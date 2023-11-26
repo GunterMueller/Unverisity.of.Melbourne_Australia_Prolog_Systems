@@ -1,0 +1,78 @@
+
+	.pred	'sys$error',2
+4: 	sot	0,&2,&5,&3,&3
+2: 	t	2,0,&0
+	tr	2,0,&1
+5: 	soc	0,&($'fatal':&1,$'warning':&0),&3
+3: 	fail	
+	.clause
+0:	gc	0,$'warning'
+	gvarx	3,1
+	pc	1,#(CHR,&11)
+	pl	2
+	ulvx	3
+	uc	$[]
+	pc	0,$'user_error'
+	exec	3,&'$format'/3
+	.clause
+1:	gc	0,$'fatal'
+	gvarx	3,1
+	pc	1,#(CHR,&17)
+	pl	2
+	ulvx	3
+	uc	$[]
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	abort	
+	dallpro	
+	last
+17: 	.string	"~NFatal Error: ~w.~n"
+11: 	.string	"~NWarning: ~w.~n"
+
+	.pred	'$catchError',3
+	.clause
+0:	gvarx	4,0
+	gvarx	5,1
+	gvarx	3,2
+	gvara	0,4
+	gvara	1,4
+	gvara	2,5
+	exec	4,&'$catchError'/4
+	last
+
+	.pred	'$catchError',4
+	labelx	4
+	.clause
+0:	all	4
+	gvary	2,1
+	gvary	3,2
+	gvary	1,3
+	gvary	0,4
+	ps	1,$'sys$error'/1
+	ulvy	3
+	call	4,2,&'catch'/2
+	jtypy	3,252,&13
+	cuty	0
+	pc	1,#(CHR,&11)
+	pl	2
+	ulvy	2
+	uc	$[]
+	pc	0,$'user_error'
+	call	2,3,&'$format'/3
+	pvaly	1,0
+	call	1,1,&'call'/1
+	cuty	0
+	fail	
+13: 	dallpro	
+14: 	last
+11: 	.string	"~NError in ~w.~n"
+
+	.pred	'$throwError',1
+	.clause
+0:	ps	1,$'sys$error'/1
+	ulvx	0
+	throw	1
+	pro	
+	last
+

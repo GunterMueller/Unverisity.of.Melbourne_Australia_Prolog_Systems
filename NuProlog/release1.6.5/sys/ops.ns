@@ -1,0 +1,304 @@
+
+	.pred	'op',3
+	labelx	3
+4: 	t	4,0,&0
+	r	4,0,&1
+	r	4,0,&2
+	tr	4,0,&3
+	.clause
+0:	gvarx	4,1
+	all	2
+	gvary	0,3
+	labely	1
+15: 	te	5,0,5,&19
+	ctypx	0,17
+	apushx	0
+	pushi	$$0
+	afunc	34
+	pushx	0
+	pushi	$$1200
+	afunc	32
+	apred	0
+	ctypx	4,2
+16: 	te	3,0,3,&17
+	ctypx	2,2
+	j	&18
+17: 	tre	3,0
+	pc	0,$'atom'
+	gvara	1,2
+	call	2,2,&'mapList'/2
+18: 	cuty	1
+	fail	
+19: 	tre	5,0
+	pc	1,#(CHR,&14)
+	ps	5,$'op'/3
+	ulvx	0
+	ulvx	4
+	ulvx	2
+	pl	2
+	uvalx	5
+	uc	$[]
+	pc	0,$'user_error'
+	call	1,3,&'$format'/3
+	cuty	0
+	fail	
+20: 	.clause
+1:	gnil	2
+	cutx	3
+	pro	
+	.clause
+2:	gvarx	4,0
+	typx	2,48
+	cutx	3
+	ps	0,$'$addop'/2
+	ulvx	4
+	ulvx	1
+	gvara	1,2
+	exec	2,&'mapList'/2
+	.clause
+3:	ctypx	2,2
+	exec	3,&'$addop'/3
+	last
+14: 	.string	"~NError in ~w -- arguments not appropriate.~n"
+
+	.pred	'$addop',3
+	labelx	3
+3: 	sot	0,&1,&4,&2,&2
+4: 	jc	0,$0,&1
+	j	&0
+	j	&1
+2: 	fail	
+	.clause
+0:	all	10
+	gvary	2,0
+	gvary	1,1
+	gvary	0,2
+	ctypy	0,2
+	ctypy	2,17
+	apushy	2
+	pushi	$$0
+	afunc	33
+	pushy	2
+	pushi	$$1200
+	afunc	32
+	apred	0
+	cutx	3
+	labely	5
+47: 	te	0,0,0,&56
+	pvaly	0,0
+	pvary	7,1
+	call	10,2,&'$opField'/2
+	puval	7,4
+	pnil	5
+	notid	4,5
+	cuty	5
+	labely	8
+48: 	te	0,0,0,&52
+	pvaly	0,0
+	pvarx	1,1
+	pvarx	2,2
+	call	10,3,&'$sysOp'/3
+	labely	9
+49: 	te	0,0,0,&50
+	pvaly	0,0
+	pvaly	2,1
+	pvaly	1,2
+	call	10,3,&'$sysOp'/3
+	cuty	9
+	fail	
+50: 	tre	0,0
+51: 	cuty	8
+	pc	1,#(CHR,&20)
+	ps	4,$'op'/3
+	ulvy	2
+	ulvy	1
+	ulvy	0
+	pl	2
+	uvalx	4
+	uc	$[]
+	pc	0,$'user_error'
+	call	8,3,&'$format'/3
+	j	&53
+52: 	tre	0,0
+53: 	labely	6
+54: 	te	0,0,0,&55
+	pvaly	1,0
+	pvaly	2,1
+	puval	7,2
+	pvary	4,3
+	call	7,4,&'parser$convert1'/4
+	cuty	6
+	pvaly	0,0
+	puval	4,1
+	dallexe	2,&'$setOpField'/2
+55: 	tre	0,0
+	pc	1,#(CHR,&30)
+	ps	4,$'op'/3
+	ulvy	2
+	ulvy	1
+	ulvy	0
+	pl	2
+	uvalx	4
+	uc	$[]
+	pc	0,$'user_error'
+	call	0,3,&'$format'/3
+	fail	
+	j	&60
+56: 	re	0,0,&59
+	ps	2,$'op'/9
+	ulvy	2
+	uc	$'n'
+	uc	$'n'
+	uc	$'n'
+	uc	$'n'
+	uc	$'n'
+	uc	$'n'
+	uc	$'n'
+	uc	$'n'
+	pvaly	1,0
+	pvaly	2,1
+	pvary	4,3
+	call	6,4,&'parser$convert1'/4
+	cuty	5
+	pvaly	0,0
+	puval	4,1
+	call	4,2,&'$setOpField'/2
+	labely	3
+57: 	te	0,0,0,&58
+	pvaly	0,0
+	pvaly	2,1
+	pvaly	1,2
+	call	4,3,&'$sysOp'/3
+	cuty	3
+	dallpro	
+58: 	tre	0,0
+	pc	0,$'$operators'
+	pc	1,$'$currentOp'
+	pvaly	0,2
+	dallexe	3,&'addpropa'/3
+	j	&60
+59: 	tre	0,0
+	pc	1,#(CHR,&46)
+	ps	4,$'op'/3
+	ulvy	2
+	ulvy	1
+	ulvy	0
+	pl	2
+	uvalx	4
+	uc	$[]
+	pc	0,$'user_error'
+	call	0,3,&'$format'/3
+	fail	
+60: 	.clause
+1:	gc	0,$0
+	all	4
+	gvary	2,1
+	gvary	1,2
+	gvary	0,3
+	ctypy	1,2
+	cuty	0
+	labely	3
+77: 	te	0,0,0,&78
+	pvaly	1,0
+	pvarx	1,1
+	pvarx	2,2
+	call	4,3,&'$sysOp'/3
+	cuty	3
+	pc	1,#(CHR,&71)
+	ps	4,$'op'/3
+	uc	$0
+	ulvy	2
+	ulvy	1
+	pl	2
+	uvalx	4
+	uc	$[]
+	pc	0,$'user_error'
+	call	2,3,&'$format'/3
+	j	&79
+78: 	tre	0,0
+79: 	pvaly	1,0
+	pnil	1
+	call	2,2,&'$setOpField'/2
+	pc	0,$'$operators'
+	pc	1,$'$currentOp'
+	pvaly	1,2
+	call	1,3,&'remprop'/3
+	cuty	0
+	dallpro	
+	last
+71: 	.string	"~NWarning in ~w -- undefining a system-defined operator.~n"
+46: 	.string	"~NError in ~w -- invalid operator redefinition.~n"
+30: 	.string	"~NError in ~w -- invalid operator redefinition.~n"
+20: 	.string	"~NWarning in ~w -- changing a system-defined operator.~n"
+
+	.pred	'$defop',3
+	.clause
+0:	exec	3,&'$addop'/3
+	last
+
+	.pred	'$opField',2
+	.clause
+0:	symbol	0,2
+	pc	3,$5
+	arg	3,2,2
+	gvalx	1,2
+	pro	
+	last
+
+	.pred	'$setOpField',2
+	.clause
+0:	gvarx	2,1
+	symbol	0,3
+	labelx	1
+7: 	te	3,0,4,&8
+	pc	4,$0
+	copy	4,2,4,5
+	gc	4,$0
+	cutx	1
+	pc	4,$5
+	replacn	4,3,5
+	pro	
+8: 	tre	3,0
+	pc	1,#(CHR,&6)
+	ps	3,$'$setOpField'/2
+	ulvx	0
+	ulvx	2
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	exec	3,&'$format'/3
+9: 	last
+6: 	.string	"~NError in ~w -- ground value expected.~n"
+
+	.pred	'currentOp',3
+	.clause
+0:	all	4
+	gvary	1,0
+	gvary	2,1
+	gvary	3,2
+	jtypy	3,3,&17
+15: 	te	0,0,0,&16
+	pvaly	3,0
+	pvarx	1,1
+	pvarx	2,2
+	call	4,3,&'$sysOp'/3
+	j	&17
+16: 	tre	0,0
+	pc	0,$'$operators'
+	pc	1,$'$currentOp'
+	pvaly	3,2
+	call	4,3,&'getprop'/3
+	j	&17
+17: 	pvaly	3,0
+	pvary	0,1
+	call	3,2,&'$opField'/2
+	puval	0,3
+	pnil	4
+	notid	3,4
+	pvaly	2,0
+	pvaly	1,1
+	puval	0,2
+	dallexe	3,&'parser$convert2'/3
+	last
+

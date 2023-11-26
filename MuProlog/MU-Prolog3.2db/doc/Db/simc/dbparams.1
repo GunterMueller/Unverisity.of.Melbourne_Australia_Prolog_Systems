@@ -1,0 +1,82 @@
+.TH DBPARAMS 1-ucb
+.SH ORIGIN
+4.2BSD
+.SH NAME
+dbparams \- generate ``optimal'' parameters for a
+.I simc
+relation
+.SH SYNOPSIS
+.B dbparams
+[\|-\|v\|] Av Arity Nrecs SegSize Nd
+.SH DESCRIPTION
+.I dbparams
+generates a complete set of near-optimal parameters for
+a
+.I simc
+style database.
+The complete set of parameters is quite complex so
+.I dbparam
+only requires you to specify a small number of them.
+It is intended to be used in conjunction with
+.I newrel
+to generate new relations.
+A typical usage might be as follows:
+.TP
+	\fBnewrel\fP db rel type `\|dbparams args .\|.\|.\|` skel
+.PP
+The parameters which
+.I dbparams
+requires are as follows:
+.TP 4
+.B Av
+Average length of records. Records are stored simply as C-like text
+strings within the segments, with the relation name stripped off.
+Thus the record
+.br
+	``employee(e1234,fred,analyst,edp,30000)''
+.br
+will be stored in the data file as
+.br
+	``e1234,fred,analyst,edp,30000''.
+.br
+Note that this does not form a fixed upper bound;
+it is possible to exceed average length
+at a cost in retrieval performance.
+.TP 4
+.B Arity
+The number of keys in each record (or, viewed another way, the number
+of arguments to the Prolog predicate which the relation represents).
+.TP 4
+.B Nrecs
+Maximum records in relation.
+This is equal to the product of
+.B Ns
+*
+.BR Nr .
+If this is exceeded, then massive re-organisation of the database is
+necessary. At present, this is not implemented, so relations have a fixed
+maximum size.
+.TP 4
+.B SegSize
+The size (in bytes) of segment buffers. This allows the records to
+be optimally partitioned between segments. For a typical 4.2BSD Unix
+system this would be 4096; for other systems, use some optimal disk
+transfer block size.
+.TP 4
+.B Nd
+The number of data files to use to store the segments of the relation.
+Initially, for locking, the system aimed to have one file per segment,
+but since large databases require more than 1000 segments this is not
+feasible.
+There is a trade-off here between speed and locking; sixteen files is
+sufficient for around 1000 segments.
+.SH FILES
+db/rel/desc	Index files
+.br
+db/rel/00*	Data files
+.SH SEE ALSO
+dbinfo(1), ddb(1), consult(1), newrel(1), prefix(1)
+.SH DIAGNOSTICS
+Silent bastardry.
+.SH BUGS
+This program is too simple to have bugs. And, besides, Rao wrote it.

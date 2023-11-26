@@ -1,0 +1,26 @@
+%pinched from control
+			/* Delay until first arg is ground */
+	/* This uses the fudged system pred $nground, used to implement ~. */
+	/* If its arg is ground, it fails, otherwise it "delays" the */
+	/* PREVIOUS (parent) call on the first variable it finds. */
+whengrnd(T, P) :- $nground(T).
+whengrnd(_, P) :- P.
+
+	% This is useful for a generalised negation predicate, which only
+	% delays until some variables in the call are ground. Local
+	% (universally quantified) vars are not a problem with not.
+	% Below, G is the list of global vars and P is the predicate to negate.
+gnot(G, P) :- whengrnd(G, $nt(G, P)).
+
+$nt(G, A) :-
+	$ndelay(N),
+	A,
+	$ndelay(M),
+	(	N =\= M,
+		!,
+		error(enotdelay, gnot(G, A))
+	;
+		!,	
+		fail
+	).
+$nt(G, A).

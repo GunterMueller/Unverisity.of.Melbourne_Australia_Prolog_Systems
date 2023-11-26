@@ -1,0 +1,285 @@
+%	setof and bagof - uses some modified code from Edinburgh
+%	This version of bagof is more logical than the standard version.
+%	Most implementations of bagof have problems similar to those of
+%	not and \= (ie. if there are variables in the call then the set
+%	of answers returned may not be correct). The version here uses
+%	a sound implementation of inequality (involving coroutining) to
+%	ensure correctness. The differences between this version
+%	and the more standard version, in file setof, are
+%	the sound definition of the noteq inequality predicate,
+%	empty sets can be returned,
+%	setof sorts the list (logically, with delaying if necessary), and
+%	error messages are printed if there are local variables in answers or
+%	delayed calls in the goals.
+%	noteq and term_compare should be implemented in C, not Prolog - this
+%	version is far slower than it could be
+%
+%						Lee Naish
+
+?- hide([tsort(2), tinsert(3), prove(1), is_ground(1), mk_ground(1),
+	asgen1(2), bindvars(3), bindlv(3), noteq(2), $bag]).
+
+?-op(200, xfy, ^).
+
+setof(Term, Goal, Set) :-
+	$setof(Term, Goal, Set).
+
+$setof(X, P, Set) :-
+	$bagof(X, P, Bag),
+	Set = Set0,
+	tsort(Bag, Set0).
+
+bagof(Term, Goal, Bag) :-
+	$bagof(Term, Goal, Bag).
+
+$bagof(X, P, Bag) :-
+	$excess_vars(P, X, [], L),
+	$nonempty(L),
+	!,
+	Key =.. $.L,
+	$bagof(X, P, Key, Bag).
+$bagof(X, P, Bag) :-
+	asserta(bagtmp($bag)),
+	prove(P),
+	asserta(bagtmp(X)),
+	not is_ground(X),
+	writeln(2, 'Error: unbound local variable(s) in bagof'),
+	fail.
+$bagof(X, P, Bag) :-
+	$reap([], Bag).
+
+$bagof(X, P, Key, Bag) :-
+	asserta(bagtmp($bag)),
+	prove(P),
+	asserta(bagtmp(Key - X)),
+	mk_ground(Key),
+	not is_ground(X),
+	writeln(2, 'Error: unbound local variables in bagof'),
+	fail.
+$bagof(X, P, Key, Bag) :-
+	$reap([], Bags),
+	$pick(Bags, Key, Bag).
+
+$nonempty(_._).
+
+$reap(L0, L) :-
+	retract(bagtmp(X)),
+	!,
+	$reap1(X, L0, L).
+
+$reap1(X, L0, L) :-
+	X \== $bag,
+	!,
+	$reap(X.L0, L).
+$reap1(_, L, L).
+
+$pick([], _, []).
+$pick(Key-T1.Tn, Key, T1.S) :-
+	$pick(Tn, Key, S).
+$pick(K-T1.Tn, Key, S) :-
+	noteq(Key, K),
+	$pick(Tn, Key, S).
+
+$excess_vars(T, X, L0, L) :-
+	var(T),
+	!,
+	(	not occurs(T, X),
+		!,
+		$introduce(T, L0, L)
+	;
+		L = L0
+	).
+$excess_vars(X ^ P, Y, L0, L) :-
+	!,
+	$excess_vars(P, (X, Y), L0, L).
+$excess_vars(setof(X, P, S), Y, L0, L) :-
+	!,
+	$excess_vars((P, S), (X, Y), L0, L).
+$excess_vars(bagof(X, P, S), Y, L0, L) :-
+	!,
+	$excess_vars((P, S), (X, Y), L0, L).
+$excess_vars(T, X, L0, L) :-
+	T =.. F.A,
+	$rem_excess_vars(A, T, X, L0, L).
+$excess_vars(T, X, L, L) :-
+	integer(T).
+
+$rem_excess_vars([], _, _, L, L).
+$rem_excess_vars(T1.A, T, X, L0, L) :-
+	$excess_vars(T1, X, L0, L1),
+	$rem_excess_vars(A, T, X, L1, L).
+
+$introduce(X, L, L) :-
+	occurs(X, L),
+	!.
+$introduce(X, L, X.L).
+
+X ^ P :-
+	P.
+
+prove(P) :-		% instead of call which is effected by cut
+	$ndelay(N),
+	P,
+	$ndelay(M),
+	(if N ~= M then
+		writeln('Error: delayed call(s) in bagof')
+	).
+
+tsort([], []).
+tsort(A.B, C.D) :-
+	tsort(B, E),
+	tinsert(A, E, C.D).
+
+tinsert(A, [], [A]).
+tinsert(A, B.C, D) :-
+	term_compare(R, A, B),
+	(	R = (<),
+		D = A.B.C
+	;
+		R = (=),
+		tinsert(A, C, D)
+	;
+		R = (>),
+		D = B.E,
+		tinsert(A, C, E)
+	).
+
+asgen1(A, B) :-
+	bindvars(0, _, B),
+	A = B.
+
+bindvars(N, M, b(N)) :-
+	M is N + 1,
+	!.
+bindvars(N, N, M) :-
+	atomic(M),
+	!.
+bindvars(N, M, T) :-
+	T =.. F.A,
+	bindlv(N, M, A).
+
+bindlv(N, N, []).
+bindlv(N, M, H.T) :-
+	bindvars(N, N1, H),
+	bindlv(N1, M, T).
+
+?- protect([$setof(3), $bagof(3), $bagof(4), $nonempty(1), $reap(2), $reap1(3),
+	$pick(3), $excess_vars(4), $rem_excess_vars(5), $introduce(3)]).
+
+	% noteq(X, Y) means for all Y, X \= Y
+noteq(Key, K) :-
+	$is_eq(K, K, Key, fail).
+
+	% tests if a term contains no vars
+
+?- hide(nground(1)).
+
+is_ground(X) :-
+	nground(X),	% fails if ground, delays otherwise
+	!,
+	fail.
+is_ground(X).
+
+nground(X) :-
+	$nground(X).
+
+	% make a term ground (all vars are bound to [])
+mk_ground([]) :-
+	!.
+mk_ground(A.B) :-
+	!,
+	mk_ground(A),
+	mk_ground(B).
+mk_ground(N) :-
+	atomic(N),
+	!.
+mk_ground(C) :-
+	C =.. F.A,
+	mk_ground(A).
+
+	% term comparison
+	% (compare/2, @</2, $</2 etc not here yet)
+	% logical version is term_compare/3 which delays with vars
+	% (and causes a bit of backtracking too).
+	% This should really be implemented in C.
+	% term order is ints, low arity, low alphanumeric name, args L to R
+?- hide([ compare1(3), ncompare(5), lcompare(3), scompare(3), non_int(1)]).
+
+term_compare((=), X, X).
+term_compare(C, X, Y) :-
+	X ~= Y,
+	compare1(X, Y, C).
+
+?- wait compare1(0, 0, 1).
+compare1(1, _, _) :-		% causes delay with vars
+	fail.
+compare1(_, 1, _) :-
+	fail.
+compare1(X, Y, (<)) :-
+	int(X),
+	int(Y),
+	X < Y.
+compare1(X, Y, (>)) :-
+	int(X),
+	int(Y),
+	X > Y.
+compare1(X, Y, (<)) :-
+	int(X),
+	non_int(Y).
+compare1(X, Y, (>)) :-
+	int(Y),
+	non_int(X).
+compare1(X, Y, C) :-
+	X =.. XF.XA,
+	Y =.. YF.YA,
+	length(XA, XN),
+	length(YA, YN),
+	(	XN < YN,
+		C = (<)
+	;	 
+		XN > YN,
+		C = (>)
+	;
+		XN = YN,
+		ncompare(XF, XA, YF, YA, C)
+	).
+
+ncompare(XF, XA, XF, YA, C) :-
+	lcompare(XA, YA, C).
+ncompare(XF, XA, YF, YA, C) :-
+	XF ~= YF,
+	name(XF, XN),
+	name(YF, YN),
+	scompare(XN, YN, C).
+
+?- wait lcompare(1, 0, 1).
+?- wait lcompare(0, 1, 1).
+lcompare(A.XA, B.YA, C) :-
+	term_compare(C1, A, B),
+	(	C1 = (<),
+		C = (<)
+	;	 
+		C1 = (>),
+		C = (>)
+	;
+		C1 = (=),
+		lcompare(XA, YA, C)
+	).
+
+?- wait scompare(1, 0, 1).
+?- wait scompare(0, 1, 1).
+scompare([], [], (=)).
+scompare([], _._, (<)).
+scompare(_._, [], (>)).
+scompare(A.X, A.Y, C) :-
+	scompare(X, Y, C).
+scompare(A.X, B.Y, (<)) :-
+	A < B.
+scompare(A.X, B.Y, (>)) :-
+	A > B.
+
+non_int(X) :-
+	X =.. _.
+
+?- protect(term_compare(3)).
+?- hidden.

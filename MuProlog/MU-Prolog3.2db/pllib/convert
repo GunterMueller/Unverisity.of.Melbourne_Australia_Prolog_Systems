@@ -1,0 +1,44 @@
+	% conversion between integers, constants and strings
+
+const_str(C, S) :-
+		name(C, S).
+
+int_const(I, C) :-
+		name(C, S),
+		str_int(S, I).
+
+str_int(M.S, I) :-
+		I < 0,
+		M is "-",
+		plus(I, MI, 0),
+		str_uint(S, MI).
+str_int(D.S, I) :-
+		I >= 0,
+		("0" =< D) and (D =< "9"),
+		str_uint(D.S, I).
+
+str_uint(S, I) :-	/* uses var, cut beause 'times' doesn't exist yet */
+		var(I),
+		!,
+		stoi(S, 0, I).
+str_uint(S, I) :-
+		itos(I, [], S).
+
+stoi([D], N, I) :-
+		("0" =< D) and (D =< "9"),
+		I is N*10 + D - "0".
+stoi(D.D1.S, N, I) :-
+		("0" =< D) and (D =< "9"),
+		N1 is N*10 + D - "0",
+		stoi(D1.S, N1, I).
+
+itos(I, S, D.S) :-
+		I < 10,
+		D is I + "0".
+itos(I, S, S1) :-
+		I >= 10,
+		D is I mod 10 + "0",
+		I2 is I/10,
+		itos(I2, D.S, S1).
+
+

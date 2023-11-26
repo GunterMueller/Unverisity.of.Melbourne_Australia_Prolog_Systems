@@ -1,0 +1,73 @@
+/* general purpose problem solving procedure */
+goal :-
+	finalstate(S),
+	state(S).
+
+state(S) :-
+	initstate(S).
+state(S) :-
+	safe(S),
+	move(S1, S),
+	lcall(state(S1)).
+
+/* call that avoids (some) infinite loops - if the call is an ancestor
+   of itself then if fails
+*/
+lcall(A) :-
+	isancestor(A),
+	!,
+	fail.
+lcall(G1) :-
+	G1.
+
+isancestor(A) :-
+	depth(D),
+	for(I, 4, D, 2), /* not general */
+	ancestor(I, C),
+	A=C.
+
+for(Min, Min, Max, Inc) :-
+	Min=<Max.
+for(A, Min, Max, Inc) :-
+	Min1 is Min+Inc,
+	Min1=<Max,
+	for(A, Min1, Max, Inc).
+
+/* relevant definitions for the fox, goose and wheat problem
+	states are as follows: s(Fox, Goose, Wheat, Man), each variable
+	being either left or right
+*/
+
+initstate(s(left, left, left, left)).
+
+finalstate(s(right, right, right, right)).
+
+safe(s(F, G, W, M)) :-
+	noeat(F, G, M),
+	noeat(G, W, M).
+
+noeat(A, _, A).
+noeat(A, B, _) :-
+	A\=B.
+
+move(s(F, G, W, M), s(F1, G1, W1, M1)) :-
+	opside(M, M1),
+	(	F1=F,
+		G1=G,
+		W1=W
+	;	 
+		opside(F, F1),
+		G1=G,
+		W1=W
+	;	 
+		F1=F,
+		opside(G, G1),
+		W1=W
+	;
+		F1=F,
+		G1=G,
+		opside(W, W1)
+	).
+
+opside(left, right).
+opside(right, left).

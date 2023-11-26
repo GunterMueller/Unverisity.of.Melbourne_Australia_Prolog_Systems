@@ -1,0 +1,57 @@
+<HTML>
+<TITLE>
+HTML Web forms interface to NU-Prolog
+</TITLE>
+<H1>
+HTML Web forms interface to NU-Prolog
+</H1>
+<hr>
+<EM>
+***   Our system administrators change our WWW hardware/software
+occasionally without letting me know.  If this system doesn't work
+please
+<A HREF="mailto:lee@unimelb.edu.au">email me</A>.
+<P>
+</EM>
+
+
+HTML has a form facility with quite a few neato features.
+There is a Common Gateway Interface (CGI) defined between these forms and
+other code.  Perl is a common language for interfacing with forms;
+C is sometimes used also.  Here is some code which interfaces NU-Prolog
+with HTML forms.  I should add the disclaimer that I don't know much
+about HTML or CGI.  I'm probably doing some things the "wrong"
+way, but nevertheless, it works!
+<P>
+<HR>
+
+
+Check out this
+<A HREF="formnp.html">form</A>
+which illustrates most of the features of HTML forms.
+You fill in the form, hit the "Submit Form" button and another page pops up.
+What creates that page?
+<A HREF="prform.nl.txt">This</A>
+NU-Prolog program.
+<P>
+
+How is the connection specified?  The form specifies that the ACTION is
+<A HREF="nptest.txt"> "http://www.cs.mu.oz.au/us/cgi-bin/nptest"</A>.
+This is the file produced by compiling the program above using the
+NU-Prolog compiler nc.  The compiler output must be very slightly
+modified for the interface to work properly - see the comment in the file.
+<P>
+
+<A HREF="http://mayor.dia.fi.upm.es/~herme/">Manuel Hermenegildo</A>
+has also done some related work with Sicstus Prolog and developed the
+<A HREF="http://www.clip.dia.fi.upm.es/miscdocs/pillow/pillow.html">
+PiLLoW library</A>.  Actually, lots of
+people have now done this kind of thing - there have been ICLP conference
+workshops on WWW and I'm sure they will continue.
+<P>
+
+<br>
+<br>
+<A HREF="http://people.eng.unimelb.edu.au/lee/"> Lee </A>
+
+</HTML>

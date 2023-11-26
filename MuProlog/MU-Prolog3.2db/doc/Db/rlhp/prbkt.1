@@ -1,0 +1,51 @@
+.TH PRBKT MUDD "6 December 1984"
+.SH NAME
+prbkt \- diagnostic print of one bucket
+.SH SYNOPSIS
+.B prbkt
+[
+.B \-r
+]
+db relation level bucket
+.br
+.SH DESCRIPTION
+.I Prbkt
+prints out diagnostic information about the
+.I bucket
+in
+.I level
+of
+.I relation
+in database directory
+.I db.
+For example,
+prbkt /usr/adm/studdb student 0 0
+.PP
+ descriptor contents
+        level: 0
+        page: 0
+        actual bucket no.: 0
+        no. of records: 40
+        descriptor:
+        key[0]
+         10100111 01110111 11011011 01001101 10001110 111
+        key[1]
+        key[2]
+        key[3]
+         11011111 11110110 00110011 00010111 11101101 100
+        key[4]
+         00011110 01110101 11010101 01101010 11111100 0
+        key[5]
+        key[6]
+        key[7]
+        key[8]
+ bucket contents
+        no. of facts: 40
+        no. of bytes: 2228
+.PP
+The
+.B \-r
+option will print out all the records in the bucket as well.
+.SH "SEE ALSO"
+mudd(mudd), newrel(mudd), prdd(mudd)
+.SH BUGS

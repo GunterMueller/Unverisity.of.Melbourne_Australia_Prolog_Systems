@@ -1,0 +1,64 @@
+	% various list processing preds
+
+/*	_3 is _2 appended to _1 */
+?- wait append(0,0,1).
+?- wait append(1,1,0).
+append([], A, A).
+append(A.B, C, A.D) :- append(B, C, D).
+
+/*	_3 is _2 with element _1 removed */
+?- wait delete(1,0,1).
+?- wait delete(0,1,0).
+delete(A, A.B, B).
+delete(A, B.C.D, B.E) :- delete(A, C.D, E).
+
+/* length is defined in system as follows */
+/*	?- wait length(1,0).
+	?- wait length(0,1).
+	length([], 0).
+	length(A.B, N) :- N > 0, plus(M, 1, N), length(B, M).
+*/
+
+/*	_1 is a member of _2 */
+?- wait member(1,0).
+member(A, A.C).
+member(A, B.C) :- /* A ~= B, */  member(A, C).
+
+/*	_2 contains exactly _3 occurrences of _1 */
+?- wait nmember(1,0,1).
+nmember(A, [], 0).
+nmember(A, A.C, N) :- nmember(A, C, N1), N is N1 + 1.
+nmember(A, B.C, N) :- A ~= B, nmember(A, C, N).
+
+/*	if _1 and _2 are non-decreasing lists of integers then _3 is _1
+	merged with _2 (duplicates are not removed) */
+?- wait merge(0,0,1).
+?- wait merge(1,1,0).
+merge(A.B, C.D, A.E) :- A < C, merge(B, C.D, E).
+merge(A.B, C.D, C.E) :- A >= C, merge(A.B, D, E).
+merge([], A, A) :- A ~= [].
+merge(A, [], A).
+
+/*	_2 is a permutation of _1 */
+?- wait perm(1,0).
+?- wait perm(0,1).
+perm([],[]).
+perm(A.B, C.D) :- delete(C, A.B, E), perm(E, D).
+
+/*	_2 is list _1 reversed */
+reverse(A, B) :- 
+	/* rev2(B, [], A),	/* if B is instantiated */
+	rev2(A, [], B).		/* if A is instantiated (can have both) */
+
+/*	_3 is the reverse of _1 appended to _2 */
+?- wait rev2(0, 1, 1).
+rev2([], A, A).
+rev2(A.B, C, D) :-
+	rev2(B, A.C, D).
+
+/*	_1 is a list of non-decreasing integers */
+?- wait sorted(0).
+sorted([]).
+sorted([A]).
+sorted(A.B.C) :- A =< B, sorted(B.C).
+

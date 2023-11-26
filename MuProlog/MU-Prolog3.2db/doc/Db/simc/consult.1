@@ -1,0 +1,57 @@
+.TH CONSULT 1-ucb
+.SH ORIGIN
+4.2BSD
+.SH NAME
+consult \- insert facts into a \fIsimc\fR database
+.SH SYNOPSIS
+.B consult
+[
+.B -s
+[ num ] ] db [ file .\|.\|. ]
+.SH DESCRIPTION
+.I Consult
+reads facts and rules in standard
+.I MU-Prolog
+format from the named files or from standard input 
+and inserts them into relations in the
+.I simc
+database called
+.BR db .
+The Prolog source should first be filtered through
+.IR prefix (1)
+to convert it into prefix functional notation
+and strip comments and other ``meta-junk''.
+Thus the typical usage of 
+.I consult
+would be:
+.TP
+	cat files | prefix | consult my_database
+.PP
+.I Consult
+can be ordered to print an occasional line of statistical info,
+to let you know that it's still alive during long consultations,
+and to give you some idea of how far it has got in asserting very
+large databases.
+At any stage, it can be made to print a statistics line by
+sending the
+.I consult
+process a QUIT signal.
+.PP
+The insertion of the facts into the database is done
+in a fast ``batch'' mode, and no locking is performed.
+Hence, the database should not be written on by other
+processes while a
+.I consult
+is in progress.
+Reading from the database at this time may also produce
+unpredictable results.
+.SH FILES
+db/desc	Index file
+.br
+db/00*	Data files
+.SH SEE ALSO
+ddb(1), dbinfo(1), dbparams(1), newrel(1), prefix(1)
+.SH DIAGNOSTICS
+An occasional line of statistics.
+.SH BUGS
+Who KNOWS where the bugs are?

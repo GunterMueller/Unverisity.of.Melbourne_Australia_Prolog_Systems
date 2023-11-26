@@ -1,0 +1,905 @@
+.sh 1 INTRODUCTION 1
+.pp
+MU-PROLOG is (almost) upward compatible with DEC-10 PROLOG, C-PROLOG
+and (PDP-11) UNIX PROLOG.
+The syntax and built-in predicates are therefore very similar.
+A small number of DEC-10 predicates are not available and some have
+slightly different effects. There are also some MU-PROLOG predicates which are
+not defined in DEC-10 PROLOG. However most DEC-10 
+programs should run with few, if any, alterations.
+.pp
+However, MU-PROLOG is not intended to be a UNIX PROLOG look-alike. MU-PROLOG
+programs should be written in a more declarative style.
+The non-logical \*(lqpredicates\*(rq such as cut (!), \\=, not and var are rarely
+needed and should be avoided. Instead, the soundly implemented
+not (\*~), not equals (\*(~=) and
+if-then-else should be used and wait declarations
+should be added where they can increase efficiency.
+.sh 1 "USING MU-PROLOG"
+.pp
+To use MU-PROLOG type the shell command \*(lqprolog\*(rq (this is dependent on the
+installation). The interpreter will print
+a short message followed by a prompt. You are now at the top level of the
+interpreter and if you type PROLOG commands they will be executed. For
+example, if you type \*(lq[myfile].\*(rq then the file myfile in your current
+directory will be consulted (loaded). If you then type \*(lqls.\*(rq the program
+will be listed. Commands are PROLOG terms terminated by a full stop and
+a carriage return.
+.pp
+After you type a goal without variables the top level will print true or fail
+(depending on whether the goal succeeded or failed). If a goal with variables
+succeeds then the bindings of the variables are printed.
+If you want to see the rest of the solutions then type a semicolon
+followed by a return;
+otherwise just hit return. It is possible that some subgoals get
+delayed and are never woken. If this happens then they are printed prior to
+the variable bindings.
+The interpreter has just proved that if the delayed calls are true then
+the initial goal is true.
+If all solutions are sought, the disjunction of answers (including delayed
+calls) is equivalent to the goal.
+.pp
+Because commands are often repeated, especially during debugging, the system
+saves the most recent ones you type. Each top level prompt contains a command
+number. If the command you type is a positive number then the command of
+that number is repeated. If you type
+\*(lq\(mi1.\*(rq then the previous command is printed and \*(lq\(mi2.\*(rq means the one before that
+etc. The h (for history) command lists the saved commands.
+.pp
+An alternative way to run MU-PROLOG is possible if you have a saved
+state (created by the save predicate) in a file (say savefile). If you type
+.(b
+		prolog savefile arg1 arg2 ...
+
+or equivalently (with Berkeley UNIX, at least), just
+
+		savefile arg1 arg2 ...
+.)b
+then the state is restored and the arguments may be accessed with the argv
+predicate. In this mode, no initial message is written.
+There is a utility available on the system to save PROLOG programs. If
+you type \*(lqplsave f.pl dir\*(rq, then a save file named f is created in
+directory dir (the default is the current directory).
+The program in f.pl should have a procedure called main,
+with one argument. When the
+saved file is run, main is called with the command line list
+(from argv) as the argument. To save space, some of the
+facilities (the debugging package, for example) are not provided by plsave.
+.sh 1 "BUILT-IN PREDICATES"
+.pp
+Here are brief descriptions of the predicates supplied by the interpreter.
+There are also a number of library predicates which should be used freely,
+rather than re-inventing the same predicates with different definitions and
+names. The system also has many predicates with names starting with dollar
+signs. These are protected from the user but to avoid confusion, you should
+not start predicate names with dollars.
+.sh 2 "Internal Database Predicates"
+.pp
+The following predicates are used in accessing and updating the database of
+clauses stored in main memory.
+.in +0.5i
+.dp assert(X)
+Adds clause X (a rule or fact) to the database.
+It is the same as assertz.
+.dp asserta(X)
+Adds X at the start of a procedure.
+.dp assertz(X)
+Adds X at the end of a procedure.
+.dp clause(X,Y)
+There is a clause in the database with head X and body Y. The body of a
+fact is \*(lqtrue\*(rq.
+.dp clindex(X,Y)
+Y is a procedure head and X is the number of an argument of the procedure.
+An inverted index is formed for that procedure and argument, so searching
+for a matching clause can be made much faster.  After clindex is called,
+the procedure cannot be modified.
+.dp consult(X)
+The file with name X is consulted. X must be an atom. All clauses and
+definite clause grammar rules in the file are added to the
+database and goals are executed. Goals are written in the form
+\*(lq?\-goal.\*(rq.
+.dp deny(X,Y)
+Equivalent to retract((X :\- Y)).
+.dp hidden
+Used in conjunction with hide(X) to hide the implementation of some predicates
+and make some procedures local to a file.
+.dp hide(X)
+X is a procedure name or list of procedure names in the form
+<procname>(<number of args>). If hide is called at the start of a file
+being consulted and hidden is called at the end then the effect is to make
+the procedure(s) local to that file. They cannot be accessed except by
+other procedures in that file. When hidden procedure names are printed they
+are followed by an underscore.
+.dp "lib X"
+Reconsults the file named X in the PROLOG library.
+.dp libdirectory(X)
+X is the atom whose name is the UNIX directory where the PROLOG library
+resides.
+.dp protect(X)
+X specifies a number of procedures, in the same way as with hide.
+The procedures are protected, so they can still be called but not listed
+or altered in any way.
+.dp reconsult(X)
+Reads clauses and grammar rules from file X to supersede existing ones (like
+consult but previous definitions of predicates are retracted).
+.dp retract(X)
+The first rule or fact that matches X is removed from the database.
+On backtracking, the next matching clause is removed.
+.dp retractall(X)
+Retracts all clauses whose head matches X.
+.dp "[file1, file2, ... ]"
+Consult file1, file2, etc. If \*(lq\(mifile1\*(rq is used then that file will be
+reconsulted instead.
+.in -0.5i
+.sh 2 "I/O Predicates"
+.pp
+These predicates are related to input and output. There are more low level
+I/O predicates in the UNIX section of this manual.
+.in +0.5i
+.dp display(X)
+Write term X on the current output in prefix format. Equivalent to
+\*(lqwritef(X,2'1011)\*(rq.
+.dp eof(X)
+Equivalent to \*(lqX = (?\-end)\*(rq (but more portable).
+.dp get(X)
+Reads characters from current input and returns X, the first printing
+character.
+.dp get0(X)
+Returns the next character, X, from the current input. At the end of file
+it returns 26 (\*(^^Z).
+.dp muprolog
+Succeeds (does nothing). Useful for conditional loading of clauses which
+are MU-PROLOG dependent.
+.dp next(X,Y)
+Changes the standard input to X and the standard output to Y. If X(Y) is
+\*(lquser\*(rq then the input(output) is not changed. After calling next the new
+standard input and output are still referred to as \*(lquser\*(rq. The old input
+and output are lost. By default read and write use the standard files but
+this can be overridden by using see and tell. These should generally be
+used in preference to next.
+.dp nl
+A newline is printed on the current output.
+.dp op(X,Y,Z)
+Declares Z, an atom (or list of atoms), to be an operator of type Y and
+precedence X. The standard operator declarations are nearly all the same
+as in DEC-10 PROLOG are as listed at the end of this manual.
+.dp portraycl(X)
+Write clause X in a suitable format.
+.dp portraygoals(X)
+Write goal X in a suitable format.
+.dp print(X)
+Print X on the current output. If the user has defined a predicate called
+\*(lqportray\*(rq, with one argument, then this is called. If \*(lqportray(X)\*(rq fails
+then \*(lqwrite(X)\*(rq is called.
+.dp printf(X,Y)
+List Y is printed with format X. Y is a list of strings, constants and
+integers. X is a string specifying the format. Exactly the same conventions
+are used as with printf in the C language. For strings and constants a \*%s
+format is used, \*%ld for decimal output of integers (integers are cast to longs
+for portability reasons), \*%lo for octal, \*%c for
+characters (small positive integers in PROLOG). Field widths can be specified
+in the same way as in C. The types of the elements of Y \fImust\fR match
+the format string.
+.dp putatom(X)
+Atom X is printed on the current output.
+.dp put(X)
+Character X is written on the current output. X may also be a string.
+.dp read(X)
+Read a term terminated by a full stop and a whitespace from the current input.
+If the term contains variables these are considered distinct from all other
+variables. At end of file read returns
+\*(lq?\-end\*(rq. X must be a variable. If a syntax error in encountered, a message
+is printed and read fails.
+.dp see(X)
+Switches current input to file X. If X has not already been opened by see
+then it is, otherwise the old file descriptor is used. After calling see,
+all calls to read, get, get0 and skip cause X to be read.
+X must be an atom.
+.dp seeing(X)
+X names the current input file.
+.dp seen
+Closes the current input file and reverts to the standard input.
+.dp skip(X)
+Reads characters from current input until X appears or end of file is reached.
+If X is a list, then it reads until a member of the list is found.
+.dp tab(X)
+Prints X spaces on the current output.
+.dp tell(X)
+Switches current output to file X.
+.dp telling(X)
+X is the current output file.
+.dp told
+Closes current output and reverts to standard output.
+.dp "use_if X
+Use_if, use_else and use_end allow conditional loading of clauses from
+files in the same way as #if, #else and #endif in C. The are used as goals
+(prefixed with ?\-). The goal X is called
+and if it fails, terms are read, from the current input, up to and
+including the next matching use_else or use_end.
+.dp use_else
+Use_else reads terms up to and including the next matching use_end.
+.dp use_end
+Succeeds (does nothing).
+.dp wflags(X)
+If X is an integer, the write flags are set to X. If X is a variable, it is
+bound to the current value of the write flags. Write interprets the value as a
+bit string. If the 1 bit is set, terms are written in prefix format. If the 2
+bit is set, names containing non-alphanumeric characters are quoted. If the 4
+bit is set, lists of integers between 32 and 126 are written as strings. If
+the 8 bit is set, level numbers are written after variables, to distinguish
+between different variables with the same name. If the 16 bit is set, lists
+are written with the dot notation, instead of brackets. If the 32 bit is set,
+non-alphanumeric constants are parenthesised.
+The write flags are initially set to 2'01100.
+.dp write(X)
+Writes term X on current output, taking into consideration current operator
+declarations and write flags.
+Write is currently written recursively, so for deeply nested terms some
+systems may have problems with the stack size.
+.dp writef(X,Y)
+Write term X using flags Y, rather than the current write flags.
+.dp writeln(X)
+The same as \*(lqwrite(X), nl\*(rq.
+.in -0.5i
+.sh 2 "Interactive Predicates"
+.pp
+These predicates are usually called from the top level of the interpreter,
+or used for debugging, rather than being part of programs.
+.in +0.5i
+.dp abort
+Aborts execution of the current goal and reverts to top level.
+.dp backtrace(X)
+Write the X most recent ancestors.
+.dp backtrace
+Write the 10 most recent ancestors.
+.dp break
+Causes a new invocation of the top-level interpreter. When this has finished,
+the previous computation is resumed.
+.dp debugging
+Lists all current spypoints.
+.dp h
+Print a history of the top level commands that have been saved.
+.dp ls
+Write all predicate definitions (except hidden and protected ones).
+.dp listing
+Write all predicate definitions (except hidden and protected ones).
+.dp "ls X"
+Write all definitions of predicates named X (except hidden and protected ones).
+X may be a list of predicate names.
+.dp "listing X"
+Write all definitions of predicates named X (except hidden and protected ones).
+X may be a list of predicate names.
+.dp nodebug
+Removes all spypoints. See \*(lqspy\*(rq.
+.dp "nospy X"
+Removes any spypoints on procedure(s) X.
+.dp notrace
+Equivalent to trace(0).
+.dp restore(X)
+Restores the prolog state saved in file X. If X is not a compatible save file,
+restore fails. No files (other than the standard ones) should be open when
+restore is called.
+.dp save(X)
+Saves a copy of the current prolog state in file X. X is made an executable
+file which, when run or used as the first argument to prolog,
+restores the state and continues as if the save had
+just succeeded. No files (other than the standard ones) should be open when
+save is called.
+.dp "spy X"
+Places a spypoint on procedure(s) X. X is a procedure name or list of
+procedure names in the form <procname> or <procname>(<number of args>).
+When a procedure with a
+spypoint is called a message is printed and the user is able to trace and
+control the execution.
+.dp trace(X)
+Turns universal tracing on/off. X is an integer interpreted as a bit string.
+If the least significant bit (1) is one then each time the interpreter tries
+to match a call with a procedure head, a message is printed. The second bit
+(2) causes messages when backtracking occurs. The third bit (4) causes
+messages when a calls delay. The fourth bit (8) causes messages when delayed
+calls are woken. Some system predicates turn tracing off.
+.dp trace
+Equivalent to \*(lqtrace(2'1111)\*(rq.
+.in -0.5i
+.sh 2 "Arithmetic Predicates"
+.pp
+The following predicates deal with integers or integer expressions.
+Integer expressions may contain integers, variables bound to integer
+expressions, strings of length one and
+arithmetic operators. The allowable binary operators are +, \(mi, *, /, mod,
+/\\ (bitwise and), \\/ (bitwise or), \*(^^ (exclusive or), << (shift left),
+>> (shift right), and (logical and), or (logical or) and the relational
+operators <, =<, >, >=, =:= and =\\=.
+The valid unary operators are \(mi and \\ (bitwise not).
+Logical expressions evaluate to one (true) or zero (false).
+All predicates which use integer expressions delay until all variables
+in the expression(s) are bound.
+.in +0.5i
+.dp maxint(X)
+X is the largest integer possible in the system. The smallest is
+\(miX\ \(mi\ 1.
+.dp "X < Y"
+Integer expression X is evaluates to less than integer expression Y.
+.dp "X =< Y"
+Integer expression X is less than or equal to expression Y.
+.dp "X > Y"
+Integer expression X is greater than expression Y.
+.dp "X >= Y"
+Integer expression X is greater than or equal to expression Y.
+.dp "X =:= Y"
+Integer expressions X and Y are equal.
+.dp "X =\\\= Y"
+Integer expressions X and Y are not equal.
+.dp "X and Y"
+Integer expressions X and Y are both non-zero.
+.dp "X or Y"
+Integer expressions X, Y or both are non-zero.
+.dp "X is Y"
+Integer expression Y evaluates to X (a variable or integer).
+Remember that it delays if Y contains
+an unbound variable so it can only be used \*(lqin one direction\*(rq, unlike plus.
+.dp plus(X,Y,Z)
+X + Y = Z. If at least two arguments are variables it will delay. If two
+are integers then the third will be calculated. If all three are integers
+it acts solely as a test.
+.dp length(X,Y)
+X is a list of length Y. X or Y may be variables. If they are both
+variables, then the call delays.
+.in -0.5i
+.ne 10
+.sh 2 "Control and Meta Level Predicates"
+.pp
+Those predicates in this section which are non-logical,
+should be avoided where possible.
+.in +0.5i
+.dp ancestor(X,Y)
+Y is the X\*[th\*] ancestor (not including \*(lqcall\*(rq, \*(lq;\*(rq or \*(lq,\*(rq) of the current call.
+.dp depth(X)
+X is the number of ancestors of the current call.
+.dp arg(X,Y,Z)
+The X\*[th\*] argument of term Y is Z (delays if X or Y are variables).
+.dp functor(X,Y,Z)
+X is a term whose functor is Y and arity Z. Delays if X and either Y or Z
+are variables.
+.dp name(X,Y)
+Y is the list of characters in the name of atom X. If X and Y are variables, it
+delays.
+.dp atom(X)
+X is an atom (non-logical). If X is currently a variable it fails.
+.dp atomic(X)
+X is an atom or integer (non-logical).
+.dp int(X)
+X is an integer. If X is currently a variable it delays.
+.dp integer(X)
+X is an integer (non-logical). If X is currently a variable it fails.
+.dp var(X)
+X is currently a variable (non-logical).
+.dp nonvar(X)
+X is not currently a variable (non-logical).
+.dp "not X"
+If X succeeds then not X fails and if X fails then not X succeeds.
+The result is suspect if X succeeds and binds any variables (non-logical \-
+use \*~ instead).
+.dp \*~X
+Sound implementation of negation as failure.
+If X contains variables then it delays,
+otherwise if X succeeds then \*~X fails and if X fails then \*~X succeeds.
+.dp occurs(X,Y)
+Term Y contains a subterm X. X must be a variable, an atom or an integer
+(non-logical).
+.dp error(X)
+Called when an error occurs (see section 5 of this manual).
+.dp errhandler(X)
+Called by \*(lqerror\*(rq if the user-defined procedure \*(lqtraperror(X,Y,Z)\*(rq fails
+(see section 5).
+.dp repeat
+Always succeeds, even on backtracking.
+.dp true
+Succeeds. On backtracking it fails.
+.dp fail
+Always fails.
+.dp "wait X"
+X is a procedure head with all its argument either 1 or 0. The corresponding
+wait declaration is added to the procedure.
+See section 4 of this manual.
+.dp call(X)
+The goal represented by the term X.
+.dp X
+The goal given by the binding of the variable X (meta-variables).
+.dp "X, Y"
+X and Y (the bodies of clauses are in this form).
+.dp "X ; Y"
+X or Y (use sparingly - use an extra clause instead).
+.dp "X =.. Y"
+Y is a list made up of the functor of X followed by the arguments of X. The
+call delays if X and Y are insufficiently instantiated. If X is an integer
+it fails.
+.dp "X == Y"
+Terms X and Y are identical. That is, they can be unified without binding any
+variables (non-logical).
+.dp "X \\\== Y"
+X and Y are not identical (non-logical).
+.dp "X = Y"
+X equals Y (X and Y are unified).
+.dp "X \\\= Y"
+The same as not(X = Y). ie. unsound implementation of not equals.
+.dp "X \*(~= Y"
+Sound implementation of inequality. If X and Y do not unify it succeeds. If
+X and Y unify without binding any variables then it fails. If X and Y unify
+but variables need to be bound then it delays. Underscores in the call are
+not treated as other variables are. It is assumed that they are universally
+quantified. For example, X \*(~= f(_) means for all possible values of _,
+X does not equal f(_) (so it fails if X equals f(Y), whatever Y is).
+.dp "if X then Y"
+If X contains variables then it delays, otherwise if X succeeds then Y is
+called. If X fails the goal succeeds.
+.dp "if X then Y else Z"
+If X contains variables then it delays, otherwise if X succeeds then Y is
+called and if X fails then Z is called.
+.dp "X \(mi> Y"
+Unsound implementation of \*(lqif X then Y\*(rq. It does not delay if X contains
+variables (non-logical).
+.dp "X \(mi> Y ; Z"
+Unsound implementation of \*(lqif X then Y else Z\*(rq. It does not delay if X contains
+variables (non-logical).
+.dp !
+The cut operation. It succeeds, but on backtracking everything fails up to and
+including the most recent ancestor which is not \*(lq;\*(rq, \*(lqcall\*(rq or \*(lq,\*(rq.
+No atoms to the left of the cut are retried and no more clauses in
+that procedure are tried. It can be used to implement
+many of the unsafe features of PROLOG (for example, not, \\=, var and ==).
+It should be used as sparingly as possible.
+.in -0.5i
+.sh 2 "UNIX-related Predicates"
+.pp
+These predicates provide an alternative interface to the file system and
+other facilities provided by UNIX. The number of predicates in this section
+is likely to grow with demand.
+.in +0.5i
+.dp open(X,Y,Z)
+Opens file X (an atom) on channel Y in mode Z. There are currently twenty file
+channels available. Numbers zero to four are reserved for standard input, 
+standard output, standard error output, current input and current output,
+respectively.  If Y is a variable, then it is bound to the highest free channel.
+The mode must be \*`r' (read), \*`w' (write) or \*`a' (append).
+.dp close(X)
+Closes channel X. X must be a channel number obtained from a previous call
+to the open predicate.
+.dp getc(X,Y)
+Y is bound to the value of the next character read on file channel X.
+.dp putc(X,Y)
+Character Y is written on file channel X.
+.dp read(X,Y)
+A term Y is read from file channel X.
+.dp write(X,Y)
+Y is written on file channel X.
+.dp write(X,Y,Z)
+Y is written on channel X using flags Z.
+.dp writeln(X,Y)
+Equivalent to \*(lqwrite(X,Y), putc(X,10)\*(rq.
+.dp fprintf(X,Y,Z)
+Print list Z on file channel X using format Y.
+.dp pipe(X)
+Creates a pipe named X. X must be an atom. X may then be used with \*(lqsee\*(rq,
+\*(lqtell\*(rq and \*(lqnext\*(rq.
+.dp pipe(X,Y)
+Creates a pipe using file channel X for the input from the pipe and file
+channel Y for output to it. If X or Y are variables they
+are bound to the highest free channels.
+.dp fork
+Creates another prolog process, with the same core image.
+The only difference is that the call to fork in the parent process
+succeeds but the call in the child process fails. Care must be taken to
+ensure the two processes do not compete for input from the terminal or
+other open files.
+.dp system(X,Y)
+Command line X (an atom) is passed to UNIX to execute and Y is then bound
+to the exit status returned. The exit status is the termination code (one byte)
+followed by the argument to exit (one byte).
+.dp argv(X)
+X is a list of atoms which were the command line arguments typed by the
+user. The first element of the list will be the name of the save file.
+.dp csh
+Invokes a new copy of the UNIX shell (csh). The prolog process is suspended
+until the shell process terminates.
+.dp sh
+Invokes a new copy of the UNIX shell (sh).
+.dp shell(X)
+Calls the UNIX shell with the string X as a command line.
+.dp more(X)
+Lists file X using the \*(lqmore\*(rq command.
+.dp edit(X)
+The editor \*(lqvi\*(rq is used to edit file X. When the editing is completed, the
+file is reconsulted.
+.dp exit(X)
+The prolog process terminates with code X (an integer).  X is made available
+to the parent process.
+.dp getuid(X)
+Binds X to the uid of the user running prolog.
+.dp isuser(X)
+Checks the password file for user-name X (X must be a string).
+.dp sig(X,Y)
+Used to trap, ignore or set to default, the various UNIX signals.
+X is the number of a signal as defined in <signal.h>.
+Y must be zero, to set the signal to the default, one,
+to ignore the signal, or two, to trap the signal.
+The most common use is \*(lqsig(2,2)\*(rq which traps interrupts.
+This is used at the top level of the interpreter.
+The library file \*(lqsignal\*(rq gives a more high level interface.
+.in -0.5i
+.sh 2 "External Database Predicates"
+.pp
+This section describes the predicates available for using
+external databases to store MU-PROLOG relations.
+This facility is not is still under development.
+For this reason, the predicates here are fairly
+low-level and may change in the future.
+Eventually, a more sophisticated
+system will be available for creating
+and maintaining databases.
+.pp
+Database relations behave in the same way as ordinary MU-PROLOG predicates
+with the following restrictions.
+The order of the clauses cannot be controlled by the programmer.
+Concurrent reading and writing of relations is not permitted.
+This is not well defined in PROLOG, and to
+avoid it with database relations sometimes requires the addition of extra
+cuts. For example, with \*(lqp(X), assert(p(Y))\*(rq, the call
+to p(X) is still active (for reading) when assert is called.
+If cut is called after the call to p(X), the system terminates that database
+access and so assert can be called.
+.pp
+A MU-PROLOG
+database consists of a number of database relations and another file which
+may contain other (generally small) predicate definitions.
+For more details, consult the technical report \*(lqThe MU-PROLOG Deductive
+Database\*(rq, by Lee Naish and James Thom (this technical report describes
+an interface using pipes such as \fBrlhp\fP described below).
+To load the following database predicates access the database library by typing:
+.(l
+?-lib db.
+.)l
+.in +0.5i
+.dp db_create(Db).
+An empty database named \fIDb\fP (an atom) is created.
+A UNIX directory of the same name is created and files within it are used
+to store all information in the database.
+.dp db_rules(Db,F).
+Adds the file of rules named \fIF\fP to database \fIDb\fP.
+The previous rules file is over-written.
+.dp db_define(Db,Rel,Nkeys,Scheme([Args]))).
+Creates a relation in the database \fIDb\fP.
+\fIRel\fP is an atom specifying the name which will be used to reference
+the relation from within Prolog programs.
+\fINkeys\fP specifies the arity of the relation.
+\fIScheme\fP refers to the access scheme to be used to
+access records of the relation; currently, only the values
+\fBrlhp\fP (recursive linear hashing with pipes),
+\fBsimc\fP (superimposed coding) and
+\fBhsimc\fP (hashed superimposed coding, for
+records which contain no variables) are meaningful.
+\fIArgs\fP is a list which is the parameters to the access scheme, see
+the appendix which describes the access schemes in detail.
+If the access scheme is not already loaded it will be loaded, see
+later section on dynamic loading.
+.dp db_undefine(Db,Rel).
+Removes the relation named \fIRel\fP from database \fIDb\fP.
+It is not possible to have two
+relations with the same name in the same database, so the number of arguments
+is not specified.
+.dp db_cons(Db).
+Database Db is consulted.
+All relations in the database become accessible
+and the rules file is reconsulted (so this is more like reconsult than
+consult).
+These relations replace any existing relations of the same name and
+number of arguments.
+If required any access schemes which are not already loaded will be loaded, see
+later section on dynamic loading.
+Any changes (asserts etc.) to the database relations update the
+disc file and are therefore permanent.
+Changes to predicates defined in the
+rule file, like changes to normal predicates, are lost at the end of the
+prolog session.
+.in -0.5i
+.sh 2 "Dynamic Loading"
+.pp
+MU-PROLOG allows programs written in C
+to be compiled then loaded into prolog and linked to a prolog predicate.
+You need some knowledge of how the interpreter works and, preferably, access
+to some of the source code.  The code you write should be similar to the
+functions in the interpreter used to implement the built in predicates
+and normally needs the \*(lqtypes.h\*(rq file.  Hopefully, this will be
+documented in a separate report.
+.pp
+Unfortunately, current versions of UNIX do not officially support dynamic
+loading of object files.  Therefore, the implementation may not work
+completely on all systems.  In particular, dynamic loading of object files
+and saved states may not interact favourably.  If a saved state is created
+after some functions have been dynamically loaded, restoring it may cause
+trouble.  If restoring such a saved
+state does not seem possible, an attempt is made to exit gracefully.
+On most systems, restores done at the start of a prolog session should
+work but after some processing, especially opening files, the chances
+diminish.
+.in +0.5i
+.dp "dload(Files, Libs, Entries, Procs).
+Files must be a list of atoms which are object file names.
+Libs must be an atom specifying what libraries are to be used.
+For example, \*`-lcurses -lm' causes the screen management
+and double-precision mathematics libraries to be used.
+If no libraries (or only the standard C library) are needed, use \*` '.
+Entries must be a list of atoms which are function entry points in the
+object files.  Note that many C compilers prepend an underscore to names,
+so if your function is called window, the entry point is _window.
+Procs is a list specifying what prolog procedures the functions are
+attached to.  The length of Procs must be the same as Entries and each
+element is in the form of a procedure head (only the name and number of
+arguments is significant).
+.in -0.5i
+.sh 1 "Wait Declarations"
+.pp
+Procedures without wait declarations behave as normal PROLOG
+procedures \- calls to them succeed or fail. If wait declarations are added,
+calls may also delay.
+This happens when the call unifies with the head of some clause but
+in doing so, certain of variables in the call are bound. Wait declarations can
+be used to prevent infinite loops and to enable coroutining between
+sub-goals, which often increases efficiency.
+.pp
+Wait declarations are most easily added by putting goals in the files
+containing programs. A typical predicate definition would have a couple of
+goals to add wait declarations (\*(lq?\-\ wait\ ...\*(rq) to the clauses for
+the procedure. The argument to the call to wait should look like the head
+of one of the clauses with each argument being a one or a zero. A one
+signifies that the corresponding argument in a call to the procedure may
+be constructed and a zero means that it may not.
+.pp
+As each argument of a call is being unified with the corresponding
+argument in a procedure head we check if it is constructed. An argument is
+constructed if a variable in it is unified with a non-variable in the
+clause head.
+If the unification succeeds,
+the result is a mask of ones and zeros, representing which
+arguments were and were not constructed. This is then compared with the wait
+declarations. If there is a wait declaration with ones corresponding to all
+ones in the mask then we succeed; otherwise we delay.
+.pp
+When a call is delayed the bindings are removed. Thus from a logical point of
+view nothing has happened. However, the variables that were bound are marked
+and when any of them are bound by some other call, the delayed call is woken.
+A call may bind several marked variables and each one may have been marked
+several times so any number of delayed calls may be woken at the same time.
+The order of subsequent calls is as if the woken calls were all at the start
+of the clause that just matched, in the order that they were delayed.
+For further discussion of the use of wait declarations, see \*(lqAn Introduction
+to MU-PROLOG\*(rq or \*(lqAutomating Control for Logic Programs\*(rq.
+There is also a preprocessor, lpp,  available, which
+produces reasonable wait declarations for most procedures.
+It is used as follows:
+.(b
+	lpp < prog > newprog
+
+On non-Berkeley systems, something like the following is needed.
+
+	prolog /usr/lib/prolog/lpp < prog > newprog
+.)b
+.sh 1 ERRORS
+.pp
+Whenever an error occurs, procedure error is called with the error code
+and the call that caused the error as arguments. The call to error in effect
+replaces the call that caused the error. This allows you to simulate failure,
+success and replacing the call with another call. When error is called it
+always prints a message (on standard error) and depending on the error it
+will do various things.
+.pp
+If the program is almost out of memory then an error
+is generated, the last ancestors are written and abort is called. If you hit
+the interrupt key an error is generated. If you hit it again it will
+get you back to the top level of the interpreter (abort is called).
+It is an error to call a predicate for which no clauses or wait declarations
+have ever been added. In such cases, a warning is printed and (in effect) the
+call fails.
+.pp
+Other errors will cause the error code (and/or some explanation) and the
+call to be printed, followed by a question mark prompt. The simplest thing to
+do is to hit interrupt, which generates an abort. If you type a goal
+it will be executed in place of the call (eg \*(lqfail.\*(rq will cause a failure).
+If you type a clause then the call is unified with its head and then the
+body is executed. This can save some typing and allows you to change the
+call but still use the same variables.
+.pp
+MU-PROLOG also allows users to write their own error handlers, rather than rely
+on the default one outlined so far.
+Procedure error is defined in (something like) the following way:
+.(b
+	error(Ecode, Call) :\- traperror(Ecode, Call, X), !, call(X).
+	error(Ecode, Call) :\- errhandler(Ecode, Call).
+.)b
+.pp
+User programs may contain definitions of traperror and other predicates
+to trap and handle errors, respectively.
+For example, if you want \*(lqis\*(rq to fail if
+it encounters any errors and you want to query the user if an undefined
+predicate is called, then the following code would do.
+.(b
+	traperror(_, _ is _, fail).
+	traperror(enoproc, Call, askabout(Call)).
+
+	askabout(Call) :\- ...
+.)b
+The following error codes are currently used:
+.(b
+eelist\h'|15m'list expected
+eeconst\h'|15m'constant expected
+eeint\h'|15m'integer expected
+eefunct\h'|15m'functor expected
+eestring\h'|15m'string expected
+ee01\h'|15m'one or zero expected
+eevar\h'|15m'variable expected
+eerwa\h'|15m'r, w or a expected
+euint\h'|15m'unexpected integer
+eufunct\h'|15m'unexpected functor
+euvar\h'|15m'unexpected variable
+enoproc\h'|15m'undefined procedure called
+eprotect\h'|15m'protection violation
+eopen\h'|15m'cant open file
+efile\h'|15m'invalid file specification
+.)b
+.ne 10
+.sh 1 "STANDARD OPERATOR DECLARATIONS"
+.(b
+?\- op(1200, fx, (?\-)).\h'|45m'?\- op(700, xfx, ==).
+?\- op(1200, fx, (:\-)).\h'|45m'?\- op(700, xfx, \\==).
+?\- op(1200, xfx, (:\-)).\h'|45m'?\- op(700, xfx, =:=).
+?\- op(1200, xfx, (\(mi\(mi>)).\h'|45m'?\- op(700, xfx, =\\=).
+?\- op(1170, fx, (if)).\h'|45m'?\- op(680, xfy, or).
+?\- op(1160, xfx, (else)).\h'|45m'?\- op(660, xfy, and).
+?\- op(1150, xfx, (then)).\h'|45m'?\- op(630, xfx, <).
+?\- op(1100, xfy, (;)).\h'|45m'?\- op(630, xfx, >).
+?\- op(1050, xfy, (\(mi>)).\h'|45m'?\- op(630, xfx, =<).
+?\- op(1000, xfy, \*`,').\h'|45m'?\- op(630, xfx, >=).
+?\- op(900, fy, ls).\h'|45m'?\- op(600, xfy, \*`.').
+?\- op(900, fy, listing).\h'|45m'?\- op(500, yfx, +).
+?\- op(900, fy, wait).\h'|45m'?\- op(500, yfx, \(mi).
+?\- op(900, fy, \*~).\h'|45m'?\- op(500, yfx, /\\).
+?\- op(900, fy, not).\h'|45m'?\- op(500, yfx, \\/).
+?\- op(900, fy, \\+).\h'|45m'?\- op(500, fx, (+)).
+?\- op(900, fy, nospy).\h'|45m'?\- op(500, fx, (\(mi)).
+?\- op(900, fy, spy).\h'|45m'?\- op(500, fx, \\).
+?\- op(900, fy, lib).\h'|45m'?\- op(400, yfx, *).
+?\- op(700, xfx, =).\h'|45m'?\- op(400, yfx, /).
+?\- op(700, xfx, \*(~=).\h'|45m'?\- op(400, yfx, <<).
+?\- op(700, xfx, \\=).\h'|45m'?\- op(400, yfx, >>).
+?\- op(700, xfx, is).\h'|45m'?\- op(300, xfx, mod).
+?\- op(700, xfx, =..).\h'|45m'?\- op(200, xfy, \*`\*(^^').
+?\- op(1190, fx, (use_if)).
+.)b
+.ne 10
+.sh 1 "SAMPLE MU-PROLOG SESSION
+.nf
+
+$ more test.pl
+
+\*% arg2 is a permutation of the list arg1
+perm([], []).
+perm(A, C.D) :\- delete(C, A, E), perm(E, D).
+
+\*% arg3 is the list arg2 with the element arg1 deleted
+delete(A, A.B, B).
+delete(A, B.C, B.E) :\- delete(A, C, E).
+
+$ prolog
+MU\-PROLOG Version 3.2
+
+
+1?\- ['test.pl'].        \*% file names need quotes if they contain . etc.
+consulting test.pl
+done
+
+true.
+
+2?\- delete(X, 1.2.3.[], Y).	\*% can be used for deleting
+
+X = 1,
+Y = [2, 3]  ;		\*% (you type ; if you want more solutions)
+
+X = 2,
+Y = [1, 3]  ;          \*% (this is the same as 1.3.[\|])
+
+X = 3,
+Y = [1, 2]  ;
+
+fail.			\*% note that the disjunction above is equivalent
+			\*% to the goal
+
+3?\- delete(3, X, 1.2.[]).	\*% and also for inserting
+
+X = [3, 1, 2]  ;
+
+X = [1, 3, 2]  ;
+
+X = [1, 2, 3]  ;
+
+fail.
+
+4?\- perm(1.2.3.[], X).	\*% lets try some permutations
+
+X = [1, 2, 3]  ;
+
+X = [1, 3, 2]  ;
+
+X = [2, 1, 3]   	\*% thats enough - just hit return
+
+5?\- perm(X, 1.2.[]).
+
+X = [1, 2]   		\*% if we typed ; here we would get into an infinite loop
+
+6?\- lib perm.		\*% this loads the library version of perm
+reconsulting /usr/lib/prolog/pllib/perm
+done
+
+true.
+
+7?\- h.			\*% list history of commands
+1	['test.pl']
+2	delete(X, [1, 2, 3], Y)
+3	delete(3, X, [1, 2])
+4	perm([1, 2, 3], X)
+5	perm(X, [1, 2])
+6	lib perm
+7	h
+
+true.
+
+8?\- 4.			\*% repeat command 4 (with perm defined differently)
+perm([1, 2, 3], X)
+
+X = [1, 2, 3]  ;
+
+X = [1, 3, 2]  
+
+9?\- 5.			\*% this version works backwards too
+perm(X, [1, 2])
+
+X = [1, 2]  ;
+
+X = [2, 1]  ;
+
+fail.
+
+10?\- perm(1.X, Y).
+
+perm(E_105, D_105),		\*% this call was delayed and never woken
+X = E_105,
+Y = [1|D_105]  ;
+
+perm(E_105, D_105),
+delete(C_105, [1|X_91], E_105),
+X = X_91,
+Y = [C_105|D_105]  ;
+
+fail.			\*% the disjunction above is still equivalent to the goal
+
+11?\- ls.		\*% list all predicate definitions
+
+
+?\- wait perm(1, 0).
+?\- wait perm(0, 1).
+perm([], []).
+perm(A.B, C.D) :\-
+	delete(C, A.B, E),
+	perm(E, D).
+
+?\- wait delete(1, 0, 1).
+?\- wait delete(0, 1, 0).
+delete(A, A.B, B).
+delete(A, B.C.D, B.E) :\-
+	delete(A, C.D, E).
+
+
+true.
+
+12?\- ^D			\*% hit end of file char to get out
+End of session
+.fi

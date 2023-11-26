@@ -1,0 +1,1505 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        _T_H_E _M_U-_P_R_O_L_O_G _D_E_D_U_C_T_I_V_E _D_A_T_A_B_A_S_E
+
+                                       by
+
+                          Lee Naish and James A. Thom
+
+                             Technical Report 83/10
+
+                         Department of Computer Science
+                          The University of Melbourne
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+9
+
+
+
+
+9
+
+
+
+
+                                     -- 11 --
+
+
+_A_b_s_t_r_a_c_t
+
+
+     This paper describes the implementation and an application of  a  deductive
+
+database being developed at the University of Melbourne.
+
+
+     The system is implemented by adding a partial match retrieval system to the
+
+MU-PROLOG interpreter.
+
+
+
+
+
+
+
+
+CR Categories and Subject Descriptors:
+
+     H.2.3 [DDaattaabbaassee MMaannaaggeemmeenntt]: Languages - _q_u_e_r_y _l_a_n_g_u_a_g_e_s
+
+     I.2.3 [AArrttiiffiicciiaall IInntteelllliiggeennccee]: Deduction  and  Theorem  Proving  -  _L_o_g_i_c
+
+     _p_r_o_g_r_a_m_m_i_n_g
+
+
+General Terms
+
+     languages
+
+
+Additional Key Words and Phrases:
+
+     deductive database, PROLOG, partial match retrieval, UNIX
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+99
+
+
+
+
+                                     -- 22 --
+
+
+_1.  _I_N_T_R_O_D_U_C_T_I_O_N
+
+
+     This report describes  the  MU-PROLOG  deductive  database  facility.   The
+
+system  is still under development and some details of the implementation may be
+
+changed.  Figure 1 shows the architecture of the MU-PROLOG  deductive  database.
+
+A  user is able to access the database via a number of user interfaces.  A logic
+
+engine (the MU-PROLOG interpreter - Naish 1983a) provides the link  between  the
+
+various user interfaces and the external database containing relations stored in
+
+secondary memory.  The main components of the system are as follows:
+
+
+(1)  The MU-PROLOG interpreter.
+
+
+(2)  The interface between the MU-PROLOG interpreter and the external database.
+
+
+(3)  The partial match system using recursive linear hashing and descriptors.
+
+
+     One use currently being made of  the  database,  is  recording  information
+
+about  all  students  in  the  Computer  Science Department.  This is used as an
+
+example.  The MU-PROLOG deductive database has some novel features, not  present
+
+in other systems.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+99
+
+
+
+
+                                     -- 33 --
+
+
+    ________________________________________________________________________
+
+
+_T_H_E _A_R_C_H_I_T_E_C_T_U_R_E _O_F _T_H_E _M_U-_P_R_O_L_O_G _D_E_D_U_C_T_I_V_E _D_A_T_A_B_A_S_E
+
+
+          USER                LOGIC
+        INTERFACE             ENGINE                    DATABASE
+
+
+
+      Query languages
+      (MU-PROLOG, SQL,
+      domain relational
+      calculus)
+
+      Host language           MU-PROLOG                  external
+      (MU-PROLOG)             interpreter                database
+                                                         containing
+      Add, delete and         interface to               external
+      modify facts and        external                   relations
+      rules                   database                   (multi-key
+                                                         hashed
+      define                  internal                   files)
+      relations               database
+                              (rules, some
+      define integrity        facts, host
+      constraints             programs)
+
+
+
+
+
+                                  Figure 1
+____________________________________________________________________________
+
+
+
+
+_2.  _D_E_S_C_R_I_P_T_I_O_N
+
+
+_2._1.  _M_U-_P_R_O_L_O_G _f_a_c_i_l_i_t_i_e_s
+
+
+     The highest level concept provided by the database facility of MU-PROLOG is
+
+that of databases. A database is made up of a number of relations, consisting of
+
+ground unit clauses stored on disc, and a set of  procedures,  containing  facts
+
+and/or rules, which are read into main memory.  If a PROLOG program changes some
+
+of the procedures, only the copies in main memory  are  affected.  Changes  only
+
+last  for  one session of prolog.  However, if a  relation is updated, files are
+
+altered, so the changes are permanent.  MU-PROLOG has the following commands  to
+
+
+
+
+
+                                     -- 44 --
+
+
+create, alter and access databases.
+
+
+dbcreate(db).
+
+     Creates a database named "db". A directory named "db" is created and within
+
+     this, all the database files will be stored.
+
+
+dbrules(db, rules_file).
+
+     Adds a file of rules (and/or facts) to the  database  "db".   Any  existing
+
+     procedures are replaced by the ones in file "rules_file".  When "dbcons" is
+
+     called, these procedures are loaded into memory.  It is a wise  to  keep  a
+
+     copy  of the file, so if the rules need to be changed, it can be edited and
+
+     "dbrules" can be called again.
+
+
+createrel(db, relation_spec).
+
+     Adds a relation to the database "db". The name  of  the  relation  and  the
+
+     number  of  arguments  must be specified, along with information from which
+
+     the most efficient form of indexing is calculated.
+
+
+removerel(db, relation_spec).
+
+     Removes a relation.
+
+
+dbcons(db).
+
+     Database "db" is  consulted.  All  the  procedures  are  read  in  and  the
+
+     relations  are made accessible.  Previous definitions of the procedures and
+
+     relations are removed, so it is similar to "reconsult" in normal MU-PROLOG.
+
+
+
+     On a slightly lower level, we have procedures and relations. Procedures are
+
+just ordinary MU-PROLOG procedures. The relations are also PROLOG procedures but
+
+they are slightly restricted. Only ground unit clauses are allowed and the order
+
+of  the facts cannot be controlled by the programmer. There is no general way to
+
+assert a fact at the start of a relation, for example. These differences  aside,
+
+relations  can  be accessed and modified in the same way as procedures stored in
+
+
+
+
+
+                                     -- 55 --
+
+
+main memory.
+
+
+     At the level of calls to access relations, the only differences are at  the
+
+implementation  level,  which  is transparent to the user. There are three basic
+
+actions that require access: calling a relation directly, asserting a fact  into
+
+it  and retracting a fact from it.  Calls to the built-in predicate "clause" can
+
+be  implemented  by  calling  the  relation,  since  it  only  contains   facts.
+
+Similarly, a version of the "retract" predicate which is retried on backtracking
+
+is implemented by calling the relation and then calling a procedure to retract a
+
+single fact.
+
+
+     The MU-PROLOG system needs to know what relations currently exist  (and  in
+
+what databases they are stored).  Each database has a file listing its contents,
+
+so "dbcons" can easily keep track of  all  the  relations.  The  three  database
+
+access  methods are also needed and are provided by the _d_a_t_a_b_a_s_e _i_n_t_e_r_f_a_c_e.  The
+
+implementation is discussed in the  next  section  but  first  we  give  a  more
+
+detailed account of what is required.
+
+
+
+(1)  _C_a_l_l_s.
+
+     Calls to relations are partial match queries  to  the  database.   The  MU-
+
+     PROLOG  system  supplies  the  interface  with  a query and the name of the
+
+     database in which the relation is stored. The interface must then query the
+
+     database  and  make the list of answers available to prolog.  These answers
+
+     are used  one  at  a  time  (as  prolog  backtracks)  and  between  getting
+
+     successive  answers  to  one  query, several other database accesses may be
+
+     made.  When the last answer is returned the query has been  completed.  Due
+
+     to  the  cut  operation in PROLOG, it is possible that the last answer will
+
+     never be requested.  In  this  case,  prolog  can  tell  the  interface  to
+
+     prematurely terminate that query.
+
+
+99
+
+
+
+
+                                     -- 66 --
+
+
+(2)  _A_s_s_e_r_t_s.
+
+     To assert into a relation, prolog must provide the interface with a  ground
+
+     fact  and  a  database name. No information is returned but the fact should
+
+     actually be asserted, before the prolog can continue. In some cases it does
+
+     not  matter  if  the asserts are done asynchronously and queued. This would
+
+     save prolog from waiting and could be provided as an option.
+
+
+
+(3)  _R_e_t_r_a_c_t_s.
+
+     Here prolog provides the interface with a database name and  a  fact  which
+
+     may  contain  variables.  The  interface  returns  the ground fact which it
+
+     actually retracted or indicates in some way that there were no matches.
+
+
+     As well as the facilities  to  access  relations  on  disc,  MU-PROLOG  has
+
+additional  control and negation facilities, which are particularly important in
+
+a system where the users are not expected to be experts.  In  a  typical  PROLOG
+
+system,  the way in which a query is expressed has a marked effect on efficiency
+
+and may also affect correctness, if negation is involved.  The implementation of
+
+negation in MU-PROLOG ensures correctness and the control facilities can be used
+
+to improve efficiency (Naish 1982).  A  further  control  facility  is  planned,
+
+which is particularly useful for database applications (Naish 1983b).
+
+
+_2._2.  _I_n_t_e_r_f_a_c_e _t_o _d_a_t_a_b_a_s_e
+
+
+     The interface between MU-PROLOG  and  the  database  creates  a  number  of
+
+partial  match  processes.   Each  (concurrent)  query, assert or retract uses a
+
+separate process.  Each partial match  process  is  dedicated  to  a  particular
+
+relation and can receive a series of requests which it processes one at a time.
+
+
+     The input to each each partial match process is referred to as the  _r_e_q_u_e_s_t
+
+_s_t_r_e_a_m and carries any of these requests (in a suitably coded form):
+
+
+99
+
+
+
+
+                                     -- 77 --
+
+
+(1)  A _Q_u_e_r_y of the form relation(t918,...,t9n8) where the t9i8 are terms.
+
+
+(2)  An _A_s_s_e_r_t_i_o_n of the  form  assert(relation(t918,...,t9n8))  where  the  t9i8  are
+
+     ground terms.
+
+
+(3)  A _R_e_t_r_a_c_t_i_o_n of the form  retract(relation(t918,...,t9n8))  where  the  t9i8  are
+
+     terms.
+
+
+     The output is referred to as the  _a_n_s_w_e_r  _s_t_r_e_a_m  and  carries  answers  to
+
+queries  and  retractions and confirmation of assertions back to MU-PROLOG - see
+
+Figure 2.
+
+
+    ________________________________________________________________________
+
+
+                                               Partial            relation
+                                               Match on             'r'
+                                                 'r'
+                 MU-PROLOG
+         user   interpreter interface
+       program
+                                               Partial
+                                               Match on
+                                                 's'
+                                                                  relation
+                                                                    's'
+                                               Partial
+                                               Match on
+                                                 's'
+
+
+                                    Figure 2
+    ________________________________________________________________________
+
+
+
+
+     In setting up each query (or assert or retract) the  MU-PROLOG  interpreter
+
+calls  the  interface  to the partial match system.  The parameters to this call
+
+include:
+
+
+    - the database name
+    - a term
+    - the type of request (assert, retract or query)
+
+
+99
+
+
+
+
+                                     -- 88 --
+
+
+     The interface keeps track of all the  partial  match  processes,  including
+
+what  state  they  are  in.  Each partial match process is either _a_c_t_i_v_e (in the
+
+middle of processing a query) or _p_a_s_s_i_v_e.  The interface uses the  database  and
+
+relation  names  to  set  up a new process when it is unable to find an existing
+
+passive process with the same relation identifier.
+
+
+     When the MU-PROLOG interpreter sets up a query  it  is  able  to  read  the
+
+answer  to  the  request  from the answer stream.  Upon reading an _e_n_d-_o_f-_a_n_s_w_e_r
+
+from the answer  stream  the  interpreter  calls  the  interface,  so  that  the
+
+interface  can  change  the  state  of  that  particular  process from active to
+
+passive.  Also, if the interpreter back-tracks over a query without reading  the
+
+end-of-answer, it must then call the interface to abort that process.
+
+
+     At present the query and answer streams are implemented using  UNIX  pipes.
+
+There  is  a limit to the number of pipes that can be connected to a process and
+
+this limits the number of partial match processes  possible  (currently  seven).
+
+Thus  it  is  sometimes  necessary  to  kill  a passive process belonging to one
+
+relation to answer a request to another relation.  This does limit  the  use  of
+
+some  programs,  particularly  those  with recursive rules which access database
+
+relations, such as the following.
+
+
+        ancestor(X, Y) :- parent(X, Y).
+
+        ancestor(X, Y) :- parent(Z, Y), ancestor(X, Z).
+
+
+     If the parent relation is stored in a  database  on  disc,  the  number  of
+
+recursive calls is limited by the maximum number of partial match processes.  It
+
+is possible to increase the limit by altering an internal  constant  within  the
+
+operating system, or by using a different method of inter-process communication.
+
+
+
+
+
+
+99
+
+
+
+
+                                     -- 99 --
+
+
+_2._3.  _A_n _E_x_a_m_p_l_e
+
+
+     As an example of how the system works, we shall use a query  to  a  student
+
+database.   Suppose  we  want  to know the enrolment number and name of students
+
+enrolled in units 101 and 102:
+
+
+        <- unit(E, 101), unit(E, 102), name(E, N).
+
+
+     We assume that  the  appropriate  definitions  of  the  "unit"  and  "name"
+
+relations  are stored in the database. The first call is to the "unit" relation.
+
+MU-PROLOG recognises that it is a database relation and requests  the  interface
+
+to  initiate  a  query.   The  interface has no passive processes for the "unit"
+
+relation so it must set up a new active process, which we will call process one;
+
+also  it  must  set  up  the request and answer streams to process one.  It then
+
+sends the query down the request stream and the interpreter waits for the  first
+
+answer  to  arrive  from the answer stream.  We will represent this situation as
+
+follows:
+
+
+        <- process1(unit(E, 101)), unit(E, 102), name(E, N).        (1)
+
+
+     Suppose now, the first answer received  is  "unit(772217,  101)".  This  is
+
+unified with the call, binding E to 772217:
+
+
+        <- unit(772217, 102), name(772217, N).
+
+
+     Now "unit" is called again and the interface sets up another active process
+
+(process two) and sends the query to it:
+
+
+        <- process2(unit(772217, 102)), name(772217, N).
+
+
+     If there are no matches to the call, then the first  thing  sent  down  the
+
+answer  stream  is  end-of-answer.  Process two is then set to "passive" and the
+
+call fails. MU-PROLOG backtracks over this call to (1), removing the binding  of
+
+E.  The  second  answer to the first query is now read from the answer stream of
+
+
+
+
+
+                                     -- 1100 --
+
+
+process one. Because process one was  producing  answers  in  parallel  (reading
+
+ahead),  there  is  probably  no  waiting needed. Suppose the answer returned is
+
+"unit(772304, 101)", so E is bound to 772304:
+
+
+        <- unit(772304, 102), name(772304, N).
+
+
+     This time, when the interface is asked to call "unit", there is  already  a
+
+passive process (process two) available for the "unit" relation.  This is set to
+
+active and the query is sent down the request stream:
+
+
+        <- process2(unit(772304, 102)), name(772304, N).
+
+
+     Suppose, this time, the call succeeds:
+
+
+        <- name(772304, N).
+
+
+     Now a third and final active process (process three) will  be  created,  to
+
+access relation "name" and the query will be sent to it:
+
+
+        <- process3(name(772304, N)).
+
+
+     When the answer to this query (say, "name(772304, smith)") is read from the
+
+stream,  N is bound to 'smith' and the query succeeds.  If further solutions are
+
+required, prolog backtracks, undoing bindings but retaining  the  processes,  as
+
+before.   Because process was executing in parallel, there is little or no delay
+
+before the execution proceeds forwards again, re-using the same  processes.   If
+
+the user does not need all solutions, then the three queries must be aborted.
+
+
+_2._4.  _P_a_r_t_i_a_l _M_a_t_c_h _R_e_t_r_i_e_v_a_l _S_y_s_t_e_m
+
+
+     The database stores each relation in a separate file (actually  files)  and
+
+accesses  the tuples in that relation by _p_a_r_t_i_a_l _m_a_t_c_h _r_e_t_r_i_e_v_a_l _u_s_i_n_g _r_e_c_u_r_s_i_v_e
+
+_l_i_n_e_a_r _h_a_s_h_i_n_g _a_n_d _d_e_s_c_r_i_p_t_o_r_s.  This access scheme  is  a  combination  of  the
+
+schemes  described  by  Ramamohanarao, Lloyd and Thom (1983), Ramamohanarao, and
+
+
+
+
+
+
+                                     -- 1111 --
+
+
+Sacks-Davis (1983a), and Ramamohanarao, and Sacks-Davis (1983b).
+
+
+     Recursive linear hashing is an extension of a method originally proposed by
+
+Litwin  (1980)  for  a  hashing  technique  for  files  which  grow  and  shrink
+
+dynamically.  Recursive linear hashing  eliminates  the  need  for  conventional
+
+overflow  records.   If a record does not fit into the primary storage area then
+
+it is stored in a secondary linear hashed file (and so forth).   This  technique
+
+is described in Ramamohanarao, and Sacks-Davis (1983a).
+
+
+     By constructing the hashing function in the way described in Ramamohanarao,
+
+and  Sacks-Davis (1983b) it is possible to use this scheme to efficiently access
+
+files via multi-key combinations.
+
+
+     Finally descriptors are added to this scheme to reduce the number of  pages
+
+in  the  main file which actually have to be examined.  Descriptors are used for
+
+each page in each linear hashed file.  The use of  descriptors  to  improve  the
+
+performance  of  partial  match schemes is described in Ramamohanarao, Lloyd and
+
+Thom (1983).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+99
+
+
+
+
+                                     -- 1122 --
+
+
+_3.  _A_N _A_P_P_L_I_C_A_T_I_O_N - _S_T_U_D_E_N_T _D_A_T_A_B_A_S_E
+
+
+     Since the begining of 1983, the MU-PROLOG deductive database has been  used
+
+to  store  information on all the students in the Computer Science Department at
+
+The University of Melbourne.  Enrolment information stored in the  database  was
+
+used for creating student accounts and allocating recources to them.
+
+
+_3._1.  _R_e_l_a_t_i_o_n_s
+
+
+     The following are some relations in the student database:
+
+
+    relation(freeuid(Uid)).
+    relation(stud_unit(Enrol,Unit)).
+    relation(student(Enrol,Sname,Gnames,Uname,Uid,CrsA,CrsB,Year,Attend)).
+    relation(mark(Uname,Unit,Project,Mark)).
+
+
+
+_3._2.  _A_p_p_l_i_c_a_t_i_o_n _P_r_o_g_r_a_m_s
+
+
+     The following are some application programs which access the database,  two
+
+of these (info and eddb) are listed in the appendix.
+
+
+mmkkddbb
+
+     Make the database from the file supplied by the University administration.
+
+
+eeddddbb student
+
+     Edit the entry in the database for the particular student.
+
+
+iinnffoo student
+
+     Print information about a particular student or students.
+
+
+eexxttrraacctt
+
+     Extract information from the database.
+
+
+     Two predicates, "priv" and "signal", provide access to Unix  system  calls.
+
+These  are necessary to allow students to access their own entry in the database
+
+but not invade the privacy of others.  The implications of deductive and similar
+
+
+
+
+
+                                     -- 1133 --
+
+
+databases for personal privacy are discussed in Thom and Thorne (1983).
+
+
+_4.  _R_E_L_A_T_E_D _W_O_R_K
+
+
+     A  substantial  amount  of  work  has  been  done  on  assimilating   logic
+
+programming  and  databases.   Gallaire  (1983) has proposed a categorization of
+
+such systems, from logic programming with database facilities to databases  with
+
+deductive  facilities.  The MU-PROLOG system lies near the logic programming end
+
+of the scale, either PROLOG+ or PROLOG DB,  in  Gallaire's  terminology.   These
+
+systems,  such  as  Bruynooghe  (1981)  and  Chomicki  and  Grundzinski  (1983),
+
+generally have similar facilities available to the PROLOG programmer.
+
+
+     The unique aspects of the MU-PROLOG system are the  implementation  of  the
+
+database  interface,  the  file  structure  and  the facilities for negation and
+
+control.  The interface allows asynchronous reading ahead and is  very  easy  to
+
+modify  so,  for example, another file access method could be used.  The reading
+
+ahead and sophisticated hashing scheme should be  the  basis  of  and  efficient
+
+database system.  The control and negation offer extra user convenience.
+
+
+_A_C_K_N_O_W_L_E_D_G_E_M_E_N_T
+
+
+     The authors wish to thank John  Lloyd  for  instigating  this  project  and
+
+continuing to spur us on.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+99
+
+
+
+
+                                     -- 1144 --
+
+
+_A_P_P_E_N_D_I_X
+
+
+     The appendix contains listings of the ".con" and ".rules"  files  from  the
+
+student database and listings of two programs "info.pl" and "eddb.pl".
+
+"..ccoonn"
+
+relation(freeuid(Uid)).
+relation(stud_unit(Enrol,Unit)).
+relation(student(Enrol,Sname,Gnames,Uname,Uid,CrsA,CrsB,Year,Attend)).
+relation(mark(Uname,Unit,Project,Mark)).
+
+"..rruulleess"
+
+priv(student) :- privilege(1).
+priv(tutor) :- privilege(2).
+priv(super_tute) :- privilege(3).
+
+uid(Enrol,Uid) :- student(Enrol,_,_,_,Uid,_,_,_,_).
+unam(Enrol,Unam) :- student(Enrol,_,_,Unam,_,_,_,_,_).
+
+enstud(E,X) :- student(E,S,G,U,I,A,B,Y,T),X = student(E,S,G,U,I,A,B,Y,T).
+usrstud(U,X) :- student(E,S,G,U,I,A,B,Y,T),X = student(E,S,G,U,I,A,B,Y,T).
+idstud(I,X) :- student(E,S,G,U,I,A,B,Y,T),X = student(E,S,G,U,I,A,B,Y,T).
+
+traperror(Err, Call, err(Err, Call)).
+
+err(Err, Call) :- printf("Error %s, call = ", [Err]),
+                writeln(Call),
+                exit(1).
+
+course(0,"Null").
+course(104,"BA(Hons)").
+course(105,"BA").
+course(205,"BCom").
+course(355,"BE").
+course(365,"BE(Agr)").
+course(375,"BE(Chem)").
+course(395,"BE(Elect)").
+course(415,"BE(Mech)").
+course(445,"BSurv").
+course(465,"BAppSc").
+course(505,"LLB").
+course(555,"MBBS").
+course(655,"BMus").
+course(754,"BSc(Hons)").
+course(755,"BSc").
+course(756,"DipComp").
+course(759,"AddSubjSc").
+course(765,"BScEd").
+course(785,"BSc(Optom)").
+course(X,Y) :- str_int(Y,X).
+
+
+
+99
+
+
+
+
+                                     -- 1155 --
+
+
+"iinnffoo..ppll"
+
+main(_.'-d'.Db.Users) :-
+                !,
+                dbcons(Db),
+                main(info.Users).
+main(_.User1.Users) :-
+                priv(super_tute),
+                info(User1.Users),
+                exit(0).
+main(_._._) :-
+                writeln('Bad luck'),
+                exit(1).
+main(_.[]) :-
+                getuid(Uid),
+                prinfo(En,Uname, Uid),
+                exit(0).
+main(_) :-
+                /* never happens */
+                writeln('Usage: info [-d db] [user ...]'),
+                exit(1).
+
+info([]).
+info(User.R) :-
+                int_const(En, User),
+                (
+                        prinfo(En,Uname, Uid),
+                        fail
+                ;
+                        info(R)
+                ).
+info(User.R) :-
+                const_str(User, Uname),
+                (
+                        prinfo(En,Uname, Uid),
+                        fail
+                ;
+                        info(R)
+                ).
+
+prinfo(En,Uname, Uid) :-
+                student(En, Sname, Gnames, Uname, Uid, CrsA, CrsB, Year, Att),
+                printf("User:%s(%d)%c",[Uname,Uid,10]),
+                printf("Enrolment number:%d%c%s %s%c",
+                        [En, 10, Gnames, Sname, 10]),
+                (if CrsB = 0 then
+                        course(CrsA,A),
+                        printf("Course: %s%c", [A, 10])
+                else
+                        course(CrsA,A),
+                        course(CrsB,B),
+                        printf("Primary course: %s%c", [A, 10]),
+                        printf("Secondary course: %s%c", [B, 10])
+                ),
+                printf("Year: %d%c", [Year, 10]),
+                printf("Attendance Type: %s%c", [Att, 10]),
+                printf("Units:", []),
+                prunit(En),
+
+
+
+
+
+                                     -- 1166 --
+
+
+                !.
+prinfo(_,_,_) :-
+                printf("NOT IN DATABASE",[]),
+                nl,
+                nl.
+prunit(En) :-
+                stud_unit(En, Unit),
+                printf(" %d",[Unit]),
+                fail.
+prunit(_) :-
+                nl,
+                nl.
+
+?-lib convert.
+?-dbcons('/usr/adm/studdb').
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+99
+
+
+
+
+                                     -- 1177 --
+
+
+"eeddddbb..ppll"
+
+main(_.User.[]) :-
+        priv(super_tute),
+        eddb(User),
+        exit(0).
+main(_._.[]) :-
+        writeln('Get Stuffed'),
+        exit(1).
+main(_) :-
+        writeln('Usage: eddb user'),
+        exit(1).
+
+eddb(User) :-
+        int_const(En, User),
+        newinfo(En,Uname).
+eddb(User) :-
+        const_str(User, Uname),
+        newinfo(En,Uname).
+
+newinfo(En,Uname) :-
+        student(En, Sname, Gnames, Uname, Uid, CrsA, CrsB, Year, Att),
+        printf("User: %s(%d)%c",[Uname,Uid,10]),
+        printf("Enrolment number:%d%c", [En, 10]),
+        newstr("Surname", Sname, New_Sname,sname(New_Sname),"UPPER CASE ONLY"),
+        newstr("Given names", Gnames, New_Gnames,gnames(New_Gnames),
+                        "First Letters Upper Case Only"),
+        newint("Primary course", CrsA, New_CrsA, course(New_CrsA),
+                        "Course number expected"),
+        newint("Secondary course", CrsB, New_CrsB, course(New_CrsB),
+                        "Course number expected"),
+        newint("Year", Year, New_Year, year(New_Year),[]),
+        newconst("Attendance Type", Att, New_Att, attend(New_Att),
+                        "f/t, p/t, n/a or raaf"),
+        newunits(En),
+        retract(student(En, Sname, Gnames, Uname, Uid, CrsA, CrsB, Year, Att)),
+        assert(student(En, New_Sname, New_Gnames, Uname, Uid,
+                        New_CrsA, New_CrsB, New_Year, New_Att)),
+        !.
+newinfo(En,Uname) :-
+        nonvar(En),
+        newstr("Surname", [], Sname, sname(Sname), "UPPER CASE ONLY"),
+        newstr("Given names", [], Gnames, gnames(Gnames),
+                        "First Letters Upper Case Only"),
+        mkunam(Sname,Gnames,Uname),
+        printf("User: %s%c",[Uname,10]),
+        newint("Primary course", [], CrsA, course(CrsA),
+                        "Course number expected"),
+        newint("Secondary course", [], CrsB, course(CrsB),
+                        "Course number expected"),
+        newint("Year", [], Year, year(Year),[]),
+        newconst("Attendance Type", [], Att, attend(Att),
+                        "f/t, p/t, n/a or raaf"),
+        newunits(En),
+        retract(freeuid(Uid)),
+        assert(student(En, Sname, Gnames, Uname, Uid, CrsA, CrsB, Year, Att)).
+newinfo(En,Uname) :-
+        writeln('No such user'),
+
+
+
+
+
+                                     -- 1188 --
+
+
+        exit(1).
+
+newunits(En) :-
+        all(X, stud_unit(En, X), Ucurru),
+        sort(Ucurru, Curru),
+        chunits(Curru, Newu),
+        signal(sigint,sig_ign),
+        signal(sigquit,sig_ign),
+        signal(sighup,sig_ign),
+        signal(sigtstp,sig_ign),
+        Newu ~= Curru,
+        retractall(stud_unit(En, _)),
+        member(U, Newu),
+        assert(stud_unit(En, U)),
+        fail.
+newunits(_).
+
+chunits(Curru, Newu) :-
+        writeln('Current units:'),
+        delunits(Curru, Remu),
+        addunits(Extrau),
+        append(Remu, Extrau, Newu).
+
+delunits([], []).
+delunits(U.R, X) :-
+        printf("        Keep %d", [U]),
+        newstr(" ", "y", Ans, (Ans = "y" ; Ans = "n"), "y or n"),
+        (
+                Ans = "y",
+                X = U.Y,
+                delunits(R, Y)
+        ;
+                Ans ~= "y",
+                delunits(R, X)
+        ).
+
+addunits(X) :-
+        write('Additional unit: '),
+        getline(L),
+        (
+                str_int(L, U),
+                (
+                        unit(U),
+                        X = U.R,
+                        addunits(R)
+                ;
+                        writeln('Not a valid unit'),
+                        addunits(X)
+                )
+        ;
+                X = []
+        ),
+        !.
+
+
+year(X) :-
+                X > 0,
+                X < 9.
+
+
+
+
+
+                                     -- 1199 --
+
+
+course(X) :-
+                X >= 0,
+                X < 1000.
+unit(X) :-                      /* this (and course) should be extended */
+                X > 99,
+                X < 1000.
+attend('f/t').
+attend('p/t').
+attend('n/a').
+attend(raaf).
+
+sname([]).
+sname(C.N) :-
+                "A" =< C,
+                C =< "Z",
+                sname(N).
+sname(C.N) :-
+                member(C, "'- "),
+                sname(N).
+
+gnames([]).
+gnames(C.N) :-
+                "A" =< C,
+                C =< "Z",
+                names(N).
+
+names([]).
+names(C.N) :-
+                "a" =< C,
+                C =< "z",
+                names(N).
+names(C.N) :-
+                member(C, "'-"),
+                names(N).
+names(C.N) :-
+                C is " ",
+                gnames(N).
+/* output old value (if any) and input new (CR for no change) */
+
+newint(Mess, Curr, New, Test, Emess) :-
+        repeat,
+        (if Curr ~= [] then
+                printf("%s <%d>: ", [Mess, Curr])
+        else
+                printf("%s: ", [Mess])
+        ),
+        getline(Line),
+        (
+                Line = [],
+                Curr ~= [],
+                New = Curr
+        ;
+                Line ~= [],
+                str_int(Line,New),
+                Test
+        ;
+                Emess ~= [],
+                printf("%s%c", [Emess, 10]),
+
+
+
+
+
+                                     -- 2200 --
+
+
+                fail
+        ),
+        !.
+
+newconst(Mess, Curr, New, Test, Emess) :-
+        repeat,
+        (if Curr ~= [] then
+                printf("%s <%s>: ", [Mess, Curr])
+        else
+                printf("%s: ", [Mess])
+        ),
+        getline(Line),
+        (
+                Line = [],
+                Curr ~= [],
+                New = Curr
+        ;
+                Line ~= [],
+                const_str(New,Line),
+                Test
+        ;
+                Emess ~= [],
+                printf("%s%c", [Emess, 10]),
+                fail
+        ),
+        !.
+
+newstr(Mess, Curr, New, Test, Emess) :-
+        repeat,
+        (if Curr ~= [] then
+                printf("%s <%s>: ", [Mess, Curr])
+        else
+                printf("%s: ", [Mess])
+        ),
+        getline(Line),
+        (
+                Line = [],
+                New = Curr
+        ;
+                Line ~= [],
+                Line = New,
+                Test
+        ;
+                Emess ~= [],
+                printf("%s%c", [Emess, 10]),
+                fail
+        ),
+        !.
+
+getline(X) :-
+        get0(Y),
+        (
+                Y = 10,
+                X = []
+        ;
+                Y ~= 10,
+                X = Y.Z,
+                getline(Z)
+
+
+
+
+
+                                     -- 2211 --
+
+
+        ).
+
+sort([], []).
+sort(A.B, C.D) :-
+                sort(B, E),
+                insert(A, E, C.D).
+
+insert(A, [], A.[]).
+insert(A, B.C, A.B.C) :-
+                A =< B.
+insert(A, B.C, B.D) :-
+                A > B,
+                insert(A, C, D).
+
+?-[-'mkunam.con'].
+?-lib convert.
+?-lib signal.
+?-dbcons('/usr/adm/studdb').
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+99
+
+
+
+
+                                     -- 2222 --
+
+
+_R_E_F_E_R_E_N_C_E_S
+
+
+Bruynooghe, M. (1981): _P_R_O_L_O_G-_C _I_m_p_l_e_m_e_n_t_a_t_i_o_n, University of Leuven, 1981.
+
+
+Chomicki  and  Grundzinski  (1983):  A  Database  Support  System  for   PROLOG,
+
+_P_r_o_c_e_e_d_i_n_g_s,  _L_o_g_i_c  _P_r_o_g_r_a_m_m_i_n_g  _W_o_r_k_s_h_o_p '_8_3, Algarve, Portugal, July 1983, pp
+
+290-303.
+
+
+Gallaire, H. (1983): Logic Databases vs Deductive Databases, _P_r_o_c_e_e_d_i_n_g_s,  _L_o_g_i_c
+
+_P_r_o_g_r_a_m_m_i_n_g _W_o_r_k_s_h_o_p '_8_3, Algarve, Portugal, July 1983, pp 608-622.
+
+
+Naish, L. (1982): _A_n _I_n_t_r_o_d_u_c_t_i_o_n _t_o _M_U-_P_R_O_L_O_G, Technical Report 82/2,  (revised
+
+July 1983), Department of Computer Science, The University of Melbourne.
+
+
+Naish, L. (1983a):  _M_U-_P_R_O_L_O_G  _3._0  _R_e_f_e_r_e_n_c_e  _M_a_n_u_a_l,  Department  of  Computer
+
+Science, The University of Melbourne.
+
+
+Naish, L. (1983b): _A_u_t_o_m_a_t_i_c _G_e_n_e_r_a_t_i_o_n _o_f _C_o_n_t_r_o_l _f_o_r _L_o_g_i_c _P_r_o_g_r_a_m_s, Technical
+
+Report 83/6, Department of Computer Science, The University of Melbourne.
+
+
+Ramamohanarao, K., Lloyd, J.W. and Thom, J.A. (1983):  Partial  Match  Retrieval
+
+Using Hashing and Descriptors, _A_C_M _T_r_a_n_s. _o_n _D_a_t_a_b_a_s_e _S_y_s_t_e_m_s, (to appear).
+
+
+Ramamohanarao, K.,  and  Sacks-Davis,  R.  (1983a):  _R_e_c_u_r_s_i_v_e  _L_i_n_e_a_r  _H_a_s_h_i_n_g,
+
+Technical Report 83/1, Department of Computing, RMIT.
+
+
+Ramamohanarao, K., and Sacks-Davis, R. (1983b): _P_a_r_t_i_a_l  _M_a_t_c_h  _R_e_t_r_i_e_v_a_l  _U_s_i_n_g
+
+_R_e_c_u_r_s_i_v_e _L_i_n_e_a_r _H_a_s_h_i_n_g, (to appear)
+
+
+Thom, J.A. and Thorne, P.G. (1983): Privacy Legislation and the Right of Access,
+
+_A_u_s_t_r_a_l_i_a_n _C_o_m_p_u_t_e_r _J_o_u_r_n_a_l, Vol 15, No 4, pp 145-150.
+
+
+
+
+
+
+99

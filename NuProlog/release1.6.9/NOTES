@@ -1,0 +1,5 @@
+This version builds on DEC Alphas running DEC Unix.  In porting it I may have
+broken it for some other machines.  You may have more luck with 1.6.5.
+
+
+	Jeff Schultz

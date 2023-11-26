@@ -1,0 +1,21 @@
+Things you can make:
+
+all	: builds the Prolog binaries but doesn't install them
+
+install	: builds all of the binaries and libraries and installs them
+
+BEFORE you try either of these, edit the Makefile to set up the parameters
+for your local configuration; you will probably need to change the values:
+
+HOME	= top level of Prolog source directories (the current directory)
+	  [default: /usr/src/melb/prolog]
+
+BIN	= the directory where the Prolog binaries will be installed
+	  [default: /usr/melb]
+
+LIB	= the directory where the Prolog libraries will be installed
+	  [default: /usr/lib/prolog]
+
+CFLAGS	= flags to the C compiler to indicate which facilities of the
+	  MU-Prolog system should be made available (see Makefile for
+	  more details)

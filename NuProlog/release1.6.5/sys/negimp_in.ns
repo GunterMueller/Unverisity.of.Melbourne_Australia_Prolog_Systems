@@ -1,0 +1,113 @@
+
+	.pred	'$compilerNegation',0
+	.clause
+0:	fail	
+	last
+
+	.pred	'$imp_not',5
+	labelx	5
+3: 	sot	0,&2,&4,&1,&1
+2: 	t	6,0,&0
+	tr	6,0,&1
+4: 	jc	0,$[],&2
+	j	&1
+	j	&2
+	.clause
+0:	gnil	0
+	gs	3,$'\\+'/1
+	ulvx	2
+	gnil	4
+	cutx	5
+	pro	
+	.clause
+1:	gs	3,$'$if'/4
+	uvara	1
+	ulvx	2
+	uc	$'fail'
+	uc	$'true'
+	gnil	4
+	exec	2,&'$squash_list'/2
+	last
+
+	.pred	'$imp_if',7
+	.clause
+0:	gs	5,$'$if'/4
+	uvara	1
+	ulvx	2
+	ulvx	3
+	ulvx	4
+	gnil	6
+	exec	2,&'$squash_list'/2
+	last
+
+	.pred	'$imp_if_soft',7
+	.clause
+0:	gs	5,$'$if_soft'/4
+	uvara	1
+	ulvx	2
+	ulvx	3
+	ulvx	4
+	gnil	6
+	exec	2,&'$squash_list'/2
+	last
+
+	.pred	'$imp_is_eq',7
+	.clause
+0:	gs	5,$'$call_is_eq'/4
+	all	2
+	uvary	0
+	ulvx	2
+	ulvx	3
+	ulvx	4
+	gnil	6
+	pvary	1,2
+	call	2,3,&'append'/3
+	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'$squash_list'/2
+	last
+
+	.pred	'$imp_solutions',7
+	.clause
+0:	gs	5,$'$solutions'/4
+	uvara	1
+	ulvx	2
+	ulvx	3
+	ulvx	4
+	gnil	6
+	exec	2,&'$squash_list'/2
+	last
+
+	.pred	'$imp_limit',8
+	.clause
+0:	gs	6,$'$limit'/5
+	uvara	1
+	ulvx	2
+	ulvx	3
+	ulvx	4
+	ulvx	5
+	gnil	7
+	exec	2,&'$squash_list'/2
+	last
+
+	.pred	'$imp_sum',8
+	.clause
+0:	gs	6,$'$sum'/5
+	uvara	1
+	ulvx	2
+	ulvx	3
+	ulvx	4
+	ulvx	5
+	gnil	7
+	exec	2,&'$squash_list'/2
+	last
+
+	.pred	'$imp_freeze',5
+	.clause
+0:	gs	3,$'freeze'/2
+	ulvx	0
+	ulvx	2
+	gnil	4
+	pro	
+	last
+

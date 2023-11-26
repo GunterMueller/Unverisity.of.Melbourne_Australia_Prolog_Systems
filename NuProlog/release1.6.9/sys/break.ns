@@ -1,0 +1,254 @@
+
+	.pred	'break',0
+	.clause
+0:	pc	0,$'$mainloop'
+	pc	1,$'$breaklevel'
+	all	1
+	pvary	0,2
+	call	1,3,&'getprop'/3
+	apushy	0
+	afunc	46
+	popx	0
+	dallexe	1,&'$break'/1
+	last
+
+	.pred	'$break',1
+	.clause
+0:	gvarx	1,0
+	pnil	0
+	exec	2,&'$mainloop'/2
+	last
+
+	.pred	'$break',3
+	.clause
+0:	pc	3,$'user'
+	pc	4,$10
+	sput	3,4
+	all	1
+	call	1,0,&'repeat'/0
+	pc	3,$'user'
+	pc	4,#(CHR,&7)
+	sputl	3,4
+	pc	3,$'user'
+	flush	3
+	pc	3,$'user'
+	sget	3,3,1
+	gvary	0,3
+	pvaly	0,3
+	pc	4,$-1
+	idtest	3,4
+	jfail	&8
+	pc	3,$'user_input'
+	clrerr	3
+	pc	3,$'user_input'
+	close	3,3
+	abort	
+	dallpro	
+8: 	pc	0,$'user'
+	pc	1,$10
+	call	1,2,&'skip'/2
+	pvaly	0,0
+	dallexe	1,&'$breakAction'/1
+9: 	last
+7: 	.string	"Prolog interrupted (h for help)? "
+
+	.pred	'$breakAction',1
+10: 	sot	0,&8,&11,&9,&9
+8: 	t	1,0,&0
+	r	1,0,&1
+	r	1,0,&2
+	r	1,0,&3
+	r	1,0,&4
+	r	1,0,&5
+	r	1,0,&6
+	tr	1,0,&7
+11: 	soc	0,&($63:&0,$97:&1,$98:&2,$99:&3,$100:&4,$101:&5,$104:&6,$116:&7),&9
+9: 	fail	
+	.clause
+0:	gc	0,$63
+	pc	0,$104
+	execsot	1,0,&8,&11,&9,&9
+	.clause
+1:	gc	0,$97
+	abort	
+	pro	
+	.clause
+2:	gc	0,$98
+	exec	0,&'break'/0
+	.clause
+3:	gc	0,$99
+	pro	
+	.clause
+4:	gc	0,$100
+	all	0
+	call	0,0,&'debug'/0
+	pc	0,$'localDebug'
+	pc	1,$'debug'
+	dallexe	2,&'$setFlag'/2
+	.clause
+5:	gc	0,$101
+	pc	1,$0
+	exit	1
+	pro	
+	.clause
+6:	gc	0,$104
+	pc	1,$'user'
+	pc	2,#(CHR,&21)
+	sputl	1,2
+	fail	
+	.clause
+7:	gc	0,$116
+	all	0
+	call	0,0,&'trace'/0
+	pc	0,$'localDebug'
+	pc	1,$'trace'
+	dallexe	2,&'$setFlag'/2
+	last
+21: 	.string	"Prolog interrupt options:\n    a    abort\n    b    break\n    c    continue\n    d    debug\n    e    exit\n    h/?  help\n    t    trace\n"
+
+	.pred	'$exit',3
+	.clause
+0:	pc	3,$1
+	exit	3
+	pro	
+	last
+
+	.pred	'$ignore',3
+	.clause
+0:	pro	
+	last
+
+	.pred	'signal',2
+	.clause
+0:	all	3
+	gvary	2,0
+	gvary	0,1
+	pvaly	2,2
+	fvar	2,255
+	jtypx	255,252,&11
+	jctypy	0,2,&11
+	j	&12
+11: 	pc	1,#(CHR,&6)
+	ps	3,$'signal'/2
+	ulvy	2
+	ulvy	0
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	call	3,3,&'$format'/3
+	fail	
+12: 	jctypy	2,17,&13
+	pvaly	2,255
+	glvary	1,255
+	j	&14
+13: 	pvaly	2,0
+	pvary	1,1
+	call	2,2,&'$signumber'/2
+14: 	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'$signal'/2
+	last
+6: 	.string	"~NError in ~w -- signal name and atomic action expected.~n"
+
+	.pred	'$signumber',2
+21: 	sot	0,&19,&22,&20,&20
+19: 	t	2,0,&0
+	r	2,0,&1
+	r	2,0,&2
+	r	2,0,&3
+	r	2,0,&4
+	r	2,0,&5
+	r	2,0,&6
+	r	2,0,&7
+	r	2,0,&8
+	r	2,0,&9
+	r	2,0,&10
+	r	2,0,&11
+	r	2,0,&12
+	r	2,0,&13
+	r	2,0,&14
+	r	2,0,&15
+	r	2,0,&16
+	r	2,0,&17
+	tr	2,0,&18
+22: 	soc	0,&($'sigalrm':&13,$'sigbus':&9,$'sigcld':&17,$'sigemt':&6,$'sigfpe':&7,$'sighup':&0,$'sigill':&3,$'sigint':&1,$'sigiot':&5,$'sigkill':&8,$'sigpipe':&12,$'sigpwr':&18,$'sigquit':&2,$'sigsegv':&10,$'sigsys':&11,$'sigterm':&14,$'sigtrap':&4,$'sigusr1':&15,$'sigusr2':&16),&20
+20: 	fail	
+	.clause
+0:	gc	0,$'sighup'
+	gc	1,$1
+	pro	
+	.clause
+1:	gc	0,$'sigint'
+	gc	1,$2
+	pro	
+	.clause
+2:	gc	0,$'sigquit'
+	gc	1,$3
+	pro	
+	.clause
+3:	gc	0,$'sigill'
+	gc	1,$4
+	pro	
+	.clause
+4:	gc	0,$'sigtrap'
+	gc	1,$5
+	pro	
+	.clause
+5:	gc	0,$'sigiot'
+	gc	1,$6
+	pro	
+	.clause
+6:	gc	0,$'sigemt'
+	gc	1,$7
+	pro	
+	.clause
+7:	gc	0,$'sigfpe'
+	gc	1,$8
+	pro	
+	.clause
+8:	gc	0,$'sigkill'
+	gc	1,$9
+	pro	
+	.clause
+9:	gc	0,$'sigbus'
+	gc	1,$10
+	pro	
+	.clause
+10:	gc	0,$'sigsegv'
+	gc	1,$11
+	pro	
+	.clause
+11:	gc	0,$'sigsys'
+	gc	1,$12
+	pro	
+	.clause
+12:	gc	0,$'sigpipe'
+	gc	1,$13
+	pro	
+	.clause
+13:	gc	0,$'sigalrm'
+	gc	1,$14
+	pro	
+	.clause
+14:	gc	0,$'sigterm'
+	gc	1,$15
+	pro	
+	.clause
+15:	gc	0,$'sigusr1'
+	gc	1,$16
+	pro	
+	.clause
+16:	gc	0,$'sigusr2'
+	gc	1,$17
+	pro	
+	.clause
+17:	gc	0,$'sigcld'
+	gc	1,$18
+	pro	
+	.clause
+18:	gc	0,$'sigpwr'
+	gc	1,$19
+	pro	
+	last
+

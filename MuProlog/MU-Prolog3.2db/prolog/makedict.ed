@@ -1,0 +1,18 @@
+e makedict.c
+1,$s/\/\* /printf("#define /
+1,$s/= .../\%d\\n", /
+1,$s/;$/);/
+0a
+#include "types.h"
+extern Int *goalstk, *gtop, *hbot;
+main(){
+extern find();
+	gtop = goalstk;
+	hbot = goalstk + GSTKLEN;
+.
+$a
+	exit(0);
+}
+.
+w
+q

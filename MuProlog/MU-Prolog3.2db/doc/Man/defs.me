@@ -1,0 +1,101 @@
+.	\" ditroff settings for imagen printer and -me
+.	\"
+.	\" Character size and font
+.nr VS 12	\" Global vertical spacing (default=12)
+.nr PS 10	\" Global font size (default=10)
+.	\" Don't change remaining font sizes
+.vs \n(VS	\" Vertical spacing 
+.ps \n(PS	\" Font size 
+.\"nr $r 18p/\n(.s \" 1.5 spacing
+.\"nr $R 16p/\n(.s \" 1.5 spacing
+.nr tp \n(PS	\" Header and footer font size 
+.nr pp \n(PS	\" Paragraph font size
+.nr sp \n(PS	\" (Sub-)heading font size
+.nr qp \n(PS	\" Quote font size (default = -1)
+.nr fp \n(PS-1	\" Footnote font size (default = 8)
+.nr tf 1	\" Roman headers and footers
+.nr sf 3	\" Bold (sub-)headings
+.	\" Page size using headers (footers)
+.ll 6i
+.po 1.25i
+.nr hm 3v	\" Header margin (4v)
+.nr tm 5v	\" Top margin (7v)	tm > hm
+.nr fm 1v	\" Footer margin (3v)
+.nr bm 3v	\" Bottom margin (6v)	bm > fm
+.	\" Indentations
+.nr pi 4n	\" Paragraph 
+.nr ii 4n	\" Indented paragraph
+.nr bi 8n	\" Block
+.nr qi 8n	\" quote
+.	\" Reset headers and footers
+.he ''''
+.fo ''- % -''
+.nh
+.	\" Special macros
+.\" start block with constant-width font
+.de (B
+.\"cs R \(PS
+.(b \\$1
+.ft as
+..
+.\" end block with constant-width font
+.de )B
+.ft R
+.)b
+.\"cs R
+..
+.       \" Strings for Imagen
+.ds E \(te
+.                     \" existential quantifier
+.ds e \s+2\(te\s-2
+.             \"
+.ds A \(fa
+.                     \" universal quantifier
+.ds a \s+2\(fa\s-2
+.             \"
+.ds ^ \s-2\(an\s+2
+.             \" and
+.ds v \s-2\(or\s+2
+.             \" or
+.ds I \(<-\h'-0.1i'\(->
+.        \" <-> implies
+.ds M \s-2\(mo\s+2
+.             \" member
+.ds P \s-2\(ap\s+2
+.             \"
+.ds ` `
+.                        \" back/open single quote
+.ds ~= \d\s+4~\s0\u=
+.   \" ~=  (MU-Prolog)
+.ds ~ \d\s+4~\s0\u
+.     \" ~  (MU-Prolog)
+.ds % \s-2%\s+2
+.                \" %
+.ds ^^ \d\s+4^\s0\u
+.\"			^
+.       \" Indentations
+.nr pi 6n       \" Paragraph 
+.nr ii 6n       \" Indented paragraph
+.nr bi 6n       \" Block
+.nr qi 6n       \" quote
+.	\" macros
+.de rf          \" Reference macro (pre bib)
+.ti -0.5i
+..
+.de $0          \" Put section heading in index
+.(x
+.in \\$3*2u
+\\$2 \\$1
+.)x
+..
+.de dp		\" Describe predicate and put in index
+.br
+.ne 4
+.sp
+.ti -0.5i
+\\$1
+.(x z
+\\$1
+.)x
+.br
+..

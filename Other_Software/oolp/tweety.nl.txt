@@ -1,0 +1,237 @@
+%%%%%%%%%%%%%%%%%%%%%%%%% Header
+:- op(800, fx, (def_object)).
+:- op(800, fx, (end_def)).
+:- op(401, xfx, (::)).
+:- op(600, xfx, (isa)).
+%%%%%%%%%%%%%%%%%%%%%%%%% OBJECT.op
+'OBJECT'(defines_property(A), B) :-
+	defines_prop(B, A).
+'OBJECT'(parent(A), B) :-
+	B isa A.
+%%%%%%%%%%%%%%%%%%%%%%%%% tweety.op
+
+% bird isa OBJECT
+bird(goes(chirp), A).
+bird(weight(400), A).
+bird(can_swim, A) :-
+	fail.
+bird(can_fly, A) :-
+	A :: weight(B),
+	B < 4000.
+
+% tweety isa bird
+tweety(goes(tweet), A).
+
+% sparrow isa bird
+sparrow(weight(150), A).
+
+% duck isa bird
+duck(goes(quack), A).
+duck(can_swim, A).
+duck(weight(2000), A).
+
+% kookaburra isa bird
+kookaburra(goes(kookookakakookookookookakakakakakakakakaka), A).
+kookaburra(weight(600), A).
+
+% hummingbird isa bird
+hummingbird(goes(hum), A).
+hummingbird(weight(10), A).
+
+% lyrebird isa bird
+lyrebird(goes(chirp), A).
+lyrebird(goes(tweet), A).
+lyrebird(goes(squawk), A).
+lyrebird(goes(quack), A).
+lyrebird(goes(kookookakakookookookookakakakakakakakakaka), A).
+lyrebird(goes(woof), A).
+lyrebird(weight(2000), A).
+
+% pelican isa bird
+pelican(goes(clack), A).
+pelican(can_swim, A).
+pelican(weight(5000), A).
+pelican(can_fly, A).
+
+% penguin isa bird
+penguin(can_swim, A).
+penguin(weight(5000), A).
+
+% fairy_penguin isa penguin
+fairy_penguin(weight(600), A).
+fairy_penguin(can_fly, A) :-
+	fail.
+
+% emu isa bird
+emu(goes(squawk), A).
+emu(weight(12000), A).
+
+% brucey isa emu
+description(A, B) :-
+	(if some C bird_desc(A, C) then
+		B = C
+	else
+		B = "has an elusive indescribable quality"
+	).
+bird_desc(tweety, "a character who is, paradoxically, famous for being typical").
+bird_desc(A, B) :-
+	A ~= tweety,
+	some [] tc_isa(A, bird),
+	weight_desc(A, C),
+	fly_swim_desc(A, D),
+	goes_desc(A, E),
+	append(D, E, F),
+	append(C, F, G),
+	(if G = "a bird" then
+		B = "a typical bird"
+	else
+		B = G
+	).
+tc_isa(A, A).
+tc_isa(A, B) :-
+	A isa C,
+	tc_isa(C, B).
+weight_desc(A, B) :-
+	A :: weight(C),
+	(if C < 200 then
+		B = "a small"
+	else if C > 3500 then
+		B = "a large"
+	else
+		B = "a"
+	).
+fly_swim_desc(A, B) :-
+	(if A :: can_fly then
+		(if A :: can_swim then
+			B = " bird at home on land, water or in the air"
+		else
+			B = " bird"
+		)
+	else if A :: can_swim then
+		B = " bird which swims but cannot fly"
+	else
+		B = " flightless bird"
+	).
+goes_desc(A, B) :-
+	sum(C, D, some [E] (A :: goes(E), atomToString(E, D), length(D, C)), F),
+	(if F > 20 then
+		B = ", noted for its song"
+	else
+		B = []
+	).
+match_description(A, B) :-
+	append(A, C, D),
+	object(B),
+	description(B, E),
+	append(F, D, E).
+
+
+bird isa 'OBJECT'.
+tweety isa bird.
+sparrow isa bird.
+duck isa bird.
+kookaburra isa bird.
+hummingbird isa bird.
+lyrebird isa bird.
+pelican isa bird.
+penguin isa bird.
+fairy_penguin isa penguin.
+emu isa bird.
+brucey isa emu.
+
+object('OBJECT').
+object(bird).
+object(tweety).
+object(sparrow).
+object(duck).
+object(kookaburra).
+object(hummingbird).
+object(lyrebird).
+object(pelican).
+object(penguin).
+object(fairy_penguin).
+object(emu).
+object(brucey).
+
+defines_prop('OBJECT', defines_property(A)).
+defines_prop('OBJECT', parent(A)).
+defines_prop(bird, goes(A)).
+defines_prop(bird, weight(A)).
+defines_prop(bird, can_swim).
+defines_prop(bird, can_fly).
+defines_prop(tweety, goes(A)).
+defines_prop(sparrow, weight(A)).
+defines_prop(duck, goes(A)).
+defines_prop(duck, can_swim).
+defines_prop(duck, weight(A)).
+defines_prop(kookaburra, goes(A)).
+defines_prop(kookaburra, weight(A)).
+defines_prop(hummingbird, goes(A)).
+defines_prop(hummingbird, weight(A)).
+defines_prop(lyrebird, goes(A)).
+defines_prop(lyrebird, weight(A)).
+defines_prop(pelican, goes(A)).
+defines_prop(pelican, can_swim).
+defines_prop(pelican, weight(A)).
+defines_prop(pelican, can_fly).
+defines_prop(penguin, can_swim).
+defines_prop(penguin, weight(A)).
+defines_prop(fairy_penguin, weight(A)).
+defines_prop(fairy_penguin, can_fly).
+defines_prop(emu, goes(A)).
+defines_prop(emu, weight(A)).
+
+call_object('OBJECT', defines_property(A), B) :-
+	'OBJECT'(defines_property(A), B).
+call_object('OBJECT', parent(A), B) :-
+	'OBJECT'(parent(A), B).
+call_object(bird, goes(A), B) :-
+	bird(goes(A), B).
+call_object(bird, weight(A), B) :-
+	bird(weight(A), B).
+call_object(bird, can_swim, A) :-
+	bird(can_swim, A).
+call_object(bird, can_fly, A) :-
+	bird(can_fly, A).
+call_object(tweety, goes(A), B) :-
+	tweety(goes(A), B).
+call_object(sparrow, weight(A), B) :-
+	sparrow(weight(A), B).
+call_object(duck, goes(A), B) :-
+	duck(goes(A), B).
+call_object(duck, can_swim, A) :-
+	duck(can_swim, A).
+call_object(duck, weight(A), B) :-
+	duck(weight(A), B).
+call_object(kookaburra, goes(A), B) :-
+	kookaburra(goes(A), B).
+call_object(kookaburra, weight(A), B) :-
+	kookaburra(weight(A), B).
+call_object(hummingbird, goes(A), B) :-
+	hummingbird(goes(A), B).
+call_object(hummingbird, weight(A), B) :-
+	hummingbird(weight(A), B).
+call_object(lyrebird, goes(A), B) :-
+	lyrebird(goes(A), B).
+call_object(lyrebird, weight(A), B) :-
+	lyrebird(weight(A), B).
+call_object(pelican, goes(A), B) :-
+	pelican(goes(A), B).
+call_object(pelican, can_swim, A) :-
+	pelican(can_swim, A).
+call_object(pelican, weight(A), B) :-
+	pelican(weight(A), B).
+call_object(pelican, can_fly, A) :-
+	pelican(can_fly, A).
+call_object(penguin, can_swim, A) :-
+	penguin(can_swim, A).
+call_object(penguin, weight(A), B) :-
+	penguin(weight(A), B).
+call_object(fairy_penguin, weight(A), B) :-
+	fairy_penguin(weight(A), B).
+call_object(fairy_penguin, can_fly, A) :-
+	fairy_penguin(can_fly, A).
+call_object(emu, goes(A), B) :-
+	emu(goes(A), B).
+call_object(emu, weight(A), B) :-
+	emu(weight(A), B).

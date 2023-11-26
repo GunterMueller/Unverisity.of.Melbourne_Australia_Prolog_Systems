@@ -1,0 +1,27 @@
+	% reverse of numbervars ($VAR(N) ---> Var)
+	% needs member
+	% Should rewrite so it uses a seperate pred to
+	% process the lis of args.
+
+varnumbers(N, V) :-
+	varnumbers(N.[], [], _, V.[]).
+
+?- wait varnumbers(0, 1, 1, 1).
+varnumbers([], I, I, []).
+varnumbers($VAR(N1).N, I, O, A.V) :-
+	( member(N1 - A, I) ->
+		varnumbers(N, I, O, V)
+	;
+		varnumbers(N, N1 - A.I, O, V)
+	).
+varnumbers(($null).N, I, O, _.V) :-
+	varnumbers(N, I, O, V).
+varnumbers(A.N, I, O, A.V) :-
+	atomic(A),
+	varnumbers(N, I, O, V).
+varnumbers(N1.N, I, O, A.V) :-
+	N1 ~= $VAR(_),
+	N1 =.. F.L.LL,
+	varnumbers(L.LL, I, O1, L1),
+	A =.. F.L1,
+	varnumbers(N, O1, O, V).

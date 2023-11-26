@@ -1,0 +1,18 @@
+#!/bin/sed -f $0
+s/casel/casel/
+tgotit
+p
+d
+:gotit
+N
+s/casel	\([^,]*\),\$0,\$255\n\([^:]*\):$/movl	\2[\1],\1	\
+	jmp	(\1)												\
+	.align 2												\
+\2:/
+tlong
+p
+d
+:long
+n
+s/word\(.*\)-.*$/long\1/
+tlong

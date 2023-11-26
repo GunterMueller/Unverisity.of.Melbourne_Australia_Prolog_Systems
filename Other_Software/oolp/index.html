@@ -1,0 +1,104 @@
+<HTML>
+<TITLE>
+NUOO-Prolog
+</TITLE>
+<H1>
+NUOO-Prolog
+</H1>
+<hr>
+
+NUOO-Prolog is a simple object oriented extension to NU-Prolog, mostly hacked
+together by Lee Naish rather quicky.  It works as a preprocessor.
+Check out
+the (brief) examples below for some of the syntax/features.
+One of the
+nice things about the system is that
+its "pure" in the sense it can easily be given clear declarative
+semantics.  A prototype declarative debugger has been implemented.
+The down side is that objects can't have mutable state.
+The
+<A HREF="../../papers/oolp/">
+tech report
+</A>
+gives more information on the language and
+implementation.  The tech report describes a version implemented on top
+of Quintus Prolog.  The version here has some improvements such as
+parameterised objects.  I also have an implementation of further
+enhancements such as supporting separate compilation and various forms
+of multiple inheritance.
+<P>
+I have certainly found it of use for knowledge bases I have had to
+maintain.
+Examples include coordinating honours and other fourth year courses where
+there are students, thesis topics, supervisors etc, and coordinating the
+technical programme of the
+<A HREF="http://www.cs.kuleuven.ac.be/~iclp97/">ICLP'97</A>
+conference (paper submissions, reviews etc).
+<P>
+
+
+<H2>
+Examples
+</H2>
+
+<UL>
+
+<LI>
+The famous Tweety:
+<A HREF="tweety.op.txt">
+tweety.op
+</A>
+(preprocessed to become
+<A HREF="tweety.nl.txt">
+tweety.nl</A>)
+
+<LI>
+Objects with parameters:
+<A HREF="shape.op.txt">
+shape.op
+</A>
+(preprocessed to become
+<A HREF="shape.nl.txt">
+shape.nl</A>)
+
+<LI>
+A boring example from the paper:
+<A HREF="sample.op.txt">
+sample.op
+</A>
+(preprocessed to become
+<A HREF="sample.nl.txt">
+sample.nl</A>)
+
+</UL>
+
+<H2>
+Source code
+</H2>
+
+<UL>
+
+<LI>
+<A HREF="./nuooprolog.tar.gz">
+Source code (gzipped tar file)</A>
+
+<LI>
+<A HREF="./dougl.tgz">
+Source code (tar/gzipped file)</A> of version with additional features 
+such as multiple inheritance
+
+<LI>
+To run it you will need a copy of
+<A HREF="../nuprolog">
+NU-Prolog
+</A>.
+Actually the code is so short (around 300 lines) and simple you
+should be able to port it to any Unix-based Prolog easily.
+
+</UL>
+
+
+<br>
+<A HREF="http://people.eng.unimelb.edu.au/lee/"> Lee </A>
+
+</HTML>

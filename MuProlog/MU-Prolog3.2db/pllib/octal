@@ -1,0 +1,27 @@
+	% conversion between (octal) integers and strings
+	%
+	% adapted by jat from /usr/lib/prolog/pllib/convert on 22/10/85
+
+str_octal(S, I) :-	/* uses var, cut beause 'times' doesn't exist yet */
+		var(I),
+		!,
+		stoo(S, 0, I).
+str_octal(S, I) :-
+		otos(I, [], S).
+
+stoo([D], N, I) :-
+		("0" =< D) and (D =< "7"),
+		I is N*8 + D - "0".
+stoo(D.D1.S, N, I) :-
+		("0" =< D) and (D =< "7"),
+		N1 is N*8 + D - "0",
+		stoo(D1.S, N1, I).
+
+otos(I, S, D.S) :-
+		I < 8,
+		D is I + "0".
+otos(I, S, S1) :-
+		I >= 8,
+		D is I mod 8 + "0",
+		I2 is I/8,
+		otos(I2, D.S, S1).

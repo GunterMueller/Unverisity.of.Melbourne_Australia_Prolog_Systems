@@ -1,0 +1,10 @@
+l(a, x).
+l(a, y).
+l(b, x).
+l(b, z).
+t1(A) :-
+	$solutions([], B - C, l(B, C), A).
+t2(A) :-
+	$solutions([], B, l(C, B), A).
+t3(A) :-
+	$solutions(B.[], C, l(B, C), A).

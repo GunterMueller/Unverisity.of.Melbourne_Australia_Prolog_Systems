@@ -1,0 +1,2026 @@
+
+	.pred	'$neg_trf',3
+	.clause
+0:	all	3
+	gvary	2,0
+	gvary	1,1
+	gvary	0,2
+	pvaly	2,0
+	call	3,1,&'$save_proc_name'/1
+	pvaly	2,0
+	pvaly	1,1
+	pvaly	0,2
+	dallexe	3,&'$trf'/3
+	last
+
+	.pred	'$call_trf',2
+	.clause
+0:	gvarx	2,1
+	pnil	1
+	exec	3,&'$call_trf'/3
+	last
+
+	.pred	'$call_trf',3
+	.clause
+0:	all	5
+	gvary	0,0
+	gvary	2,1
+	gvary	3,2
+	pvaly	0,0
+	pvary	4,1
+	pnil	2
+	call	5,3,&'$op_trf'/3
+	puval	4,0
+	pvaly	3,1
+	pnil	2
+	pvaly	2,3
+	pvary	1,4
+	call	2,5,&'$trf'/5
+	puval	1,3
+	pnil	4
+	idtest	3,4
+	jtrue	&16
+	pc	1,#(CHR,&15)
+	pl	2
+	ulvy	0
+	uc	$[]
+	pc	0,$'user_error'
+	dallexe	3,&'$format'/3
+16: 	dallpro	
+17: 	last
+15: 	.string	"~NError in call/1 of ~w -- negation broken.~n"
+
+	.pred	'$trf',3
+	.clause
+0:	all	5
+	gvary	4,0
+	gvary	2,1
+	gvary	0,2
+	pvaly	4,0
+	pvary	3,1
+	call	5,2,&'$xs_trf'/2
+	pvaly	4,0
+	pvary	1,1
+	call	4,2,&'$unique_vars'/2
+	puval	3,0
+	pvaly	2,1
+	pnil	2
+	puval	1,3
+	pvaly	0,4
+	dallexe	5,&'$trf'/5
+	last
+
+	.pred	'$trf',5
+	labelx	5
+4: 	sot	0,&0,&3,&3,&3
+3: 	t	6,0,&1
+	tr	6,0,&2
+	.clause
+0:	typx	0,3
+	cutx	5
+	gvalx	1,0
+	gnil	4
+	pro	
+	.clause
+1:	gvarx	6,1
+	all	7
+	gvary	4,2
+	gvary	1,3
+	gvary	0,4
+	gvary	6,5
+	pvary	3,1
+	pvary	2,2
+	pvary	5,3
+	gvara	4,6
+	call	7,5,&'$meta_call'/5
+	cuty	6
+	pl	2
+	ulvy	5
+	ulvy	4
+	puval	3,0
+	puval	2,1
+	pvaly	1,3
+	pvaly	0,4
+	dallexe	5,&'$$trf_list'/5
+	.clause
+2:	exec	5,&'$trf1'/5
+	last
+
+	.pred	'$trf1',5
+	labelx	5
+18: 	sot	0,&16,&15,&15,&19
+16: 	t	6,0,&0
+	r	6,0,&1
+	r	6,0,&2
+	r	6,0,&3
+	r	6,0,&4
+	r	6,0,&5
+	r	6,0,&6
+	r	6,0,&7
+	r	6,0,&8
+	r	6,0,&9
+	r	6,0,&10
+	r	6,0,&11
+	r	6,0,&12
+	r	6,0,&13
+	r	6,0,&14
+	tr	6,0,&15
+19: 	sose	0,&($'all'/2:&0,$'count'/3:&12,$'else'/2:&7,$'freeze'/2:&5,$'gAll'/2:&1,$'gSome'/2:&14,$'if'/1:&6,$'max'/3:&9,$'min'/3:&10,$'not'/1:&17,$'solutions'/3:&8,$'some'/2:&13,$'sum'/4:&11,$'~='/2:&4),&15
+17: 	t	6,0,&2
+	tr	6,0,&3
+	.clause
+0:	gsx2	0,6,7,$'all'/2
+	all	7
+	gvary	5,1
+	gvary	4,2
+	gvary	1,3
+	gvary	0,4
+	cutx	5
+	ps	0,$'all'/2
+	uvalx	6
+	uvalx	7
+	pvary	3,1
+	pvary	2,2
+	pvary	6,3
+	call	7,4,&'$str_all'/4
+	puval	6,0
+	pvaly	5,1
+	pvaly	4,2
+	puval	3,3
+	puval	2,4
+	pvaly	1,5
+	pvaly	0,6
+	dallexe	7,&'$trf_all'/7
+	.clause
+1:	gsx2	0,6,7,$'gAll'/2
+	all	7
+	gvary	5,1
+	gvary	4,2
+	gvary	1,3
+	gvary	0,4
+	cutx	5
+	ps	0,$'gAll'/2
+	uvalx	6
+	uvalx	7
+	pvary	3,1
+	pvary	2,2
+	pvary	6,3
+	call	7,4,&'$str_all'/4
+	puval	6,0
+	pvaly	5,1
+	pvaly	4,2
+	puval	3,3
+	puval	2,4
+	pvaly	1,5
+	pvaly	0,6
+	dallexe	7,&'$trf_all'/7
+	.clause
+2:	gsx1	0,6,$'not'/1
+	gs	1,$'not'/1
+	uvalx	6
+	gnil	4
+	typx	6,3
+	cutx	5
+	pro	
+	.clause
+3:	gsx1	0,0,$'not'/1
+	all	12
+	gvary	3,1
+	gvary	11,2
+	gvary	9,3
+	gvary	0,4
+	cutx	5
+	pvary	10,1
+	pvary	7,2
+	pvary	8,3
+	call	12,4,&'$str_some'/4
+	pvaly	8,0
+	pvary	4,1
+	pvaly	11,2
+	pvaly	9,3
+	pvary	1,4
+	call	11,5,&'$trf'/5
+	ps	1,$'f'/3
+	ulvy	7
+	ulvy	10
+	ulvy	9
+	puval	8,0
+	pvary	6,2
+	call	8,3,&'$extra_vars'/3
+	puval	7,0
+	pvaly	6,1
+	pvary	5,2
+	call	7,3,&'append'/3
+	puval	6,0
+	puval	5,1
+	puval	4,2
+	pvaly	3,3
+	pvary	2,4
+	call	3,5,&'$imp_not'/5
+	puval	2,0
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'append'/3
+	.clause
+4:	gs	0,$'~='/2
+	all	5
+	uvary	3
+	uvary	2
+	gvary	1,1
+	gvara	0,3
+	gvary	0,4
+	cutx	5
+	ps	1,$'~='/2
+	uvaly	3
+	uvaly	2
+	pvary	4,2
+	call	5,3,&'$v_intersect'/3
+	puval	4,0
+	pnil	1
+	pvaly	3,2
+	pvaly	2,3
+	pc	4,$'fail'
+	pvaly	1,5
+	pvaly	0,6
+	dallexe	7,&'$imp_is_eq'/7
+	.clause
+5:	gs	0,$'freeze'/2
+	all	8
+	uvary	5
+	uvara	0
+	gvary	3,1
+	gvary	7,3
+	gvary	0,4
+	cutx	5
+	pvary	4,1
+	pvaly	7,3
+	pvary	1,4
+	call	8,5,&'$trf'/5
+	ps	1,$'f'/2
+	uvaly	5
+	ulvy	7
+	pvaly	4,0
+	pvary	6,2
+	call	7,3,&'$extra_vars'/3
+	pl	1
+	uvaly	5
+	ulvy	6
+	pvaly	5,0
+	puval	4,2
+	pvaly	3,3
+	pvary	2,4
+	call	3,5,&'$imp_freeze'/5
+	puval	2,0
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'append'/3
+	.clause
+6:	gsx1	0,6,$'if'/1
+	cutx	5
+	ps	0,$'if'/1
+	uvalx	6
+	exec	5,&'$trf_if'/5
+	.clause
+7:	gsx2	0,6,7,$'else'/2
+	cutx	5
+	ps	0,$'else'/2
+	uvalx	6
+	uvalx	7
+	exec	5,&'$trf_if'/5
+	.clause
+8:	gs	0,$'solutions'/3
+	all	18
+	uvary	6
+	uvary	16
+	uvary	4
+	gvary	3,1
+	gvary	11,2
+	gvary	9,3
+	gvary	0,4
+	cutx	5
+	pvaly	16,0
+	pvary	17,1
+	pvary	14,2
+	pvary	10,3
+	call	18,4,&'$str_some'/4
+	ps	1,$'f'/4
+	uvaly	6
+	ulvy	17
+	ulvy	14
+	ulvy	9
+	pvaly	16,0
+	pvary	8,2
+	call	16,3,&'$extra_vars'/3
+	pvaly	8,0
+	pvaly	11,1
+	pvary	15,2
+	call	16,3,&'$v_intersect'/3
+	pl	1
+	ulvy	15
+	ulvy	14
+	pvaly	6,0
+	pvary	12,2
+	call	16,3,&'$extra_vars'/3
+	puval	15,0
+	pvaly	12,1
+	pvary	13,2
+	call	15,3,&'append'/3
+	puval	14,0
+	puval	13,1
+	pvary	7,2
+	call	13,3,&'append'/3
+	pl	2
+	ulvy	12
+	ulvy	11
+	puval	10,0
+	pvary	5,1
+	pvaly	9,3
+	pvary	1,4
+	call	9,5,&'$trf'/5
+	puval	8,0
+	puval	7,1
+	pvaly	6,2
+	puval	5,3
+	pvaly	4,4
+	pvaly	3,5
+	pvary	2,6
+	call	3,7,&'$imp_solutions'/7
+	puval	2,0
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'append'/3
+	.clause
+9:	gs	0,$'max'/3
+	all	14
+	uvary	6
+	uvary	10
+	uvary	4
+	gvary	3,1
+	gvary	11,2
+	gvary	9,3
+	gvary	0,4
+	cutx	5
+	pl	1
+	ulvy	9
+	uvaly	6
+	pvaly	10,0
+	pvary	8,2
+	call	14,3,&'$extra_vars'/3
+	pvaly	8,0
+	pvaly	11,1
+	pvary	13,2
+	call	14,3,&'$v_intersect'/3
+	pvaly	6,0
+	pvaly	13,1
+	pvary	12,2
+	call	14,3,&'$extra_vars'/3
+	puval	13,0
+	pvaly	12,1
+	pvary	7,2
+	call	13,3,&'append'/3
+	pl	2
+	ulvy	12
+	ulvy	11
+	pvaly	10,0
+	pvary	5,1
+	pvaly	9,3
+	pvary	1,4
+	call	9,5,&'$trf'/5
+	puval	8,0
+	puval	7,1
+	pc	2,$'>'
+	pvaly	6,3
+	puval	5,4
+	pvaly	4,5
+	pvaly	3,6
+	pvary	2,7
+	call	3,8,&'$imp_limit'/8
+	puval	2,0
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'append'/3
+	.clause
+10:	gs	0,$'min'/3
+	all	14
+	uvary	6
+	uvary	10
+	uvary	4
+	gvary	3,1
+	gvary	11,2
+	gvary	9,3
+	gvary	0,4
+	cutx	5
+	pl	1
+	ulvy	9
+	uvaly	6
+	pvaly	10,0
+	pvary	8,2
+	call	14,3,&'$extra_vars'/3
+	pvaly	8,0
+	pvaly	11,1
+	pvary	13,2
+	call	14,3,&'$v_intersect'/3
+	pvaly	6,0
+	pvaly	13,1
+	pvary	12,2
+	call	14,3,&'$extra_vars'/3
+	puval	13,0
+	pvaly	12,1
+	pvary	7,2
+	call	13,3,&'append'/3
+	pl	2
+	ulvy	12
+	ulvy	11
+	pvaly	10,0
+	pvary	5,1
+	pvaly	9,3
+	pvary	1,4
+	call	9,5,&'$trf'/5
+	puval	8,0
+	puval	7,1
+	pc	2,$'<'
+	pvaly	6,3
+	puval	5,4
+	pvaly	4,5
+	pvaly	3,6
+	pvary	2,7
+	call	3,8,&'$imp_limit'/8
+	puval	2,0
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'append'/3
+	.clause
+11:	gs	0,$'sum'/4
+	all	15
+	uvary	6
+	uvary	9
+	uvary	11
+	uvary	4
+	gvary	3,1
+	gvary	12,2
+	gvary	10,3
+	gvary	0,4
+	cutx	5
+	ps	1,$'f'/3
+	ulvy	10
+	uvaly	6
+	uvaly	9
+	pvaly	11,0
+	pvary	8,2
+	call	15,3,&'$extra_vars'/3
+	pvaly	8,0
+	pvaly	12,1
+	pvary	14,2
+	call	15,3,&'$v_intersect'/3
+	pl	0
+	uvaly	9
+	uvaly	6
+	pvaly	14,1
+	pvary	13,2
+	call	15,3,&'$extra_vars'/3
+	puval	14,0
+	pvaly	13,1
+	pvary	7,2
+	call	14,3,&'append'/3
+	pl	2
+	ulvy	13
+	ulvy	12
+	pvaly	11,0
+	pvary	5,1
+	pvaly	10,3
+	pvary	1,4
+	call	10,5,&'$trf'/5
+	ps	3,$'-'/2
+	uvaly	9
+	uvaly	6
+	puval	8,0
+	puval	7,1
+	pvaly	6,2
+	puval	5,4
+	pvaly	4,5
+	pvaly	3,6
+	pvary	2,7
+	call	3,8,&'$imp_sum'/8
+	puval	2,0
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'append'/3
+	.clause
+12:	gs	0,$'count'/3
+	all	14
+	uvary	6
+	uvary	10
+	uvary	4
+	gvary	3,1
+	gvary	11,2
+	gvary	9,3
+	gvary	0,4
+	cutx	5
+	pl	1
+	ulvy	9
+	uvaly	6
+	pvaly	10,0
+	pvary	8,2
+	call	14,3,&'$extra_vars'/3
+	pvaly	8,0
+	pvaly	11,1
+	pvary	13,2
+	call	14,3,&'$v_intersect'/3
+	pvaly	6,0
+	pvaly	13,1
+	pvary	12,2
+	call	14,3,&'$extra_vars'/3
+	puval	13,0
+	pvaly	12,1
+	pvary	7,2
+	call	13,3,&'append'/3
+	pl	2
+	ulvy	12
+	ulvy	11
+	pvaly	10,0
+	pvary	5,1
+	pvaly	9,3
+	pvary	1,4
+	call	9,5,&'$trf'/5
+	puval	8,0
+	puval	7,1
+	pc	2,$1
+	pvaly	6,3
+	puval	5,4
+	pvaly	4,5
+	pvaly	3,6
+	pvary	2,7
+	call	3,8,&'$imp_sum'/8
+	puval	2,0
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'append'/3
+	.clause
+13:	gs	0,$'some'/2
+	uvarx	6
+	all	11
+	uvary	8
+	gvary	2,1
+	gvary	6,2
+	gvary	5,3
+	gvary	4,4
+	cutx	5
+	ps	0,$'some'/2
+	uvalx	6
+	uvaly	8
+	pvary	9,1
+	pvary	10,2
+	pvary	7,3
+	call	11,4,&'$str_some'/4
+	ps	1,$'f'/3
+	ulvy	10
+	ulvy	9
+	ulvy	5
+	pvaly	8,0
+	pvary	3,2
+	call	8,3,&'$extra_vars'/3
+	puval	7,0
+	pvary	1,1
+	pvaly	6,2
+	pvaly	5,3
+	pvaly	4,4
+	call	4,5,&'$trf'/5
+	puval	3,6
+	pnil	7
+	idtest	6,7
+	jfail	&345
+	pvaly	2,255
+	gs	255,$'once'/1
+	ulvy	1
+	dallpro	
+345: 	puval	3,0
+	pvary	0,1
+	call	3,2,&'$squash_list'/2
+	pvaly	2,255
+	gs	255,$';'/2
+	uvarx	6
+	ulvy	1
+	gs	6,$'->'/2
+	uvarx	6
+	us	255,$'once'/1
+	ulvy	1
+	gs	6,$'ground'/1
+	ulvy	0
+	dallpro	
+346: 	.clause
+14:	gs	0,$'gSome'/2
+	uvarx	6
+	all	11
+	uvary	8
+	gvary	2,1
+	gvary	6,2
+	gvary	5,3
+	gvary	4,4
+	cutx	5
+	ps	0,$'gSome'/2
+	uvalx	6
+	uvaly	8
+	pvary	9,1
+	pvary	10,2
+	pvary	7,3
+	call	11,4,&'$str_some'/4
+	ps	1,$'f'/3
+	ulvy	10
+	ulvy	9
+	ulvy	5
+	pvaly	8,0
+	pvary	3,2
+	call	8,3,&'$extra_vars'/3
+	puval	7,0
+	pvary	1,1
+	pvaly	6,2
+	pvaly	5,3
+	pvaly	4,4
+	call	4,5,&'$trf'/5
+	puval	3,6
+	pnil	7
+	idtest	6,7
+	jfail	&367
+	pvaly	2,255
+	gs	255,$'once'/1
+	ulvy	1
+	dallpro	
+367: 	puval	3,0
+	pvary	0,1
+	call	3,2,&'$squash_list'/2
+	pvaly	2,255
+	gs	255,$';'/2
+	uvarx	6
+	ulvy	1
+	gs	6,$'->'/2
+	uvarx	6
+	us	255,$'once'/1
+	ulvy	1
+	gs	6,$'ground'/1
+	ulvy	0
+	dallpro	
+368: 	.clause
+15:	gvalx	0,1
+	gnil	4
+	pro	
+	last
+
+	.pred	'$$trf_list',5
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	5,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	gnil	4
+	pro	
+	.clause
+1:	gl	0
+	all	8
+	uvary	7
+	uvary	5
+	gl	1
+	uvara	1
+	uvary	4
+	gvary	6,2
+	gvary	3,3
+	gvary	0,4
+	pl	2
+	uvaly	5
+	ulvy	6
+	pvaly	7,0
+	pvaly	3,3
+	pvary	2,4
+	call	8,5,&'$trf'/5
+	pl	2
+	uvaly	7
+	ulvy	6
+	pvaly	5,0
+	pvaly	4,1
+	pvaly	3,3
+	pvary	1,4
+	call	3,5,&'$$trf_list'/5
+	puval	2,0
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'append'/3
+	last
+
+	.pred	'$trf_all',7
+	labelx	7
+4: 	sot	0,&0,&3,&3,&5
+3: 	fail	
+5: 	sos	0,&($'not'/1:&2,$'~='/2:&1),&3
+	.clause
+0:	typx	0,3
+	cutx	7
+	pc	8,$'user_error'
+	pc	9,#(CHR,&14)
+	sputl	8,9
+	gs	1,$'all'/2
+	uvoid	1
+	ulvx	0
+	gnil	6
+	pro	
+	.clause
+1:	gs	0,$'~='/2
+	all	7
+	uvary	2
+	uvary	1
+	gvary	0,1
+	gvary	5,3
+	gvary	3,4
+	gvara	0,5
+	cutx	7
+	gnil	6
+	ps	1,$'~='/2
+	uvaly	2
+	uvaly	1
+	pvary	6,2
+	call	7,3,&'$v_intersect'/3
+	puval	6,0
+	pvaly	5,1
+	pvary	4,2
+	call	5,3,&'append'/3
+	puval	4,0
+	pvaly	3,1
+	pvaly	2,2
+	pvaly	1,3
+	pc	4,$'fail'
+	pvaly	0,5
+	pvarx	6,6
+	dallexe	7,&'$imp_is_eq'/7
+	.clause
+2:	gs	0,$'not'/1
+	all	11
+	uvary	8
+	gvary	3,1
+	gvary	10,3
+	gvary	7,4
+	gvary	9,5
+	gvary	0,6
+	cutx	7
+	pvaly	8,0
+	pvary	4,1
+	pvaly	9,3
+	pvary	1,4
+	call	11,5,&'$trf'/5
+	ps	1,$'f'/3
+	ulvy	7
+	ulvy	10
+	ulvy	9
+	pvaly	8,0
+	pvary	6,2
+	call	8,3,&'$extra_vars'/3
+	pvaly	7,0
+	pvaly	6,1
+	pvary	5,2
+	call	7,3,&'append'/3
+	puval	6,0
+	puval	5,1
+	puval	4,2
+	pvaly	3,3
+	pvary	2,4
+	call	3,5,&'$imp_not'/5
+	puval	2,0
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'append'/3
+	last
+14: 	.string	"% Error - malformed 'all'\n"
+
+	.pred	'$trf_if',5
+	labelx	5
+12: 	sot	0,&9,&8,&8,&13
+9: 	t	6,0,&0
+	r	6,0,&1
+	r	6,0,&2
+	r	6,0,&3
+	r	6,0,&4
+	r	6,0,&5
+	r	6,0,&6
+	r	6,0,&7
+	tr	6,0,&8
+13: 	sose	0,&($'else'/2:&10,$'if'/1:&11),&8
+10: 	t	6,0,&1
+	r	6,0,&2
+	r	6,0,&4
+	r	6,0,&5
+	r	6,0,&6
+	tr	6,0,&8
+11: 	t	6,0,&0
+	r	6,0,&3
+	r	6,0,&7
+	tr	6,0,&8
+	.clause
+0:	gsx1	0,6,$'if'/1
+	typx	6,3
+	cutx	5
+	pc	7,$'user_error'
+	pc	8,#(CHR,&20)
+	sputl	7,8
+	gs	1,$'if'/1
+	uvalx	6
+	gnil	4
+	pro	
+	.clause
+1:	gsx2	0,6,7,$'else'/2
+	typx	6,3
+	cutx	5
+	pc	8,$'user_error'
+	pc	9,#(CHR,&27)
+	sputl	8,9
+	gs	1,$'else'/2
+	uvalx	6
+	uvalx	7
+	gnil	4
+	pro	
+	.clause
+2:	gsx2	0,6,7,$'else'/2
+	gsx1	6,6,$'if'/1
+	typx	6,3
+	cutx	5
+	pc	8,$'user_error'
+	pc	9,#(CHR,&34)
+	sputl	8,9
+	gs	1,$'else'/2
+	uvarx	8
+	uvalx	7
+	gs	8,$'if'/1
+	uvalx	6
+	gnil	4
+	pro	
+	.clause
+3:	gs	0,$'if'/1
+	us	255,$'then'/2
+	uvara	0
+	uvarx	6
+	gs	1,$'if'/1
+	us	255,$'then'/2
+	uvalx	0
+	uvalx	6
+	gnil	4
+	all	2
+	gvary	0,5
+	pvarx	1,1
+	pvarx	2,2
+	pvary	1,3
+	call	2,4,&'$str_some'/4
+	typy	1,3
+	cuty	0
+	pc	6,$'user_error'
+	pc	7,#(CHR,&45)
+	sputl	6,7
+	dallpro	
+	.clause
+4:	gsx2	0,6,7,$'else'/2
+	gs	6,$'if'/1
+	us	255,$'then'/2
+	uvara	0
+	uvarx	6
+	gs	1,$'else'/2
+	uvarx	8
+	uvalx	7
+	gs	8,$'if'/1
+	us	255,$'then'/2
+	uvalx	0
+	uvalx	6
+	gnil	4
+	all	2
+	gvary	0,5
+	pvarx	1,1
+	pvarx	2,2
+	pvary	1,3
+	call	2,4,&'$str_some'/4
+	typy	1,3
+	cuty	0
+	pc	6,$'user_error'
+	pc	7,#(CHR,&56)
+	sputl	6,7
+	dallpro	
+	.clause
+5:	gsx2	0,9,8,$'else'/2
+	gs	9,$'if'/1
+	us	255,$'then'/2
+	uvarx	9
+	uvara	0
+	gsx2	9,6,7,$'='/2
+	all	1
+	gvary	0,5
+	jtypx	6,3,&73
+	jtypx	7,12,&73
+	ps	9,$'=='/2
+	uvalx	6
+	uvalx	7
+	ps	10,$'->'/2
+	uvalx	9
+	uvalx	0
+	ps	0,$'freeze'/2
+	uvalx	6
+	us	255,$';'/2
+	uvalx	10
+	uvalx	8
+	call	1,5,&'$trf'/5
+	j	&74
+73: 	typx	7,3
+	typx	6,12
+	ps	9,$'=='/2
+	uvalx	6
+	uvalx	7
+	ps	10,$'->'/2
+	uvalx	9
+	uvalx	0
+	ps	0,$'freeze'/2
+	uvalx	7
+	us	255,$';'/2
+	uvalx	10
+	uvalx	8
+	call	1,5,&'$trf'/5
+74: 	cuty	0
+	dallpro	
+	.clause
+6:	gs	0,$'else'/2
+	uvarx	6
+	all	28
+	uvary	13
+	gs	6,$'if'/1
+	us	255,$'then'/2
+	uvary	16
+	uvary	10
+	gvary	3,1
+	gvary	12,2
+	gvary	17,3
+	gvary	0,4
+	cutx	5
+	pvaly	16,0
+	pvary	11,1
+	pvary	15,2
+	pvary	14,3
+	call	28,4,&'$str_some'/4
+	labelx	0
+149: 	te	0,0,1,&150
+	pvaly	14,255
+	gs	255,$'='/2
+	uvary	23
+	uvary	22
+	cutx	0
+	pvaly	17,0
+	pvaly	14,1
+	pvary	27,2
+	call	28,3,&'$v_intersect'/3
+	puval	27,0
+	pvaly	11,1
+	pvary	26,2
+	call	27,3,&'append'/3
+	puval	26,0
+	pvaly	15,1
+	pvaly	23,2
+	pvaly	22,3
+	pvary	24,4
+	pvary	25,5
+	pvarx	6,6
+	call	26,7,&'$imp_is_eq'/7
+	pvaly	3,255
+	gs	255,$','/2
+	ulvy	25
+	uvarx	1
+	ps	6,$'=='/2
+	ulvy	24
+	uc	$'true'
+	ps	7,$'='/2
+	uvaly	23
+	uvaly	22
+	ps	8,$'if'/1
+	us	255,$'then'/2
+	uvalx	6
+	us	255,$','/2
+	uvalx	7
+	uvaly	10
+	ps	0,$'else'/2
+	uvalx	8
+	uvaly	13
+	pvaly	12,2
+	pvaly	17,3
+	pvaly	0,4
+	dallexe	5,&'$trf_if'/5
+150: 	tre	0,0
+	pl	2
+	ulvy	12
+	ul	255
+	uvaly	10
+	uvaly	13
+	pvaly	14,0
+	pvary	6,1
+	pvaly	17,3
+	pvary	21,4
+	call	22,5,&'$trf'/5
+	pl	2
+	ulvy	12
+	ul	255
+	ulvy	11
+	ul	255
+	ulvy	15
+	ul	255
+	ulvy	14
+	uvaly	13
+	pvaly	10,0
+	pvary	5,1
+	pvaly	17,3
+	pvary	20,4
+	call	22,5,&'$trf'/5
+	pl	2
+	ulvy	12
+	ul	255
+	uvaly	16
+	uvaly	10
+	pvaly	13,0
+	pvary	4,1
+	pvaly	17,3
+	pvary	18,4
+	call	22,5,&'$trf'/5
+	puval	21,0
+	puval	20,1
+	pvary	19,2
+	call	20,3,&'append'/3
+	puval	19,0
+	puval	18,1
+	pvary	1,2
+	call	18,3,&'append'/3
+	ps	1,$'f'/3
+	ulvy	15
+	ulvy	11
+	ulvy	17
+	pvaly	16,0
+	pvary	8,2
+	call	16,3,&'$extra_vars'/3
+	ps	0,$','/2
+	ulvy	11
+	us	255,$','/2
+	ulvy	15
+	us	255,$','/2
+	ulvy	14
+	us	255,$','/2
+	uvaly	10
+	uvaly	13
+	pvaly	12,1
+	pvary	7,2
+	call	12,3,&'$shared_vars'/3
+	labely	9
+151: 	te	0,0,0,&152
+	puval	11,0
+	pvaly	10,1
+	call	10,2,&'$is_local'/2
+	cuty	9
+	puval	8,0
+	puval	7,1
+	puval	6,2
+	puval	5,3
+	puval	4,4
+	pvaly	3,5
+	pvary	2,6
+	call	3,7,&'$imp_if'/7
+	j	&153
+152: 	tre	0,0
+	puval	8,0
+	puval	7,1
+	puval	6,2
+	puval	5,3
+	puval	4,4
+	pvaly	3,5
+	pvary	2,6
+	call	3,7,&'$imp_if_soft'/7
+153: 	puval	2,0
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'append'/3
+154: 	.clause
+7:	gs	0,$'if'/1
+	us	255,$'then'/2
+	uvarx	6
+	uvarx	7
+	cutx	5
+	ps	8,$'if'/1
+	us	255,$'then'/2
+	uvalx	6
+	uvalx	7
+	ps	0,$'else'/2
+	uvalx	8
+	uc	$'true'
+	exec	5,&'$trf_if'/5
+	.clause
+8:	pc	1,#(CHR,&175)
+	pl	2
+	ulvx	0
+	uc	$[]
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	fail	
+	last
+175: 	.string	"~NError - ~w is malformed.~n"
+56: 	.string	"% Error - malformed 'if'\n"
+45: 	.string	"% Error - malformed 'if'\n"
+34: 	.string	"% Error - malformed 'if'\n"
+27: 	.string	"% Error - malformed 'if'\n"
+20: 	.string	"% Error - malformed 'if'\n"
+
+	.pred	'$meta_call',5
+11: 	sot	0,&9,&10,&10,&12
+9: 	t	5,0,&0
+	r	5,0,&1
+	r	5,0,&2
+	r	5,0,&3
+	r	5,0,&4
+	r	5,0,&5
+	r	5,0,&6
+	r	5,0,&7
+	tr	5,0,&8
+10: 	fail	
+12: 	sos	0,&($','/2:&0,$'->'/2:&8,$':-'/1:&3,$':-'/2:&1,$';'/2:&2,$'?-'/1:&4,$'\\+'/1:&6,$'call'/1:&5,$'once'/1:&7),&10
+	.clause
+0:	gsx2	0,8,7,$','/2
+	gl	1
+	uvalx	8
+	ul	255
+	uvalx	7
+	uc	$[]
+	gl	2
+	uvarx	6
+	ul	255
+	uvarx	5
+	uc	$[]
+	gnil	3
+	gs	4,$','/2
+	uvalx	6
+	uvalx	5
+	pro	
+	.clause
+1:	gs	0,$':-'/2
+	ulvx	3
+	uvarx	6
+	gl	1
+	uvalx	6
+	uc	$[]
+	gl	2
+	uvarx	5
+	uc	$[]
+	gs	4,$':-'/2
+	ulvx	3
+	uvalx	5
+	pro	
+	.clause
+2:	gsx2	0,8,7,$';'/2
+	gl	1
+	uvalx	8
+	ul	255
+	uvalx	7
+	uc	$[]
+	gl	2
+	uvarx	6
+	ul	255
+	uvarx	5
+	uc	$[]
+	gnil	3
+	gs	4,$';'/2
+	uvalx	6
+	uvalx	5
+	pro	
+	.clause
+3:	gsx1	0,6,$':-'/1
+	gl	1
+	uvalx	6
+	uc	$[]
+	gl	2
+	uvarx	5
+	uc	$[]
+	gnil	3
+	gs	4,$':-'/1
+	uvalx	5
+	pro	
+	.clause
+4:	gsx1	0,6,$'?-'/1
+	gl	1
+	uvalx	6
+	uc	$[]
+	gl	2
+	uvarx	5
+	uc	$[]
+	gnil	3
+	gs	4,$'?-'/1
+	uvalx	5
+	pro	
+	.clause
+5:	gsx1	0,6,$'call'/1
+	gl	1
+	uvalx	6
+	uc	$[]
+	gl	2
+	uvarx	5
+	uc	$[]
+	gnil	3
+	gs	4,$'call'/1
+	uvalx	5
+	pro	
+	.clause
+6:	gsx1	0,6,$'\\+'/1
+	gl	1
+	uvalx	6
+	uc	$[]
+	gl	2
+	uvarx	5
+	uc	$[]
+	gnil	3
+	gs	4,$'\\+'/1
+	uvalx	5
+	pro	
+	.clause
+7:	gsx1	0,6,$'once'/1
+	gl	1
+	uvalx	6
+	uc	$[]
+	gl	2
+	uvarx	5
+	uc	$[]
+	gnil	3
+	gs	4,$'once'/1
+	uvalx	5
+	pro	
+	.clause
+8:	gsx2	0,8,7,$'->'/2
+	gl	1
+	uvalx	8
+	ul	255
+	uvalx	7
+	uc	$[]
+	gl	2
+	uvarx	6
+	ul	255
+	uvarx	5
+	uc	$[]
+	gnil	3
+	gs	4,$'->'/2
+	uvalx	6
+	uvalx	5
+	pro	
+	last
+
+	.pred	'$str_some',4
+	labelx	4
+4: 	sot	0,&0,&3,&3,&5
+5: 	sose	0,&($'gSome'/2:&2,$'some'/2:&1),&3
+	.clause
+0:	typx	0,3
+	cutx	4
+	gnil	1
+	gnil	2
+	gvalx	3,0
+	pro	
+	.clause
+1:	gs	0,$'some'/2
+	all	4
+	uvary	3
+	uvara	0
+	gvary	0,1
+	cutx	4
+	pvary	1,1
+	call	4,4,&'$str_some'/4
+	pvaly	3,0
+	pnil	1
+	pvary	2,2
+	call	3,3,&'$extra_vars'/3
+	puval	2,0
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'append'/3
+	.clause
+2:	gs	0,$'gSome'/2
+	all	4
+	uvary	3
+	uvara	0
+	gvary	0,2
+	cutx	4
+	pvary	1,2
+	call	4,4,&'$str_some'/4
+	pvaly	3,0
+	pnil	1
+	pvary	2,2
+	call	3,3,&'$extra_vars'/3
+	puval	2,0
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'append'/3
+	.clause
+3:	gvalx	0,3
+	gnil	1
+	gnil	2
+	pro	
+	last
+
+	.pred	'$str_all',4
+	labelx	4
+4: 	sot	0,&0,&3,&3,&5
+5: 	sose	0,&($'all'/2:&1,$'gAll'/2:&2),&3
+	.clause
+0:	typx	0,3
+	cutx	4
+	gnil	1
+	gnil	2
+	gvalx	3,0
+	pro	
+	.clause
+1:	gs	0,$'all'/2
+	all	4
+	uvary	3
+	uvara	0
+	gvary	0,1
+	cutx	4
+	pvary	1,1
+	call	4,4,&'$str_all'/4
+	pvaly	3,0
+	pnil	1
+	pvary	2,2
+	call	3,3,&'$extra_vars'/3
+	puval	2,0
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'append'/3
+	.clause
+2:	gs	0,$'gAll'/2
+	all	4
+	uvary	3
+	uvara	0
+	gvary	0,2
+	cutx	4
+	pvary	1,2
+	call	4,4,&'$str_all'/4
+	pvaly	3,0
+	pnil	1
+	pvary	2,2
+	call	3,3,&'$extra_vars'/3
+	puval	2,0
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'append'/3
+	.clause
+3:	gvalx	0,3
+	gnil	1
+	gnil	2
+	pro	
+	last
+
+	.pred	'$extra_vars',3
+	.clause
+0:	gvarx	3,2
+	pnil	2
+	exec	4,&'$extra_vars1a'/4
+	last
+
+	.pred	'$extra_vars1a',4
+3: 	sot	0,&0,&1,&2,&2
+	.clause
+0:	typx	0,3
+	labelx	4
+8: 	te	4,0,5,&9
+	pl	5
+	ulvx	1
+	ulvx	2
+	occurs	0,5
+	cutx	4
+	gvalx	2,3
+	pro	
+9: 	tre	4,0
+	gl	3
+	ulvx	0
+	ulvx	2
+	pro	
+10: 	.clause
+1:	typx	0,12
+	gvalx	2,3
+	pro	
+	.clause
+2:	typx	0,112
+	exec	4,&'$extra_vars2'/4
+	last
+
+	.pred	'$extra_vars2',4
+	labelx	4
+10: 	sot	0,&8,&9,&7,&11
+8: 	t	5,0,&0
+	r	5,0,&1
+	r	5,0,&2
+	r	5,0,&3
+	r	5,0,&4
+	r	5,0,&5
+	tr	5,0,&6
+9: 	fail	
+11: 	sose	0,&($'all'/2:&0,$'count'/3:&5,$'max'/3:&4,$'min'/3:&3,$'solutions'/3:&2,$'some'/2:&1,$'sum'/4:&6),&7
+	.clause
+0:	gsx2	0,5,0,$'all'/2
+	gvarx	6,1
+	cutx	4
+	pl	1
+	uvalx	5
+	ulvx	6
+	exec	4,&'$extra_vars1a'/4
+	.clause
+1:	gsx2	0,5,0,$'some'/2
+	gvarx	6,1
+	cutx	4
+	pl	1
+	uvalx	5
+	ulvx	6
+	exec	4,&'$extra_vars1a'/4
+	.clause
+2:	gs	0,$'solutions'/3
+	uvarx	5
+	uvara	0
+	uvarx	6
+	gvarx	7,2
+	gvarx	8,3
+	cutx	4
+	pl	2
+	uvalx	5
+	ulvx	1
+	gvara	1,6
+	gvara	3,7
+	gvara	4,8
+	exec	5,&'$ev1a_2'/5
+	.clause
+3:	gs	0,$'min'/3
+	uvarx	5
+	uvara	0
+	uvarx	6
+	gvarx	7,2
+	gvarx	8,3
+	cutx	4
+	pl	2
+	uvalx	5
+	ulvx	1
+	gvara	1,6
+	gvara	3,7
+	gvara	4,8
+	exec	5,&'$ev1a_2'/5
+	.clause
+4:	gs	0,$'max'/3
+	uvarx	5
+	uvara	0
+	uvarx	6
+	gvarx	7,2
+	gvarx	8,3
+	cutx	4
+	pl	2
+	uvalx	5
+	ulvx	1
+	gvara	1,6
+	gvara	3,7
+	gvara	4,8
+	exec	5,&'$ev1a_2'/5
+	.clause
+5:	gs	0,$'count'/3
+	uvarx	5
+	uvara	0
+	uvarx	6
+	gvarx	7,2
+	gvarx	8,3
+	cutx	4
+	pl	2
+	uvalx	5
+	ulvx	1
+	gvara	1,6
+	gvara	3,7
+	gvara	4,8
+	exec	5,&'$ev1a_2'/5
+	.clause
+6:	gs	0,$'sum'/4
+	uvarx	5
+	uvarx	6
+	uvara	0
+	uvarx	7
+	gvarx	8,2
+	gvarx	9,3
+	cutx	4
+	pl	2
+	uvalx	5
+	ul	255
+	uvalx	6
+	ulvx	1
+	gvara	1,7
+	gvara	3,8
+	gvara	4,9
+	exec	5,&'$ev1a_2'/5
+	.clause
+7:	typx	0,112
+	pl	5
+	uvoid	1
+	uvarx	6
+	univ	0,5
+	gvara	0,6
+	exec	4,&'$ev1a_list'/4
+	last
+
+	.pred	'$ev1a_2',5
+	.clause
+0:	all	4
+	gvary	3,0
+	gvara	0,1
+	gvary	2,2
+	gvara	2,3
+	gvary	0,4
+	pvaly	2,1
+	pvary	1,3
+	call	4,4,&'$extra_vars1a'/4
+	pvaly	3,0
+	pvaly	2,1
+	puval	1,2
+	pvaly	0,3
+	dallexe	4,&'$extra_vars1a'/4
+	last
+
+	.pred	'$ev1a_list',4
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	4,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	2,3
+	pro	
+	.clause
+1:	gl	0
+	all	4
+	uvary	3
+	uvara	0
+	gvary	2,1
+	gvary	0,3
+	pvaly	2,1
+	pvary	1,3
+	call	4,4,&'$ev1a_list'/4
+	pvaly	3,0
+	pvaly	2,1
+	puval	1,2
+	pvaly	0,3
+	dallexe	4,&'$extra_vars1a'/4
+	last
+
+	.pred	'$is_local',2
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	2,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	pro	
+	.clause
+1:	glvx2	0,2,0
+	labelx	3
+9: 	te	2,0,4,&10
+	occurs	2,1
+	cutx	3
+	fail	
+10: 	tre	2,0
+11: 	execsot	2,0,&4,&0,&1,&2
+	last
+
+	.pred	'$shared_vars',3
+	.clause
+0:	all	4
+	gvary	3,1
+	gvary	0,2
+	pnil	1
+	pvary	2,2
+	call	4,3,&'$extra_vars'/3
+	pvaly	3,0
+	pnil	1
+	pvary	1,2
+	call	3,3,&'$extra_vars'/3
+	puval	2,0
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'$v_intersect'/3
+	last
+
+	.pred	'$v_intersect',3
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	3,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gnil	2
+	pro	
+	.clause
+1:	glvx2	0,3,0
+	labelx	4
+11: 	te	3,0,5,&12
+	occurs	3,1
+	cutx	4
+	gl	2
+	uvalx	3
+	uvara	2
+	j	&13
+12: 	tre	3,0
+13: 	execsot	3,0,&4,&0,&1,&2
+	last
+
+	.pred	'$unique_vars',2
+	.clause
+0:	gvarx	3,1
+	pnil	1
+	pnil	2
+	pvarx	4,4
+	exec	5,&'$unique_vars1'/5
+	last
+
+	.pred	'$unique_vars1',5
+	.clause
+0:	gvarx	6,0
+	gvarx	9,1
+	gvarx	7,2
+	gvarx	8,3
+	gvarx	5,4
+	jtypx	6,12,&15
+	gvalx	8,7
+	gvalx	5,9
+	pro	
+15: 	jtypx	6,3,&19
+	labelx	0
+16: 	te	10,0,10,&17
+	occurs	6,7
+	cutx	0
+	gl	5
+	ulvx	6
+	ulvx	9
+	gvara	0,6
+	gvara	1,7
+	gvara	2,8
+	exec	3,&'$v_delete'/3
+17: 	re	10,0,&18
+	occurs	6,9
+	cutx	0
+	gvalx	7,8
+	gvalx	9,5
+	pro	
+18: 	tre	10,0
+	gl	8
+	ulvx	6
+	ulvx	7
+	gvalx	9,5
+	pro	
+	j	&20
+19: 	pvarx	10,10
+	pvarx	0,0
+	functor	6,10,0
+	gvara	1,6
+	gvara	2,9
+	gvara	3,7
+	gvara	4,8
+	exec	6,&'$unique_vars_a'/6
+20: 	last
+
+	.pred	'$unique_vars_a',6
+	.clause
+0:	all	6
+	gvary	4,1
+	gvara	1,2
+	gvara	2,3
+	gvary	1,4
+	gvary	0,5
+	apushx	0
+	pushi	$$0
+	jpred	4,&18
+	pvaly	4,6
+	arg	0,6,6
+	apushx	0
+	afunc	47
+	popy	5
+	gvara	0,6
+	pvary	2,3
+	pvary	3,4
+	call	6,5,&'$unique_vars1'/5
+	pvaly	5,0
+	pvaly	4,1
+	puval	3,2
+	puval	2,3
+	pvaly	1,4
+	pvaly	0,5
+	dallexe	6,&'$unique_vars_a'/6
+18: 	gvaly	1,2
+	gvaly	0,1
+	dallpro	
+19: 	last
+
+	.pred	'$v_delete',3
+	.clause
+0:	glvx2	1,3,1
+	idtest	0,3
+	jfail	&7
+	gvalx	2,1
+	pro	
+7: 	gl	2
+	uvalx	3
+	uvara	2
+	exec	3,&'$v_delete'/3
+8: 	last
+
+	.pred	'$is_eq_header',3
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	3,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	1,2
+	pro	
+	.clause
+1:	glvx2	0,3,0
+	gsx2	2,4,2,$','/2
+	gs	4,$'$copyVariablesToTopOfHeap:-)'/1
+	uvalx	3
+	execsot	3,0,&4,&0,&1,&2
+	last
+
+	.pred	'$squash_list',2
+	labelx	2
+3: 	sot	0,&2,&1,&2,&1
+2: 	t	3,0,&0
+	tr	3,0,&1
+	.clause
+0:	gl	0
+	uvarx	3
+	uc	$[]
+	gvalx	3,1
+	cutx	2
+	pro	
+	.clause
+1:	pl	3
+	uc	$'f'
+	ulvx	0
+	univ	1,3
+	pro	
+	last
+
+	.pred	'$save_proc_name',1
+	labelx	1
+3: 	sot	0,&2,&1,&1,&4
+2: 	t	2,0,&0
+	tr	2,0,&1
+4: 	js	0,$':-'/2,&0
+	j	&1
+	j	&0
+	.clause
+0:	gsx2	0,0,255,$':-'/2
+	cutx	1
+	exec	1,&'$save_proc_name1'/1
+	.clause
+1:	exec	1,&'$save_proc_name1'/1
+	last
+
+	.pred	'$save_proc_name1',1
+	labelx	1
+2: 	t	2,0,&0
+	tr	2,0,&1
+	.clause
+0:	all	1
+	gvary	0,1
+	call	1,1,&'$curr_proc_name'/1
+	cuty	0
+	dallpro	
+	.clause
+1:	all	7
+	gvary	0,1
+	jctypx	0,17,&17
+	pvary	6,255
+	gs	255,$'xyzzy'/1
+	uvoid	1
+	j	&18
+17: 	pvary	6,255
+	gvalx	0,255
+18: 	ps	0,$'$curr_proc_name'/1
+	uvoid	1
+	call	7,1,&'retract'/1
+	puval	6,2
+	pvary	5,3
+	pvary	4,4
+	functor	2,3,4
+	pvarx	2,2
+	pvaly	5,3
+	pvaly	4,4
+	functor	2,3,4
+	ps	0,$'$curr_proc_name'/1
+	uvalx	2
+	call	6,1,&'assert'/1
+	puval	5,2
+	pvary	3,3
+	name	2,3
+	puval	4,0
+	pvary	2,1
+	call	4,2,&'intToString'/2
+	puval	3,0
+	puval	2,1
+	pvary	1,2
+	call	2,3,&'append'/3
+	ps	0,$'$next_name'/1
+	uvoid	1
+	call	2,1,&'retract'/1
+	ps	0,$'$next_name'/1
+	ul	255
+	uc	$46
+	ul	255
+	uc	$97
+	ulvy	1
+	call	1,1,&'assert'/1
+	cuty	0
+	dallpro	
+	last
+
+	.pred	'$new_freeze_pred',5
+	.clause
+0:	all	5
+	gvary	2,0
+	gvary	4,1
+	gvary	3,3
+	gs	4,$'defn'/3
+	uvarx	5
+	ulvy	3
+	ulvx	2
+	gl	5
+	ulvy	2
+	uc	$[]
+	pvary	0,0
+	call	5,1,&'$new_name'/1
+	pvaly	4,0
+	pvaly	2,1
+	pvary	1,2
+	call	4,3,&'$extra_vars'/3
+	pvaly	3,5
+	pl	6
+	ulvy	2
+	ulvy	1
+	pl	7
+	ulvy	0
+	uvalx	6
+	univ	5,7
+	dallpro	
+	last
+
+	.pred	'$new_pred',5
+	.clause
+0:	all	7
+	gvary	4,0
+	gvary	5,1
+	gvary	2,3
+	gs	4,$'defn'/3
+	uvary	6
+	ulvy	2
+	ulvx	2
+	pvary	1,0
+	call	7,1,&'$new_name'/1
+	pvaly	4,0
+	pvaly	6,1
+	call	6,2,&'$groundWhenVars'/2
+	pvaly	4,5
+	pnil	6
+	idtest	5,6
+	jfail	&15
+	pvaly	2,5
+	pl	6
+	ulvy	1
+	ulvy	5
+	univ	5,6
+	dallpro	
+15: 	pvaly	5,0
+	pvaly	4,1
+	pvary	3,2
+	call	5,3,&'$extra_vars'/3
+	pvaly	4,0
+	puval	3,1
+	pvary	0,2
+	call	3,3,&'append'/3
+	pvaly	2,5
+	pl	6
+	ulvy	1
+	ulvy	0
+	univ	5,6
+	dallpro	
+16: 	last
+
+	.pred	'$groundWhenVars',2
+3: 	sot	0,&4,&0,&1,&2
+4: 	sot	1,&5,&0,&1,&2
+5: 	mkdel	2,&3
+	mark	1
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	pro	
+	.clause
+1:	glvx2	0,2,0
+	glvx2	1,3,1
+	gs	3,$'ground'/1
+	uvalx	2
+	execsot	2,0,&4,&0,&1,&2
+	last
+
+	.pred	'$new_name',1
+	labelx	1
+	.clause
+0:	all	3
+	gvary	2,0
+	gvary	0,1
+	ps	0,$'$next_name'/1
+	uvary	1
+	call	3,1,&'retract'/1
+	pvaly	2,2
+	pvaly	1,3
+	name	2,3
+	pvaly	1,255
+	gl	255
+	uvara	1
+	ul	255
+	uvara	0
+	uvarx	2
+	apushx	0
+	pushi	$$122
+	jpred	2,&9
+	apushx	0
+	afunc	46
+	popx	3
+	pl	4
+	uvalx	1
+	ul	255
+	uvalx	3
+	uvalx	2
+	j	&10
+9: 	pl	4
+	uvalx	1
+	ul	255
+	uc	$97
+	ul	255
+	uvalx	0
+	uvalx	2
+10: 	ps	0,$'$next_name'/1
+	uvalx	4
+	call	1,1,&'assert'/1
+	cuty	0
+	dallpro	
+	last
+
+	.pred	'$init',0
+11: 	t	0,0,&1
+	r	0,0,&2
+	r	0,0,&3
+	tr	0,0,&4
+	.clause
+1:	all	1
+	labely	0
+	call	1,0,&'initializing'/0
+	pc	0,#(STR,&13)
+	call	1,1,&'$dynamic'/1
+	cuty	0
+	fail	
+	.clause
+2:	all	1
+	labely	0
+	call	1,0,&'initializing'/0
+	ps	0,$'$curr_proc_name'/1
+	us	255,$'xyzzy'/1
+	uvoid	1
+	call	1,1,&'assert'/1
+	cuty	0
+	fail	
+	.clause
+3:	all	1
+	labely	0
+	call	1,0,&'initializing'/0
+	pc	0,#(STR,&16)
+	call	1,1,&'$dynamic'/1
+	cuty	0
+	fail	
+	.clause
+4:	all	1
+	labely	0
+	call	1,0,&'initializing'/0
+	pc	0,#(STR,&18)
+	call	1,1,&'assert'/1
+	cuty	0
+	fail	
+	last
+18: 	.word	$'$next_name'/1
+	.word	#(CHR,&19)
+19: 	.string	".x"
+16: 	.word	$'/'/2
+	.word	$'$next_name'
+	.word	$1
+13: 	.word	$'/'/2
+	.word	$'$curr_proc_name'
+	.word	$1
+

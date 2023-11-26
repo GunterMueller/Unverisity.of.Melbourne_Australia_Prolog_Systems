@@ -1,0 +1,22 @@
+.TH MUDD MUDD "6 December 1984"
+.SH NAME
+mudd \- send command(s) to database
+.SH SYNOPSIS
+.B mudd
+database relation
+.br
+.SH DESCRIPTION
+.I Mudd
+opens the
+.I relation
+from the directory
+.I database
+and reads commands from standard input.
+.PP
+This program is usually only run by MU-Prolog using pipes and an
+obscure protocol and is not meant to be run from the shell.
+.PP
+.SH "SEE ALSO"
+newrel(mudd), prdd(mudd), prbkt(mudd)
+.SH BUGS
+Variables inside functions dont work.

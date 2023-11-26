@@ -1,0 +1,316 @@
+
+	.pred	'$if',4
+2: 	fvar	0,255
+	jnvx	255,&0
+1: 	mkdel	4,&2
+	mark	255
+	delay	
+	.clause
+0:	gvara	0,1
+	all	2
+	gvary	0,2
+	labely	1
+10: 	te	4,0,4,&11
+	call	2,1,&'call'/1
+	cuty	1
+	pvaly	0,0
+	dallexe	1,&'call'/1
+11: 	tre	4,0
+	gvara	0,3
+	dallexe	1,&'call'/1
+12: 	last
+
+	.pred	'$if_soft',4
+2: 	fvar	0,255
+	jnvx	255,&0
+1: 	mkdel	4,&2
+	mark	255
+	delay	
+	.clause
+0:	gvara	0,1
+	all	2
+	gvary	0,2
+10: 	te	4,0,4,&11
+	labely	1
+	call	2,1,&'call'/1
+	pvaly	1,4
+	softcut	4
+	pvaly	0,0
+	dallexe	1,&'call'/1
+11: 	tre	4,0
+	gvara	0,3
+	dallexe	1,&'call'/1
+12: 	last
+
+	.pred	'$call_is_eq',4
+	.clause
+0:5: 	te	4,0,4,&6
+	cvttoh	0
+	iseq	1,2,4
+	gvalx	3,4
+	pro	
+6: 	tre	4,0
+	gc	3,$'true'
+	pro	
+7: 	last
+
+	.pred	'all',2
+2: 	jnvx	1,&0
+1: 	mkdel	2,&2
+	mark	1
+	delay	
+	.clause
+0:	gvarx	2,0
+	ps	0,$'all'/2
+	ulvx	2
+	ulvx	1
+	all	1
+	pvary	0,1
+	call	1,2,&'$call_trf'/2
+	puval	0,0
+	dallexe	1,&'call'/1
+	last
+
+	.pred	'gAll',2
+2: 	jnvx	1,&0
+1: 	mkdel	2,&2
+	mark	1
+	delay	
+	.clause
+0:	gvarx	2,0
+	ps	0,$'gAll'/2
+	ulvx	2
+	ulvx	1
+	all	1
+	pvary	0,1
+	call	1,2,&'$call_trf'/2
+	puval	0,0
+	dallexe	1,&'call'/1
+	last
+
+	.pred	'some',2
+2: 	jnvx	1,&0
+1: 	mkdel	2,&2
+	mark	1
+	delay	
+	.clause
+0:	gvarx	2,0
+	ps	0,$'some'/2
+	ulvx	2
+	ulvx	1
+	all	1
+	pvary	0,1
+	call	1,2,&'$call_trf'/2
+	puval	0,0
+	dallexe	1,&'call'/1
+	last
+
+	.pred	'gSome',2
+2: 	jnvx	1,&0
+1: 	mkdel	2,&2
+	mark	1
+	delay	
+	.clause
+0:	gvarx	2,0
+	ps	0,$'gSome'/2
+	ulvx	2
+	ulvx	1
+	all	1
+	pvary	0,1
+	call	1,2,&'$call_trf'/2
+	puval	0,0
+	dallexe	1,&'call'/1
+	last
+
+	.pred	'=>',2
+	.clause
+0:	gvarx	2,0
+	ps	0,$'=>'/2
+	ulvx	2
+	ulvx	1
+	all	1
+	pvary	0,1
+	call	1,2,&'$call_trf'/2
+	puval	0,0
+	dallexe	1,&'call'/1
+	last
+
+	.pred	'<=',2
+	.clause
+0:	gvarx	2,0
+	ps	0,$'<='/2
+	ulvx	2
+	ulvx	1
+	all	1
+	pvary	0,1
+	call	1,2,&'$call_trf'/2
+	puval	0,0
+	dallexe	1,&'call'/1
+	last
+
+	.pred	'<=>',2
+	.clause
+0:	gvarx	2,0
+	ps	0,$'<=>'/2
+	ulvx	2
+	ulvx	1
+	all	1
+	pvary	0,1
+	call	1,2,&'$call_trf'/2
+	puval	0,0
+	dallexe	1,&'call'/1
+	last
+
+	.pred	'solutions',3
+	.clause
+0:	gvarx	3,0
+	ps	0,$'solutions'/3
+	ulvx	3
+	ulvx	1
+	ulvx	2
+	all	1
+	pvary	0,1
+	call	1,2,&'$call_trf'/2
+	puval	0,0
+	dallexe	1,&'call'/1
+	last
+
+	.pred	'min',3
+	.clause
+0:	gvarx	3,0
+	ps	0,$'min'/3
+	ulvx	3
+	ulvx	1
+	ulvx	2
+	all	1
+	pvary	0,1
+	call	1,2,&'$call_trf'/2
+	puval	0,0
+	dallexe	1,&'call'/1
+	last
+
+	.pred	'max',3
+	.clause
+0:	gvarx	3,0
+	ps	0,$'max'/3
+	ulvx	3
+	ulvx	1
+	ulvx	2
+	all	1
+	pvary	0,1
+	call	1,2,&'$call_trf'/2
+	puval	0,0
+	dallexe	1,&'call'/1
+	last
+
+	.pred	'count',3
+	.clause
+0:	gvarx	3,0
+	ps	0,$'count'/3
+	ulvx	3
+	ulvx	1
+	ulvx	2
+	all	1
+	pvary	0,1
+	call	1,2,&'$call_trf'/2
+	puval	0,0
+	dallexe	1,&'call'/1
+	last
+
+	.pred	'sum',4
+	.clause
+0:	gvarx	4,0
+	ps	0,$'sum'/4
+	ulvx	4
+	ulvx	1
+	ulvx	2
+	ulvx	3
+	all	1
+	pvary	0,1
+	call	1,2,&'$call_trf'/2
+	puval	0,0
+	dallexe	1,&'call'/1
+	last
+
+	.pred	'not',1
+2: 	jnvx	0,&0
+1: 	mkdel	1,&2
+	mark	0
+	delay	
+	.clause
+0:	gvarx	1,0
+	ps	0,$'not'/1
+	ulvx	1
+	all	1
+	pvary	0,1
+	call	1,2,&'$call_trf'/2
+	puval	0,0
+	dallexe	1,&'call'/1
+	last
+
+	.pred	'if',1
+3: 	sot	0,&4,&0,&0,&5
+4: 	mkdel	1,&3
+	mark	0
+	delay	
+5: 	js	0,$'then'/2,&6
+	j	&0
+6: 	gsx2	0,1,2,$'then'/2
+7: 	jnvx	1,&8
+1: 	mkdel	3,&7
+	mark	1
+	delay	
+8: 	jnvx	2,&0
+2: 	mkdel	3,&8
+	mark	2
+	delay	
+	.clause
+0:	gvarx	3,0
+	ps	0,$'if'/1
+	ulvx	3
+	all	1
+	pvary	0,1
+	call	1,2,&'$call_trf'/2
+	puval	0,0
+	dallexe	1,&'call'/1
+	last
+
+	.pred	'else',2
+4: 	sot	0,&5,&0,&0,&6
+5: 	mkdel	2,&4
+	mark	0
+	delay	
+6: 	js	0,$'if'/1,&7
+	j	&0
+7: 	gsx1	0,2,$'if'/1
+8: 	sot	2,&9,&0,&0,&10
+9: 	mkdel	3,&8
+	mark	2
+	delay	
+10: 	js	2,$'then'/2,&11
+	j	&0
+11: 	gsx2	2,3,4,$'then'/2
+12: 	jnvx	3,&13
+1: 	mkdel	5,&12
+	mark	3
+	delay	
+13: 	jnvx	4,&14
+2: 	mkdel	5,&13
+	mark	4
+	delay	
+14: 	jnvx	1,&0
+3: 	mkdel	5,&14
+	mark	1
+	delay	
+	.clause
+0:	gvarx	5,0
+	ps	0,$'else'/2
+	ulvx	5
+	ulvx	1
+	all	1
+	pvary	0,1
+	call	1,2,&'$call_trf'/2
+	puval	0,0
+	dallexe	1,&'call'/1
+	last
+

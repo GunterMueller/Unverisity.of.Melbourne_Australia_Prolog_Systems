@@ -1,0 +1,4 @@
+/*	_1 is a member of _2 */
+?- wait member(1,0).
+member(A, B.C) :- A=B.
+member(A, B.C) :- /* A ~= B, */  member(A, C).

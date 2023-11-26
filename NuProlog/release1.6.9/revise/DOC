@@ -1,0 +1,93 @@
+New NU-Prolog revise system
+
+	Lee Naish
+
+Motivation
+
+The old system had annoying bugs and the functionality wasn't the best.
+If a new pred was added to f.nl (or the arity of a pred was changed),
+the changes did not end up in f.ns (only in @.ns), which meant that
+during program development it was necessary to recompile whole files
+quite often.  It was not possible to decouple editing and recompiling
+(you chouldn't edit several times then recompile, and couldn't do
+anything nice with make/cake, for example).
+
+There are three commands: redit, rnc and revise.  Revise is basically an
+redit followed by an rnc.  Redit behaves just like your favourite
+editor, except that it maintains a backup copy of .nl files and can
+remove some out of date files.  Rnc is just like your favourite
+NU-Prolog compiler, except is uses any backups which are around to find
+out what changes have been made to the files and only recompiled
+blocks of code which have been changed.
+
+Meaning of file extensions, etc
+
+	f.nl	- NU-Prolog source
+	f.ns	- NU-Prolog asm
+	f.no	- NU-Prolog object
+	f.save	- NU-Prolog save file
+	f	- executable (uses f.save)
+	f.nl@	- f.nl backup (created by redit/rnc. f.ns up to date wrt this)
+	f@.nl	- nldiff of f.nl and f.nl@ (created by rnc)
+	f@.ns	- asm of f@.nl (used to update f.ns)
+	f@.no	- object of f@.nl (used for loading into np, eg dEdit)
+
+Rnc allows f.nl@ to be specified as well as f.nl, in which case f@.no is
+created as well as f.no.  The current version of rnc creates backup
+files itself, so there is no need for redit.  However, if it is combined
+with nc, this might be a bit annoying, so there will still be a use for
+redit (we could actually have a more minimal system with a command which
+just creates backups, checking modify times, but does not do any editing).
+
+
+Details of basic algorithm
+
+redit
+	if f.nl@ doesn't exist then create it
+	call editor
+
+rnc
+	if f.nl@ and f.ns exist then
+		create f@.nl
+		create f@.ns
+		create f@.no	(if f.nl@ was specified)
+		remove f.nl@
+		update f.ns
+		copy f.nl to f.nl@	(optional)
+	else
+		remove f.nl@
+		create f.ns
+		copy f.nl to f.nl@	(optional)
+	fi
+	create f.no	(in background if f.nl@ was specified)
+
+revise
+	convert -p pred_name to +/^pred_name\> for editor
+	add .nl extensions to file names if needed (for upward compat)
+	call redit with optional tag/command f1.nl f2.nl ...
+	call rnc with -c f1.nl@ f2.nl@ ...
+
+The actual implementation is more complex to allow greater flexibility
+of the commands.  Redit can be used with multiple arguments: the first
+can be an editor command (eg, +LineNum); multiple .nl files can be
+specified; non-nl files are accepted (no backups are created); errors
+are reported if @ files are specified.  Rnc allows all the normal
+options of nc, so it can be used to create .save files etc.
+
+Bugs, etc
+
+There are probably a few bugs (hopefully not as many as the old system).
+There has not been much thought about error handling (eg interrupts).
+It has not been tested very well.  My sh script programming style is
+probably appalling, which does not increase confidence in the system,
+plus it uses jas's old C code (with some fixes; maybe more are
+needed).  The complexity of nsfix is O(N*M) where N,M are the number
+of preds in f.ns and f@.ns, respectively.  It should be O(M+N), by
+sorting and merging, rather than nested loop "join".  Rnc functionality
+should be put into nc probably, if we are serious/happy about the system.
+There should be some consistence checks on file modify times (eg, redit
+should not create a backup if the .ns/.no files are already out of
+date).  I didn't know how to do this in sh.  The code should be
+commented more.  There are various hard-wired path names which will need
+to be changed (grep for /mip).
+

@@ -1,0 +1,10 @@
+
+#  Build example databases for RLHP and SIMC schemes
+
+# Create the database
+
+cat creatdb | prolog
+
+# Install some data
+
+./gendata | prolog

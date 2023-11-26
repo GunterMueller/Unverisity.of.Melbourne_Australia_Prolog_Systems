@@ -1,0 +1,93 @@
+
+
+#! /bin/sh
+#
+#  Build student database using SIMC indexing scheme
+#  (assumes that .con and .rules are already set up in $Db directory)
+#
+
+# Define some configuration parameters
+
+Db=/mip/db				# where the database lives
+Data=.					# where the data files live
+Bin1=/mip/jas/lib/prolog/db/simc		# where SIMC utilities live
+Bin=.
+
+
+# Create the specified relations
+
+if [ "$1" = "-c" ]
+then
+	consult=YES
+	shift
+else
+	consult=NO
+fi
+
+if [ "$1" = "all" ]
+then
+	rels="lock freeuid student stud_unit mark machine"
+else
+	rels="$*"
+fi
+
+for rel in $rels
+do
+	case $rel in
+
+#	freeuid(Uid), simc
+	freeuid)
+		$Bin/dbparams -v simc 10 1 2000 1024 1
+		skel="g:0:0(g:1:7fffffff)"
+		;;
+
+#	lock(Relation), simc
+	lock)
+		$Bin/dbparams -v simc 10 1 40 1024 1 
+		skel="g:0:0(g:1:7fffffff)"
+		;;
+
+#	stud_unit(Enrol,Unit), simc
+	stud_unit)
+		$Bin/dbparams -v simc 20 2 4000 1024 2 
+		skel="g:0:0(g:1:55555555,g:1:2aaaaaaa)"
+		;;
+
+#	machine(Machine, Enrol, Uname), simc
+	machine)
+		#$Bin/dbparams -v simc 30 3 400 1024 1 
+		$Bin/dbparams -v simc 30 3 150 1024 1 
+		skel="g:0:0(g:1:02582582,g:2:58258258,g:1:25825825)"
+		;;
+
+# 	student(Enrol,Sname,Gnames,Uname,Uid,CrsA,CrsB,Year,Attend), simc
+	student)
+		$Bin/dbparams -v simc 80 9 3000 1024 1 
+		skel="g:0:0(g:3:08888888,g:2:44444444,g:0:0,g:3:22222222,g:3:11111111,g:0:0,g:0:0,g:0:0,g:0:0)"
+		;;
+
+#	mark(Uname,Unit,Project,Tutor,Mark), simc
+	mark)
+		echo === 300
+		$Bin1/dbparams -v simc 50 5 300 1024 4 
+		$Bin/dbparams -v simc 50 5 300 1024 4 
+		echo === 3000
+		$Bin1/dbparams -v simc 50 5 3000 1024 4 
+		$Bin/dbparams -v simc 50 5 3000 1024 4 
+		echo === 30000
+		$Bin1/dbparams -v simc 50 5 30000 1024 4 
+		$Bin/dbparams -v simc 50 5 30000 1024 4 
+		echo === 300000
+		$Bin1/dbparams -v simc 50 5 300000 1024 4 
+		$Bin/dbparams -v simc 50 5 300000 1024 4 
+		echo === 3000000
+		$Bin1/dbparams -v simc 50 5 3000000 1024 4 
+		$Bin/dbparams -v simc 50 5 3000000 1024 4 
+		skel="g:0:0(g:2:17777777,g:3:28080808,g:3:40808080,g:0:0,g:0:0)"
+		;;
+
+	*)	echo "invalid relation: $rel"
+		;;
+	esac
+
+done

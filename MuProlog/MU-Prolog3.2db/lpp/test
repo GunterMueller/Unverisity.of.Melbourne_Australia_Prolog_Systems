@@ -1,0 +1,23 @@
+	% test program for control for pre-processor
+
+nocons(X,X.Y).
+nocons(X,A.Y):-nocons(X,Y).
+
+c_nocons(X) :- nocons(a, X).
+
+c_locdet(X) :- locdet(X, Y).
+
+locdet(0, []).
+locdet(s(N), A.B) :- locdet(N, B).
+
+test([]).
+test(a.B) :- test(B).
+
+nondet(a).
+nondet(b).
+
+loop(X) :- loop(a).
+
+reorder([]).
+reorder(A.B) :- reorder(B), nondet(A),
+	loop(A), A > 0, nocons(A, B), c_nocons(B), c_locdet(A), test(B).

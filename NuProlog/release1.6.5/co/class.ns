@@ -1,0 +1,2635 @@
+
+	.pred	'builtin',1
+121: 	sot	0,&119,&122,&120,&123
+119: 	t	1,0,&0
+	r	1,0,&1
+	r	1,0,&2
+	r	1,0,&3
+	r	1,0,&4
+	r	1,0,&5
+	r	1,0,&6
+	r	1,0,&7
+	r	1,0,&8
+	r	1,0,&9
+	r	1,0,&10
+	r	1,0,&11
+	r	1,0,&12
+	r	1,0,&13
+	r	1,0,&14
+	r	1,0,&15
+	r	1,0,&16
+	r	1,0,&17
+	r	1,0,&18
+	r	1,0,&19
+	r	1,0,&20
+	r	1,0,&21
+	r	1,0,&22
+	r	1,0,&23
+	r	1,0,&24
+	r	1,0,&25
+	r	1,0,&26
+	r	1,0,&27
+	r	1,0,&28
+	r	1,0,&29
+	r	1,0,&30
+	r	1,0,&31
+	r	1,0,&32
+	r	1,0,&33
+	r	1,0,&34
+	r	1,0,&35
+	r	1,0,&36
+	r	1,0,&37
+	r	1,0,&38
+	r	1,0,&39
+	r	1,0,&40
+	r	1,0,&41
+	r	1,0,&42
+	r	1,0,&43
+	r	1,0,&44
+	r	1,0,&45
+	r	1,0,&46
+	r	1,0,&47
+	r	1,0,&48
+	r	1,0,&49
+	r	1,0,&50
+	r	1,0,&51
+	r	1,0,&52
+	r	1,0,&53
+	r	1,0,&54
+	r	1,0,&55
+	r	1,0,&56
+	r	1,0,&57
+	r	1,0,&58
+	r	1,0,&59
+	r	1,0,&60
+	r	1,0,&61
+	r	1,0,&62
+	r	1,0,&63
+	r	1,0,&64
+	r	1,0,&65
+	r	1,0,&66
+	r	1,0,&67
+	r	1,0,&68
+	r	1,0,&69
+	r	1,0,&70
+	r	1,0,&71
+	r	1,0,&72
+	r	1,0,&73
+	r	1,0,&74
+	r	1,0,&75
+	r	1,0,&76
+	r	1,0,&77
+	r	1,0,&78
+	r	1,0,&79
+	r	1,0,&80
+	r	1,0,&81
+	r	1,0,&82
+	r	1,0,&83
+	r	1,0,&84
+	r	1,0,&85
+	r	1,0,&86
+	r	1,0,&87
+	r	1,0,&88
+	r	1,0,&89
+	r	1,0,&90
+	r	1,0,&91
+	r	1,0,&92
+	r	1,0,&93
+	r	1,0,&94
+	r	1,0,&95
+	r	1,0,&96
+	r	1,0,&97
+	r	1,0,&98
+	r	1,0,&99
+	r	1,0,&100
+	r	1,0,&101
+	r	1,0,&102
+	r	1,0,&103
+	r	1,0,&104
+	r	1,0,&105
+	r	1,0,&106
+	r	1,0,&107
+	r	1,0,&108
+	r	1,0,&109
+	r	1,0,&110
+	r	1,0,&111
+	r	1,0,&112
+	r	1,0,&113
+	r	1,0,&114
+	r	1,0,&115
+	r	1,0,&116
+	r	1,0,&117
+	tr	1,0,&118
+122: 	soc	0,&($'!':&0,$'$softCut':&3,$'abort':&99,$'fail':&6,$'true':&7),&120
+120: 	fail	
+123: 	sos	0,&($'$abolishCode'/2:&44,$'$applyBuiltin'/1:&9,$'$arefBuiltin'/4:&87,$'$argBuiltin'/3:&86,$'$arithPred'/1:&33,$'$asetBuiltin'/5:&88,$'$block'/1:&27,$'$bmv'/1:&23,$'$closeBuiltin'/2:&69,$'$compareBuiltin'/3:&38,$'$copyBuiltin'/4:&41,$'$copyVariablesToTopOfHeap:-)'/1:&53,$'$currentInputBuiltin'/1:&75,$'$currentOutputBuiltin'/1:&76,$'$cutd'/1:&2,$'$definedBuiltin'/4:&82,$'$del'/1:&13,$'$display'/1:&55,$'$dsimc_cvBuiltin'/3:&111,$'$dsimc_free'/1:&110,$'$dsimc_openBuiltin'/4:&109,$'$dsimc_queryBuiltin'/4:&113,$'$dsimc_sfbqueryBuiltin'/5:&112,$'$eRefBuiltin'/2:&36,$'$error'/2:&54,$'$execs'/2:&10,$'$flagsBuiltin'/1:&84,$'$floadBuiltin'/4:&95,$'$forkBuiltin'/3:&91,$'$forkBuiltin'/4:&92,$'$funcallBuiltin'/1:&8,$'$fvarBuiltin'/2:&90,$'$get0Builtin'/1:&56,$'$get0Builtin'/2:&59,$'$getBuiltin'/1:&57,$'$getBuiltin'/2:&60,$'$getStreamBuiltin'/2:&70,$'$getTokenBuiltin'/3:&61,$'$i32'/1:&28,$'$icn'/1:&15,$'$iload'/3:&94,$'$instanceBuiltin'/3:&47,$'$is'/2:&32,$'$is_eqBuiltin'/3:&52,$'$label'/1:&1,$'$linkBMT'/3:&46,$'$listToString'/2:&80,$'$load'/1:&93,$'$makeBMTBuiltin'/4:&45,$'$mkObjBuiltin'/4:&37,$'$nospy'/2:&98,$'$oncut'/2:&51,$'$openBuiltin'/3:&68,$'$predicateAritiesBuiltin'/2:&83,$'$printNumberBuiltin'/4:&67,$'$printf'/3:&66,$'$proplistBuiltin'/3:&48,$'$pstotBuiltin'/2:&101,$'$replacn'/3:&49,$'$simc_abort'/1:&108,$'$simc_assert'/2:&106,$'$simc_delete'/1:&107,$'$simc_end'/1:&105,$'$simc_hashBuiltin'/4:&102,$'$simc_nextBuiltin'/2:&104,$'$simc_queryBuiltin'/4:&103,$'$softCut'/1:&4,$'$sortBuiltin'/3:&39,$'$sprtBuiltin'/3:&65,$'$spy'/2:&97,$'$sql_abort'/1:&118,$'$sql_end'/1:&116,$'$sql_modify'/2:&117,$'$sql_nextBuiltin'/2:&115,$'$sql_queryBuiltin'/3:&114,$'$string'/1:&20,$'$struct'/1:&22,$'$symbolBuiltin'/2:&40,$'$syscallBuiltin'/5:&96,$'$tokenizeBuiltin'/4:&62,$'$ucn'/1:&16,$'$uncopyBuiltin'/3:&42,$'='/2:&31,$'=..'/2:&77,$'=='/2:&34,$'\\=='/2:&35,$'atom'/1:&24,$'atomic'/1:&26,$'caramel'/1:&5,$'clearIOError'/1:&72,$'compound'/1:&17,$'cons'/1:&19,$'const'/1:&18,$'erase'/1:&43,$'exit'/1:&100,$'float'/1:&30,$'flushOutput'/1:&71,$'functor'/3:&85,$'ground'/1:&89,$'integer'/1:&25,$'name'/2:&79,$'nonvar'/1:&14,$'number'/1:&29,$'occurs'/2:&78,$'plus'/3:&81,$'put'/1:&58,$'put'/2:&63,$'putl'/2:&64,$'setInput'/1:&73,$'setOutput'/1:&74,$'setarg'/3:&50,$'term'/1:&21,$'throw'/1:&11,$'var'/1:&12),&120
+	.clause
+0:	gc	0,$'!'
+	pro	
+	.clause
+1:	gsx1	0,255,$'$label'/1
+	pro	
+	.clause
+2:	gsx1	0,255,$'$cutd'/1
+	pro	
+	.clause
+3:	gc	0,$'$softCut'
+	pro	
+	.clause
+4:	gsx1	0,255,$'$softCut'/1
+	pro	
+	.clause
+5:	gsx1	0,255,$'caramel'/1
+	fail	
+	.clause
+6:	gc	0,$'fail'
+	pro	
+	.clause
+7:	gc	0,$'true'
+	pro	
+	.clause
+8:	gsx1	0,255,$'$funcallBuiltin'/1
+	pro	
+	.clause
+9:	gsx1	0,255,$'$applyBuiltin'/1
+	pro	
+	.clause
+10:	gsx2	0,255,255,$'$execs'/2
+	pro	
+	.clause
+11:	gsx1	0,255,$'throw'/1
+	pro	
+	.clause
+12:	gsx1	0,255,$'var'/1
+	pro	
+	.clause
+13:	gsx1	0,255,$'$del'/1
+	pro	
+	.clause
+14:	gsx1	0,255,$'nonvar'/1
+	pro	
+	.clause
+15:	gsx1	0,255,$'$icn'/1
+	pro	
+	.clause
+16:	gsx1	0,255,$'$ucn'/1
+	pro	
+	.clause
+17:	gsx1	0,255,$'compound'/1
+	pro	
+	.clause
+18:	gsx1	0,255,$'const'/1
+	pro	
+	.clause
+19:	gsx1	0,255,$'cons'/1
+	pro	
+	.clause
+20:	gsx1	0,255,$'$string'/1
+	pro	
+	.clause
+21:	gsx1	0,255,$'term'/1
+	pro	
+	.clause
+22:	gsx1	0,255,$'$struct'/1
+	pro	
+	.clause
+23:	gsx1	0,255,$'$bmv'/1
+	pro	
+	.clause
+24:	gsx1	0,255,$'atom'/1
+	pro	
+	.clause
+25:	gsx1	0,255,$'integer'/1
+	pro	
+	.clause
+26:	gsx1	0,255,$'atomic'/1
+	pro	
+	.clause
+27:	gsx1	0,255,$'$block'/1
+	pro	
+	.clause
+28:	gsx1	0,255,$'$i32'/1
+	pro	
+	.clause
+29:	gsx1	0,255,$'number'/1
+	pro	
+	.clause
+30:	gsx1	0,255,$'float'/1
+	pro	
+	.clause
+31:	gsx2	0,255,255,$'='/2
+	pro	
+	.clause
+32:	gsx2	0,255,255,$'$is'/2
+	pro	
+	.clause
+33:	gsx1	0,255,$'$arithPred'/1
+	pro	
+	.clause
+34:	gsx2	0,255,255,$'=='/2
+	pro	
+	.clause
+35:	gsx2	0,255,255,$'\\=='/2
+	pro	
+	.clause
+36:	gsx2	0,255,255,$'$eRefBuiltin'/2
+	pro	
+	.clause
+37:	gs	0,$'$mkObjBuiltin'/4
+	uvoid	4
+	pro	
+	.clause
+38:	gs	0,$'$compareBuiltin'/3
+	uvoid	3
+	pro	
+	.clause
+39:	gs	0,$'$sortBuiltin'/3
+	uvoid	3
+	pro	
+	.clause
+40:	gsx2	0,255,255,$'$symbolBuiltin'/2
+	pro	
+	.clause
+41:	gs	0,$'$copyBuiltin'/4
+	uvoid	4
+	pro	
+	.clause
+42:	gs	0,$'$uncopyBuiltin'/3
+	uvoid	3
+	pro	
+	.clause
+43:	gsx1	0,255,$'erase'/1
+	pro	
+	.clause
+44:	gsx2	0,255,255,$'$abolishCode'/2
+	pro	
+	.clause
+45:	gs	0,$'$makeBMTBuiltin'/4
+	uvoid	4
+	pro	
+	.clause
+46:	gs	0,$'$linkBMT'/3
+	uvoid	3
+	pro	
+	.clause
+47:	gs	0,$'$instanceBuiltin'/3
+	uvoid	3
+	pro	
+	.clause
+48:	gs	0,$'$proplistBuiltin'/3
+	uvoid	3
+	pro	
+	.clause
+49:	gs	0,$'$replacn'/3
+	uvoid	3
+	pro	
+	.clause
+50:	gs	0,$'setarg'/3
+	uvoid	3
+	pro	
+	.clause
+51:	gsx2	0,255,255,$'$oncut'/2
+	pro	
+	.clause
+52:	gs	0,$'$is_eqBuiltin'/3
+	uvoid	3
+	pro	
+	.clause
+53:	gsx1	0,255,$'$copyVariablesToTopOfHeap:-)'/1
+	pro	
+	.clause
+54:	gsx2	0,255,255,$'$error'/2
+	pro	
+	.clause
+55:	gsx1	0,255,$'$display'/1
+	pro	
+	.clause
+56:	gsx1	0,255,$'$get0Builtin'/1
+	pro	
+	.clause
+57:	gsx1	0,255,$'$getBuiltin'/1
+	pro	
+	.clause
+58:	gsx1	0,255,$'put'/1
+	pro	
+	.clause
+59:	gsx2	0,255,255,$'$get0Builtin'/2
+	pro	
+	.clause
+60:	gsx2	0,255,255,$'$getBuiltin'/2
+	pro	
+	.clause
+61:	gs	0,$'$getTokenBuiltin'/3
+	uvoid	3
+	pro	
+	.clause
+62:	gs	0,$'$tokenizeBuiltin'/4
+	uvoid	4
+	pro	
+	.clause
+63:	gsx2	0,255,255,$'put'/2
+	pro	
+	.clause
+64:	gsx2	0,255,255,$'putl'/2
+	pro	
+	.clause
+65:	gs	0,$'$sprtBuiltin'/3
+	uvoid	3
+	pro	
+	.clause
+66:	gs	0,$'$printf'/3
+	uvoid	3
+	pro	
+	.clause
+67:	gs	0,$'$printNumberBuiltin'/4
+	uvoid	4
+	pro	
+	.clause
+68:	gs	0,$'$openBuiltin'/3
+	uvoid	3
+	pro	
+	.clause
+69:	gsx2	0,255,255,$'$closeBuiltin'/2
+	pro	
+	.clause
+70:	gsx2	0,255,255,$'$getStreamBuiltin'/2
+	pro	
+	.clause
+71:	gsx1	0,255,$'flushOutput'/1
+	pro	
+	.clause
+72:	gsx1	0,255,$'clearIOError'/1
+	pro	
+	.clause
+73:	gsx1	0,255,$'setInput'/1
+	pro	
+	.clause
+74:	gsx1	0,255,$'setOutput'/1
+	pro	
+	.clause
+75:	gsx1	0,255,$'$currentInputBuiltin'/1
+	pro	
+	.clause
+76:	gsx1	0,255,$'$currentOutputBuiltin'/1
+	pro	
+	.clause
+77:	gsx2	0,255,255,$'=..'/2
+	pro	
+	.clause
+78:	gsx2	0,255,255,$'occurs'/2
+	pro	
+	.clause
+79:	gsx2	0,255,255,$'name'/2
+	pro	
+	.clause
+80:	gsx2	0,255,255,$'$listToString'/2
+	pro	
+	.clause
+81:	gs	0,$'plus'/3
+	uvoid	3
+	pro	
+	.clause
+82:	gs	0,$'$definedBuiltin'/4
+	uvoid	4
+	pro	
+	.clause
+83:	gsx2	0,255,255,$'$predicateAritiesBuiltin'/2
+	pro	
+	.clause
+84:	gsx1	0,255,$'$flagsBuiltin'/1
+	pro	
+	.clause
+85:	gs	0,$'functor'/3
+	uvoid	3
+	pro	
+	.clause
+86:	gs	0,$'$argBuiltin'/3
+	uvoid	3
+	pro	
+	.clause
+87:	gs	0,$'$arefBuiltin'/4
+	uvoid	4
+	pro	
+	.clause
+88:	gs	0,$'$asetBuiltin'/5
+	uvoid	5
+	pro	
+	.clause
+89:	gsx1	0,255,$'ground'/1
+	pro	
+	.clause
+90:	gsx2	0,255,255,$'$fvarBuiltin'/2
+	pro	
+	.clause
+91:	gs	0,$'$forkBuiltin'/3
+	uvoid	3
+	pro	
+	.clause
+92:	gs	0,$'$forkBuiltin'/4
+	uvoid	4
+	pro	
+	.clause
+93:	gsx1	0,255,$'$load'/1
+	pro	
+	.clause
+94:	gs	0,$'$iload'/3
+	uvoid	3
+	pro	
+	.clause
+95:	gs	0,$'$floadBuiltin'/4
+	uvoid	4
+	pro	
+	.clause
+96:	gs	0,$'$syscallBuiltin'/5
+	uvoid	5
+	pro	
+	.clause
+97:	gsx2	0,255,255,$'$spy'/2
+	pro	
+	.clause
+98:	gsx2	0,255,255,$'$nospy'/2
+	pro	
+	.clause
+99:	gc	0,$'abort'
+	pro	
+	.clause
+100:	gsx1	0,255,$'exit'/1
+	pro	
+	.clause
+101:	gsx2	0,255,255,$'$pstotBuiltin'/2
+	pro	
+	.clause
+102:	gs	0,$'$simc_hashBuiltin'/4
+	uvoid	4
+	pro	
+	.clause
+103:	gs	0,$'$simc_queryBuiltin'/4
+	uvoid	4
+	pro	
+	.clause
+104:	gsx2	0,255,255,$'$simc_nextBuiltin'/2
+	pro	
+	.clause
+105:	gsx1	0,255,$'$simc_end'/1
+	pro	
+	.clause
+106:	gsx2	0,255,255,$'$simc_assert'/2
+	pro	
+	.clause
+107:	gsx1	0,255,$'$simc_delete'/1
+	pro	
+	.clause
+108:	gsx1	0,255,$'$simc_abort'/1
+	pro	
+	.clause
+109:	gs	0,$'$dsimc_openBuiltin'/4
+	uvoid	4
+	pro	
+	.clause
+110:	gsx1	0,255,$'$dsimc_free'/1
+	pro	
+	.clause
+111:	gs	0,$'$dsimc_cvBuiltin'/3
+	uvoid	3
+	pro	
+	.clause
+112:	gs	0,$'$dsimc_sfbqueryBuiltin'/5
+	uvoid	5
+	pro	
+	.clause
+113:	gs	0,$'$dsimc_queryBuiltin'/4
+	uvoid	4
+	pro	
+	.clause
+114:	gs	0,$'$sql_queryBuiltin'/3
+	uvoid	3
+	pro	
+	.clause
+115:	gsx2	0,255,255,$'$sql_nextBuiltin'/2
+	pro	
+	.clause
+116:	gsx1	0,255,$'$sql_end'/1
+	pro	
+	.clause
+117:	gsx2	0,255,255,$'$sql_modify'/2
+	pro	
+	.clause
+118:	gsx1	0,255,$'$sql_abort'/1
+	pro	
+	last
+
+	.pred	'fence',1
+	.clause
+0:	gc	0,$'fence'
+	pro	
+	last
+
+	.pred	'complexBuiltin',3
+92: 	sot	0,&86,&93,&91,&91
+86: 	t	3,0,&0
+	r	3,0,&1
+	r	3,0,&2
+	r	3,0,&3
+	r	3,0,&4
+	r	3,0,&5
+	r	3,0,&6
+	r	3,0,&7
+	r	3,0,&8
+	r	3,0,&9
+	r	3,0,&10
+	r	3,0,&11
+	r	3,0,&12
+	r	3,0,&13
+	r	3,0,&14
+	r	3,0,&15
+	r	3,0,&16
+	r	3,0,&17
+	r	3,0,&18
+	r	3,0,&19
+	r	3,0,&20
+	r	3,0,&21
+	r	3,0,&22
+	r	3,0,&23
+	r	3,0,&24
+	r	3,0,&25
+	r	3,0,&26
+	r	3,0,&27
+	r	3,0,&28
+	r	3,0,&29
+	r	3,0,&30
+	r	3,0,&31
+	r	3,0,&32
+	r	3,0,&33
+	r	3,0,&34
+	r	3,0,&35
+	r	3,0,&36
+	r	3,0,&37
+	r	3,0,&38
+	r	3,0,&39
+	r	3,0,&40
+	r	3,0,&41
+	r	3,0,&42
+	r	3,0,&43
+	r	3,0,&44
+	r	3,0,&45
+	r	3,0,&46
+	r	3,0,&47
+	r	3,0,&48
+	r	3,0,&49
+	r	3,0,&50
+	r	3,0,&51
+	r	3,0,&52
+	r	3,0,&53
+	r	3,0,&54
+	r	3,0,&55
+	r	3,0,&56
+	r	3,0,&57
+	r	3,0,&58
+	r	3,0,&59
+	r	3,0,&60
+	r	3,0,&61
+	r	3,0,&62
+	r	3,0,&63
+	r	3,0,&64
+	r	3,0,&65
+	r	3,0,&66
+	r	3,0,&67
+	r	3,0,&68
+	r	3,0,&69
+	r	3,0,&70
+	r	3,0,&71
+	r	3,0,&72
+	r	3,0,&73
+	r	3,0,&74
+	r	3,0,&75
+	r	3,0,&76
+	r	3,0,&77
+	r	3,0,&78
+	r	3,0,&79
+	r	3,0,&80
+	r	3,0,&81
+	r	3,0,&82
+	r	3,0,&83
+	r	3,0,&84
+	tr	3,0,&85
+93: 	soc	0,&($'$abolishCode':&39,$'$arefBuiltin':&55,$'$argBuiltin':&54,$'$asetBuiltin':&56,$'$closeBuiltin':&17,$'$compareBuiltin':&30,$'$copyBuiltin':&36,$'$copyVariablesToTopOfHeap:-)':&48,$'$currentInputBuiltin':&23,$'$currentOutputBuiltin':&24,$'$definedBuiltin':&50,$'$display':&1,$'$dsimc_cvBuiltin':&78,$'$dsimc_free':&77,$'$dsimc_openBuiltin':&76,$'$dsimc_queryBuiltin':&80,$'$dsimc_sfbqueryBuiltin':&79,$'$eRefBuiltin':&28,$'$execs':&8,$'$flagsBuiltin':&52,$'$floadBuiltin':&63,$'$forkBuiltin':&87,$'$fvarBuiltin':&58,$'$get0Builtin':&88,$'$getBuiltin':&89,$'$getStreamBuiltin':&18,$'$getTokenBuiltin':&12,$'$iload':&62,$'$instanceBuiltin':&42,$'$is_eqBuiltin':&47,$'$linkBMT':&41,$'$listToString':&35,$'$load':&61,$'$makeBMTBuiltin':&40,$'$mkObjBuiltin':&29,$'$nospy':&66,$'$oncut':&46,$'$openBuiltin':&16,$'$predicateAritiesBuiltin':&51,$'$printNumberBuiltin':&7,$'$printf':&6,$'$proplistBuiltin':&43,$'$pstotBuiltin':&68,$'$replacn':&44,$'$simc_abort':&75,$'$simc_assert':&73,$'$simc_delete':&74,$'$simc_end':&72,$'$simc_hashBuiltin':&69,$'$simc_nextBuiltin':&71,$'$simc_queryBuiltin':&70,$'$softCut':&0,$'$sortBuiltin':&31,$'$sprtBuiltin':&5,$'$spy':&65,$'$sql_abort':&85,$'$sql_end':&83,$'$sql_modify':&84,$'$sql_nextBuiltin':&82,$'$sql_queryBuiltin':&81,$'$symbolBuiltin':&32,$'$syscallBuiltin':&64,$'$tokenizeBuiltin':&13,$'$uncopyBuiltin':&37,$'=..':&25,$'==':&26,$'\\==':&27,$'clearIOError':&20,$'erase':&38,$'exit':&67,$'flushOutput':&19,$'functor':&53,$'ground':&57,$'name':&34,$'occurs':&33,$'plus':&49,$'put':&90,$'putl':&15,$'setInput':&21,$'setOutput':&22,$'setarg':&45,$'throw':&9),&91
+87: 	t	3,0,&59
+	tr	3,0,&60
+88: 	t	3,0,&2
+	tr	3,0,&10
+89: 	t	3,0,&3
+	tr	3,0,&11
+90: 	t	3,0,&4
+	tr	3,0,&14
+91: 	fail	
+	.clause
+0:	gc	0,$'$softCut'
+	gc	1,$1
+	gl	2
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+1:	gc	0,$'$display'
+	gc	1,$1
+	gl	2
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+2:	gc	0,$'$get0Builtin'
+	gc	1,$1
+	gl	2
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+3:	gc	0,$'$getBuiltin'
+	gc	1,$1
+	gl	2
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+4:	gc	0,$'put'
+	gc	1,$1
+	gl	2
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+5:	gc	0,$'$sprtBuiltin'
+	gc	1,$3
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+6:	gc	0,$'$printf'
+	gc	1,$3
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+7:	gc	0,$'$printNumberBuiltin'
+	gc	1,$4
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+8:	gc	0,$'$execs'
+	gc	1,$2
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+9:	gc	0,$'throw'
+	gc	1,$1
+	gl	2
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+10:	gc	0,$'$get0Builtin'
+	gc	1,$2
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+11:	gc	0,$'$getBuiltin'
+	gc	1,$2
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+12:	gc	0,$'$getTokenBuiltin'
+	gc	1,$3
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+13:	gc	0,$'$tokenizeBuiltin'
+	gc	1,$4
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	ul	255
+	uc	$'-'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+14:	gc	0,$'put'
+	gc	1,$2
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+15:	gc	0,$'putl'
+	gc	1,$2
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+16:	gc	0,$'$openBuiltin'
+	gc	1,$3
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+17:	gc	0,$'$closeBuiltin'
+	gc	1,$2
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+18:	gc	0,$'$getStreamBuiltin'
+	gc	1,$2
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+19:	gc	0,$'flushOutput'
+	gc	1,$1
+	gl	2
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+20:	gc	0,$'clearIOError'
+	gc	1,$1
+	gl	2
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+21:	gc	0,$'setInput'
+	gc	1,$1
+	gl	2
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+22:	gc	0,$'setOutput'
+	gc	1,$1
+	gl	2
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+23:	gc	0,$'$currentInputBuiltin'
+	gc	1,$1
+	gl	2
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+24:	gc	0,$'$currentOutputBuiltin'
+	gc	1,$1
+	gl	2
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+25:	gc	0,$'=..'
+	gc	1,$2
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+26:	gc	0,$'=='
+	gc	1,$2
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+27:	gc	0,$'\\=='
+	gc	1,$2
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+28:	gc	0,$'$eRefBuiltin'
+	gc	1,$2
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+29:	gc	0,$'$mkObjBuiltin'
+	gc	1,$4
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+30:	gc	0,$'$compareBuiltin'
+	gc	1,$3
+	gl	2
+	uc	$'-'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+31:	gc	0,$'$sortBuiltin'
+	gc	1,$3
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+32:	gc	0,$'$symbolBuiltin'
+	gc	1,$2
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+33:	gc	0,$'occurs'
+	gc	1,$2
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+34:	gc	0,$'name'
+	gc	1,$2
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+35:	gc	0,$'$listToString'
+	gc	1,$2
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+36:	gc	0,$'$copyBuiltin'
+	gc	1,$4
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+37:	gc	0,$'$uncopyBuiltin'
+	gc	1,$3
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+38:	gc	0,$'erase'
+	gc	1,$1
+	gl	2
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+39:	gc	0,$'$abolishCode'
+	gc	1,$2
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+40:	gc	0,$'$makeBMTBuiltin'
+	gc	1,$4
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+41:	gc	0,$'$linkBMT'
+	gc	1,$3
+	gl	2
+	uc	$'-'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+42:	gc	0,$'$instanceBuiltin'
+	gc	1,$3
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+43:	gc	0,$'$proplistBuiltin'
+	gc	1,$3
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+44:	gc	0,$'$replacn'
+	gc	1,$3
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+45:	gc	0,$'setarg'
+	gc	1,$3
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+46:	gc	0,$'$oncut'
+	gc	1,$2
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+47:	gc	0,$'$is_eqBuiltin'
+	gc	1,$3
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+48:	gc	0,$'$copyVariablesToTopOfHeap:-)'
+	gc	1,$1
+	gl	2
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+49:	gc	0,$'plus'
+	gc	1,$3
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+50:	gc	0,$'$definedBuiltin'
+	gc	1,$4
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+51:	gc	0,$'$predicateAritiesBuiltin'
+	gc	1,$2
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+52:	gc	0,$'$flagsBuiltin'
+	gc	1,$1
+	gl	2
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+53:	gc	0,$'functor'
+	gc	1,$3
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+54:	gc	0,$'$argBuiltin'
+	gc	1,$3
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+55:	gc	0,$'$arefBuiltin'
+	gc	1,$4
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+56:	gc	0,$'$asetBuiltin'
+	gc	1,$5
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+57:	gc	0,$'ground'
+	gc	1,$1
+	gl	2
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+58:	gc	0,$'$fvarBuiltin'
+	gc	1,$2
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+59:	gc	0,$'$forkBuiltin'
+	gc	1,$3
+	gl	2
+	uc	$'-'
+	ul	255
+	uc	$'-'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+60:	gc	0,$'$forkBuiltin'
+	gc	1,$4
+	gl	2
+	uc	$'-'
+	ul	255
+	uc	$'-'
+	ul	255
+	uc	$'-'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+61:	gc	0,$'$load'
+	gc	1,$1
+	gl	2
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+62:	gc	0,$'$iload'
+	gc	1,$3
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+63:	gc	0,$'$floadBuiltin'
+	gc	1,$4
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+64:	gc	0,$'$syscallBuiltin'
+	gc	1,$5
+	gl	2
+	uc	$'-'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+65:	gc	0,$'$spy'
+	gc	1,$2
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+66:	gc	0,$'$nospy'
+	gc	1,$2
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+67:	gc	0,$'exit'
+	gc	1,$1
+	gl	2
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+68:	gc	0,$'$pstotBuiltin'
+	gc	1,$2
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+69:	gc	0,$'$simc_hashBuiltin'
+	gc	1,$4
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+70:	gc	0,$'$simc_queryBuiltin'
+	gc	1,$4
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+71:	gc	0,$'$simc_nextBuiltin'
+	gc	1,$2
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+72:	gc	0,$'$simc_end'
+	gc	1,$1
+	gl	2
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+73:	gc	0,$'$simc_assert'
+	gc	1,$2
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+74:	gc	0,$'$simc_delete'
+	gc	1,$1
+	gl	2
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+75:	gc	0,$'$simc_abort'
+	gc	1,$1
+	gl	2
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+76:	gc	0,$'$dsimc_openBuiltin'
+	gc	1,$4
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+77:	gc	0,$'$dsimc_free'
+	gc	1,$1
+	gl	2
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+78:	gc	0,$'$dsimc_cvBuiltin'
+	gc	1,$3
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+79:	gc	0,$'$dsimc_sfbqueryBuiltin'
+	gc	1,$5
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+80:	gc	0,$'$dsimc_queryBuiltin'
+	gc	1,$4
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+81:	gc	0,$'$sql_queryBuiltin'
+	gc	1,$3
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+82:	gc	0,$'$sql_nextBuiltin'
+	gc	1,$2
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'-'
+	uc	$[]
+	pro	
+	.clause
+83:	gc	0,$'$sql_end'
+	gc	1,$1
+	gl	2
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+84:	gc	0,$'$sql_modify'
+	gc	1,$2
+	gl	2
+	uc	$'+'
+	ul	255
+	uc	$'+'
+	uc	$[]
+	pro	
+	.clause
+85:	gc	0,$'$sql_abort'
+	gc	1,$1
+	gl	2
+	uc	$'+'
+	uc	$[]
+	pro	
+	last
+
+	.pred	'complexBuiltins',4
+5: 	sot	0,&3,&4,&4,&6
+3: 	t	4,0,&0
+	r	4,0,&1
+	tr	4,0,&2
+4: 	fail	
+6: 	sos	0,&($'->'/2:&1,$'conj'/1:&0,$'disj'/3:&2),&4
+	.clause
+0:	gsx1	0,0,$'conj'/1
+	gsx1	1,1,$'conj'/1
+	gvarx	5,2
+	gvarx	4,3
+	pnil	2
+	gvara	3,5
+	exec	5,&'complexBuiltinsL'/5
+	.clause
+1:	gs	0,$'->'/2
+	uvarx	4
+	us	255,$'conj'/1
+	all	4
+	uvary	3
+	gsx1	4,0,$'conj'/1
+	gs	1,$'->'/2
+	uvarx	4
+	us	255,$'conj'/1
+	uvary	2
+	gsx1	4,1,$'conj'/1
+	gvarx	4,2
+	gvary	0,3
+	pnil	2
+	gvara	3,4
+	pvary	1,4
+	call	4,5,&'complexBuiltinsL'/5
+	pvaly	3,0
+	pvaly	2,1
+	pnil	2
+	puval	1,3
+	pvaly	0,4
+	dallexe	5,&'complexBuiltinsL'/5
+	.clause
+2:	gs	0,$'disj'/3
+	uvarx	4
+	uvarx	5
+	uvara	0
+	gs	1,$'disj'/3
+	uvalx	4
+	uvalx	5
+	uvara	1
+	gvarx	5,2
+	gvarx	4,3
+	pnil	2
+	gvara	3,5
+	exec	5,&'complexBuiltinsL'/5
+	last
+
+	.pred	'complexBuiltins',5
+	labelx	5
+5: 	sot	0,&3,&4,&4,&6
+3: 	t	6,0,&0
+	r	6,0,&1
+	tr	6,0,&2
+4: 	t	6,0,&1
+	tr	6,0,&2
+6: 	js	0,$'builtin'/3,&3
+	j	&4
+	j	&3
+	.clause
+0:	gs	0,$'builtin'/3
+	all	9
+	uvary	7
+	uvary	6
+	uvary	3
+	gvary	2,1
+	gvary	5,2
+	gvary	1,3
+	gvary	0,4
+	gvary	8,5
+	pvaly	7,0
+	pvaly	6,1
+	pvary	4,2
+	call	9,3,&'complexBuiltin'/3
+	cuty	8
+	ps	6,$'builtin'/3
+	uvaly	7
+	uvaly	6
+	uvara	2
+	pl	4
+	uvalx	6
+	ulvy	5
+	puval	4,0
+	pvaly	3,1
+	pvaly	2,3
+	pvaly	1,5
+	pvaly	0,6
+	dallexe	7,&'putModedArgsInTemporaries'/7
+	.clause
+1:	glvx2	1,1,6
+	gvalx	6,2
+	gvara	2,3
+	gvara	3,4
+	all	1
+	gvary	0,5
+	call	1,4,&'complexBuiltins'/4
+	cuty	0
+	dallpro	
+	.clause
+2:	gl	1
+	ulvx	0
+	ulvx	2
+	gvalx	3,4
+	pro	
+	last
+
+	.pred	'complexBuiltinsL',5
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	5,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	1,2
+	gvalx	3,4
+	pro	
+	.clause
+1:	gl	0
+	uvara	0
+	all	5
+	uvary	4
+	gvary	2,2
+	gvary	0,4
+	pvary	3,2
+	pvary	1,4
+	call	5,5,&'complexBuiltins'/5
+	pvaly	4,0
+	puval	3,1
+	pvaly	2,2
+	puval	1,3
+	pvaly	0,4
+	dall	
+	execsot	5,0,&4,&0,&1,&2
+	last
+
+	.pred	'putModedArgsInTemporaries',7
+3: 	sot	0,&4,&0,&1,&2
+4: 	sot	1,&5,&0,&1,&2
+5: 	sot	2,&6,&0,&1,&2
+6: 	mkdel	7,&3
+	mark	2
+	mark	1
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	gnil	2
+	gvalx	3,4
+	gvalx	5,6
+	pro	
+	.clause
+1:	gl	0
+	uvara	0
+	all	7
+	uvary	6
+	gl	1
+	uvara	1
+	uvary	5
+	gl	2
+	uvara	2
+	uvary	4
+	gvary	2,4
+	gvary	0,6
+	pvary	3,4
+	pvary	1,6
+	call	7,7,&'putModedArgInTemporary'/7
+	pvaly	6,0
+	pvaly	5,1
+	pvaly	4,2
+	puval	3,3
+	pvaly	2,4
+	puval	1,5
+	pvaly	0,6
+	dall	
+	execsot	7,0,&4,&0,&1,&2
+	last
+
+	.pred	'putModedArgInTemporary',7
+4: 	sot	0,&2,&5,&3,&3
+2: 	t	7,0,&0
+	tr	7,0,&1
+5: 	soc	0,&($'+':&1,$'-':&0),&3
+3: 	fail	
+	.clause
+0:	gc	0,$'-'
+	gvalx	1,2
+	gvalx	3,4
+	gvalx	5,6
+	pro	
+	.clause
+1:	gc	0,$'+'
+	gvara	0,1
+	gvara	1,2
+	gvara	2,3
+	gvara	3,4
+	gvara	4,5
+	gvara	5,6
+	exec	6,&'putArgInTemporary'/6
+	last
+
+	.pred	'putArgInTemporary',6
+	labelx	6
+11: 	sot	0,&6,&3,&3,&12
+6: 	t	7,0,&0
+	r	7,0,&1
+	r	7,0,&2
+	r	7,0,&3
+	r	7,0,&4
+	tr	7,0,&5
+12: 	sose	0,&($'const'/1:&7,$'list'/1:&8,$'struct'/1:&9),&10
+7: 	t	7,0,&2
+	tr	7,0,&3
+8: 	t	7,0,&3
+	tr	7,0,&4
+9: 	t	7,0,&3
+	tr	7,0,&5
+10: 	t	7,0,&0
+	r	7,0,&1
+	tr	7,0,&3
+	.clause
+0:	gvalx	0,1
+	glvx2	2,7,8
+	gs	7,$'init'/1
+	ul	255
+	uvarx	7
+	uc	$[]
+	gs	7,$'vr'/4
+	uvarx	7
+	uvarx	9
+	uc	$'temp'
+	uvoid	1
+	gvalx	8,3
+	gvalx	4,5
+	gs	0,$'vr'/4
+	uvalx	7
+	uvalx	9
+	uc	$'temp'
+	uvoid	1
+	cutx	6
+	pro	
+	.clause
+1:	gs	1,$'vr'/4
+	uvarx	7
+	uvarx	8
+	uc	$'temp'
+	uvoid	1
+	glvx2	2,9,10
+	gs	9,$'='/2
+	uvarx	9
+	ulvx	0
+	gs	9,$'vr'/4
+	uvalx	7
+	uvalx	8
+	uc	$'temp'
+	uvoid	1
+	gvalx	10,3
+	gvalx	7,4
+	gs	0,$'vr'/4
+	uvoid	2
+	uc	$'perm'
+	uvoid	1
+	cutx	6
+	apushx	7
+	afunc	46
+	popvx	5
+	pro	
+	.clause
+2:	gsx1	0,7,$'const'/1
+	gs	1,$'vr'/4
+	uvarx	8
+	uvarx	9
+	uc	$'temp'
+	uvoid	1
+	glvx2	2,10,11
+	gs	10,$'='/2
+	uvarx	10
+	us	255,$'const'/1
+	uvalx	7
+	gs	10,$'vr'/4
+	uvalx	8
+	uvalx	9
+	uc	$'temp'
+	uvoid	1
+	gvalx	11,3
+	gvalx	8,4
+	ctypx	7,51
+	cutx	6
+	apushx	8
+	afunc	46
+	popvx	5
+	pro	
+	.clause
+3:	all	5
+	gvary	2,0
+	gs	1,$'vr'/4
+	uvary	1
+	uvarx	7
+	uc	$'temp'
+	uvoid	1
+	glvx2	2,8,9
+	gs	8,$'='/2
+	uvarx	8
+	us	255,$'ground'/3
+	uvary	4
+	uvary	3
+	ulvy	2
+	gs	8,$'vr'/4
+	uvaly	1
+	uvalx	7
+	uc	$'temp'
+	uvoid	1
+	gvalx	9,3
+	gvaly	1,4
+	gvary	0,5
+	pvaly	2,7
+	fvar	7,255
+	typx	255,252
+	cutx	6
+	pvaly	2,0
+	pvaly	4,1
+	call	5,2,&'tagOfTerm'/2
+	pvaly	3,0
+	call	5,1,&'makeLabel'/1
+	ps	0,$'groundTerm'/3
+	uvaly	4
+	uvaly	3
+	ulvy	2
+	call	2,1,&'asserta'/1
+	apushy	1
+	afunc	46
+	popvy	0
+	dallpro	
+	.clause
+4:	gsx1	0,0,$'list'/1
+	gs	1,$'vr'/4
+	uvarx	7
+	uvarx	8
+	uc	$'temp'
+	uvoid	1
+	gvarx	9,3
+	gvalx	7,4
+	cutx	6
+	apushx	7
+	afunc	46
+	popx	4
+	ps	10,$'vr'/4
+	uvalx	7
+	uvalx	8
+	uc	$'temp'
+	uvoid	1
+	ps	7,$'='/2
+	uvalx	10
+	us	255,$'list'/1
+	uvara	1
+	pl	3
+	uvalx	7
+	ulvx	9
+	exec	6,&'putArgsForUnification'/6
+	.clause
+5:	gs	0,$'struct'/1
+	ul	255
+	uvarx	7
+	uvara	0
+	gs	1,$'vr'/4
+	uvarx	8
+	uvarx	9
+	uc	$'temp'
+	uvoid	1
+	gvarx	10,3
+	gvalx	8,4
+	cutx	6
+	apushx	8
+	afunc	46
+	popx	4
+	ps	11,$'vr'/4
+	uvalx	8
+	uvalx	9
+	uc	$'temp'
+	uvoid	1
+	ps	8,$'='/2
+	uvalx	11
+	us	255,$'struct'/1
+	ul	255
+	uvalx	7
+	uvara	1
+	pl	3
+	uvalx	8
+	ulvx	10
+	exec	6,&'putArgsForUnification'/6
+	last
+
+	.pred	'putArgsForUnification',6
+4: 	sot	0,&2,&0,&1,&3
+2: 	t	6,0,&0
+	tr	6,0,&1
+3: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	gvalx	2,3
+	gvalx	4,5
+	pro	
+	.clause
+1:	gl	0
+	uvara	0
+	all	6
+	uvary	5
+	gl	1
+	uvara	1
+	uvary	4
+	gvary	2,3
+	gvary	0,5
+	pvary	3,3
+	pvary	1,5
+	call	6,6,&'putArgForUnification'/6
+	pvaly	5,0
+	pvaly	4,1
+	puval	3,2
+	pvaly	2,3
+	puval	1,4
+	pvaly	0,5
+	dall	
+	execsot	6,0,&2,&0,&1,&3
+	last
+
+	.pred	'putArgForUnification',6
+	labelx	6
+8: 	sot	0,&4,&5,&5,&9
+4: 	t	7,0,&0
+	r	7,0,&1
+	r	7,0,&2
+	tr	7,0,&3
+5: 	t	7,0,&2
+	tr	7,0,&3
+9: 	js	0,$'const'/1,&7
+6: 	t	7,0,&1
+	r	7,0,&2
+	tr	7,0,&3
+7: 	t	7,0,&0
+	r	7,0,&2
+	tr	7,0,&3
+	.clause
+0:	gsx1	0,7,$'const'/1
+	gs	1,$'const'/1
+	uvalx	7
+	gvalx	2,3
+	gvalx	4,5
+	ctypx	7,51
+	cutx	6
+	pro	
+	.clause
+1:	gvalx	0,1
+	gvalx	2,3
+	gvalx	4,5
+	gs	0,$'vr'/4
+	uvoid	4
+	cutx	6
+	pro	
+	.clause
+2:	all	3
+	gvary	0,0
+	gs	1,$'ground'/3
+	uvary	2
+	uvary	1
+	ulvy	0
+	gvalx	2,3
+	gvalx	4,5
+	pvaly	0,7
+	fvar	7,255
+	typx	255,252
+	cutx	6
+	pvaly	0,0
+	pvaly	2,1
+	call	3,2,&'tagOfTerm'/2
+	pvaly	1,0
+	call	3,1,&'makeLabel'/1
+	ps	0,$'groundTerm'/3
+	uvaly	2
+	uvaly	1
+	ulvy	0
+	dallexe	1,&'asserta'/1
+	.clause
+3:	exec	6,&'putArgInTemporary'/6
+	last
+
+	.pred	'$arithConst',1
+5: 	sot	0,&3,&6,&4,&4
+3: 	t	1,0,&0
+	r	1,0,&1
+	tr	1,0,&2
+6: 	soc	0,&($'maxint':&1,$'minint':&2,$'pi':&0),&4
+4: 	fail	
+	.clause
+0:	gc	0,$'pi'
+	pro	
+	.clause
+1:	gc	0,$'maxint'
+	pro	
+	.clause
+2:	gc	0,$'minint'
+	pro	
+	last
+
+	.pred	'$arithNumber',4
+60: 	sot	0,&56,&61,&59,&59
+56: 	t	4,0,&0
+	r	4,0,&1
+	r	4,0,&2
+	r	4,0,&3
+	r	4,0,&4
+	r	4,0,&5
+	r	4,0,&6
+	r	4,0,&7
+	r	4,0,&8
+	r	4,0,&9
+	r	4,0,&10
+	r	4,0,&11
+	r	4,0,&12
+	r	4,0,&13
+	r	4,0,&14
+	r	4,0,&15
+	r	4,0,&16
+	r	4,0,&17
+	r	4,0,&18
+	r	4,0,&19
+	r	4,0,&20
+	r	4,0,&21
+	r	4,0,&22
+	r	4,0,&23
+	r	4,0,&24
+	r	4,0,&25
+	r	4,0,&26
+	r	4,0,&27
+	r	4,0,&28
+	r	4,0,&29
+	r	4,0,&30
+	r	4,0,&31
+	r	4,0,&32
+	r	4,0,&33
+	r	4,0,&34
+	r	4,0,&35
+	r	4,0,&36
+	r	4,0,&37
+	r	4,0,&38
+	r	4,0,&39
+	r	4,0,&40
+	r	4,0,&41
+	r	4,0,&42
+	r	4,0,&43
+	r	4,0,&44
+	r	4,0,&45
+	r	4,0,&46
+	r	4,0,&47
+	r	4,0,&48
+	r	4,0,&49
+	r	4,0,&50
+	r	4,0,&51
+	r	4,0,&52
+	r	4,0,&53
+	r	4,0,&54
+	tr	4,0,&55
+61: 	soc	0,&($'*':&2,$'**':&26,$'+':&57,$'+1':&38,$'-':&58,$'-1':&39,$'/':&3,$'//':&4,$'/\\':&6,$'<':&31,$'<<':&9,$'=:=':&35,$'=<':&32,$'=\\=':&36,$'>':&33,$'>=':&34,$'>>':&10,$'\\':&15,$'\\/':&7,$'^':&8,$'acos':&20,$'addressAt':&50,$'address_at':&51,$'and':&11,$'asin':&19,$'atan':&21,$'atan2':&22,$'cos':&17,$'doubleAt':&54,$'double_at':&55,$'exp':&23,$'float':&29,$'integer':&28,$'integer16At':&44,$'integer8At':&40,$'integerAt':&48,$'integer_16_at':&45,$'integer_8_at':&41,$'integer_at':&49,$'log':&24,$'log10':&25,$'mod':&5,$'not':&13,$'or':&12,$'round':&30,$'sin':&16,$'singleAt':&52,$'single_at':&53,$'sqrt':&27,$'tan':&18,$'unsigned16At':&46,$'unsigned8At':&42,$'unsigned_16_at':&47,$'unsigned_8_at':&43),&59
+57: 	t	4,0,&0
+	tr	4,0,&37
+58: 	t	4,0,&1
+	tr	4,0,&14
+59: 	fail	
+	.clause
+0:	gc	0,$'+'
+	gc	1,$2
+	gc	2,$0
+	gc	3,$0
+	pro	
+	.clause
+1:	gc	0,$'-'
+	gc	1,$2
+	gc	2,$1
+	gc	3,$38
+	pro	
+	.clause
+2:	gc	0,$'*'
+	gc	1,$2
+	gc	2,$2
+	gc	3,$2
+	pro	
+	.clause
+3:	gc	0,$'/'
+	gc	1,$2
+	gc	2,$3
+	gc	3,$39
+	pro	
+	.clause
+4:	gc	0,$'//'
+	gc	1,$2
+	gc	2,$4
+	gc	3,$40
+	pro	
+	.clause
+5:	gc	0,$'mod'
+	gc	1,$2
+	gc	2,$5
+	gc	3,$41
+	pro	
+	.clause
+6:	gc	0,$'/\\'
+	gc	1,$2
+	gc	2,$6
+	gc	3,$6
+	pro	
+	.clause
+7:	gc	0,$'\\/'
+	gc	1,$2
+	gc	2,$7
+	gc	3,$7
+	pro	
+	.clause
+8:	gc	0,$'^'
+	gc	1,$2
+	gc	2,$8
+	gc	3,$8
+	pro	
+	.clause
+9:	gc	0,$'<<'
+	gc	1,$2
+	gc	2,$9
+	gc	3,$42
+	pro	
+	.clause
+10:	gc	0,$'>>'
+	gc	1,$2
+	gc	2,$10
+	gc	3,$43
+	pro	
+	.clause
+11:	gc	0,$'and'
+	gc	1,$2
+	gc	2,$11
+	gc	3,$11
+	pro	
+	.clause
+12:	gc	0,$'or'
+	gc	1,$2
+	gc	2,$12
+	gc	3,$12
+	pro	
+	.clause
+13:	gc	0,$'not'
+	gc	1,$1
+	gc	2,$13
+	gc	3,$13
+	pro	
+	.clause
+14:	gc	0,$'-'
+	gc	1,$1
+	gc	2,$14
+	gc	3,$14
+	pro	
+	.clause
+15:	gc	0,$'\\'
+	gc	1,$1
+	gc	2,$15
+	gc	3,$15
+	pro	
+	.clause
+16:	gc	0,$'sin'
+	gc	1,$1
+	gc	2,$16
+	gc	3,$16
+	pro	
+	.clause
+17:	gc	0,$'cos'
+	gc	1,$1
+	gc	2,$17
+	gc	3,$17
+	pro	
+	.clause
+18:	gc	0,$'tan'
+	gc	1,$1
+	gc	2,$18
+	gc	3,$18
+	pro	
+	.clause
+19:	gc	0,$'asin'
+	gc	1,$1
+	gc	2,$19
+	gc	3,$19
+	pro	
+	.clause
+20:	gc	0,$'acos'
+	gc	1,$1
+	gc	2,$20
+	gc	3,$20
+	pro	
+	.clause
+21:	gc	0,$'atan'
+	gc	1,$1
+	gc	2,$21
+	gc	3,$21
+	pro	
+	.clause
+22:	gc	0,$'atan2'
+	gc	1,$2
+	gc	2,$22
+	gc	3,$44
+	pro	
+	.clause
+23:	gc	0,$'exp'
+	gc	1,$1
+	gc	2,$23
+	gc	3,$23
+	pro	
+	.clause
+24:	gc	0,$'log'
+	gc	1,$1
+	gc	2,$24
+	gc	3,$24
+	pro	
+	.clause
+25:	gc	0,$'log10'
+	gc	1,$1
+	gc	2,$25
+	gc	3,$25
+	pro	
+	.clause
+26:	gc	0,$'**'
+	gc	1,$2
+	gc	2,$26
+	gc	3,$45
+	pro	
+	.clause
+27:	gc	0,$'sqrt'
+	gc	1,$1
+	gc	2,$27
+	gc	3,$27
+	pro	
+	.clause
+28:	gc	0,$'integer'
+	gc	1,$1
+	gc	2,$28
+	gc	3,$28
+	pro	
+	.clause
+29:	gc	0,$'float'
+	gc	1,$1
+	gc	2,$29
+	gc	3,$39
+	pro	
+	.clause
+30:	gc	0,$'round'
+	gc	1,$1
+	gc	2,$30
+	gc	3,$30
+	pro	
+	.clause
+31:	gc	0,$'<'
+	gc	1,$2
+	gc	2,$31
+	gc	3,$33
+	pro	
+	.clause
+32:	gc	0,$'=<'
+	gc	1,$2
+	gc	2,$32
+	gc	3,$34
+	pro	
+	.clause
+33:	gc	0,$'>'
+	gc	1,$2
+	gc	2,$33
+	gc	3,$31
+	pro	
+	.clause
+34:	gc	0,$'>='
+	gc	1,$2
+	gc	2,$34
+	gc	3,$32
+	pro	
+	.clause
+35:	gc	0,$'=:='
+	gc	1,$2
+	gc	2,$35
+	gc	3,$35
+	pro	
+	.clause
+36:	gc	0,$'=\\='
+	gc	1,$2
+	gc	2,$36
+	gc	3,$36
+	pro	
+	.clause
+37:	gc	0,$'+'
+	gc	1,$1
+	gc	2,$37
+	gc	3,$37
+	pro	
+	.clause
+38:	gc	0,$'+1'
+	gc	1,$1
+	gc	2,$46
+	gc	3,$46
+	pro	
+	.clause
+39:	gc	0,$'-1'
+	gc	1,$1
+	gc	2,$47
+	gc	3,$47
+	pro	
+	.clause
+40:	gc	0,$'integer8At'
+	gc	1,$1
+	gc	2,$48
+	gc	3,$48
+	pro	
+	.clause
+41:	gc	0,$'integer_8_at'
+	gc	1,$1
+	gc	2,$48
+	gc	3,$48
+	pro	
+	.clause
+42:	gc	0,$'unsigned8At'
+	gc	1,$1
+	gc	2,$49
+	gc	3,$49
+	pro	
+	.clause
+43:	gc	0,$'unsigned_8_at'
+	gc	1,$1
+	gc	2,$49
+	gc	3,$49
+	pro	
+	.clause
+44:	gc	0,$'integer16At'
+	gc	1,$1
+	gc	2,$50
+	gc	3,$50
+	pro	
+	.clause
+45:	gc	0,$'integer_16_at'
+	gc	1,$1
+	gc	2,$50
+	gc	3,$50
+	pro	
+	.clause
+46:	gc	0,$'unsigned16At'
+	gc	1,$1
+	gc	2,$51
+	gc	3,$51
+	pro	
+	.clause
+47:	gc	0,$'unsigned_16_at'
+	gc	1,$1
+	gc	2,$51
+	gc	3,$51
+	pro	
+	.clause
+48:	gc	0,$'integerAt'
+	gc	1,$1
+	gc	2,$52
+	gc	3,$52
+	pro	
+	.clause
+49:	gc	0,$'integer_at'
+	gc	1,$1
+	gc	2,$52
+	gc	3,$52
+	pro	
+	.clause
+50:	gc	0,$'addressAt'
+	gc	1,$1
+	gc	2,$53
+	gc	3,$53
+	pro	
+	.clause
+51:	gc	0,$'address_at'
+	gc	1,$1
+	gc	2,$53
+	gc	3,$53
+	pro	
+	.clause
+52:	gc	0,$'singleAt'
+	gc	1,$1
+	gc	2,$54
+	gc	3,$54
+	pro	
+	.clause
+53:	gc	0,$'single_at'
+	gc	1,$1
+	gc	2,$54
+	gc	3,$54
+	pro	
+	.clause
+54:	gc	0,$'doubleAt'
+	gc	1,$1
+	gc	2,$55
+	gc	3,$55
+	pro	
+	.clause
+55:	gc	0,$'double_at'
+	gc	1,$1
+	gc	2,$55
+	gc	3,$55
+	pro	
+	last
+
+	.pred	'$arithPredNumber',4
+10: 	sot	0,&8,&11,&9,&9
+8: 	t	4,0,&0
+	r	4,0,&1
+	r	4,0,&2
+	r	4,0,&3
+	r	4,0,&4
+	r	4,0,&5
+	r	4,0,&6
+	tr	4,0,&7
+11: 	soc	0,&($'<':&2,$'=:=':&6,$'=<':&3,$'=\\=':&7,$'>':&4,$'>=':&5,$'and':&0,$'or':&1),&9
+9: 	fail	
+	.clause
+0:	gc	0,$'and'
+	gc	1,$2
+	gc	2,$0
+	gc	3,$0
+	pro	
+	.clause
+1:	gc	0,$'or'
+	gc	1,$2
+	gc	2,$1
+	gc	3,$1
+	pro	
+	.clause
+2:	gc	0,$'<'
+	gc	1,$2
+	gc	2,$2
+	gc	3,$4
+	pro	
+	.clause
+3:	gc	0,$'=<'
+	gc	1,$2
+	gc	2,$3
+	gc	3,$5
+	pro	
+	.clause
+4:	gc	0,$'>'
+	gc	1,$2
+	gc	2,$4
+	gc	3,$2
+	pro	
+	.clause
+5:	gc	0,$'>='
+	gc	1,$2
+	gc	2,$5
+	gc	3,$3
+	pro	
+	.clause
+6:	gc	0,$'=:='
+	gc	1,$2
+	gc	2,$6
+	gc	3,$6
+	pro	
+	.clause
+7:	gc	0,$'=\\='
+	gc	1,$2
+	gc	2,$7
+	gc	3,$7
+	pro	
+	last
+
+	.pred	'$syscallNumber',2
+40: 	sot	0,&38,&41,&39,&39
+38: 	t	2,0,&0
+	r	2,0,&1
+	r	2,0,&2
+	r	2,0,&3
+	r	2,0,&4
+	r	2,0,&5
+	r	2,0,&6
+	r	2,0,&7
+	r	2,0,&8
+	r	2,0,&9
+	r	2,0,&10
+	r	2,0,&11
+	r	2,0,&12
+	r	2,0,&13
+	r	2,0,&14
+	r	2,0,&15
+	r	2,0,&16
+	r	2,0,&17
+	r	2,0,&18
+	r	2,0,&19
+	r	2,0,&20
+	r	2,0,&21
+	r	2,0,&22
+	r	2,0,&23
+	r	2,0,&24
+	r	2,0,&25
+	r	2,0,&26
+	r	2,0,&27
+	r	2,0,&28
+	r	2,0,&29
+	r	2,0,&30
+	r	2,0,&31
+	r	2,0,&32
+	r	2,0,&33
+	r	2,0,&34
+	r	2,0,&35
+	r	2,0,&36
+	tr	2,0,&37
+41: 	soc	0,&($'access':&0,$'chdir':&1,$'chmod':&2,$'environment':&3,$'exec':&32,$'fesq':&36,$'fork':&30,$'fseek':&34,$'ftell':&35,$'getegid':&4,$'geteuid':&13,$'getgid':&5,$'getgroups':&6,$'getlogin':&7,$'getpid':&8,$'getppid':&9,$'getpwnam':&11,$'getpwuid':&10,$'getuid':&12,$'getwd':&14,$'hostname':&15,$'kill':&16,$'link':&17,$'mkdir':&18,$'random':&19,$'readdir':&29,$'rename':&20,$'rmdir':&21,$'signal':&37,$'sleep':&22,$'stat':&23,$'statistics':&33,$'system':&31,$'time':&24,$'truncate':&25,$'umask':&26,$'unlink':&27,$'wait':&28),&39
+39: 	fail	
+	.clause
+0:	gc	0,$'access'
+	gc	1,$0
+	pro	
+	.clause
+1:	gc	0,$'chdir'
+	gc	1,$1
+	pro	
+	.clause
+2:	gc	0,$'chmod'
+	gc	1,$2
+	pro	
+	.clause
+3:	gc	0,$'environment'
+	gc	1,$3
+	pro	
+	.clause
+4:	gc	0,$'getegid'
+	gc	1,$4
+	pro	
+	.clause
+5:	gc	0,$'getgid'
+	gc	1,$5
+	pro	
+	.clause
+6:	gc	0,$'getgroups'
+	gc	1,$6
+	pro	
+	.clause
+7:	gc	0,$'getlogin'
+	gc	1,$7
+	pro	
+	.clause
+8:	gc	0,$'getpid'
+	gc	1,$8
+	pro	
+	.clause
+9:	gc	0,$'getppid'
+	gc	1,$9
+	pro	
+	.clause
+10:	gc	0,$'getpwuid'
+	gc	1,$10
+	pro	
+	.clause
+11:	gc	0,$'getpwnam'
+	gc	1,$11
+	pro	
+	.clause
+12:	gc	0,$'getuid'
+	gc	1,$12
+	pro	
+	.clause
+13:	gc	0,$'geteuid'
+	gc	1,$13
+	pro	
+	.clause
+14:	gc	0,$'getwd'
+	gc	1,$14
+	pro	
+	.clause
+15:	gc	0,$'hostname'
+	gc	1,$15
+	pro	
+	.clause
+16:	gc	0,$'kill'
+	gc	1,$16
+	pro	
+	.clause
+17:	gc	0,$'link'
+	gc	1,$17
+	pro	
+	.clause
+18:	gc	0,$'mkdir'
+	gc	1,$18
+	pro	
+	.clause
+19:	gc	0,$'random'
+	gc	1,$19
+	pro	
+	.clause
+20:	gc	0,$'rename'
+	gc	1,$20
+	pro	
+	.clause
+21:	gc	0,$'rmdir'
+	gc	1,$21
+	pro	
+	.clause
+22:	gc	0,$'sleep'
+	gc	1,$22
+	pro	
+	.clause
+23:	gc	0,$'stat'
+	gc	1,$23
+	pro	
+	.clause
+24:	gc	0,$'time'
+	gc	1,$24
+	pro	
+	.clause
+25:	gc	0,$'truncate'
+	gc	1,$25
+	pro	
+	.clause
+26:	gc	0,$'umask'
+	gc	1,$26
+	pro	
+	.clause
+27:	gc	0,$'unlink'
+	gc	1,$27
+	pro	
+	.clause
+28:	gc	0,$'wait'
+	gc	1,$28
+	pro	
+	.clause
+29:	gc	0,$'readdir'
+	gc	1,$29
+	pro	
+	.clause
+30:	gc	0,$'fork'
+	gc	1,$30
+	pro	
+	.clause
+31:	gc	0,$'system'
+	gc	1,$31
+	pro	
+	.clause
+32:	gc	0,$'exec'
+	gc	1,$32
+	pro	
+	.clause
+33:	gc	0,$'statistics'
+	gc	1,$33
+	pro	
+	.clause
+34:	gc	0,$'fseek'
+	gc	1,$34
+	pro	
+	.clause
+35:	gc	0,$'ftell'
+	gc	1,$35
+	pro	
+	.clause
+36:	gc	0,$'fesq'
+	gc	1,$36
+	pro	
+	.clause
+37:	gc	0,$'signal'
+	gc	1,$37
+	pro	
+	last
+

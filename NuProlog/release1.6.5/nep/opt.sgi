@@ -1,0 +1,34 @@
+#!/bin/sh
+
+exec /bin/cat $1
+
+#!/usr/contrib/bin/perl
+
+$file = $ARGV[0];
+
+open(FILE, $file) || die "Can't open file $file";
+while(<FILE>) {
+	$acc = $_;
+	next unless (/^	bgeu	.([0-9]*), 256, .[0-9]*$/);
+	$r1 = $1;
+	$_ = <FILE>;
+	$acc .= $_;
+	$keep = $_;
+	$s = "^	sll	.([0-9]*), .$r1, 2$";
+	next unless ($_ =~ $s);
+	$r2 = $1;
+	$_ = <FILE>;
+	$acc .= $_;
+	$keep .= $_;
+	$s = "^	lw	.$r2, .[0-9]*..$r2.";
+	next unless ($_ =~ $s);
+	$_ = <FILE>;
+	$acc .= $_;
+	$keep .= $_;
+	$s = "^	j	.$r2";
+	next unless ($_ =~ $s);
+	print $keep;
+	$acc = "";
+} continue {
+	print $acc;
+}

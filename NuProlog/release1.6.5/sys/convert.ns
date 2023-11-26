@@ -1,0 +1,432 @@
+
+	.pred	'atomToString',2
+	.clause
+0:	glvx2	1,2,3
+	pl	4
+	uvalx	2
+	uvalx	3
+	name	0,4
+	pro	
+	last
+
+	.pred	'intToAtom',2
+3: 	jnvx	0,&0
+1: 	jnvx	1,&0
+2: 	mkdel	2,&3
+	mark	1
+	mark	0
+	delay	
+	.clause
+0:	all	2
+	gvary	1,1
+	pvary	0,1
+	call	2,2,&'intToString'/2
+	pvaly	1,2
+	puval	0,3
+	name	2,3
+	dallpro	
+	last
+
+	.pred	'intToString',2
+3: 	jnvx	0,&0
+1: 	fvar	1,255
+	jnvx	255,&0
+2: 	mkdel	2,&3
+	mark	255
+	mark	0
+	delay	
+	.clause
+0:	all	4
+	gvary	0,0
+	gvary	1,1
+	jctypy	0,17,&20
+	apushy	0
+	pushi	$$0
+	jpred	4,&18
+	pvaly	0,0
+	pnil	1
+	pvaly	1,2
+	dallexe	3,&'$convertIToS'/3
+18: 	apushy	0
+	pushi	$$0
+	jpred	6,&19
+	pvaly	1,255
+	gl	255
+	uc	$48
+	uc	$[]
+	dallpro	
+19: 	apushy	0
+	afunc	14
+	popy	2
+	pvaly	2,0
+	pnil	1
+	pvary	3,2
+	call	4,3,&'$convertIToS'/3
+	pvaly	1,255
+	gl	255
+	uc	$45
+	ulvy	3
+	dallpro	
+	j	&23
+20: 	typy	0,3
+	labelx	0
+21: 	te	0,0,1,&22
+	pvaly	1,255
+	gl	255
+	uc	$45
+	uvary	3
+	cutx	0
+	puval	3,0
+	pc	1,$0
+	pvary	2,2
+	call	3,3,&'$convertSToI'/3
+	apushy	2
+	afunc	14
+	popvy	0
+	dallpro	
+22: 	tre	0,0
+	pvaly	1,0
+	pc	1,$0
+	pvaly	0,2
+	dallexe	3,&'$convertSToI'/3
+23: 	last
+
+	.pred	'$convertSToI',3
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	3,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	1,2
+	pro	
+	.clause
+1:	glvx2	0,3,0
+	apushx	3
+	pushi	$$48
+	afunc	34
+	pushx	3
+	pushi	$$57
+	afunc	32
+	apred	0
+	apushx	1
+	pushi	$$10
+	afunc	2
+	pushx	3
+	afunc	0
+	pushi	$$48
+	afunc	1
+	popx	1
+	execsot	3,0,&4,&0,&1,&2
+	last
+
+	.pred	'$convertIToS',3
+	.clause
+0:	gvarx	3,1
+	apushx	0
+	pushi	$$0
+	jpred	6,&7
+	gvalx	2,3
+	pro	
+7: 	apushx	0
+	pushi	$$10
+	afunc	5
+	pushi	$$48
+	afunc	0
+	popx	4
+	apushx	0
+	pushi	$$10
+	afunc	4
+	popx	0
+	pl	1
+	uvalx	4
+	ulvx	3
+	exec	3,&'$convertIToS'/3
+8: 	last
+
+	.pred	'intToAtom',3
+	.clause
+0:	gvarx	4,1
+	gvarx	3,2
+	pc	1,$97
+	gvara	2,4
+	exec	4,&'intToAtom'/4
+	last
+
+	.pred	'intToString',3
+	.clause
+0:	gvarx	4,1
+	gvarx	3,2
+	pc	1,$97
+	gvara	2,4
+	exec	4,&'intToString'/4
+	last
+
+	.pred	'intToAtom',4
+5: 	jnvx	0,&6
+1: 	mkdel	4,&5
+	mark	0
+	delay	
+6: 	jnvx	1,&7
+2: 	mkdel	4,&6
+	mark	1
+	delay	
+7: 	jnvx	2,&0
+3: 	jnvx	3,&0
+4: 	mkdel	4,&7
+	mark	3
+	mark	2
+	delay	
+	.clause
+0:	all	2
+	gvary	1,3
+	pvary	0,3
+	call	2,4,&'intToString'/4
+	pvaly	1,4
+	puval	0,5
+	name	4,5
+	dallpro	
+	last
+
+	.pred	'intToString',4
+5: 	jnvx	0,&6
+1: 	mkdel	4,&5
+	mark	0
+	delay	
+6: 	jnvx	1,&7
+2: 	mkdel	4,&6
+	mark	1
+	delay	
+7: 	jnvx	2,&0
+3: 	fvar	3,255
+	jnvx	255,&0
+4: 	mkdel	4,&7
+	mark	255
+	mark	2
+	delay	
+	.clause
+0:	all	4
+	gvary	0,2
+	gvary	1,3
+	jctypy	0,17,&34
+	apushy	0
+	pushi	$$0
+	jpred	4,&32
+	pvaly	0,2
+	pnil	3
+	pvaly	1,4
+	dallexe	5,&'$convertIToS'/5
+32: 	apushy	0
+	pushi	$$0
+	jpred	6,&33
+	pvaly	1,255
+	gl	255
+	uc	$48
+	uc	$[]
+	dallpro	
+33: 	apushy	0
+	afunc	14
+	popy	2
+	pvaly	2,2
+	pnil	3
+	pvary	3,4
+	call	4,5,&'$convertIToS'/5
+	pvaly	1,255
+	gl	255
+	uc	$45
+	ulvy	3
+	dallpro	
+	j	&37
+34: 	typy	0,3
+	labelx	2
+35: 	te	2,0,3,&36
+	pvaly	1,255
+	gl	255
+	uc	$45
+	uvary	3
+	cutx	2
+	puval	3,2
+	pc	3,$0
+	pvary	2,4
+	call	3,5,&'$convertSToI'/5
+	apushy	2
+	afunc	14
+	popvy	0
+	dallpro	
+36: 	tre	2,0
+	pvaly	1,2
+	pc	3,$0
+	pvaly	0,4
+	dallexe	5,&'$convertSToI'/5
+37: 	last
+
+	.pred	'$convertSToI',5
+3: 	sot	2,&4,&0,&1,&2
+4: 	mkdel	5,&3
+	mark	2
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	2
+	gvalx	3,4
+	pro	
+	.clause
+1:	all	7
+	gvary	3,0
+	gvary	2,1
+	gl	2
+	uvary	6
+	uvary	1
+	gvary	5,3
+	gvary	0,4
+	pvaly	3,0
+	pvaly	2,1
+	pvaly	6,2
+	call	7,3,&'$radixDigit'/3
+	pvaly	6,0
+	pvaly	2,1
+	pvary	4,2
+	call	6,3,&'$charToDigit'/3
+	apushy	5
+	pushy	3
+	afunc	2
+	pushy	4
+	afunc	0
+	popx	3
+	pvaly	3,0
+	pvaly	2,1
+	pvaly	1,2
+	pvaly	0,4
+	dall	
+	execsot	5,2,&4,&0,&1,&2
+	last
+
+	.pred	'$convertIToS',5
+	.clause
+0:	all	6
+	gvary	2,0
+	gvary	1,1
+	gvary	5,2
+	gvary	3,3
+	gvary	0,4
+	apushy	5
+	pushi	$$0
+	jpred	6,&14
+	pvaly	0,255
+	gvaly	3,255
+	dallpro	
+14: 	apushy	5
+	pushy	2
+	afunc	5
+	popx	0
+	pvaly	1,1
+	pvary	4,2
+	call	6,3,&'$digitToChar'/3
+	apushy	5
+	pushy	2
+	afunc	4
+	popx	2
+	pl	3
+	ulvy	4
+	ulvy	3
+	pvaly	2,0
+	pvaly	1,1
+	pvaly	0,4
+	dallexe	5,&'$convertIToS'/5
+15: 	last
+
+	.pred	'$radixDigit',3
+	.clause
+0:	apushx	0
+	pushi	$$10
+	afunc	32
+	pushx	2
+	pushi	$$48
+	afunc	34
+	pushx	2
+	pushx	0
+	pushi	$$48
+	afunc	0
+	afunc	31
+	afunc	11
+	afunc	11
+	pushx	0
+	pushi	$$10
+	afunc	33
+	pushx	2
+	pushi	$$48
+	afunc	34
+	pushx	2
+	pushi	$$57
+	afunc	32
+	afunc	11
+	pushx	1
+	pushx	2
+	afunc	32
+	pushx	2
+	pushx	1
+	pushi	$$10
+	afunc	1
+	pushx	0
+	afunc	0
+	afunc	31
+	afunc	11
+	afunc	12
+	afunc	11
+	apred	1
+	pro	
+	last
+
+	.pred	'$charToDigit',3
+	.clause
+0:	apushx	0
+	pushi	$$48
+	afunc	34
+	pushx	0
+	pushi	$$57
+	afunc	32
+	jpred	0,&4
+	apushx	0
+	pushi	$$48
+	afunc	1
+	popvx	2
+	pro	
+4: 	apushx	1
+	pushx	0
+	afunc	32
+	pushx	0
+	pushx	1
+	pushi	$$26
+	afunc	0
+	afunc	31
+	jpred	0,&5
+	apushx	0
+	pushx	1
+	afunc	1
+	pushi	$$10
+	afunc	0
+	popvx	2
+	pro	
+5: 	fail	
+6: 	last
+
+	.pred	'$digitToChar',3
+	.clause
+0:	apushx	0
+	pushi	$$10
+	jpred	2,&4
+	apushx	0
+	pushi	$$48
+	afunc	0
+	popvx	2
+	pro	
+4: 	apushx	0
+	pushi	$$10
+	afunc	1
+	pushx	1
+	afunc	0
+	popvx	2
+	pro	
+5: 	last
+

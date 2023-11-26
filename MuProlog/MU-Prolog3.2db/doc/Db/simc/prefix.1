@@ -1,0 +1,36 @@
+.TH PREFIX 1-ucb
+.SH ORIGIN
+4.2BSD
+.SH NAME
+prefix \- filter Prolog input for consulting into a
+.I ddb
+relation
+.SH SYNOPSIS
+.B prefix
+< file 
+.SH DESCRIPTION
+.I prefix
+takes standard MU-Prolog source and transforms it into
+prefix functional notation, with appropriate quoting
+suitable for feeding into the
+.IR consult (1)
+program.
+.br
+If you don't like the idea of using
+.IR prefix (1)
+and
+.IR consult (1),
+then run Prolog and simply
+consult the data file from within
+the Prolog interpreter as you would
+consult any other Prolog source.
+.SH FILES
+db/rel/desc	Index files
+.br
+db/rel/00*	Data files
+.SH SEE ALSO
+dbinfo(1), ddb(1), consult(1), newrel(1)
+.SH DIAGNOSTICS
+Silent bastardry.
+.SH BUGS
+It's written in Prolog ... that's enough.

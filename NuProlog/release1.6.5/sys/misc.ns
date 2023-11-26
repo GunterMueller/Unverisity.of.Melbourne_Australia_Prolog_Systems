@@ -1,0 +1,1279 @@
+
+	.pred	'restart',0
+	.clause
+0:	abort	
+	pro	
+	last
+
+	.pred	'iota',3
+	.clause
+0:	exec	3,&'between'/3
+	last
+
+	.pred	'between',3
+5: 	jnvx	0,&6
+1: 	jnvx	2,&6
+2: 	mkdel	3,&5
+	mark	2
+	mark	0
+	delay	
+6: 	jnvx	1,&0
+3: 	jnvx	2,&0
+4: 	mkdel	3,&6
+	mark	2
+	mark	1
+	delay	
+	.clause
+0:	jctypx	2,17,&13
+	apushx	0
+	pushx	2
+	apred	3
+	apushx	2
+	pushx	1
+	apred	3
+	pro	
+13: 	ctypx	0,17
+	ctypx	1,17
+	exec	3,&'$between'/3
+14: 	last
+
+	.pred	'$between',3
+	.clause
+0:	apushx	0
+	pushx	1
+	jpred	2,&9
+7: 	te	3,0,3,&8
+	gvalx	2,0
+	pro	
+8: 	tre	3,0
+	apushx	0
+	afunc	46
+	popx	0
+	exec	3,&'$between'/3
+	j	&10
+9: 	gvalx	1,0
+	gvalx	2,0
+	pro	
+10: 	last
+
+	.pred	'useIf',1
+	labelx	1
+2: 	t	2,0,&0
+	tr	2,0,&1
+	.clause
+0:	all	4
+	gvary	2,0
+	gvary	0,1
+	labely	3
+12: 	te	0,0,0,&13
+	pvaly	2,0
+	call	4,1,&'call'/1
+	cuty	3
+	fail	
+13: 	tre	0,0
+14: 	call	3,0,&'repeat'/0
+	pvary	1,0
+	call	3,1,&'read'/1
+	typy	1,252
+15: 	te	0,0,0,&16
+	pvaly	1,255
+	gs	255,$'?-'/1
+	uc	$'useElse'
+	j	&22
+16: 	re	0,0,&17
+	pvaly	1,255
+	gs	255,$':-'/1
+	uc	$'useElse'
+	j	&22
+17: 	re	0,0,&18
+	pvaly	1,255
+	gs	255,$'?-'/1
+	uc	$'useEnd'
+	j	&22
+18: 	re	0,0,&19
+	pvaly	1,255
+	gs	255,$':-'/1
+	uc	$'useEnd'
+	j	&22
+19: 	re	0,0,&20
+	pvaly	1,0
+	call	3,1,&'eof'/1
+	pc	1,#(CHR,&11)
+	ps	3,$'useIf'/1
+	ulvy	2
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	call	1,3,&'$format'/3
+	j	&22
+20: 	re	0,0,&21
+	pvaly	1,255
+	gs	255,$'?-'/1
+	us	255,$'useIf'/1
+	uvoid	1
+	call	1,0,&'useElse'/0
+	fail	
+21: 	tre	0,0
+	pvaly	1,255
+	gs	255,$':-'/1
+	us	255,$'useIf'/1
+	uvoid	1
+	call	1,0,&'useElse'/0
+	fail	
+22: 	cuty	0
+	dallpro	
+	.clause
+1:	pro	
+	last
+11: 	.string	"~NError in ~w.~nEnd of input encountered before matching useEnd.~n"
+
+	.pred	'useElse',0
+	labelx	0
+	.clause
+0:	all	2
+	gvary	0,0
+	call	2,0,&'repeat'/0
+	pvary	1,0
+	call	2,1,&'read'/1
+	typy	1,252
+5: 	te	0,0,0,&6
+	pvaly	1,255
+	gs	255,$'?-'/1
+	uc	$'useEnd'
+	j	&10
+6: 	re	0,0,&7
+	pvaly	1,255
+	gs	255,$':-'/1
+	uc	$'useEnd'
+	j	&10
+7: 	re	0,0,&8
+	puval	1,0
+	call	1,1,&'eof'/1
+	pc	0,$'Unmatched "use"'
+	call	1,1,&'writeln'/1
+	j	&10
+8: 	re	0,0,&9
+	pvaly	1,255
+	gs	255,$'?-'/1
+	us	255,$'useIf'/1
+	uvoid	1
+	call	1,0,&'useElse'/0
+	fail	
+9: 	tre	0,0
+	pvaly	1,255
+	gs	255,$':-'/1
+	us	255,$'useIf'/1
+	uvoid	1
+	call	1,0,&'useElse'/0
+	fail	
+10: 	cuty	0
+	dallpro	
+	last
+
+	.pred	'useEnd',0
+	.clause
+0:	pro	
+	last
+
+	.pred	'$nameToAtom',2
+2: 	fvar	0,255
+	jnvx	255,&0
+1: 	mkdel	2,&2
+	mark	255
+	delay	
+	.clause
+0:	jctypx	0,2,&5
+	gvalx	1,0
+	pro	
+5: 	name	1,0
+	pro	
+6: 	last
+
+	.pred	'$nameToString',2
+2: 	fvar	0,255
+	jnvx	255,&0
+1: 	mkdel	2,&2
+	mark	255
+	delay	
+	.clause
+0:	jctypx	0,2,&5
+	name	0,1
+	pro	
+5: 	ltos	0,1
+	pro	
+6: 	last
+
+	.pred	'$sameName',2
+3: 	fvar	0,255
+	jnvx	255,&4
+1: 	mkdel	2,&3
+	mark	255
+	delay	
+4: 	fvar	1,255
+	jnvx	255,&0
+2: 	mkdel	2,&4
+	mark	255
+	delay	
+	.clause
+0:	all	2
+	gvary	1,1
+	pvary	0,1
+	call	2,2,&'$nameToString'/2
+	pvaly	1,0
+	puval	0,1
+	dallexe	2,&'$nameToString'/2
+	last
+
+	.pred	'$compareLE',1
+4: 	sot	0,&2,&5,&3,&3
+2: 	t	1,0,&0
+	tr	1,0,&1
+5: 	soc	0,&($'<':&1,$'=':&0),&3
+3: 	fail	
+	.clause
+0:	gc	0,$'='
+	pro	
+	.clause
+1:	gc	0,$'<'
+	pro	
+	last
+
+	.pred	'type',1
+	.clause
+0:	pro	
+	last
+
+	.pred	'pred',1
+	.clause
+0:	pro	
+	last
+
+	.pred	'pure',1
+	.clause
+0:	gsx2	0,0,2,$'/'/2
+	all	1
+	labely	0
+8: 	te	3,0,3,&9
+	ps	1,$'$property'/1
+	uvalx	2
+	pc	2,$'pure'
+	call	1,3,&'getprop'/3
+	cuty	0
+	dallpro	
+9: 	tre	3,0
+	ps	1,$'$property'/1
+	uvalx	2
+	pc	2,$'pure'
+	dallexe	3,&'addpropa'/3
+10: 	last
+
+	.pred	'when',2
+	labelx	2
+3: 	sot	0,&1,&2,&2,&2
+2: 	t	3,0,&0
+	tr	3,0,&1
+	.clause
+0:	all	4
+	gvary	2,0
+	gvary	1,1
+	typy	2,252
+	pvaly	2,3
+	pvary	0,4
+	pvary	3,5
+	functor	3,4,5
+	ctypy	0,2
+	cutx	2
+	pvaly	0,0
+	pvaly	3,1
+	call	4,2,&'$makeDynamicWithWhens'/2
+	ps	1,$'$when'/1
+	ulvy	3
+	ps	2,$'when'/2
+	ulvy	2
+	ulvy	1
+	puval	0,0
+	dallexe	3,&'addpropz'/3
+	.clause
+1:	gvarx	3,1
+	pc	1,#(CHR,&18)
+	ps	4,$'when'/2
+	ulvx	0
+	ulvx	3
+	pl	2
+	uvalx	4
+	uc	$[]
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	fail	
+	last
+18: 	.string	"~NError in ~w.~nLHS of a when declaration must be about a predicate.~n"
+
+	.pred	'dynamic',1
+	.clause
+0:	gvarx	1,0
+	ps	2,$'$dynamic'/1
+	uvara	0
+	exec	3,&'$applyToEachPredicate'/3
+	last
+
+	.pred	'$dynamic',1
+	.clause
+0:	pc	1,$'fail'
+	exec	2,&'$dynamic'/2
+	last
+
+	.pred	'$dynamic',2
+	.clause
+0:	gs	0,$'/'/2
+	all	5
+	uvary	1
+	uvary	0
+	gvary	4,1
+	pvaly	1,0
+	pvaly	0,1
+	call	5,2,&'$loadingPredicate'/2
+	ps	1,$'$property'/1
+	uvaly	0
+	pvaly	1,0
+	pc	2,$'dynamic'
+	call	5,3,&'addpropa'/3
+	apushy	0
+	pushi	$$0
+	jpred	6,&33
+	pvary	3,255
+	gl	255
+	uvarx	2
+	uc	$[]
+	gs	2,$'emit'/3
+	uc	$'pc'
+	uvarx	2
+	us	255,$'$'/1
+	uvaly	1
+	gl	2
+	uc	$255
+	uc	$[]
+	j	&34
+33: 	pvary	3,255
+	gl	255
+	uvarx	3
+	uvarx	2
+	gs	3,$'emit'/3
+	uc	$'ps'
+	uvarx	3
+	us	255,$'/'/2
+	uvaly	1
+	uvaly	0
+	gl	3
+	uc	$255
+	uc	$[]
+	pc	0,$0
+	pvaly	0,1
+	call	5,3,&'iload$unifies'/3
+34: 	pvaly	4,2
+	pc	3,$'fail'
+	idtest	2,3
+	jfail	&35
+	pc	1,#(LST,&14)
+	pvaly	3,0
+	pvary	2,2
+	call	3,3,&'append'/3
+	j	&36
+35: 	pc	2,#(STR,&18)
+	pc	3,#(STR,&19)
+	pc	4,#(LST,&20)
+	ps	5,$'emit'/3
+	uc	$'pc'
+	uvalx	4
+	us	255,$'$'/1
+	uvaly	1
+	pc	4,#(LST,&21)
+	ps	6,$'emit'/3
+	uc	$'pc'
+	uvalx	4
+	us	255,$'$'/1
+	uvaly	0
+	pc	4,#(STR,&22)
+	pc	7,#(STR,&23)
+	pc	8,#(STR,&24)
+	pc	9,#(STR,&25)
+	pc	10,#(STR,&26)
+	pl	1
+	uvalx	2
+	ul	255
+	uvalx	3
+	ul	255
+	uvalx	5
+	ul	255
+	uvalx	6
+	ul	255
+	uvalx	4
+	ul	255
+	uvalx	7
+	ul	255
+	uvalx	8
+	ul	255
+	uvalx	9
+	ul	255
+	uvalx	10
+	uc	$[]
+	pvaly	3,0
+	pvary	2,2
+	call	3,3,&'append'/3
+36: 	pvaly	1,0
+	pvaly	0,1
+	puval	2,2
+	call	2,3,&'iload$iload'/3
+	pvaly	1,0
+	pvaly	0,1
+	pnil	2
+	dallexe	3,&'iload$iload'/3
+	last
+26: 	.word	$'emit'/3
+	.word	$'dallexe'
+	.word	#(LST,&37)
+	.word	#(STR,&38)
+37: 	.word	$2
+	.word	$[]
+38: 	.word	$'&'/2
+	.word	$'sys$whensCall'
+	.word	$2
+25: 	.word	$'emit'/2
+	.word	$'pvaly'
+	.word	#(LST,&39)
+39: 	.word	$1
+	.word	#(LST,&40)
+40: 	.word	$1
+	.word	$[]
+24: 	.word	$'emit'/2
+	.word	$'pvaly'
+	.word	#(LST,&41)
+41: 	.word	$0
+	.word	#(LST,&42)
+42: 	.word	$0
+	.word	$[]
+23: 	.word	$'emit'/3
+	.word	$'call'
+	.word	#(LST,&43)
+	.word	#(STR,&44)
+43: 	.word	$2
+	.word	#(LST,&45)
+45: 	.word	$3
+	.word	$[]
+44: 	.word	$'&'/2
+	.word	$'whens'
+	.word	$3
+22: 	.word	$'emit'/2
+	.word	$'pvary'
+	.word	#(LST,&46)
+46: 	.word	$0
+	.word	#(LST,&47)
+47: 	.word	$2
+	.word	$[]
+21: 	.word	$1
+	.word	$[]
+20: 	.word	$0
+	.word	$[]
+19: 	.word	$'emit'/2
+	.word	$'gvary'
+	.word	#(LST,&48)
+48: 	.word	$1
+	.word	#(LST,&49)
+49: 	.word	$255
+	.word	$[]
+18: 	.word	$'emit'/2
+	.word	$'all'
+	.word	#(LST,&50)
+50: 	.word	$2
+	.word	$[]
+14: 	.word	#(STR,&51)
+	.word	#(LST,&52)
+51: 	.word	$'emit'/2
+	.word	$'gvarx'
+	.word	#(LST,&53)
+53: 	.word	$0
+	.word	#(LST,&54)
+54: 	.word	$255
+	.word	$[]
+52: 	.word	#(STR,&55)
+	.word	$[]
+55: 	.word	$'emit'/3
+	.word	$'exec'
+	.word	#(LST,&56)
+	.word	#(STR,&57)
+56: 	.word	$1
+	.word	$[]
+57: 	.word	$'&'/2
+	.word	$'sys$callDynamic'
+	.word	$1
+
+	.pred	'iload$unifies',3
+2: 	t	3,0,&0
+	tr	3,0,&1
+	.clause
+0:	gvalx	0,1
+	gnil	2
+	pro	
+	.clause
+1:	glvx2	2,3,2
+	gs	3,$'emit'/2
+	uc	$'ulvx'
+	ul	255
+	ulvx	0
+	uc	$[]
+	apushx	0
+	pushx	1
+	apred	2
+	apushx	0
+	afunc	46
+	popx	0
+	exec	3,&'iload$unifies'/3
+	last
+
+	.pred	'dynamic',2
+	.clause
+0:	all	4
+	gvary	2,1
+	labely	0
+	pvary	3,1
+	pvary	1,2
+	call	4,3,&'getprop'/3
+6: 	te	0,0,0,&7
+	pvaly	3,255
+	gs	255,$'$clause'/1
+	ulvy	2
+	j	&8
+7: 	tre	0,0
+	pvaly	3,255
+	gs	255,$'$property'/1
+	ulvy	2
+	pvaly	1,255
+	gc	255,$'dynamic'
+8: 	cuty	0
+	dallpro	
+	last
+
+	.pred	'$hasWhens',2
+	.clause
+0:	gvarx	2,1
+	all	1
+	labely	0
+	ps	1,$'$when'/1
+	ulvx	2
+	pvarx	2,2
+	call	1,3,&'getprop'/3
+	cuty	0
+	dallpro	
+	last
+
+	.pred	'pure',2
+	.clause
+0:	gvarx	2,1
+	all	1
+	labely	0
+	ps	1,$'$property'/1
+	ulvx	2
+	pc	2,$'pure'
+	call	1,3,&'getprop'/3
+	cuty	0
+	dallpro	
+	last
+
+	.pred	'predicateProperty',3
+	.clause
+0:	all	7
+	gvary	1,0
+	gvary	0,1
+	gvary	2,2
+	pvaly	1,0
+	pvaly	0,1
+	call	7,2,&'currentPredicate'/2
+24: 	te	0,0,0,&25
+	ps	1,$'$property'/1
+	ulvy	0
+	pvaly	1,0
+	pvaly	2,2
+	dallexe	3,&'getprop'/3
+25: 	re	0,0,&28
+	pvaly	2,255
+	gc	255,$'compiled'
+	labely	6
+26: 	te	0,0,0,&27
+	ps	1,$'$property'/1
+	ulvy	0
+	pvaly	1,0
+	pc	2,$'dynamic'
+	call	7,3,&'getprop'/3
+	cuty	6
+	fail	
+27: 	tre	0,0
+	dallpro	
+	j	&32
+28: 	re	0,0,&29
+	pvaly	2,255
+	gc	255,$'system'
+	pvaly	1,3
+	pvaly	0,4
+	defined	3,4,2,3
+	labely	5
+	pc	0,$'$systemSourceFiles'
+	pc	1,$'$file'
+	call	6,3,&'getprop'/3
+	cuty	5
+	dallpro	
+29: 	re	0,0,&30
+	pvaly	2,255
+	gc	255,$'built_in'
+	pvaly	1,3
+	pvaly	0,4
+	defined	3,4,2,3
+	labely	4
+	pc	0,$'$systemSourceFiles'
+	pc	1,$'$file'
+	call	5,3,&'getprop'/3
+	cuty	4
+	dallpro	
+30: 	re	0,0,&31
+	pvaly	2,255
+	gc	255,$'library'
+	pvary	3,0
+	call	4,1,&'libdirectory'/1
+	puval	3,3
+	pvarx	0,0
+	name	3,0
+	pvaly	1,3
+	pvaly	0,4
+	defined	3,4,2,3
+	pvarx	3,3
+	name	2,3
+	pvarx	1,1
+	gvarx	2,3
+	dallexe	3,&'append'/3
+31: 	tre	0,0
+	pvaly	2,255
+	gc	255,$'spypoint'
+	pvaly	1,0
+	pvaly	0,1
+	dallexe	2,&'$spypoint'/2
+32: 	last
+
+	.pred	'systemPredicate',1
+	.clause
+0:	pvarx	2,2
+	pvarx	1,1
+	functor	0,2,1
+	gvara	0,2
+	exec	2,&'systemPredicate'/2
+	last
+
+	.pred	'systemPredicate',2
+	.clause
+0:	pc	2,$'system'
+	exec	3,&'predicateProperty'/3
+	last
+
+	.pred	'libraryPredicate',2
+	.clause
+0:	all	2
+	gvary	1,0
+	gvary	0,1
+	pc	0,$'predefined'
+	call	2,1,&'$autoLoadLibrary'/1
+	pvaly	1,0
+	pvaly	0,1
+	dallexe	2,&'libraryPredicate'/2
+	last
+
+	.pred	'nonlogicalPredicate',1
+	.clause
+0:	all	1
+	gvary	0,0
+	pc	0,$'predefined'
+	call	1,1,&'$autoLoadLibrary'/1
+	pvaly	0,0
+	dallexe	1,&'nonlogicalPredicate'/1
+	last
+
+	.pred	'libraryPredicate',3
+	.clause
+0:	all	3
+	gvary	2,0
+	gvary	1,1
+	gvary	0,2
+	pc	0,$'predefined'
+	call	3,1,&'$autoLoadLibrary'/1
+	pvaly	2,0
+	pvaly	1,1
+	pvaly	0,2
+	dallexe	3,&'libraryPredicate'/3
+	last
+
+	.pred	'nonlogicalPredicate',2
+	.clause
+0:	all	2
+	gvary	1,0
+	gvary	0,1
+	pc	0,$'predefined'
+	call	2,1,&'$autoLoadLibrary'/1
+	pvaly	1,0
+	pvaly	0,1
+	dallexe	2,&'nonlogicalPredicate'/2
+	last
+
+	.pred	'absoluteFileName',2
+	.clause
+0:	all	3
+	gvary	0,1
+	labely	2
+13: 	te	1,0,1,&14
+	pc	1,#(LST,&8)
+	pc	2,$0
+	pvarx	3,3
+	pvary	1,4
+	call	3,5,&'$findFile'/5
+	cuty	2
+	pvaly	0,2
+	puval	1,3
+	name	2,3
+	dallpro	
+14: 	tre	1,0
+	pc	1,#(CHR,&12)
+	ps	2,$'absoluteFileName'/2
+	ulvx	0
+	ulvy	0
+	pc	0,$'user_error'
+	call	0,3,&'$format'/3
+	fail	
+15: 	last
+12: 	.string	"~NError in ~w -- File not found.~n"
+8: 	.word	#(CHR,&16)
+	.word	#(LST,&17)
+16: 	.string	".nl"
+17: 	.word	$[]
+	.word	$[]
+
+	.pred	'sourceFile',1
+	.clause
+0:	gvarx	2,0
+	pc	0,$'$sourceFiles'
+	pc	1,$'$file'
+	exec	3,&'getprop'/3
+	last
+
+	.pred	'sourceFile',3
+	.clause
+0:	all	3
+	gvary	2,0
+	gvary	1,1
+	gvary	0,2
+	pvaly	2,0
+	pvaly	1,1
+	call	3,2,&'currentPredicate'/2
+	pvaly	2,3
+	pvaly	1,4
+	defined	3,4,3,4
+	gvaly	0,3
+	dallpro	
+	last
+
+	.pred	'prologFlag',3
+	.clause
+0:	all	6
+	gvary	4,0
+	gvary	3,1
+	gvary	0,2
+	pvary	2,255
+	jctypy	4,2,&20
+	labely	5
+18: 	te	0,0,0,&19
+	pvaly	4,0
+	pvaly	2,1
+	call	6,2,&'$flagNumber'/2
+	cuty	5
+	j	&21
+19: 	tre	0,0
+	pc	1,#(CHR,&9)
+	ps	3,$'prologFlag'/3
+	ulvy	4
+	ulvy	3
+	ulvy	0
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	call	5,3,&'$format'/3
+	fail	
+	j	&21
+20: 	pc	1,#(CHR,&13)
+	ps	3,$'prologFlag'/3
+	ulvy	4
+	ulvy	3
+	ulvy	0
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	call	5,3,&'$format'/3
+	fail	
+21: 	flags	3
+	gvary	1,3
+	puval	2,3
+	pvaly	1,4
+	arg	3,4,3
+	gvaly	3,3
+	jctypy	0,51,&22
+	j	&23
+22: 	pc	1,#(CHR,&17)
+	ps	3,$'prologFlag'/3
+	ulvy	4
+	ulvy	3
+	ulvy	0
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	call	3,3,&'$format'/3
+	fail	
+23: 	puval	2,3
+	pvaly	1,4
+	pvaly	0,5
+	replacn	3,4,5
+	dallpro	
+	last
+17: 	.string	"~NError in ~w -- flag value must be atomic.~n"
+13: 	.string	"~NError in ~w -- flag name must be atom.~n"
+9: 	.string	"~NError in ~w -- unknown flag.~n"
+
+	.pred	'prologFlag',2
+	.clause
+0:	exec	2,&'$getFlag'/2
+	last
+
+	.pred	'$setFlag',2
+	.clause
+0:	all	3
+	gvary	2,0
+	gvary	0,1
+	jctypy	0,51,&9
+	j	&10
+9: 	pc	1,#(CHR,&6)
+	ps	3,$'$setFlag'/2
+	ulvy	2
+	ulvy	0
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	call	3,3,&'$format'/3
+	fail	
+10: 	pvaly	2,0
+	pvary	1,1
+	call	2,2,&'$flagNumber'/2
+	flags	2
+	puval	1,3
+	pvaly	0,4
+	replacn	3,2,4
+	dallpro	
+	last
+6: 	.string	"~NError in ~w -- flag value must be atomic.~n"
+
+	.pred	'$getFlag',2
+	.clause
+0:	all	2
+	gvary	0,1
+	pvary	1,1
+	call	2,2,&'$flagNumber'/2
+	flags	2
+	puval	1,3
+	arg	3,2,2
+	gvaly	0,2
+	dallpro	
+	last
+
+	.pred	'$flagNumber',2
+26: 	sot	0,&24,&27,&25,&25
+24: 	t	2,0,&0
+	r	2,0,&1
+	r	2,0,&2
+	r	2,0,&3
+	r	2,0,&4
+	r	2,0,&5
+	r	2,0,&6
+	r	2,0,&7
+	r	2,0,&8
+	r	2,0,&9
+	r	2,0,&10
+	r	2,0,&11
+	r	2,0,&12
+	r	2,0,&13
+	r	2,0,&14
+	r	2,0,&15
+	r	2,0,&16
+	r	2,0,&17
+	r	2,0,&18
+	r	2,0,&19
+	r	2,0,&20
+	r	2,0,&21
+	r	2,0,&22
+	tr	2,0,&23
+27: 	soc	0,&($'bindirectory':&5,$'callNumber':&9,$'characterEscapes':&0,$'codegrow':&16,$'commanddirectory':&15,$'datagrow':&6,$'debugging':&2,$'delayed':&10,$'fileErrors':&1,$'fload':&19,$'leashMode':&8,$'libdirectory':&4,$'localDebug':&7,$'machine':&20,$'maxArity':&23,$'maxDepth':&18,$'nstreams':&22,$'optimizeQuery':&17,$'printDepth':&13,$'redefinitionWarning':&12,$'tdatagrow':&14,$'vars':&11,$'version':&21,$'wizard':&3),&25
+25: 	fail	
+	.clause
+0:	gc	0,$'characterEscapes'
+	gc	1,$1
+	pro	
+	.clause
+1:	gc	0,$'fileErrors'
+	gc	1,$2
+	pro	
+	.clause
+2:	gc	0,$'debugging'
+	gc	1,$3
+	pro	
+	.clause
+3:	gc	0,$'wizard'
+	gc	1,$4
+	pro	
+	.clause
+4:	gc	0,$'libdirectory'
+	gc	1,$5
+	pro	
+	.clause
+5:	gc	0,$'bindirectory'
+	gc	1,$6
+	pro	
+	.clause
+6:	gc	0,$'datagrow'
+	gc	1,$7
+	pro	
+	.clause
+7:	gc	0,$'localDebug'
+	gc	1,$8
+	pro	
+	.clause
+8:	gc	0,$'leashMode'
+	gc	1,$9
+	pro	
+	.clause
+9:	gc	0,$'callNumber'
+	gc	1,$10
+	pro	
+	.clause
+10:	gc	0,$'delayed'
+	gc	1,$11
+	pro	
+	.clause
+11:	gc	0,$'vars'
+	gc	1,$12
+	pro	
+	.clause
+12:	gc	0,$'redefinitionWarning'
+	gc	1,$13
+	pro	
+	.clause
+13:	gc	0,$'printDepth'
+	gc	1,$14
+	pro	
+	.clause
+14:	gc	0,$'tdatagrow'
+	gc	1,$15
+	pro	
+	.clause
+15:	gc	0,$'commanddirectory'
+	gc	1,$16
+	pro	
+	.clause
+16:	gc	0,$'codegrow'
+	gc	1,$17
+	pro	
+	.clause
+17:	gc	0,$'optimizeQuery'
+	gc	1,$18
+	pro	
+	.clause
+18:	gc	0,$'maxDepth'
+	gc	1,$19
+	pro	
+	.clause
+19:	gc	0,$'fload'
+	gc	1,$20
+	pro	
+	.clause
+20:	gc	0,$'machine'
+	gc	1,$21
+	pro	
+	.clause
+21:	gc	0,$'version'
+	gc	1,$22
+	pro	
+	.clause
+22:	gc	0,$'nstreams'
+	gc	1,$23
+	pro	
+	.clause
+23:	gc	0,$'maxArity'
+	gc	1,$24
+	pro	
+	last
+
+	.pred	'dbBackup',2
+	.clause
+0:	all	2
+	gvary	1,0
+	gvary	0,1
+	pc	0,$'db'
+	call	2,1,&'$autoLoadLibrary'/1
+	pvaly	1,0
+	pvaly	0,1
+	dallexe	2,&'dbBackup'/2
+	last
+
+	.pred	'dbCons',1
+	.clause
+0:	all	1
+	gvary	0,0
+	pc	0,$'db'
+	call	1,1,&'$autoLoadLibrary'/1
+	pvaly	0,0
+	dallexe	1,&'dbCons'/1
+	last
+
+	.pred	'dbCreate',1
+	.clause
+0:	all	1
+	gvary	0,0
+	pc	0,$'db'
+	call	1,1,&'$autoLoadLibrary'/1
+	pvaly	0,0
+	dallexe	1,&'dbCreate'/1
+	last
+
+	.pred	'dbDefine',3
+	.clause
+0:	all	3
+	gvary	2,0
+	gvary	1,1
+	gvary	0,2
+	pc	0,$'db'
+	call	3,1,&'$autoLoadLibrary'/1
+	pvaly	2,0
+	pvaly	1,1
+	pvaly	0,2
+	dallexe	3,&'dbDefine'/3
+	last
+
+	.pred	'dbDefine',4
+	.clause
+0:	all	4
+	gvary	3,0
+	gvary	2,1
+	gvary	1,2
+	gvary	0,3
+	pc	0,$'db'
+	call	4,1,&'$autoLoadLibrary'/1
+	pvaly	3,0
+	pvaly	2,1
+	pvaly	1,2
+	pvaly	0,3
+	dallexe	4,&'dbDefine'/4
+	last
+
+	.pred	'dbParam',4
+	.clause
+0:	all	5
+	gvary	2,0
+	gvary	1,1
+	gvary	0,2
+	gs	3,$'='/2
+	uvary	4
+	uvary	3
+	pc	0,$'db'
+	call	5,1,&'$autoLoadLibrary'/1
+	ps	3,$'='/2
+	uvaly	4
+	uvaly	3
+	pvaly	2,0
+	pvaly	1,1
+	pvaly	0,2
+	dallexe	4,&'dbParam'/4
+	last
+
+	.pred	'dbRestore',2
+	.clause
+0:	all	2
+	gvary	1,0
+	gvary	0,1
+	pc	0,$'db'
+	call	2,1,&'$autoLoadLibrary'/1
+	pvaly	1,0
+	pvaly	0,1
+	dallexe	2,&'dbRestore'/2
+	last
+
+	.pred	'dbRules',2
+	.clause
+0:	all	2
+	gvary	1,0
+	gvary	0,1
+	pc	0,$'db'
+	call	2,1,&'$autoLoadLibrary'/1
+	pvaly	1,0
+	pvaly	0,1
+	dallexe	2,&'dbRules'/2
+	last
+
+	.pred	'dbUndefine',3
+	.clause
+0:	all	3
+	gvary	2,0
+	gvary	1,1
+	gvary	0,2
+	pc	0,$'db'
+	call	3,1,&'$autoLoadLibrary'/1
+	pvaly	2,0
+	pvaly	1,1
+	pvaly	0,2
+	dallexe	3,&'dbUndefine'/3
+	last
+
+	.pred	'man',1
+	.clause
+0:	all	1
+	gvary	0,0
+	pc	0,$'man'
+	call	1,1,&'$autoLoadLibrary'/1
+	pvaly	0,0
+	dallexe	1,&'man'/1
+	last
+
+	.pred	'$optimize',2
+	.clause
+0:	all	2
+	gvary	1,0
+	gvary	0,1
+	pc	0,$'db'
+	call	2,1,&'$autoLoadLibrary'/1
+	pc	0,$'dsimc'
+	call	2,1,&'$autoLoadLibrary'/1
+	pvaly	1,0
+	pvaly	0,1
+	dallexe	2,&'$optimize'/2
+	last
+
+	.pred	'listOfVars',2
+	.clause
+0:	pnil	2
+	exec	3,&'$listOfVars'/3
+	last
+
+	.pred	'$listOfVars',3
+3: 	sot	0,&0,&1,&2,&2
+	.clause
+0:	typx	0,3
+	labelx	3
+7: 	te	3,0,4,&8
+	occurs	0,2
+	cutx	3
+	gvalx	2,1
+	pro	
+8: 	tre	3,0
+	gl	1
+	ulvx	0
+	ulvx	2
+	pro	
+9: 	.clause
+1:	typx	0,12
+	gvalx	2,1
+	pro	
+	.clause
+2:	gvarx	4,0
+	gvarx	5,1
+	gvarx	3,2
+	typx	4,112
+	pvarx	6,6
+	pvarx	0,0
+	functor	4,6,0
+	gvara	1,4
+	gvara	2,5
+	exec	4,&'$listOfVarsN'/4
+	last
+
+	.pred	'$listOfVarsN',4
+	.clause
+0:	all	4
+	gvary	2,1
+	gvary	0,2
+	gvara	2,3
+	apushx	0
+	pushi	$$0
+	jpred	4,&12
+	pvaly	2,4
+	arg	0,4,4
+	apushx	0
+	afunc	47
+	popy	3
+	gvara	0,4
+	pvary	1,1
+	call	4,3,&'$listOfVars'/3
+	pvaly	3,0
+	pvaly	2,1
+	pvaly	0,2
+	puval	1,3
+	dallexe	4,&'$listOfVarsN'/4
+12: 	gvaly	0,2
+	dallpro	
+13: 	last
+
+	.pred	'waitedOn',2
+	.clause
+0:	all	2
+	gvary	0,1
+	pvary	1,1
+	call	2,2,&'listOfVars'/2
+	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'$waitedOn'/2
+	last
+
+	.pred	'$waitedOn',2
+8: 	labelx	2
+	sot	0,&9,&0,&10,&7
+9: 	mkdel	3,&8
+	mark	0
+	delay	
+10: 	glvx2	0,0,3
+6: 	t	4,0,&4
+	tr	4,0,&5
+7: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	pro	
+	.clause
+4:	typx	0,2
+	cutx	2
+	gl	1
+	ulvx	0
+	uvara	1
+	gvara	0,3
+	exec	2,&'$waitedOn'/2
+	.clause
+5:	gvara	0,3
+	exec	2,&'$waitedOn'/2
+	last
+
+	.pred	'$init',0
+	.clause
+3:	all	1
+	labely	0
+	call	1,0,&'initializing'/0
+	pc	0,#(STR,&24)
+	call	1,1,&'$dynamic'/1
+	cuty	0
+	fail	
+	last
+24: 	.word	$'/'/2
+	.word	$'option'
+	.word	$1
+

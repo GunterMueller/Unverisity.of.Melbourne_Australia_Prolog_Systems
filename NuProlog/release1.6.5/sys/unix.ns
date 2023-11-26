@@ -1,0 +1,745 @@
+
+	.pred	'access',2
+	.clause
+0:	all	2
+	gvary	0,1
+	pvary	1,1
+	call	2,2,&'$nameToString'/2
+	puval	1,2
+	pvaly	0,3
+	pc	4,$0
+	syscall	0,2,3,4,2
+	gc	2,$0
+	dallpro	
+	last
+
+	.pred	'chdir',1
+	.clause
+0:	all	1
+	pvary	0,1
+	call	1,2,&'$nameToString'/2
+	puval	0,1
+	pc	2,$0
+	pc	3,$0
+	syscall	1,1,2,3,1
+	gc	1,$0
+	dallpro	
+	last
+
+	.pred	'cd',1
+	.clause
+0:	exec	1,&'chdir'/1
+	last
+
+	.pred	'chmod',2
+	.clause
+0:	all	2
+	gvary	0,1
+	pvary	1,1
+	call	2,2,&'$nameToString'/2
+	puval	1,2
+	pvaly	0,3
+	pc	4,$0
+	syscall	2,2,3,4,2
+	gc	2,$0
+	dallpro	
+	last
+
+	.pred	'environ',1
+	.clause
+0:	pc	1,$0
+	pc	2,$0
+	pc	3,$0
+	syscall	3,1,2,3,1
+	gvalx	0,1
+	pro	
+	last
+
+	.pred	'getenv',2
+	.clause
+0:	all	3
+	gvary	2,0
+	gvary	1,1
+	pvary	0,0
+	call	3,1,&'environ'/1
+	jctypy	2,2,&8
+	ps	0,$'='/2
+	ulvy	2
+	ulvy	1
+	puval	0,1
+	dallexe	2,&'memberchk'/2
+8: 	ps	0,$'='/2
+	ulvy	2
+	ulvy	1
+	puval	0,1
+	dallexe	2,&'member'/2
+9: 	last
+
+	.pred	'getegid',1
+	.clause
+0:	pc	1,$0
+	pc	2,$0
+	pc	3,$0
+	syscall	4,1,2,3,1
+	gvalx	0,1
+	pro	
+	last
+
+	.pred	'getgid',1
+	.clause
+0:	pc	1,$0
+	pc	2,$0
+	pc	3,$0
+	syscall	5,1,2,3,1
+	gvalx	0,1
+	pro	
+	last
+
+	.pred	'getgroups',1
+	.clause
+0:	pc	1,$0
+	pc	2,$0
+	pc	3,$0
+	syscall	6,1,2,3,1
+	gvalx	0,1
+	pro	
+	last
+
+	.pred	'getlogin',1
+	.clause
+0:	pc	1,$0
+	pc	2,$0
+	pc	3,$0
+	syscall	7,1,2,3,1
+	gvalx	0,1
+	pro	
+	last
+
+	.pred	'getpid',1
+	.clause
+0:	pc	1,$0
+	pc	2,$0
+	pc	3,$0
+	syscall	8,1,2,3,1
+	gvalx	0,1
+	pro	
+	last
+
+	.pred	'getppid',1
+	.clause
+0:	pc	1,$0
+	pc	2,$0
+	pc	3,$0
+	syscall	9,1,2,3,1
+	gvalx	0,1
+	pro	
+	last
+
+	.pred	'getpw',2
+3: 	sot	0,&0,&2,&0,&0
+2: 	t	2,0,&0
+	tr	2,0,&1
+	.clause
+0:	all	2
+	gvary	0,1
+	pvary	1,1
+	call	2,2,&'$nameToString'/2
+	puval	1,2
+	pc	3,$0
+	pc	4,$0
+	syscall	11,2,3,4,2
+	gvaly	0,2
+	dallpro	
+	.clause
+1:	ctypx	0,17
+	pc	2,$0
+	pc	3,$0
+	syscall	10,0,2,3,2
+	gvalx	1,2
+	pro	
+	last
+
+	.pred	'getuid',1
+	.clause
+0:	pc	1,$0
+	pc	2,$0
+	pc	3,$0
+	syscall	12,1,2,3,1
+	gvalx	0,1
+	pro	
+	last
+
+	.pred	'geteuid',1
+	.clause
+0:	pc	1,$0
+	pc	2,$0
+	pc	3,$0
+	syscall	13,1,2,3,1
+	gvalx	0,1
+	pro	
+	last
+
+	.pred	'getwd',1
+	.clause
+0:	pc	1,$0
+	pc	2,$0
+	pc	3,$0
+	syscall	14,1,2,3,1
+	gvalx	0,1
+	pro	
+	last
+
+	.pred	'hostname',1
+	.clause
+0:	pc	1,$0
+	pc	2,$0
+	pc	3,$0
+	syscall	15,1,2,3,1
+	gvalx	0,1
+	pro	
+	last
+
+	.pred	'kill',2
+	.clause
+0:	all	3
+	gvary	1,0
+	gvary	2,1
+	pvaly	2,2
+	fvar	2,255
+	jtypx	255,252,&9
+	jctypy	1,17,&9
+	j	&10
+9: 	pc	1,#(CHR,&6)
+	ps	3,$'kill'/2
+	ulvy	1
+	ulvy	2
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	call	3,3,&'$format'/3
+	fail	
+10: 	jctypy	2,17,&11
+	pvaly	2,255
+	glvary	0,255
+	j	&12
+11: 	pvaly	2,0
+	pvary	0,1
+	call	2,2,&'$signumber'/2
+12: 	pvaly	1,2
+	puval	0,3
+	pc	4,$0
+	syscall	16,2,3,4,2
+	gc	2,$0
+	dallpro	
+	last
+6: 	.string	"~NError in ~w.~nPid and Signal expected.~n"
+
+	.pred	'link',2
+	.clause
+0:	all	3
+	gvary	2,1
+	pvary	1,1
+	call	3,2,&'$nameToString'/2
+	pvaly	2,0
+	pvary	0,1
+	call	2,2,&'$nameToString'/2
+	puval	1,2
+	puval	0,3
+	pc	4,$0
+	syscall	17,2,3,4,2
+	gc	2,$0
+	dallpro	
+	last
+
+	.pred	'mkdir',1
+	.clause
+0:	all	1
+	pvary	0,1
+	call	1,2,&'$nameToString'/2
+	puval	0,1
+	pc	2,$511
+	pc	3,$0
+	syscall	18,1,2,3,1
+	gc	1,$0
+	dallpro	
+	last
+
+	.pred	'random',1
+	.clause
+0:	pc	1,$0
+	pc	2,$0
+	pc	3,$0
+	syscall	19,1,2,3,1
+	gvalx	0,1
+	pro	
+	last
+
+	.pred	'rename',2
+	.clause
+0:	all	3
+	gvary	2,1
+	pvary	1,1
+	call	3,2,&'$nameToString'/2
+	pvaly	2,0
+	pvary	0,1
+	call	2,2,&'$nameToString'/2
+	puval	1,2
+	puval	0,3
+	pc	4,$0
+	syscall	20,2,3,4,2
+	gc	2,$0
+	dallpro	
+	last
+
+	.pred	'rmdir',1
+	.clause
+0:	all	1
+	pvary	0,1
+	call	1,2,&'$nameToString'/2
+	puval	0,1
+	pc	2,$0
+	pc	3,$0
+	syscall	21,1,2,3,1
+	gc	1,$0
+	dallpro	
+	last
+
+	.pred	'sleep',1
+	.clause
+0:	pc	1,$0
+	pc	2,$0
+	syscall	22,0,1,2,1
+	gc	1,$0
+	pro	
+	last
+
+	.pred	'stat',2
+	.clause
+0:	all	2
+	gvary	0,1
+	pvary	1,1
+	call	2,2,&'$nameToString'/2
+	puval	1,2
+	pc	3,$0
+	pc	4,$0
+	syscall	23,2,3,4,2
+	gvaly	0,2
+5: 	te	0,0,0,&6
+	pvaly	0,2
+	pnil	3
+	iseq	2,3,2
+	gc	2,$'fail'
+	dallpro	
+6: 	tre	0,0
+	fail	
+7: 	last
+
+	.pred	'time',1
+	.clause
+0:	pc	1,$0
+	pc	2,$0
+	pc	3,$0
+	syscall	24,1,2,3,1
+	gvalx	0,1
+	pro	
+	last
+
+	.pred	'time',2
+	.clause
+0:	ctypx	0,17
+	pc	2,$1
+	pc	3,$0
+	syscall	24,0,2,3,2
+	gvalx	1,2
+	pro	
+	last
+
+	.pred	'truncate',2
+	.clause
+0:	all	2
+	gvary	0,1
+	pvary	1,1
+	call	2,2,&'$nameToString'/2
+	puval	1,2
+	pvaly	0,3
+	pc	4,$0
+	syscall	25,2,3,4,2
+	gc	2,$0
+	dallpro	
+	last
+
+	.pred	'umask',1
+	.clause
+0:	pc	1,$0
+	pc	2,$0
+	syscall	26,0,1,2,1
+	pro	
+	last
+
+	.pred	'unlink',1
+	.clause
+0:	all	1
+	pvary	0,1
+	call	1,2,&'$nameToString'/2
+	puval	0,1
+	pc	2,$0
+	pc	3,$0
+	syscall	27,1,2,3,1
+	gc	1,$0
+	dallpro	
+	last
+
+	.pred	'wait',2
+	.clause
+0:	pc	2,$0
+	pc	3,$0
+	pc	4,$0
+	syscall	28,2,3,4,2
+	gl	2
+	ulvx	0
+	ulvx	1
+	apushx	0
+	pushi	$$0
+	apred	5
+	pro	
+	last
+
+	.pred	'directory',2
+	.clause
+0:	all	2
+	gvary	0,1
+	pvary	1,1
+	call	2,2,&'$nameToString'/2
+	puval	1,2
+	pc	3,$0
+	pc	4,$0
+	syscall	29,2,3,4,2
+	gvaly	0,2
+	typy	0,48
+	dallpro	
+	last
+
+	.pred	'sh',0
+	.clause
+0:	pc	0,#(CHR,&2)
+	exec	1,&'system'/1
+	last
+2: 	.string	"/bin/sh"
+
+	.pred	'csh',0
+	.clause
+0:	pc	0,#(CHR,&2)
+	exec	1,&'system'/1
+	last
+2: 	.string	"/bin/csh"
+
+	.pred	'shell',1
+	.clause
+0:	pvarx	1,1
+	exec	2,&'system'/2
+	last
+
+	.pred	'system',1
+	.clause
+0:	pvarx	1,1
+	exec	2,&'system'/2
+	last
+
+	.pred	'system',2
+	.clause
+0:	all	2
+	gvary	0,1
+	pvary	1,1
+	call	2,2,&'$nameToString'/2
+	puval	1,2
+	pc	3,$0
+	pc	4,$0
+	syscall	31,2,3,4,2
+	gvaly	0,2
+	dallpro	
+	last
+
+	.pred	'system',3
+	.clause
+0:	all	5
+	gvary	0,2
+	labely	4
+9: 	te	2,0,2,&10
+	pvary	3,0
+	call	5,1,&'fork'/1
+	cuty	4
+	labely	2
+	call	4,0,&'repeat'/0
+	puval	3,0
+	pvary	1,1
+	call	3,2,&'wait'/2
+	cuty	2
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+10: 	re	2,0,&11
+	dallexe	2,&'exec'/2
+11: 	tre	2,0
+	pc	3,$-1
+	exit	3
+	dallpro	
+12: 	last
+
+	.pred	'fork',0
+	.clause
+0:	pvarx	0,0
+	exec	1,&'fork'/1
+	last
+
+	.pred	'fork',1
+	.clause
+0:	pc	1,$0
+	pc	2,$0
+	pc	3,$0
+	syscall	30,1,2,3,1
+	gvalx	0,1
+	apushx	0
+	pushi	$$0
+	apred	4
+	pro	
+	last
+
+	.pred	'exec',2
+	.clause
+0:	all	3
+	gvary	2,1
+	pvary	1,1
+	call	3,2,&'$nameToString'/2
+	pc	0,$'$nameToString'
+	pvaly	2,1
+	pvary	0,2
+	call	2,3,&'mapList'/3
+	puval	1,2
+	puval	0,3
+	pc	4,$0
+	syscall	32,2,3,4,2
+	gc	2,$0
+	dallpro	
+	last
+
+	.pred	'statistics',1
+	.clause
+0:	pc	1,$0
+	pc	2,$0
+	pc	3,$0
+	syscall	33,1,2,3,1
+	gvalx	0,1
+	pro	
+	last
+
+	.pred	'statistics',0
+	labelx	0
+	.clause
+0:	all	12
+	gvary	10,0
+	pvary	11,0
+	call	12,1,&'statistics'/1
+	ps	0,$'='/2
+	uc	$'memory'
+	ul	255
+	uvary	9
+	ul	255
+	uvoid	1
+	uc	$[]
+	pvaly	11,1
+	call	12,2,&'member'/2
+	ps	0,$'='/2
+	uc	$'program'
+	ul	255
+	uvary	8
+	ul	255
+	uvoid	1
+	uc	$[]
+	pvaly	11,1
+	call	12,2,&'member'/2
+	ps	0,$'='/2
+	uc	$'global'
+	ul	255
+	uvary	7
+	ul	255
+	uvary	6
+	uc	$[]
+	pvaly	11,1
+	call	12,2,&'member'/2
+	ps	0,$'='/2
+	uc	$'local'
+	ul	255
+	uvary	5
+	ul	255
+	uvary	4
+	uc	$[]
+	pvaly	11,1
+	call	12,2,&'member'/2
+	ps	0,$'='/2
+	uc	$'trail'
+	ul	255
+	uvary	3
+	ul	255
+	uvary	2
+	uc	$[]
+	pvaly	11,1
+	call	12,2,&'member'/2
+	ps	0,$'='/2
+	uc	$'utime'
+	ul	255
+	uvary	1
+	ul	255
+	uvoid	1
+	uc	$[]
+	pvaly	11,1
+	call	12,2,&'member'/2
+	ps	0,$'='/2
+	uc	$'stime'
+	ul	255
+	uvary	0
+	ul	255
+	uvoid	1
+	uc	$[]
+	puval	11,1
+	call	11,2,&'member'/2
+	cuty	10
+	currstr	1,0
+	pc	1,#(CHR,&20)
+	pl	2
+	uvaly	9
+	uc	$[]
+	call	9,3,&'$quickFormat'/3
+	currstr	1,0
+	pc	1,#(CHR,&24)
+	pl	2
+	uvaly	8
+	uc	$[]
+	call	8,3,&'$quickFormat'/3
+	currstr	1,0
+	pc	1,#(CHR,&28)
+	ps	3,$'+'/2
+	uvaly	7
+	uvaly	6
+	pl	2
+	uvalx	3
+	ul	255
+	uvaly	7
+	ul	255
+	uvaly	6
+	uc	$[]
+	call	6,3,&'$quickFormat'/3
+	currstr	1,0
+	pc	1,#(CHR,&32)
+	ps	3,$'+'/2
+	uvaly	5
+	uvaly	4
+	pl	2
+	uvalx	3
+	ul	255
+	uvaly	5
+	ul	255
+	uvaly	4
+	uc	$[]
+	call	4,3,&'$quickFormat'/3
+	currstr	1,0
+	pc	1,#(CHR,&36)
+	ps	3,$'+'/2
+	uvaly	3
+	uvaly	2
+	pl	2
+	uvalx	3
+	ul	255
+	uvaly	3
+	ul	255
+	uvaly	2
+	uc	$[]
+	call	2,3,&'$quickFormat'/3
+	currstr	1,0
+	pc	1,#(CHR,&40)
+	ps	3,$'+'/2
+	uvaly	1
+	uvaly	0
+	pl	2
+	uvalx	3
+	ul	255
+	uvaly	1
+	ul	255
+	uvaly	0
+	uc	$[]
+	dallexe	3,&'$quickFormat'/3
+	last
+40: 	.string	"~3d sec. runtime = ~3d sec. user + ~3d sec. system~n"
+36: 	.string	"  trail stack   ~d bytes = ~d in use + ~d free~n"
+32: 	.string	"  local stack   ~d bytes = ~d in use + ~d free~n"
+28: 	.string	"  global stack  ~d bytes = ~d in use + ~d free~n"
+24: 	.string	"  program space ~d bytes~n"
+20: 	.string	"total memory    ~d bytes~n"
+
+	.pred	'$fseek',3
+	.clause
+0:	gvarx	3,0
+	all	4
+	gvary	1,1
+	gvary	0,2
+	fvar	3,255
+	typx	255,252
+	pvaly	1,4
+	fvar	4,255
+	typx	255,252
+	pvaly	0,4
+	fvar	4,255
+	typx	255,252
+	labely	3
+	pvary	2,0
+	gvara	1,3
+	call	4,2,&'$anyCurrentStream'/2
+	cuty	3
+	puval	2,3
+	pvaly	1,4
+	pvaly	0,5
+	syscall	34,3,4,5,3
+	gc	3,$0
+	dallpro	
+	last
+
+	.pred	'$ftell',2
+	.clause
+0:	gvarx	2,0
+	all	2
+	gvary	0,1
+	fvar	2,255
+	typx	255,252
+	pvary	1,0
+	gvara	1,2
+	call	2,2,&'$anyCurrentStream'/2
+	puval	1,2
+	pc	3,$0
+	pc	4,$0
+	syscall	35,2,3,4,2
+	gvaly	0,2
+	dallpro	
+	last
+
+	.pred	'$fesq',2
+	.clause
+0:	pc	2,$0
+	pc	3,$0
+	pc	4,$0
+	syscall	36,2,3,4,2
+	gl	2
+	ulvx	0
+	ulvx	1
+	pro	
+	last
+
+	.pred	'$signal',2
+	.clause
+0:	ctypx	0,17
+	ctypx	1,2
+	pc	2,$0
+	syscall	37,0,1,2,2
+	gc	2,$0
+	pro	
+	last
+

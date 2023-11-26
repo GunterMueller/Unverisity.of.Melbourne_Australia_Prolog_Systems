@@ -1,0 +1,792 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  Heterogeneous SLD Resolution____________________________
+
+                               by
+
+                            Lee Naish
+                      Technical Report 84/1
+
+                 Department of Computer Science
+                     University of Melbourne
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                       1
+
+
+
+                                    Abstract________
+
+
+               The current theory of SLD  resolution  is  not  general
+
+          enough   to   describe   the   behaviour   of   some  PROLOG
+
+          implementations with advanced control facilities.   In  this
+
+          paper,  Heterogeneous  SLD  resolution is defined.  It is an
+
+          extension of SLD resolution which increases the "don't care"
+
+          non-determinism  of  computation  rules and can decrease the
+
+          size of the search space.  Soundness and  completeness,  for
+
+          success and finite failure, are proved using similar results
+
+          from SLD resolution.
+
+
+               Heterogeneous SLD  resolution  can  be  exploited  more
+
+          fully  than  it  is  in  current  systems.   An  interesting
+
+          computation rule is described, which can be seen as a simple
+
+          form of intelligent backtracking, with few overheads.
+
+
+
+
+
+
+
+
+
+
+
+          Keywords and Phrases____________________:
+
+               PROLOG,  resolution,  control  facilities,  intelligent
+
+          backtracking.
+
+
+          CR Categories_____________:
+
+
+          I.2.3  [Artificial  Intelligence]:  Deduction  and   Theorem
+
+          Proving - Logic Programming.
+
+          D.3.2 [Programming Languages]:  Language  Classifications  -
+
+          Very High-Level Languages.
+
+
+
+
+
+                                       2
+
+
+
+1. Introduction____________
+
+
+
+     The growing interest in logic  programming  has  prompted  the  theoretical
+
+investigation  of  SLD  resolution.   Of  particular  importance  is the work on
+
+soundness and completeness, for success and finite failure (for  example,  [Hill
+
+74],  [Clark  79],  [Apt and van Emden 82], [Lloyd 82] and [Wolfram et al. 83]).
+
+Two key results  are  that  SLD  resolution  is  sound  and  complete,  for  any
+
+computation  rule.   Capitalising  on  this,  a  number  of  systems which allow
+
+flexible computation rules have  been  implemented.   However,  the  lack  of  a
+
+rigorous  definition  of  what  a computation rule is, has lead to a discrepancy
+
+between theory and practice.
+
+
+     For a particular goal clause, the current  theory  allows  the  computation
+
+rule  to  select  any  one  atom.  Each clause with a head that unifies with the
+
+selected atom leads to a possible child goal clause.  In  most  implementations,
+
+these  children are examined sequentially, using backtracking.  However, in some
+
+systems (such as MU-PROLOG [Naish 83a] and IC-PROLOG  [Clark  and  McCabe  81]),
+
+having  examined  one  child,  the  original  goal clause can be re-examined and
+
+another atom selected.  In general, the children are determined by a sequence of
+
+selected  atoms,  rather  a  single  one  (hence  the  name,  Heterogeneous  SLD
+
+resolution).  This changes the search space considerably, so the current  theory
+
+is not alway applicable.
+
+
+     Heterogeneous SLD (HSLD) resolution is not restricted to  modeling  current
+
+systems.   To  illustrate  this,  section  4  describes a computation rule which
+
+implements a form of intelligent backtracking.  First, though,  HSLD  resolution
+
+is precisely defined and some theoretical results are proved.
+
+
+
+
+
+
+
+
+
+
+
+                                       3
+
+
+
+2. Definitions___________
+
+
+
+     For comparison, we first give definitions used in standard SLD  resolution.
+
+Corresponding definitions are then given for HSLD resolution.
+
+
+2.1. SLD Resolution______________
+
+
+     The search spaces of SLD refutation procedures  are  _S_L_D  _t_r_e_e_s.   Given  a
+
+program  P (a set of Horn Clauses) and a goal G (a negative clause), an SLD tree
+
+for P U {G} is defined as follows:
+
+
+    Each node in the tree is a goal plus a substitution, the root being  G  plus
+
+    the empty substitution.
+
+    Each non-empty goal contains a _s_e_l_e_c_t_e_d atom.
+
+    If the goal is G918,..,G9i8,..,G9j8, the selected atom is G9i8 and the  substitution
+
+    is O, then the node has a child for each clause in P whose head unifies with
+
+    G9i8O.
+
+    If the clause (variant) is H<-B918,..,B9k8 and \ is a most general unifier of  H
+
+    and  G9i8O then the child node is the goal G918,..,G9i-18,B918,..,B9k8,G9i+18,..,G9j8 plus
+
+    the composition of the substitutions O  and  \.   B918,..,B9k8  are  called  the
+
+    _i_n_t_r_o_d_u_c_e_d _a_t_o_m_s.
+
+    Variables in the clauses are renamed, so they do not appear in any  previous
+
+    goal.
+
+
+     This definition is slightly unorthodox, in that the goals and substitutions
+
+are  separated.   In  most  other  definitions a substitution is applied to each
+
+child goal, which obscures the connections with atoms in the parent  goal.   Our
+
+definition  simplifies  the  theory  (for example, our definition of fairness in
+
+section 3) and also reflects most implementations more closely.
+
+
+     SLD branches which end in the empty goal as called _s_u_c_c_e_s_s _b_r_a_n_c_h_e_s.  Other
+
+
+
+
+
+
+                                       4
+
+
+
+finite  branches  are  called _f_a_i_l_u_r_e _b_r_a_n_c_h_e_s.  For each atom in an SLD branch,
+
+its _s_e_l_e_c_t_e_d _c_l_a_u_s_e is the clause whose head it is  (eventually)  unified  with.
+
+Two  SLD  branches  are  called  _s_i_m_i_l_a_r  if they have the same initial goal and
+
+contain the same atoms and selected clauses (possibly  in  a  different  order).
+
+The  _a_n_s_w_e_r  _s_u_b_s_t_i_t_u_t_i_o_n  of  a  success  branch  is  the  subset  of the final
+
+substitution which applies to variables in the initial goal.
+
+
+     The function which determines the selected atoms is called the  _c_o_m_p_u_t_a_t_i_o_n
+
+_r_u_l_e.   The  computation  rule  does  not affect the number or length of success
+
+branches but markedly  affects  the  size  of  the  tree.   The  choice  of  the
+
+computation  rule  is  a  case  of  "don't  care"  non-determinism,  though, for
+
+efficiency reasons, an attempt should be made to make  the  trees  as  small  as
+
+possible.
+
+
+2.2. HSLD Resolution_______________
+
+
+     HSLD trees are similar to SLD trees but the nodes contain more information.
+
+Associated  with  each  atom  in  the  tree is a set, the _c_l_a_u_s_e _s_e_t, made up of
+
+program clauses that _m_a_t_c_h the atom (that is, the heads  of  the  clauses  unify
+
+with  atom  after  the substitution has been made).  To simplify this definition
+
+(w.l.o.g.), we impose an order on the children of each node.
+
+
+    Each node is a goal plus a clause set for each atom  in  that  goal  plus  a
+
+    substitution.
+
+    In the root goal, G, clause sets for atoms contain all matching clauses  and
+
+    the substitution is the empty substitution.
+
+    The computation rule selects a sequence of atom-clause pairs.  The  atom  is
+
+    selected  from  the  goal  and the clause is selected from the atom's clause
+
+    set.
+
+    All clauses in at least one clause set must be selected.
+
+    The atoms and substitutions in each child are the same as in SLD trees.
+
+
+
+
+
+                                       5
+
+
+
+    The clause sets of introduced atoms contain all matching clauses.
+
+    The other clause sets in the child contain the clauses from the parent which
+
+    still match and have not been selected for any previous child.
+
+
+     Definitions of success branches, etc. can all be extended  to  HSLD  trees.
+
+For an example of an HSLD tree, consider the following program and goal:
+
+
+        p(Y) <- q(a).           q(d).
+
+        p(a).                   q(e).
+
+        p(b).
+
+        p(c).
+
+
+        <- p(X), q(X).
+
+
+     The root contains <-p(X){p(Y)<-q(a),p(a),p(b),p(c)}, q(X){q(d),q(e)}.
+
+
+Below is a possible sequence of atom-clause pairs, with  children  shown  (after
+
+the substitutions are applied):
+
+        p(X)-p(Y)<-q(a)                 <-q(a){}, q(X){q(d),q(e)}
+
+        q(X)-q(d)                       <-p(d){}
+
+        q(X)-q(e)                       <-p(e){}
+
+
+     At this point, everything in the clause set of q(X) has been  selected,  so
+
+there is no need for more children.  This behaviour can be achieved in MU-PROLOG
+
+by having a zero  _w_a_i_t  _d_e_c_l_a_r_a_t_i_o_n  for  procedure  p.   We  believe  the  same
+
+behaviour  occurs in IC-PROLOG if the call to p is an _e_a_g_e_r _c_o_n_s_u_m_e_r of X.  This
+
+example also illustrates how HSLD resolution can have  a  smaller  search  space
+
+than  SLD  resolution.   The optimal SLD tree for the goal above has five nodes,
+
+compared with four, for HSLD trees.  The reason for this is that SLD  trees  may
+
+contain several instances of the same failed sub-tree, which can be factored out
+
+in HSLD trees.  In the example above, q(a) is shown to fail  once,  rather  than
+
+once for each solution to q(X).
+
+
+
+
+
+                                       6
+
+
+
+3. Theoretical Results___________________
+
+
+
+     In [Wolfram et al. 83] appears the most concise proof of the soundness  and
+
+completeness  of  SLD  resolution,  with  respect  to success and finite failure
+
+(finite failure completeness is subject to a fairness condition).  In fact,  the
+
+results  are  proved  for  another  extension  of  SLD  resolution.  The various
+
+characterizations of these results are not discussed here.  We  just  show  that
+
+the same results apply to HSLD resolution also.
+
+
+     The soundness of HSLD resolution is a direct consequence of  the  soundness
+
+of  SLD  resolution,  since HSLD branches are, in essence, no different from SLD
+
+branches.  We now define the fairness condition,  simplified  from  [Lassez  and
+
+Maher 82], then give a theorem from which the other results follow.
+
+
+     Definition__________ An SLD (HSLD) branch is _f_a_i_r if it is failed or every atom in it
+
+is eventually selected.
+
+
+     Theorem_______ For all SLD and HSLD trees of P U {G},
+
+if there exists a success (fair infinite) branch in the HSLD  tree,  then  there
+
+exists a similar success (infinite) branch in the SLD tree and
+
+if there exists a success (fair infinite) branch in the  SLD  tree,  then  there
+
+exists a similar success (infinite) branch in the HSLD tree.
+
+
+     Proof_____ If there is an HSLD success (fair infinite) branch then at least  one
+
+SLD  tree with a similar success (fair infinite) branch can be found by choosing
+
+a computation rule which selects the same atoms in that branch.  Therefore,  all
+
+SLD  trees  have  a similar success (infinite) branch (proved in [Wolfram et al.
+
+83]  -  for  success  branches,  it  is  a  consequence  of  SLD  soundness  and
+
+completeness).
+
+
+     To prove the other half of the theorem, we present an algorithm to  find  a
+
+
+
+
+
+
+                                       7
+
+
+
+similar  success  (infinite)  HSLD  branch,  given a success (fair infinite) SLD
+
+branch:
+
+
+    while_____ the HSLD root goal is not empty do__
+
+            {Invariant: All atoms in the root of the HSLD tree are  in  the  SLD
+
+            branch  and  the  clause  sets  contain all selected clauses for the
+
+            respective atoms in the SLD branch.}
+
+            Choose the first branch from the root of the HSLD tree which uses  a
+
+            selected clause from the SLD branch.
+
+            {This must exist, since all clauses in at least one set are selected
+
+            and all atoms in the SLD branch are selected eventually.}
+
+            Now consider the HSLD tree starting at this branch.
+
+    end___
+
+
+     For success branches, the algorithm must  terminate  (since  no  extraneous
+
+atoms  are  introduced) and find a similar branch.  Conversely, if the algorithm
+
+terminates, then the SLD branch must be finite.  Therefore, if the SLD branch is
+
+infinite,  then  the  algorithm  does  not  terminate but finds an infinite HSLD
+
+branch.  //
+
+
+     Corollary_________ HSLD resolution is complete with respect to success.
+
+
+     Proof_____ SLD resolution is complete and if there is an SLD success branch then
+
+there  is a similar HSLD success branch, with an equivalent answer substitution,
+
+in all HSLD trees. //
+
+
+     Corollary_________ HSLD resolution is sound with respect to finite failure.
+
+
+     Proof_____ If an HSLD tree is finitely failed then it has no success or infinite
+
+branches, so no fair SLD trees have success or infinite branches.  Hence, by the
+
+(finite failure) soundness of SLD resolution, so is HSLD resolution. //
+
+
+
+
+
+
+
+                                       8
+
+
+
+     Corollary_________ Fair HSLD resolution is complete with respect to finite failure.
+
+
+     Proof_____ If an SLD tree is finitely failed then no fair HSLD has a success  or
+
+infinite branch. //
+
+
+
+4. An Application______________
+
+
+
+     We now describe a computation rule for HSLD resolution which can be  viewed
+
+in  several  ways. It is first described informally, using different viewpoints,
+
+then a formal definition is given.
+
+
+     To minimize the search space, computation rules should tend to select atoms
+
+which  fail.  The following heuristic can be used to this effect.  If an atom is
+
+found to fail when selected at one node of an HSLD tree, then it  is  likely  to
+
+fail  if  selected  at  the parent node.  This can easily be incorporated into a
+
+computation rule, by taking account of a previous failure when the next atom  is
+
+selected.
+
+
+     This rule can also be seen as a form of intelligent backtracking.   When  a
+
+failure  occurs in an intelligent backtracking system, an analysis reveals where
+
+the failure originated and the system backtracks to that point.  This can  avoid
+
+many  other  choices  which  would  inevitably  lead  to  failure.  The analysis
+
+requires various data  which  must  be  stored  during  forward  execution  (see
+
+[Bruynooghe  and  Pereira  83], for example).  A simpler way to detect where the
+
+failure originated is to backtrack one step at a time, retrying the failed  goal
+
+at  each  stage.   Forward  execution  should  be less expensive, since no extra
+
+information needs to be stored, though  backtracking  over  a  large  number  of
+
+choice points would be slower.
+
+
+     More formally, the first atom selected at a  node  is  determined  by  some
+
+default rule (depth first, left to right, for example).  For subsequent choices,
+
+
+
+
+
+                                       9
+
+
+
+if an atom in a child is found to fail and it occurs in  the  goal  then  it  is
+
+selected,  otherwise  the  previous  atom selection is repeated.  The selections
+
+continue until one  of  the  clause  sets  has  been  exhausted.   Consider  the
+
+following example:
+
+
+        p(X) <- q(X).           q(d).
+
+        p(b).                   q(e).
+
+        p(c).
+
+
+        <- p(X), q(a).
+
+
+     The computation proceeds as follows:
+
+        <- p(X), q(a).
+
+        <- q(X), q(a).
+
+        <- q(a).
+
+
+     At this point, the goal fails  and  we  backtrack  to  the  previous  goal.
+
+Because q(a) failed, it is selected again, rather than re-trying q(X).  The goal
+
+then fails and we backtrack to the first  goal,  where  q(a)  is  selected  (and
+
+fails)  once  more.   If  this  example  was part of a larger computation, which
+
+previously bound the argument of 'q' to 'a', then we would quickly backtrack  to
+
+this  point.   Alternatively,  q(a)  may  have been an introduced atom when some
+
+other atom, say p(a), was selected.  In this case, q(a) would be selected  until
+
+we backtrack to the goal containing p(a).  p(a) would then be selected again and
+
+would fail, thus continuing the process.
+
+
+     Ideally, we believe, such a rule should be implemented in conjunction  with
+
+other  computation  rules  which  complement  each  other  (for  example,  those
+
+discussed in [Naish 83b]).  One criticism of intelligent backtracking is that it
+
+only  reacts  intelligently to mistakes when they are finally discovered, rather
+
+than avoiding them in the first place, as sophisticated computation rules try to
+
+
+
+
+
+
+                                       10
+
+
+
+do.   The scheme we propose attempts to avoid mistakes and also behaves sensibly
+
+when  this  fails.   Furthermore,  the  intelligent  backtracking  component  is
+
+included in the computation rule and requires very little additional overhead.
+
+
+
+5. Moral_____
+
+
+
+     Developing a more complete and rigorous  mathematical  model  of  a  system
+
+leads  to a better understanding of it.  The model allows us to see more easily,
+
+new extensions to the system, as well as the problems  and  limitations  of  it.
+
+Logic  programming  is  one of the most promising areas of computer science, for
+
+the union of theory with practice.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                       11
+
+
+
+6. References__________
+
+
+
+[Apt and van Emden 82] Apt, K.R. and van Emden, M.H.,  "A  Contribution  to  the
+
+        Theory of Logic Programming", JACM 29/3, pp 841-862, July 1982.
+
+
+[Bruynooghe and  Pereira  83]  Pereira,  L.M.  and  Bruynooghe,  M.,  "Deductive
+
+        Revision  by  Intelligent Backtracking", UNL-10/83, Universidade Nova de
+
+        Lisboa, 1983.
+
+
+[Clark 79] Clark, K.L., "Predicate Logic as a Computational Formalism", A  Draft
+
+        Monograph, DOC, Imperial College, Dec 1979.
+
+
+[Clark and McCabe 81] Clark, K.L. and McCabe, F.,  "The  Control  Facilities  of
+
+        IC-PROLOG",  in "Expert Systems in the Micro Electronic Age", D. Mitchie
+
+        (Ed), Edinburgh University Press, pp 122-149, 1981.
+
+
+[Hill 74] Hill, "LUSH Resolution  and  its  Completeness",  DCL  memo  78,  DAI,
+
+        University of Edinburgh, 1974.
+
+
+[Lassez and Maher 82]  Lassez, J-L., Maher, M., "Closure  and  Fairness  in  the
+
+        Semantics of Programming Logic", to appear in TCS.
+
+
+[Lloyd 82] Lloyd, J.W., "Foundations of Logic Programming", TR 82/7,  Department
+
+        of Computer Science, University of Melbourne, 1982 (revised 1983).
+
+
+[Naish 83a] Naish, L., "MU-PROLOG 3.0 Reference Manual", Department of  Computer
+
+        Science, University of Melbourne, 1983.
+
+
+[Naish 83b] Naish, L., "Automatic Generation of Control for Logic Programs",  TR
+
+        83/6, Department of Computer Science, University of Melbourne, 1983.
+
+
+[Wolfram et al. 83] Wolfram, D.A., Maher, M.J. and Lassez,  J-L.L.,  "A  Unified
+
+        Treatment  of  Resolution  Strategies  for  Logic  Programs",  TR 83/12,
+
+        Department of Computer Science, University of Melbourne, 1983.
+
+
+

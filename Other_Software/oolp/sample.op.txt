@@ -1,0 +1,54 @@
+:- op(300, fx, dummyop).
+
+dummyop 2.
+
+%
+% typical desk
+%
+def_object desk.
+
+		% default vaules for number, size of drawers
+	d_len(70).	% drawer length
+	d_num(3).	% drawer number
+	d_width(30).	% drawer width
+
+		% drawer total area - general rule
+	d_tot_area(R) :-
+		self::d_num(Num),
+		self::d_len(Len),
+		self::d_width(Width),
+		R is Num*Len*Width.
+
+end_def desk.
+
+%
+% my desk has an extra drawer
+%
+def_object my_desk
+	isa desk.
+
+	d_num(4).	% overrides "default" defn
+
+end_def my_desk.
+
+%
+% his desk has shorter drawers
+%
+def_object his_desk
+	isa desk.
+
+	d_len(50).	% overrides "default" defn
+
+end_def his_desk.
+
+%
+% typical???? room
+%
+def_object room.
+
+	d_area(T) :-
+		my_desk::d_tot_area(A1),
+		his_desk::d_tot_area(A2),
+		T is A1 + A2.
+
+end_def room.

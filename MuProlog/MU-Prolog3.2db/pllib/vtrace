@@ -1,0 +1,54 @@
+%	trace bindings of variables in a goal
+%	Usage: vtrace(Goal)
+%
+%	The goal is executed, and whenever one of its variables is further
+%	instantiated, the value of the variables are printed. When
+%	backtracking occurs, 'FAIL' is printed. Some interesting examples
+%	are Perm and niave Reverse (used in both directions) and Append3,
+%	with and without wait declarations.
+
+vtrace(G) :-
+	$hasvars(G, V),		% V is list of vars in G (defined in system)
+	pcopy(V, P),
+	append(V, _, V1),	% append a dummy var on end of list
+	trvars(V1, P),		% this will delay initially
+	G.			% call goal
+
+pcopy(V, p(Copy, V)) :-
+	asserta(tmp(V)),
+	retract(tmp(Copy)),
+	!.
+
+printvals(p([], [])) :-
+	!.
+printvals(p(C.Copy, V.Vars)) :-
+	writef(C, 0),
+	writef(' = ', 1),
+	writeln(V),
+	printvals(p(Copy, Vars)).
+	
+?- hide(u(1)).			% should hide other junk (preds) too
+
+?- wait trvars(0, 0).
+trvars(V, _) :-		% succeeds if list is empty (actually a single var)
+	V = [],
+	!.
+			% delays until a var is bound
+trvars(u(0).u(1).u(2).u(3).u(4).u(5).u(6).u(7).u(8).u(9).u(10).u(11).u(12).u(13).u(14).u(15).u(16).u(17).u(18).u(19).[], _).
+trvars(V, P) :-
+	printvals(P),			% print new var values
+	$lhv(V, V1, _),			% find new 'list' of vars
+	!,
+	(	trvars(V1, P)		% trace next step of execution
+	;
+		writeln('FAIL'),	% write FAIL on backtracking
+		fail
+	).
+
+?- hidden.
+
+/*	_3 is _2 appended to _1 */
+?- wait append(0,0,1).
+?- wait append(1,1,0).
+append([], A, A).
+append(A.B, C, A.D) :- append(B, C, D).

@@ -1,0 +1,26 @@
+%	$Header: subsumes.pl,v 1.1 85/09/23 19:02:00 lee Exp $
+%
+% subsumes/2 arg1 subsumes arg2
+
+subsumes(A, B) :-
+	\+ \+ subsumes1(A, B).
+
+subsumes1(A, B) :-
+	bindvars(0, _, B),	% use numbervars!
+	A = B.
+
+bindvars(N, M, b(N)) :-
+	M is N + 1,
+	!.
+bindvars(N, N, M) :-
+	atomic(M),
+	!.
+bindvars(N, M, T) :-
+	T =.. F.A,
+	bindlv(N, M, A).
+
+bindlv(N, N, []).
+bindlv(N, M, H.T) :-
+	bindvars(N, N1, H),
+	bindlv(N1, M, T).
+

@@ -1,0 +1,22 @@
+/*
+	append three lists together using append with wait declarations
+	time is always O(N1 + N2 + N3) where Ni is the length of a list
+	always terminates
+*/
+app(A, B, D, E) :- append(A, B, C), append(C, D, E).
+
+?- wait append(0, 1, 1).
+?- wait append(1, 1, 0).
+append([], A, A).
+append(A.B, C, A.D) :- append(B, C, D).
+
+/*
+	append three lists together using append without wait declarations
+	if the first arg is a variable the time can be O(N1 * N1),
+	where N1 is it's length (finally)
+	if the first arg is a variable the infinite loops are possible
+*/
+app1(A, B, D, E) :- append1(A, B, C), append1(C, D, E).
+
+append1([], A, A).
+append1(A.B, C, A.D) :- append1(B, C, D).

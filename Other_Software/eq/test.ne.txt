@@ -1,0 +1,124 @@
+	% examples of {P}NUE-Prolog
+	% ({Parallel}NU-Prolog with Equations)
+	% 
+	% f(X) = Y.		defines an equation
+	% g(X) == Y.		is similar but it is compiled in-line
+	%			(only one equation for g is allowed,
+	%			 - not currently checked though)
+	% h(X) = Y :- Body.	defines a conditional equation
+	%
+	% (C ? A : B)		is a built in function.  It is equivalent
+	%			to the following definition
+	% (C ? A : B) == X :- (if C then X = A else X = B).
+	%			but doesn't evaluate both A and B
+	%
+	% To be run in parallel, the left sides of equations must
+	% not unify with the left sides of previous equations
+	% (at least those without cut in the body, which is not
+	%  highly recommended).
+
+	% should be in some standard definition file
+A + B == C :- C is quote(A + B).	% could use plus/3
+A - B == C :- C is quote(A - B).	% maybe not ('-' is used lots)
+A * B == C :- C is quote(A * B).
+A // B == C :- C is quote(A // B).
+univ_f(F) == L	:- F =.. L.
+univ_l(L) == F	:- F =.. L.
+% should do arg, functor, name etc also
+
+	% goals
+:- writeln(fact1(7)).
+
+	% append
+concat([], A) = A.
+concat(A.B, C) = A.concat(B, C).
+
+	% append 3 lists together
+append3(A, B, C) = concat(A, concat(B, C)).
+%append3(A, B, C) = concat(concat(A, B), C).	% less efficient
+	% reversible version - like outermost evaluation
+	% of first definition
+%append3(A, B, C, D) :- concat(A, X, D), concat(B, C, X).
+
+	% sum integers in a tree
+sum_tree(nil) = 0.
+sum_tree(t(L, N, R)) = sum_tree(L) + N + sum_tree(R).
+
+	% flatten tree into list
+flatten_tree(nil) = [].
+flatten_tree(t(nil, N, R)) = N.flatten_tree(R).
+flatten_tree(t(t(LL, LN, LR), N, R)) =
+	flatten_tree(t(LL, LN, t(LR, N, R))).
+
+	% sum integers in a list
+sum([]) = 0.
+sum(A.B) = A + sum(B).
+
+	% max of two numbers
+nmax(A, B) = (A >= B ? A : B).
+
+	% max of list of numbers (efficient tail recursive version)
+max_l(A.B) = max_l1(A, B).
+
+max_l1(A, []) = A.
+max_l1(A, B.C) = max_l1(nmax(A, B), C).
+
+	% add two lists of numbers, pairwise
+	% illustrates uniform defn
+add_lists([], _) = [].
+add_lists(_._, []) = [].
+add_lists(A.As, B.Bs) = (A+B).add_lists(As, Bs).
+
+	% insertion sort (inefficient version)
+isort([]) = [].
+isort(A.B) = insert(A, isort(B)).
+
+insert(A, []) = [A].
+insert(A, B.C) = (A =< B ? A.B.C : B.insert(A, C)).
+
+	% insertion sort (more efficient version)
+isort1(L) = isort1a(L, []).
+
+	% insertion sort with accumulator
+isort1a([], Ac) = Ac.
+isort1a(H.T, Ac) = isort1a(T, insert(H, Ac)).
+
+	% factorial
+	% should use ?: to get mutex heads (or cut - yuk)
+	% This definition results in an error message
+fact(0) = 1.
+fact(N) = N * fact(N - 1) :- N > 0.
+
+	% like this!
+fact1(N) = (N > 0 ? N * fact1(N - 1) : 1).
+
+	% 91 function
+f91(X) = (X > 100 ? X - 10 : f91(f91(X + 11))).
+
+	% quicksort (inefficient version, without difference lists)
+	% shows limitation of functional notation
+	% - part has two outputs
+qs([]) = [].
+qs(A.B) = concat(qs(L), A.qs(G)) :- part(A, B, L, G).
+
+	% needs cuts or if for PNU-Prolog
+part(A, [], [], []).
+part(A, B.C, B.D, E) :- B =< A, part(A, C, D, E).
+part(A, B.C, D, B.E) :- B > A, part(A, C, D, E).
+
+	% test if max element of list is greater than another list
+	% (only decent example of calling functions from Prolog
+	%  I could think of)
+gt_l(A, B) :- max_l(A) > max_l(B).
+
+	% zip2 as in Miranda
+zip2([], _) = [].
+zip2(_._, []) = [].
+zip2(A.As, B.Bs) = (A, B).zip2(As, Bs).
+
+	% appends single element onto list
+insertlast(E, []) = [E].
+insertlast(E, H.T) = H.insertlast(E, T).
+
+	% should put in more Prolog examples, with
+	% function calls in the body

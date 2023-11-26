@@ -1,0 +1,19 @@
+lib db.
+db_create(db).
+
+% In case they are already there ...
+
+db_undefine(db, simc).
+db_undefine(db, rlhp).
+
+% Make SIMC relation capable of holding 1200 records
+
+db_define(db, simc, 3,
+	simc([30, 1200, 4096, 1,
+		"g:0:0(g:3:02582582,g:2:58258258,g:1:25825825)"])).
+
+% Make RLHP relation initially holding 1024 records
+
+db_define(db, rlhp, 3,
+	rlhp([64, 2048, 48, 32, 16,
+		2'100100100100100, 2'010010010010010, 2'001001001001001, 16])).

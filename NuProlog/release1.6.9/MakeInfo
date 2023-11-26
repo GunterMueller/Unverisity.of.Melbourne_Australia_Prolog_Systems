@@ -1,0 +1,26 @@
+Things you can make:
+
+all	: builds the NU-Prolog binaries but doesn't install them
+
+install	: builds all of the binaries and libraries and installs them
+
+BEFORE you try either of these, edit the Makefile to set up the parameters
+for your local configuration; you will probably need to change the values:
+
+HOME	= top level of NU-Prolog source directories (the current directory)
+	  [default: /usr/src/melb/nuprolog]
+
+BIN	= the directory where the NU-Prolog binaries will be installed
+	  [default: /usr/melb]
+
+LIB	= the directory where the NU-Prolog libraries will be installed
+	  [default: /usr/lib/nuprolog]
+
+CFLAGS	= flags to the C compiler to indicate which facilities of the
+	  NU-Prolog system should be made available (see Makefile for
+	  more details)
+
+If you are on a sun, vax, encore, or elxsi, you will want to alter the
+rule for inter.o in nep/Makefile, and if you are not on one of these,
+then you should look through nep/Makefile and nep/machdep.h very carefully.
+You may also need to install Larry Wall's perl.

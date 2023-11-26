@@ -1,0 +1,2931 @@
+
+	.pred	'$findFile',5
+	labelx	5
+	.clause
+0:	all	11
+	gvary	5,1
+	gvary	1,2
+	gvary	3,3
+	gvary	2,4
+	gvary	0,5
+	pvary	6,1
+	call	11,2,&'$fileNameToString'/2
+	labely	7
+25: 	te	0,0,0,&32
+	pl	1
+	uc	$46
+	uvary	8
+	pvary	4,0
+	pvaly	6,2
+	call	11,3,&'append'/3
+	labely	10
+26: 	te	0,0,0,&27
+	pc	0,$46
+	pvaly	8,1
+	call	11,2,&'member'/2
+	cuty	10
+	fail	
+27: 	tre	0,0
+28: 	labely	9
+29: 	te	0,0,0,&30
+	pc	0,$47
+	pvaly	8,1
+	call	10,2,&'member'/2
+	cuty	9
+	fail	
+30: 	tre	0,0
+31: 	pl	0
+	uc	$46
+	uvaly	8
+	pvaly	5,1
+	call	8,2,&'member'/2
+	cuty	7
+	j	&33
+32: 	tre	0,0
+	puval	6,255
+	glvary	4,255
+33: 	pvaly	3,0
+	pvaly	5,1
+	call	5,2,&'member'/2
+	puval	4,0
+	pvaly	3,1
+	pvaly	2,2
+	call	3,3,&'append'/3
+	pvaly	2,0
+	pvaly	1,1
+	call	1,2,&'access'/2
+	cuty	0
+	dallpro	
+	last
+
+	.pred	'$expandFileName',2
+	.clause
+0:	all	3
+	gvary	2,0
+	gvary	1,1
+	pvaly	2,0
+	call	3,1,&'$fileName'/1
+	pvaly	2,0
+	pvary	0,1
+	call	2,2,&'$fileNameToString'/2
+	pvaly	1,2
+	puval	0,3
+	name	2,3
+	dallpro	
+	last
+
+	.pred	'$fileName',1
+	labelx	1
+8: 	sot	0,&0,&1,&2,&9
+9: 	sos	0,&($'/'/1:&3,$'/'/2:&4,$'append'/2:&6,$'library'/1:&5),&7
+7: 	fail	
+	.clause
+0:	typx	0,3
+	cutx	1
+	fail	
+	.clause
+1:	ctypx	0,2
+	cutx	1
+	pro	
+	.clause
+2:	gl	0
+	uvara	0
+	all	1
+	uvary	0
+	jctypx	0,17,&18
+	j	&19
+18: 	call	1,1,&'$fileName'/1
+	j	&19
+19: 	pvaly	0,0
+	dallexe	1,&'$fileName'/1
+	.clause
+3:	gsx1	0,0,$'/'/1
+	exec	1,&'$fileName'/1
+	.clause
+4:	gs	0,$'/'/2
+	uvara	0
+	all	1
+	uvary	0
+	call	1,1,&'$fileName'/1
+	pvaly	0,0
+	dallexe	1,&'$fileName'/1
+	.clause
+5:	gsx1	0,0,$'library'/1
+	exec	1,&'$fileName'/1
+	.clause
+6:	gs	0,$'append'/2
+	uvara	0
+	all	1
+	uvary	0
+	call	1,1,&'$fileName'/1
+	pvaly	0,0
+	dallexe	1,&'$fileName'/1
+	last
+
+	.pred	'$fileNameToString',2
+	labelx	2
+	.clause
+0:	all	15
+	gvary	14,0
+	gvary	1,1
+	gvary	0,2
+	pvaly	14,3
+	fvar	3,255
+	jtypx	255,252,&35
+	j	&36
+35: 	pc	1,#(CHR,&7)
+	ps	3,$'$fileNameToString'/2
+	ulvy	14
+	ulvy	1
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	call	15,3,&'$format'/3
+	fail	
+36: 	pvaly	14,0
+	pvary	13,1
+	pnil	2
+	call	14,3,&'$fileNameToList'/3
+	puval	13,0
+	pvary	6,1
+	call	13,2,&'$fileNameListToComponents'/2
+	labelx	0
+37: 	te	1,0,1,&38
+	pvaly	6,255
+	gl	255
+	uvarx	3
+	uvary	9
+	gl	3
+	uc	$126
+	uvary	12
+	cutx	0
+	pvaly	12,0
+	call	13,1,&'isAlphaL'/1
+	pvaly	12,0
+	pvary	11,1
+	call	12,2,&'$lookupUserHome'/2
+	puval	11,0
+	pvary	10,1
+	call	11,2,&'$fileNameListToComponents'/2
+	puval	10,0
+	pvaly	9,1
+	pvary	4,2
+	call	5,3,&'append'/3
+	j	&40
+38: 	re	1,0,&39
+	pvaly	6,255
+	glvx2	255,3,255
+	gl	3
+	uc	$47
+	uc	$[]
+	cutx	0
+	puval	6,255
+	glvary	4,255
+	j	&40
+39: 	tre	1,0
+	pvary	8,0
+	call	9,1,&'getwd'/1
+	puval	8,0
+	pvary	7,1
+	pnil	2
+	call	8,3,&'$fileNameToList'/3
+	puval	7,0
+	pvary	5,1
+	call	7,2,&'$fileNameListToComponents'/2
+	pc	3,#(CHR,&30)
+	pl	1
+	uvalx	3
+	ulvy	6
+	puval	5,0
+	pvary	4,2
+	call	5,3,&'append'/3
+40: 	puval	4,0
+	pvary	3,1
+	call	4,2,&'$cleanupFileNameComponents'/2
+	pvary	2,0
+	puval	3,1
+	call	3,2,&'$fileNameListToComponents'/2
+	puval	2,3
+	pvaly	1,4
+	ltos	3,4
+	cuty	0
+	dallpro	
+	last
+30: 	.string	"/"
+7: 	.string	"~NError in ~w -- file name must be ground.~n"
+
+	.pred	'$fileNameListToComponents',2
+	labelx	2
+6: 	sot	0,&3,&7,&5,&2
+3: 	t	3,0,&0
+	r	3,0,&1
+	tr	3,0,&2
+7: 	jc	0,$[],&4
+	j	&2
+4: 	t	3,0,&0
+	tr	3,0,&2
+5: 	t	3,0,&1
+	tr	3,0,&2
+	.clause
+0:	gnil	0
+	gnil	1
+	cutx	2
+	pro	
+	.clause
+1:	gl	0
+	uc	$47
+	uvara	0
+	glvx2	1,3,1
+	gl	3
+	uc	$47
+	uc	$[]
+	cutx	2
+	exec	2,&'$fileNameListToComponents'/2
+	.clause
+2:	gvarx	3,0
+	gl	1
+	uvarx	4
+	all	2
+	uvary	0
+	pc	0,#(STR,&23)
+	gvara	1,3
+	gvara	2,4
+	pvary	1,3
+	call	2,4,&'spanList'/4
+	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'$fileNameListToComponents'/2
+	last
+23: 	.word	$'\\=='/1
+	.word	$47
+
+	.pred	'$cleanupFileNameComponents',2
+	.clause
+0:	all	3
+	gvary	2,0
+	gvary	0,1
+	pvaly	2,0
+	pvary	1,1
+	call	3,2,&'$cleanupFileNameComponents1'/2
+	labelx	0
+7: 	te	0,0,1,&8
+	puval	1,255
+	gvaly	2,255
+	cutx	0
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+8: 	tre	0,0
+	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'$cleanupFileNameComponents'/2
+9: 	last
+
+	.pred	'$cleanupFileNameComponents1',2
+	labelx	2
+12: 	sot	0,&9,&0,&13,&11
+9: 	t	3,0,&0
+	r	3,0,&1
+	r	3,0,&2
+	r	3,0,&3
+	tr	3,0,&4
+13: 	glvx2	0,0,3
+10: 	t	4,0,&5
+	r	4,0,&6
+	r	4,0,&7
+	tr	4,0,&8
+11: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	pro	
+	.clause
+1:	gl	0
+	uvarx	4
+	ul	255
+	uvarx	5
+	uvarx	6
+	gl	4
+	uc	$47
+	uc	$[]
+	gl	5
+	uc	$47
+	uc	$[]
+	cutx	2
+	pc	4,#(CHR,&19)
+	pl	0
+	uvalx	4
+	uvalx	6
+	exec	2,&'$cleanupFileNameComponents1'/2
+	.clause
+2:	gl	0
+	uvarx	4
+	ul	255
+	uvarx	5
+	uvara	0
+	gl	4
+	uc	$46
+	uc	$[]
+	gl	5
+	uc	$47
+	uc	$[]
+	cutx	2
+	exec	2,&'$cleanupFileNameComponents1'/2
+	.clause
+3:	gl	0
+	uvoid	1
+	ul	255
+	uvarx	4
+	ul	255
+	uvarx	5
+	uvara	0
+	gl	4
+	uc	$47
+	uc	$[]
+	pc	255,#(CHR,&26)
+	gvalx	5,255
+	cutx	2
+	exec	2,&'$cleanupFileNameComponents1'/2
+	.clause
+4:	glvx2	0,4,0
+	gl	1
+	uvalx	4
+	uvara	1
+	cutx	2
+	exec	2,&'$cleanupFileNameComponents1'/2
+	.clause
+5:	gl	0
+	uc	$47
+	uc	$[]
+	glvx2	3,4,5
+	gl	4
+	uc	$47
+	uc	$[]
+	cutx	2
+	pc	4,#(CHR,&42)
+	pl	0
+	uvalx	4
+	uvalx	5
+	exec	2,&'$cleanupFileNameComponents1'/2
+	.clause
+6:	gl	0
+	uc	$46
+	uc	$[]
+	glvx2	3,4,0
+	gl	4
+	uc	$47
+	uc	$[]
+	cutx	2
+	exec	2,&'$cleanupFileNameComponents1'/2
+	.clause
+7:	gl	3
+	uvarx	4
+	ul	255
+	uvarx	5
+	uvara	0
+	gl	4
+	uc	$47
+	uc	$[]
+	pc	255,#(CHR,&53)
+	gvalx	5,255
+	cutx	2
+	exec	2,&'$cleanupFileNameComponents1'/2
+	.clause
+8:	gl	1
+	ulvx	0
+	uvara	1
+	gvara	0,3
+	cutx	2
+	exec	2,&'$cleanupFileNameComponents1'/2
+	last
+53: 	.string	".."
+42: 	.string	"/"
+26: 	.string	".."
+19: 	.string	"/"
+
+	.pred	'$lookupUser',2
+	labelx	2
+	.clause
+0:	all	9
+	gvary	1,0
+	gvary	0,1
+	gvary	6,2
+	jtypy	1,48,&34
+	pc	0,$'/etc/passwd'
+	pc	1,$'read'
+	pvary	5,2
+	call	9,3,&'open'/3
+	call	9,0,&'repeat'/0
+	pvaly	5,0
+	pvary	4,1
+	call	9,2,&'getl'/2
+	pvaly	4,3
+	pnil	4
+	idtest	3,4
+	jfail	&30
+	cuty	6
+	pvaly	5,0
+	call	7,1,&'close'/1
+	fail	
+30: 	labely	7
+31: 	te	0,0,0,&32
+	pl	1
+	uvary	8
+	uc	$[]
+	pvarx	0,0
+	pvaly	4,2
+	call	9,3,&'append'/3
+	pvaly	8,3
+	pc	4,$10
+	notid	3,4
+	cuty	7
+	cuty	6
+	pvaly	5,0
+	call	7,1,&'close'/1
+	fail	
+32: 	tre	0,0
+33: 	pl	1
+	uc	$58
+	uvoid	1
+	pvaly	1,0
+	pvaly	4,2
+	call	7,3,&'append'/3
+	cuty	6
+	puval	5,0
+	call	5,1,&'close'/1
+	puval	4,255
+	gvaly	0,255
+	dallpro	
+34: 	pvaly	1,3
+	pnil	4
+	idtest	3,4
+	jfail	&37
+	labely	3
+35: 	te	0,0,0,&36
+	pc	0,$'LOGNAME'
+	pvary	2,1
+	call	4,2,&'getenv'/2
+	cuty	3
+	puval	2,0
+	pvaly	0,1
+	dallexe	2,&'$lookupUser'/2
+36: 	tre	0,0
+	pc	1,#(CHR,&25)
+	ps	3,$'$lookupUser'/2
+	ulvy	1
+	ulvy	0
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	dallexe	3,&'$format'/3
+	j	&38
+37: 	pc	1,#(CHR,&29)
+	ps	3,$'$lookupUser'/2
+	ulvy	1
+	ulvy	0
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	dallexe	3,&'$format'/3
+38: 	last
+29: 	.string	"~NError in ~w. -- String or [] expected.~n"
+25: 	.string	"~NError in ~w. -- Can't figure out who I am.~n"
+
+	.pred	'$lookupUserHome',2
+	.clause
+0:	all	3
+	gvary	0,1
+	pvary	2,1
+	call	3,2,&'$lookupUser'/2
+	pc	0,#(STR,&9)
+	puval	2,1
+	pvarx	2,2
+	pvary	1,3
+	call	2,4,&'groupList'/4
+	pc	0,$5
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'nth0'/3
+	last
+9: 	.word	$'\\=='/1
+	.word	$58
+
+	.pred	'$fileNameToList',3
+7: 	sot	0,&8,&0,&1,&9
+8: 	mkdel	3,&7
+	mark	0
+	delay	
+9: 	sos	0,&($'/'/1:&2,$'/'/2:&3,$'append'/2:&5,$'library'/1:&4),&6
+6: 	fail	
+	.clause
+0:	gvarx	3,1
+	gvara	1,2
+	ctypx	0,2
+	pnil	4
+	idtest	0,4
+	jfail	&16
+	gvalx	1,3
+	pro	
+16: 	pvarx	4,4
+	name	0,4
+	gvara	0,4
+	gvara	2,3
+	exec	3,&'append'/3
+17: 	.clause
+1:	gl	0
+	uvara	0
+	all	3
+	uvary	2
+	gvary	0,2
+	jctypx	0,17,&27
+	gl	1
+	uvalx	0
+	uvary	1
+	j	&28
+27: 	pl	2
+	uc	$46
+	uvary	1
+	call	3,3,&'$fileNameToList'/3
+28: 	pvaly	2,0
+	pvaly	1,1
+	pvaly	0,2
+	dall	
+	execsot	3,0,&8,&0,&1,&9
+	.clause
+2:	gsx1	0,0,$'/'/1
+	gl	1
+	uc	$47
+	uvara	1
+	execsot	3,0,&8,&0,&1,&9
+	.clause
+3:	gs	0,$'/'/2
+	uvara	0
+	all	3
+	uvary	2
+	gvary	0,2
+	pl	2
+	uc	$47
+	uvary	1
+	call	3,3,&'$fileNameToList'/3
+	pvaly	2,0
+	pvaly	1,1
+	pvaly	0,2
+	dall	
+	execsot	3,0,&8,&0,&1,&9
+	.clause
+4:	gs	0,$'library'/1
+	all	7
+	uvary	1
+	gvary	6,1
+	gvary	0,2
+	pvary	5,0
+	call	7,1,&'libdirectory'/1
+	pvaly	5,0
+	pvaly	6,1
+	pvary	2,2
+	call	6,3,&'$fileNameToList'/3
+	labely	3
+58: 	te	0,0,0,&62
+	puval	5,3
+	pvarx	2,2
+	name	3,2
+	labely	4
+59: 	te	0,0,3,&60
+	pc	3,#(CHR,&54)
+	pl	1
+	uvoid	1
+	uvalx	3
+	pvarx	0,0
+	call	5,3,&'append'/3
+	cuty	4
+	fail	
+60: 	tre	0,0
+61: 	cuty	3
+	pvaly	2,255
+	gl	255
+	uc	$47
+	uvarx	1
+	j	&63
+62: 	tre	0,0
+	puval	2,1
+63: 	pvaly	1,0
+	pvaly	0,2
+	dall	
+	execsot	3,0,&8,&0,&1,&9
+	.clause
+5:	gs	0,$'append'/2
+	uvara	0
+	all	3
+	uvary	2
+	gvary	0,2
+	pvary	1,2
+	call	3,3,&'$fileNameToList'/3
+	pvaly	2,0
+	puval	1,1
+	pvaly	0,2
+	dall	
+	execsot	3,0,&8,&0,&1,&9
+	last
+54: 	.string	"/"
+
+	.pred	'$baseName',2
+2: 	fvar	0,255
+	jnvx	255,&0
+1: 	mkdel	2,&2
+	mark	255
+	delay	
+	.clause
+0:	all	3
+	gvary	1,1
+	pvary	0,1
+	pnil	2
+	call	3,3,&'$fileNameToList'/3
+	labely	2
+13: 	te	0,0,0,&14
+	pl	1
+	uc	$47
+	ulvy	1
+	pvarx	0,0
+	pvaly	0,2
+	call	3,3,&'append'/3
+	pc	0,$47
+	pvaly	1,1
+	call	3,2,&'notMember'/2
+	cuty	2
+	dallpro	
+14: 	tre	0,0
+	puval	0,255
+	gvaly	1,255
+	dallpro	
+15: 	last
+
+	.pred	'makeTemp',2
+2: 	fvar	0,255
+	jvx	255,&1
+	labelx	2
+	j	&0
+1: 	mkdel	3,&2
+	mark	255
+	delay	
+	.clause
+0:	all	9
+	gvary	2,1
+	gvary	0,2
+	pvary	7,1
+	pnil	2
+	call	9,3,&'$fileNameToList'/3
+	pc	0,#(CHR,&12)
+	pvary	3,1
+	pvary	8,2
+	call	9,3,&'append'/3
+	pvary	6,0
+	puval	8,1
+	puval	7,2
+	call	7,3,&'append'/3
+	pvary	5,0
+	call	7,1,&'getpid'/1
+	pc	0,$97
+	pc	1,$122
+	pvary	4,2
+	call	7,3,&'between'/3
+	pc	0,#(CHR,&23)
+	pl	1
+	ulvy	6
+	ul	255
+	ulvy	5
+	ul	255
+	ulvy	4
+	ul	255
+	ulvy	3
+	uc	$[]
+	pvaly	2,2
+	call	3,3,&'sformat'/3
+	labely	1
+26: 	te	0,0,0,&27
+	pvaly	2,0
+	pvarx	1,1
+	call	2,2,&'stat'/2
+	cuty	1
+	fail	
+27: 	tre	0,0
+28: 	cuty	0
+	dallpro	
+	last
+23: 	.string	"~s~|~'0t~d~c~6+~s"
+12: 	.string	"XXXXXX"
+
+	.pred	'load',1
+	.clause
+0:	all	3
+	labely	2
+	pvary	0,255
+	pvary	1,255
+16: 	te	1,0,1,&17
+	pc	1,#(LST,&7)
+	pc	2,$4
+	pvaly	1,3
+	pvaly	0,4
+	call	3,5,&'$findFile'/5
+	cuty	2
+	j	&18
+17: 	tre	1,0
+	pc	1,#(CHR,&11)
+	ps	3,$'load'/1
+	ulvx	0
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	call	2,3,&'$format'/3
+	fail	
+18: 	puval	1,1
+	pc	2,#(CHR,&14)
+	idtest	1,2
+	jfail	&19
+	puval	0,0
+	call	0,1,&'$loadFile'/1
+	j	&20
+19: 	puval	0,0
+	call	0,1,&'$consult'/1
+20: 	pc	1,$'user'
+	pc	2,#(CHR,&15)
+	sputl	1,2
+	dallpro	
+	last
+15: 	.string	"done\n"
+14: 	.string	".no"
+11: 	.string	"~NError in ~w. -- cannot find file to load.~n"
+7: 	.word	#(CHR,&21)
+	.word	#(LST,&22)
+21: 	.string	".no"
+22: 	.word	#(CHR,&23)
+	.word	#(LST,&24)
+23: 	.string	".nl"
+24: 	.word	$[]
+	.word	#(LST,&25)
+25: 	.word	#(CHR,&26)
+	.word	$[]
+26: 	.string	".pl"
+
+	.pred	'$loadFile',1
+	.clause
+0:	all	2
+	gvary	0,0
+	pvaly	0,0
+	pvary	1,1
+	call	2,2,&'$nameToString'/2
+	pc	1,#(CHR,&7)
+	pl	2
+	ulvy	1
+	uc	$[]
+	pc	0,$'user'
+	call	2,3,&'$format'/3
+	labelx	0
+12: 	te	0,0,1,&13
+	puval	1,1
+	load	1
+	cutx	0
+	dallpro	
+13: 	tre	0,0
+	pc	1,#(CHR,&11)
+	ps	3,$'$loadFile'/1
+	ulvy	0
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	dallexe	3,&'$format'/3
+14: 	last
+11: 	.string	"~NError in ~w. -- cannot load.~n"
+7: 	.string	"~NLoading ~s.~n"
+
+	.pred	'.',2
+	.clause
+0:	gvarx	2,1
+	pl	1
+	ulvx	0
+	ulvx	2
+	pc	0,$'load'
+	exec	2,&'mapList'/2
+	last
+
+	.pred	'ensureLoaded',1
+	.clause
+0:	gvarx	1,0
+	jtypx	1,48,&5
+	pc	0,$'$ensureLoaded'
+	exec	2,&'mapList'/2
+5: 	pnil	2
+	notid	1,2
+	gvara	0,1
+	exec	1,&'$ensureLoaded'/1
+6: 	last
+
+	.pred	'$ensureLoaded',1
+	.clause
+0:	all	7
+	gvary	0,0
+	labely	6
+15: 	te	0,0,0,&25
+	pc	1,#(LST,&7)
+	pvaly	0,0
+	pc	2,$4
+	pvarx	3,3
+	pvary	4,4
+	call	7,5,&'$findFile'/5
+	cuty	6
+	labelx	0
+16: 	te	0,0,1,&17
+	pvaly	4,255
+	gl	255
+	uc	$47
+	uvoid	1
+	cutx	0
+	pvarx	0,0
+	puval	4,1
+	name	0,1
+	j	&19
+17: 	tre	0,0
+	pvary	5,0
+	call	6,1,&'getwd'/1
+	puval	5,1
+	pc	2,$'/'
+	idtest	1,2
+	jfail	&18
+	pvarx	0,0
+	pl	1
+	uc	$47
+	ulvy	4
+	name	0,1
+	j	&19
+18: 	puval	5,1
+	pvarx	0,0
+	name	1,0
+	pl	1
+	uc	$47
+	ulvy	4
+	pvary	3,2
+	call	4,3,&'append'/3
+	pvarx	0,0
+	puval	3,1
+	name	0,1
+19: 	labely	1
+20: 	te	0,0,1,&24
+	labely	2
+21: 	te	0,0,1,&22
+	call	3,1,&'sourceFile'/1
+	cuty	2
+	fail	
+22: 	tre	0,0
+23: 	cuty	1
+	pvaly	0,0
+	dallexe	1,&'load'/1
+24: 	tre	0,0
+	dallpro	
+	j	&26
+25: 	tre	0,0
+	pvaly	0,0
+	dallexe	1,&'load'/1
+26: 	last
+7: 	.word	#(CHR,&27)
+	.word	#(LST,&28)
+27: 	.string	".no"
+28: 	.word	#(CHR,&29)
+	.word	#(LST,&30)
+29: 	.string	".nl"
+30: 	.word	$[]
+	.word	#(LST,&31)
+31: 	.word	#(CHR,&32)
+	.word	$[]
+32: 	.string	".pl"
+
+	.pred	'$autoLoadLibrary',1
+	.clause
+0:	all	2
+	gvary	1,0
+	pc	0,$'redefinitionWarning'
+	pvary	0,1
+	pc	2,$'off'
+	call	2,3,&'prologFlag'/3
+	pvaly	1,0
+	call	1,1,&'lib'/1
+	pc	0,$'redefinitionWarning'
+	pvarx	1,1
+	puval	0,2
+	dallexe	3,&'prologFlag'/3
+	last
+
+	.pred	'consult',1
+	.clause
+0:	gvarx	1,0
+	jtypx	1,48,&5
+	pc	0,$'$consult'
+	exec	2,&'mapList'/2
+5: 	pnil	2
+	notid	1,2
+	gvara	0,1
+	exec	1,&'$consult'/1
+6: 	last
+
+	.pred	'$consult',1
+	labelx	1
+7: 	sot	0,&3,&8,&6,&6
+3: 	t	2,0,&0
+	r	2,0,&1
+	tr	2,0,&2
+8: 	jc	0,$'user',&5
+4: 	t	2,0,&0
+	tr	2,0,&2
+5: 	t	2,0,&0
+	tr	2,0,&1
+6: 	t	2,0,&0
+	tr	2,0,&2
+	.clause
+0:	fvar	0,255
+	jtypx	255,252,&15
+	fail	
+15: 	cutx	1
+	pc	1,#(CHR,&14)
+	ps	3,$'consult'/1
+	ulvx	0
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	fail	
+	.clause
+1:	gc	0,$'user'
+	cutx	1
+	pc	1,#(CHR,&21)
+	pc	0,$'user'
+	pnil	2
+	all	1
+	call	1,3,&'$format'/3
+	pc	0,$'/dev/tty'
+	pc	1,$'read'
+	pvary	0,2
+	call	1,3,&'open'/3
+	puval	0,0
+	dallexe	1,&'$consultStdin'/1
+	.clause
+2:	all	5
+	labely	4
+	pvary	3,255
+54: 	te	1,0,1,&55
+	pc	1,#(LST,&33)
+	pc	2,$4
+	pvarx	3,3
+	pvaly	3,4
+	call	5,5,&'$findFile'/5
+	cuty	4
+	j	&56
+55: 	tre	1,0
+	pc	1,#(CHR,&37)
+	ps	3,$'consult'/1
+	ulvx	0
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	call	4,3,&'$format'/3
+	fail	
+56: 	puval	3,0
+	pvary	1,1
+	call	3,2,&'$nameToAtom'/2
+	labely	2
+57: 	te	0,0,0,&58
+	pc	0,$'$sourceFiles'
+	pc	1,$'$file'
+	pvaly	1,2
+	call	3,3,&'getprop'/3
+	cuty	2
+	j	&59
+58: 	tre	0,0
+	pc	0,$'$sourceFiles'
+	pc	1,$'$file'
+	pvaly	1,2
+	call	2,3,&'addprop'/3
+59: 	pc	1,#(CHR,&49)
+	pl	2
+	ulvy	1
+	uc	$[]
+	pc	0,$'user'
+	call	2,3,&'$format'/3
+	puval	1,0
+	pc	1,$'read'
+	pvary	0,2
+	call	1,3,&'open'/3
+	puval	0,0
+	dallexe	1,&'$consultStdin'/1
+	last
+49: 	.string	"~NConsulting ~a.~n"
+37: 	.string	"~NError in ~w. -- cannot find file.~n"
+33: 	.word	#(CHR,&60)
+	.word	#(LST,&61)
+60: 	.string	".nl"
+61: 	.word	$[]
+	.word	#(LST,&62)
+62: 	.word	#(CHR,&63)
+	.word	$[]
+63: 	.string	".pl"
+21: 	.string	"~NConsulting user.~n"
+14: 	.string	"~NError in ~w. -- file name must be ground.~n"
+
+	.pred	'$consultStdin',1
+	labelx	1
+	.clause
+0:	all	7
+	gvary	1,0
+	gvary	2,1
+	currstr	0,2
+	gvary	0,2
+	pvaly	1,2
+	setstr	0,2
+	pvary	3,0
+	call	7,1,&'$initConsult'/1
+	call	7,0,&'repeat'/0
+	labely	5
+10: 	te	0,0,0,&14
+	pvary	4,0
+	call	7,1,&'read1'/1
+	labely	6
+11: 	te	0,0,0,&12
+	pvaly	4,0
+	call	7,1,&'isEof'/1
+	cuty	6
+	fail	
+12: 	tre	0,0
+13: 	cuty	5
+	puval	4,0
+	call	4,1,&'$storeClause'/1
+	fail	
+14: 	tre	0,0
+	pvaly	1,0
+	call	4,1,&'streamEof'/1
+15: 	puval	3,0
+	call	3,1,&'$cleanupConsult'/1
+	cuty	2
+	pvaly	1,0
+	call	1,1,&'close'/1
+	pvaly	0,2
+	setstr	0,2
+	dallpro	
+	last
+
+	.pred	'$initConsult',1
+	.clause
+0:	all	2
+	gvary	0,0
+	labely	1
+2: 	te	0,0,0,&3
+	call	2,0,&'$consulting'/0
+	cuty	1
+	pvaly	0,255
+	gc	255,$'rest'
+	dallpro	
+3: 	tre	0,0
+	pvaly	0,255
+	gc	255,$'first'
+	dallexe	0,&'$initConsult'/0
+4: 	last
+
+	.pred	'$initConsult',0
+2: 	t	0,0,&0
+	tr	0,0,&1
+	.clause
+0:	pc	0,$'$consulting'
+	pc	1,$'$consulting'
+	all	1
+	pvary	0,2
+	call	1,3,&'getprop'/3
+	puval	0,0
+	pc	1,$'$consulting'
+	call	0,2,&'remprop'/2
+	fail	
+	.clause
+1:	pc	0,$'$consulting'
+	pc	1,$'$consulting'
+	all	0
+	call	0,2,&'remprop'/2
+	pc	0,$'$consulting'
+	pc	1,$'$consultingNow'
+	call	0,2,&'remprop'/2
+	pc	0,$'$consulting'
+	pc	1,$'$consultingNow'
+	pc	2,$'true'
+	dallexe	3,&'addprop'/3
+	last
+
+	.pred	'$cleanupConsult',1
+4: 	sot	0,&2,&5,&3,&3
+2: 	t	1,0,&0
+	tr	1,0,&1
+5: 	soc	0,&($'first':&1,$'rest':&0),&3
+3: 	fail	
+	.clause
+0:	gc	0,$'rest'
+	pro	
+	.clause
+1:	gc	0,$'first'
+	all	0
+	call	0,0,&'$initConsult'/0
+	pc	0,$'$consulting'
+	pc	1,$'$consultingNow'
+	dallexe	2,&'remprop'/2
+	last
+
+	.pred	'$storeClause',1
+	.clause
+0:	all	1
+	pvary	0,1
+	call	1,2,&'expandTerm'/2
+	puval	0,0
+	dallexe	1,&'$storeClause2'/1
+	last
+
+	.pred	'$storeClause2',1
+	labelx	1
+9: 	sot	0,&6,&5,&5,&10
+6: 	t	2,0,&0
+	r	2,0,&1
+	r	2,0,&2
+	r	2,0,&3
+	r	2,0,&4
+	tr	2,0,&5
+10: 	sose	0,&($':-'/1:&7,$':-'/2:&4,$'?-'/1:&8),&5
+7: 	t	2,0,&1
+	tr	2,0,&3
+8: 	t	2,0,&0
+	tr	2,0,&2
+	.clause
+0:	gs	0,$'?-'/1
+	us	255,$'when'/2
+	all	2
+	uvary	1
+	uvary	0
+	cutx	1
+	pvaly	1,0
+	call	2,1,&'$loadingPredicate'/1
+	pvaly	1,0
+	pvaly	0,1
+	dallexe	2,&'when'/2
+	.clause
+1:	gs	0,$':-'/1
+	us	255,$'when'/2
+	all	2
+	uvary	1
+	uvary	0
+	cutx	1
+	pvaly	1,0
+	call	2,1,&'$loadingPredicate'/1
+	pvaly	1,0
+	pvaly	0,1
+	dallexe	2,&'when'/2
+	.clause
+2:	gsx1	0,0,$'?-'/1
+	all	1
+	gvary	0,1
+	cuty	0
+	call	1,1,&'call'/1
+	cuty	0
+	dallpro	
+	.clause
+3:	gsx1	0,0,$':-'/1
+	all	1
+	gvary	0,1
+	cuty	0
+	call	1,1,&'call'/1
+	cuty	0
+	dallpro	
+	.clause
+4:	gs	0,$':-'/2
+	all	2
+	uvary	1
+	uvary	0
+	cutx	1
+	pvaly	1,0
+	call	2,1,&'$loadingPredicate'/1
+	ps	0,$':-'/2
+	uvaly	1
+	uvaly	0
+	dallexe	1,&'assertz'/1
+	.clause
+5:	all	1
+	gvary	0,0
+	pvaly	0,0
+	call	1,1,&'$loadingPredicate'/1
+	pvaly	0,0
+	dallexe	1,&'assertz'/1
+	last
+
+	.pred	'$consulting',0
+	.clause
+0:	all	1
+	labely	0
+	pc	0,$'$consulting'
+	pc	1,$'$consultingNow'
+	pc	2,$'true'
+	call	1,3,&'getprop'/3
+	cuty	0
+	dallpro	
+	last
+
+	.pred	'$loadingPredicate',1
+	.clause
+0:	pvarx	2,2
+	pvarx	1,1
+	functor	0,2,1
+	gvara	0,2
+	exec	2,&'$loadingPredicate'/2
+	last
+
+	.pred	'$loadingPredicate',2
+	.clause
+0:	all	4
+	gvary	0,0
+	gvary	1,1
+	labely	3
+16: 	te	0,0,0,&17
+	pvaly	0,0
+	pc	1,$'$consulting'
+	pvaly	1,2
+	call	4,3,&'getprop'/3
+	cuty	3
+	dallpro	
+17: 	tre	0,0
+	pvaly	0,0
+	pvaly	1,1
+	call	3,2,&'$redefiningPredicate'/2
+	pvaly	0,0
+	pvaly	1,1
+	call	3,2,&'abolish'/2
+	labely	2
+18: 	te	0,0,0,&19
+	call	3,0,&'$consulting'/0
+	cuty	2
+	pvaly	0,0
+	pc	1,$'$consulting'
+	pvaly	1,2
+	call	1,3,&'addpropa'/3
+	pc	0,$'$consulting'
+	pc	1,$'$consulting'
+	pvaly	0,2
+	dallexe	3,&'addpropa'/3
+19: 	tre	0,0
+	dallpro	
+20: 	last
+
+	.pred	'$redefiningPredicate',1
+	.clause
+0:	pvarx	2,2
+	pvarx	1,1
+	functor	0,2,1
+	gvara	0,2
+	exec	2,&'$redefiningPredicate'/2
+	last
+
+	.pred	'$redefiningPredicate',2
+	.clause
+0:	all	3
+	gvary	1,0
+	gvary	0,1
+	labely	2
+9: 	te	0,0,0,&10
+	pvaly	1,2
+	pvaly	0,3
+	defined	2,3,2,3
+	pc	0,$'redefinitionWarning'
+	pc	1,$'on'
+	call	3,2,&'prologFlag'/2
+	cuty	2
+	pc	1,#(CHR,&8)
+	pl	2
+	ulvy	1
+	ul	255
+	ulvy	0
+	uc	$[]
+	pc	0,$'user_error'
+	dallexe	3,&'$format'/3
+10: 	tre	0,0
+	dallpro	
+11: 	last
+8: 	.string	"~NWarning: ~a/~d redefined~n"
+
+	.pred	'libdirectory',1
+2: 	t	1,0,&0
+	tr	1,0,&1
+	.clause
+0:	pc	1,$'libraryDirectory'
+	pc	2,$1
+	defined	1,2,1,2
+	exec	1,&'libraryDirectory'/1
+	.clause
+1:	gvarx	1,0
+	pc	0,$'libdirectory'
+	exec	2,&'prologFlag'/2
+	last
+
+	.pred	'lib',1
+	.clause
+0:	all	6
+	gvary	1,0
+	labely	5
+	pvary	0,255
+22: 	te	0,0,0,&23
+	ps	0,$'library'/1
+	ulvy	1
+	pc	1,#(LST,&7)
+	pc	2,$4
+	pvarx	3,3
+	pvaly	0,4
+	call	6,5,&'$findFile'/5
+	cuty	5
+	j	&24
+23: 	tre	0,0
+	pc	1,#(CHR,&11)
+	ps	3,$'lib'/1
+	ulvy	1
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	call	5,3,&'$format'/3
+	fail	
+24: 	labely	3
+25: 	te	0,0,0,&28
+	pc	0,$'$sourceFiles'
+	pc	1,$'$file'
+	pvary	4,2
+	call	5,3,&'getprop'/3
+	puval	4,1
+	puval	0,2
+	name	1,2
+	cuty	3
+	labely	2
+26: 	te	0,0,0,&27
+	pc	0,$'redefinitionWarning'
+	pc	1,$'on'
+	call	3,2,&'prologFlag'/2
+	cuty	2
+	pc	1,#(CHR,&20)
+	ps	3,$'lib'/1
+	ulvy	1
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	call	0,3,&'$format'/3
+	fail	
+27: 	tre	0,0
+	dallpro	
+	j	&29
+28: 	tre	0,0
+	puval	0,0
+	dallexe	1,&'$loadFile'/1
+29: 	last
+20: 	.string	"~NError in ~w. -- library all ready loaded.~n"
+11: 	.string	"~NError in ~w. -- cannot find library.~n"
+7: 	.word	#(CHR,&30)
+	.word	$[]
+30: 	.string	".no"
+
+	.pred	'iload$iload',3
+	labelx	3
+	.clause
+0:	all	4
+	gvary	3,0
+	gvary	2,1
+	gvara	0,2
+	gvary	0,3
+	pvary	1,1
+	pnil	2
+	call	4,3,&'$toBytecodes'/3
+	pvaly	3,4
+	pvaly	2,5
+	puval	1,6
+	iload	4,5,6
+	cuty	0
+	dallpro	
+	last
+
+	.pred	'$toBytecodes',3
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	3,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	1,2
+	pro	
+	.clause
+1:	gl	0
+	uvara	0
+	all	3
+	uvary	2
+	gvary	0,2
+	pvary	1,2
+	call	3,3,&'$toBytecode'/3
+	pvaly	2,0
+	puval	1,1
+	pvaly	0,2
+	dall	
+	execsot	3,0,&4,&0,&1,&2
+	last
+
+	.pred	'$toBytecode',3
+6: 	sot	0,&4,&5,&5,&7
+4: 	t	3,0,&0
+	r	3,0,&1
+	r	3,0,&2
+	tr	3,0,&3
+5: 	fail	
+7: 	sos	0,&($'$'/1:&2,$'emit'/2:&0,$'emit'/3:&1,$'{}'/1:&3),&5
+	.clause
+0:	gs	0,$'emit'/2
+	all	2
+	uvary	1
+	uvara	0
+	glvx2	1,3,4
+	gl	3
+	uvary	0
+	uvarx	3
+	gvalx	4,2
+	pnil	1
+	gvara	2,3
+	call	2,3,&'append'/3
+	pvaly	1,0
+	pvaly	0,1
+	pvarx	2,2
+	dallexe	3,&'$bytecode'/3
+	.clause
+1:	gs	0,$'emit'/3
+	all	5
+	uvary	1
+	uvara	0
+	uvary	4
+	gl	1
+	uvarx	3
+	uvary	3
+	gl	3
+	uvary	0
+	uvarx	3
+	gvary	2,2
+	pnil	1
+	gvara	2,3
+	call	5,3,&'append'/3
+	pvaly	4,0
+	pvaly	3,1
+	pvaly	2,2
+	call	2,3,&'$toExtension'/3
+	pvaly	1,0
+	pvaly	0,1
+	pvarx	2,2
+	dallexe	3,&'$bytecode'/3
+	.clause
+2:	gsx1	0,3,$'$'/1
+	gl	1
+	uvarx	4
+	ulvx	2
+	gs	4,$':'/1
+	uvalx	3
+	pro	
+	.clause
+3:	gsx1	0,255,$'{}'/1
+	gvalx	1,2
+	pro	
+	last
+
+	.pred	'$toExtension',3
+11: 	sot	0,&9,&10,&10,&12
+9: 	t	3,0,&0
+	r	3,0,&1
+	r	3,0,&2
+	r	3,0,&3
+	r	3,0,&4
+	r	3,0,&5
+	r	3,0,&6
+	r	3,0,&7
+	tr	3,0,&8
+10: 	fail	
+12: 	sos	0,&($'#'/3:&2,$'$'/1:&0,$'&'/1:&3,$'&'/2:&4,$'/'/2:&1,$'cFunction'/1:&5,$'call'/1:&6,$'sotTable'/4:&8,$'table'/1:&7),&10
+	.clause
+0:	gsx1	0,3,$'$'/1
+	gl	1
+	uvarx	4
+	ulvx	2
+	gs	4,$'$'/1
+	uvalx	3
+	pro	
+	.clause
+1:	gsx2	0,4,3,$'/'/2
+	gl	1
+	uvarx	5
+	ulvx	2
+	gs	5,$'$'/2
+	uvalx	4
+	uvalx	3
+	pro	
+	.clause
+2:	gs	0,$'#'/3
+	uvoid	2
+	uvarx	3
+	gl	1
+	uvarx	4
+	ulvx	2
+	gs	4,$'#'/1
+	uvalx	3
+	pro	
+	.clause
+3:	gsx1	0,3,$'&'/1
+	gl	1
+	uvarx	4
+	ulvx	2
+	gs	4,$'&'/1
+	uvalx	3
+	pro	
+	.clause
+4:	gsx2	0,4,3,$'&'/2
+	gl	1
+	uvarx	5
+	ulvx	2
+	gs	5,$'&'/2
+	uvalx	4
+	uvalx	3
+	pro	
+	.clause
+5:	gsx1	0,3,$'cFunction'/1
+	gl	1
+	uvarx	4
+	ulvx	2
+	gs	4,$'cFunction'/1
+	uvalx	3
+	pro	
+	.clause
+6:	gsx1	0,3,$'call'/1
+	gl	1
+	uvarx	4
+	ulvx	2
+	gs	4,$'call'/1
+	uvalx	3
+	pro	
+	.clause
+7:	gsx1	0,3,$'table'/1
+	gl	1
+	uvarx	4
+	ulvx	2
+	gs	4,$'table'/1
+	uvalx	3
+	pro	
+	.clause
+8:	gs	0,$'sotTable'/4
+	uvarx	6
+	uvarx	5
+	uvarx	4
+	uvarx	3
+	gl	1
+	uvarx	7
+	ul	255
+	uvarx	8
+	ul	255
+	uvarx	9
+	ul	255
+	uvarx	10
+	ulvx	2
+	gs	7,$'&'/1
+	uvalx	6
+	gs	8,$'&'/1
+	uvalx	5
+	gs	9,$'&'/1
+	uvalx	4
+	gs	10,$'&'/1
+	uvalx	3
+	pro	
+	last
+
+	.pred	'loadForeignFiles',2
+2: 	t	2,0,&0
+	tr	2,0,&1
+	.clause
+0:	all	3
+	gvary	1,0
+	gvary	0,1
+	labely	2
+15: 	te	0,0,0,&16
+	pc	0,$'fload'
+	pc	1,$'fail'
+	call	3,2,&'prologFlag'/2
+	cuty	2
+	pc	1,#(CHR,&10)
+	pc	0,$'user_error'
+	pnil	2
+	call	2,3,&'$format'/3
+	fail	
+16: 	tre	0,0
+17: 	ps	0,$'fload$loadForeignFiles'/2
+	ulvy	1
+	ulvy	0
+	ps	1,$'loadForeignFiles'/2
+	ulvy	1
+	ulvy	0
+	pvarx	2,3
+	call	0,4,&'$catchError'/4
+	fail	
+	.clause
+1:	pro	
+	last
+10: 	.string	"~NForeign functions not supported/installed on this machine.~n"
+
+	.pred	'.bfload$loadForeignFiles2',2
+	.clause
+3:	gvarx	2,1
+	pvarx	1,1
+	exec	3,&'fload$foreign'/3
+	last
+
+	.pred	'.afload$loadForeignFiles2',2
+	.clause
+2:	all	2
+	gvary	0,0
+	pvary	1,0
+	call	2,2,&'foreignFile'/2
+	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'$baseName'/2
+	last
+
+	.pred	'.cfload$loadForeignFiles2',3
+	.clause
+1:	gvarx	3,0
+	all	6
+	gvary	1,1
+	gvary	2,2
+	pvary	5,0
+	gvara	1,3
+	call	6,2,&'member'/2
+	pl	0
+	ulvy	5
+	uc	$[]
+	ps	2,$'.afload$loadForeignFiles2'/2
+	ulvy	5
+	uvara	1
+	pvary	4,3
+	call	6,4,&'$solutions'/4
+	pvaly	4,3
+	pnil	4
+	idtest	3,4
+	jfail	&38
+	pc	3,#(CHR,&25)
+	ps	0,$'format'/3
+	uc	$'user_error'
+	uvalx	3
+	ul	255
+	ulvy	5
+	uc	$[]
+	call	5,1,&'$throwError'/1
+	j	&38
+38: 	pvary	3,0
+	puval	4,1
+	call	4,2,&'member'/2
+	pvaly	1,0
+	puval	3,1
+	call	3,2,&'member'/2
+	pl	0
+	ulvy	1
+	uc	$[]
+	ps	2,$'.bfload$loadForeignFiles2'/2
+	ulvy	1
+	uvara	1
+	pvary	0,3
+	call	3,4,&'$solutions'/4
+	labelx	0
+39: 	te	0,0,1,&40
+	pvaly	0,255
+	gl	255
+	ulvy	2
+	uc	$[]
+	cutx	0
+	dallpro	
+40: 	tre	0,0
+	puval	0,3
+	pnil	4
+	idtest	3,4
+	jfail	&41
+	pc	3,#(CHR,&35)
+	ps	0,$'format'/3
+	uc	$'user_error'
+	uvalx	3
+	ul	255
+	ulvy	1
+	uc	$[]
+	dallexe	1,&'$throwError'/1
+41: 	pc	3,#(CHR,&37)
+	ps	0,$'format'/3
+	uc	$'user_error'
+	uvalx	3
+	ul	255
+	ulvy	1
+	ul	255
+	ulvy	0
+	uc	$[]
+	dallexe	1,&'$throwError'/1
+42: 	last
+37: 	.string	"~NFunction ~w multiply defined in foreign/[2,3] -- ~w.~n"
+35: 	.string	"~NFunction ~w not defined in foreign/[2,3].~n"
+25: 	.string	"~NFile ~w not defined in foreignFile/2.~n"
+
+	.pred	'fload$loadForeignFiles',2
+	.clause
+0:	all	14
+	gvary	9,0
+	gvary	13,1
+	labely	12
+	pvary	8,255
+	pvary	11,255
+75: 	te	0,0,0,&76
+	pvaly	9,2
+	fvar	2,255
+	typx	255,252
+	pc	0,$'$baseName'
+	pvaly	9,1
+	pvaly	11,2
+	call	14,3,&'mapList'/3
+	pvaly	13,2
+	fvar	2,255
+	typx	255,252
+	pc	0,$'$nameToString'
+	pvaly	13,1
+	pvaly	8,2
+	call	13,3,&'mapList'/3
+	cuty	12
+	j	&77
+76: 	tre	0,0
+	pc	0,#(STR,&52)
+	call	12,1,&'$throwError'/1
+77: 	pl	0
+	ulvy	11
+	uc	$[]
+	ps	1,$'-'/2
+	uvarx	3
+	uvarx	4
+	ps	2,$'.cfload$loadForeignFiles2'/3
+	ulvy	11
+	uvalx	3
+	uvalx	4
+	pvary	10,3
+	call	11,4,&'$solutions'/4
+	pvaly	10,0
+	call	11,1,&'fload$checkFunctionSpecs'/1
+	puval	10,0
+	pvary	2,1
+	pvary	1,2
+	pvary	7,3
+	call	10,4,&'fload$functionNames'/4
+	pc	0,$'$nameToString'
+	pvaly	9,1
+	pvary	4,2
+	call	9,3,&'mapList'/3
+	pc	1,#(LST,&68)
+	puval	8,0
+	pvary	3,2
+	call	8,3,&'append'/3
+	labely	6
+78: 	te	0,0,0,&79
+	puval	7,0
+	pvary	5,1
+	call	7,2,&'fload$links'/2
+	cuty	6
+	pl	2
+	ulvy	5
+	ulvy	4
+	puval	3,3
+	puval	2,4
+	fload	2,3,4,2
+	gvary	0,2
+	puval	5,0
+	call	2,1,&'unlink'/1
+	j	&80
+79: 	tre	0,0
+	puval	4,2
+	puval	3,3
+	puval	2,4
+	fload	2,3,4,2
+	gvary	0,2
+80: 	pc	0,$'fload$install'
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'mapList'/3
+	last
+68: 	.word	#(CHR,&81)
+	.word	#(LST,&82)
+81: 	.string	"-lc"
+82: 	.word	#(CHR,&83)
+	.word	$[]
+83: 	.string	"-lm"
+52: 	.word	$'format'/3
+	.word	$'user_error'
+	.word	#(CHR,&84)
+	.word	$[]
+84: 	.string	"~NGround lists of file names required.~n"
+
+	.pred	'fload$foreign',3
+2: 	t	3,0,&0
+	tr	3,0,&1
+	.clause
+0:	gc	1,$'c'
+	gvara	1,2
+	pc	3,$'foreign'
+	pc	4,$2
+	defined	3,4,3,4
+	exec	2,&'foreign'/2
+	.clause
+1:	gc	1,$'c'
+	pc	3,$'foreign'
+	pc	4,$3
+	defined	3,4,3,4
+	exec	3,&'foreign'/3
+	last
+
+	.pred	'fload$functionNames',4
+10: 	labelx	4
+	sot	0,&11,&0,&14,&8
+11: 	labelx	4
+	sot	1,&12,&0,&13,&8
+12: 	mkdel	5,&10
+	mark	1
+	mark	0
+	delay	
+13: 	glvx2	1,1,5
+7: 	t	6,0,&5
+	tr	6,0,&6
+8: 	fail	
+14: 	glvx2	0,0,5
+9: 	t	6,0,&3
+	tr	6,0,&4
+	.clause
+0:	gnil	0
+	gnil	1
+	gnil	2
+	gnil	3
+	pro	
+	.clause
+3:	gsx2	0,6,7,$'-'/2
+	glvx2	1,8,1
+	gl	2
+	uvalx	7
+	uvara	2
+	gvara	0,5
+	gsx2	7,255,255,$'/'/2
+	cutx	4
+	pvarx	7,7
+	name	6,7
+	pl	6
+	uc	$95
+	uvalx	7
+	ltos	6,8
+	exec	4,&'fload$functionNames'/4
+	.clause
+4:	gsx2	0,6,7,$'-'/2
+	gl	1
+	all	7
+	uvary	4
+	uvary	2
+	gl	2
+	uvalx	7
+	uvary	1
+	gl	3
+	uvarx	8
+	uvary	0
+	gs	8,$'link'/3
+	uvara	1
+	uvalx	7
+	uvary	5
+	gvary	3,5
+	name	6,1
+	pc	0,#(CHR,&34)
+	pvaly	5,2
+	call	7,3,&'append'/3
+	labely	6
+41: 	te	0,0,0,&42
+	pc	0,$'machine'
+	pc	1,$'sgi'
+	call	7,2,&'prologFlag'/2
+	cuty	6
+	pvaly	5,6
+	pvaly	4,7
+	ltos	6,7
+	j	&43
+42: 	tre	0,0
+	pl	6
+	uc	$95
+	uvaly	5
+	pvaly	4,7
+	ltos	6,7
+43: 	pvaly	3,0
+	pvaly	2,1
+	pvaly	1,2
+	pvaly	0,3
+	dallexe	4,&'fload$functionNames'/4
+	.clause
+5:	glvx2	0,6,0
+	gsx2	6,6,7,$'-'/2
+	gl	2
+	uvalx	7
+	uvara	2
+	gsx2	7,255,255,$'/'/2
+	cutx	4
+	pvarx	7,7
+	name	6,7
+	pl	6
+	uc	$95
+	uvalx	7
+	ltos	6,1
+	gvara	1,5
+	exec	4,&'fload$functionNames'/4
+	.clause
+6:	gl	0
+	uvarx	6
+	all	7
+	uvary	3
+	gsx2	6,6,7,$'-'/2
+	gvary	4,1
+	gl	2
+	uvalx	7
+	uvary	1
+	gl	3
+	uvarx	8
+	uvary	0
+	gs	8,$'link'/3
+	uvara	1
+	uvalx	7
+	uvary	5
+	gvary	2,5
+	name	6,1
+	pc	0,#(CHR,&63)
+	pvaly	5,2
+	call	7,3,&'append'/3
+	labely	6
+70: 	te	0,0,0,&71
+	pc	0,$'machine'
+	pc	1,$'sgi'
+	call	7,2,&'prologFlag'/2
+	cuty	6
+	pvaly	5,6
+	pvaly	4,7
+	ltos	6,7
+	j	&72
+71: 	tre	0,0
+	pl	6
+	uc	$95
+	uvaly	5
+	pvaly	4,7
+	ltos	6,7
+72: 	pvaly	3,0
+	pvaly	2,1
+	pvaly	1,2
+	pvaly	0,3
+	dallexe	4,&'fload$functionNames'/4
+	last
+63: 	.string	"NU_"
+34: 	.string	"NU_"
+
+	.pred	'fload$checkFunctionSpecs',1
+	.clause
+0:	all	5
+	gvary	4,0
+	pvaly	4,1
+	fvar	1,255
+	jtypx	255,252,&10
+	j	&11
+10: 	pc	1,#(CHR,&3)
+	ps	0,$'format'/3
+	uc	$'user_error'
+	uvalx	1
+	ul	255
+	ulvy	4
+	uc	$[]
+	call	5,1,&'$throwError'/1
+11: 	labely	2
+12: 	te	0,0,0,&16
+	ps	0,$'-'/2
+	uvary	1
+	uvary	0
+	pvaly	4,1
+	call	4,2,&'member'/2
+	labely	3
+13: 	te	0,0,0,&14
+	pvaly	1,0
+	pvaly	0,1
+	call	4,2,&'fload$checkFunctionSpec'/2
+	cuty	3
+	fail	
+14: 	tre	0,0
+15: 	cuty	2
+	pc	1,#(CHR,&9)
+	ps	0,$'format'/3
+	uc	$'user_error'
+	uvalx	1
+	ul	255
+	uvaly	1
+	ul	255
+	uvaly	0
+	uc	$[]
+	dallexe	1,&'$throwError'/1
+16: 	tre	0,0
+	dallpro	
+17: 	last
+9: 	.string	"~NFunction(~w, ~w) not a valid function specification.~n"
+3: 	.string	"~NFunction specifications (~w) must be ground.~n"
+
+	.pred	'fload$checkFunctionSpec',2
+4: 	sot	0,&1,&2,&3,&3
+2: 	t	2,0,&0
+	tr	2,0,&1
+3: 	fail	
+	.clause
+0:	ctypx	0,2
+	pl	2
+	uvarx	3
+	all	4
+	uvary	3
+	univ	1,2
+	ctypx	3,2
+	pc	0,$'fload$checkArg'
+	pvaly	3,1
+	call	4,2,&'mapList'/2
+	labely	2
+14: 	te	0,0,0,&17
+	pl	0
+	uvoid	1
+	uc	$[]
+	pl	2
+	uvoid	1
+	uvary	1
+	pvaly	3,1
+	call	3,3,&'member'/3
+	cuty	2
+	labely	0
+15: 	te	0,0,0,&16
+	pl	0
+	uvoid	1
+	uc	$[]
+	pvaly	1,1
+	call	1,2,&'member'/2
+	cuty	0
+	fail	
+16: 	tre	0,0
+	dallpro	
+	j	&18
+17: 	tre	0,0
+	dallpro	
+18: 	.clause
+1:	gsx2	1,2,3,$'/'/2
+	ctypx	0,2
+	ctypx	2,2
+	ctypx	3,17
+	apushx	3
+	pushi	$$0
+	apred	5
+	pro	
+	last
+
+	.pred	'fload$checkArg',1
+5: 	sot	0,&3,&4,&2,&6
+3: 	t	1,0,&0
+	r	1,0,&1
+	tr	1,0,&2
+4: 	fail	
+6: 	sos	0,&($'+'/1:&0,$'-'/1:&1),&4
+	.clause
+0:	gsx1	0,0,$'+'/1
+	exec	1,&'fload$type'/1
+	.clause
+1:	gsx1	0,0,$'-'/1
+	exec	1,&'fload$type'/1
+	.clause
+2:	gl	0
+	uvarx	1
+	uc	$[]
+	gsx1	1,0,$'-'/1
+	exec	1,&'fload$type'/1
+	last
+
+	.pred	'fload$links',2
+	.clause
+0:	all	12
+	gvary	10,0
+	gvary	7,1
+	typy	10,48
+	pc	0,#(CHR,&5)
+	pvary	2,1
+	call	12,2,&'makeTemp'/2
+	pvaly	2,0
+	pc	1,$'write'
+	pvary	9,2
+	call	12,3,&'open'/3
+	pvary	11,0
+	call	12,1,&'libdirectory'/1
+	pc	1,#(CHR,&13)
+	pvaly	9,0
+	puval	11,2
+	call	11,3,&'$quickFormat'/3
+	ps	0,$'fload$link'/1
+	ulvy	9
+	pvaly	10,1
+	call	10,2,&'mapList'/2
+	puval	9,0
+	call	9,1,&'close'/1
+	pc	1,#(CHR,&20)
+	pvary	8,0
+	pvaly	2,2
+	call	9,3,&'append'/3
+	pc	1,#(CHR,&24)
+	puval	8,0
+	pvary	3,2
+	call	8,3,&'append'/3
+	pvaly	3,2
+	pvaly	7,3
+	ltos	2,3
+	labely	6
+	pvary	4,255
+46: 	te	0,0,0,&47
+	pc	0,$'/bin/cc'
+	pc	1,$1
+	call	7,2,&'access'/2
+	cuty	6
+	pvaly	4,255
+	gc	255,$'/bin/cc'
+	j	&49
+47: 	re	0,0,&48
+	pc	0,$'/usr/bin/cc'
+	pc	1,$1
+	call	7,2,&'access'/2
+	cuty	6
+	pvaly	4,255
+	gc	255,$'/usr/bin/cc'
+	j	&49
+48: 	tre	0,0
+	pc	0,#(STR,&30)
+	call	6,1,&'$throwError'/1
+49: 	labely	5
+50: 	te	0,0,0,&51
+	pc	0,$'machine'
+	pc	1,$'encore'
+	call	6,2,&'prologFlag'/2
+	cuty	5
+	pc	0,#(CHR,&36)
+	pl	1
+	ulvy	4
+	ul	255
+	ulvy	2
+	uc	$[]
+	pvary	0,2
+	call	3,3,&'sformat'/3
+	j	&52
+51: 	tre	0,0
+	pc	0,#(CHR,&40)
+	pl	1
+	ulvy	4
+	ul	255
+	ulvy	2
+	ul	255
+	ulvy	3
+	uc	$[]
+	pvary	0,2
+	call	3,3,&'sformat'/3
+52: 	pvaly	0,0
+	pvary	1,1
+	call	3,2,&'system'/2
+	puval	2,0
+	call	2,1,&'unlink'/1
+	puval	1,2
+	pc	3,$0
+	idtest	2,3
+	jtrue	&53
+	pc	2,#(CHR,&45)
+	ps	0,$'format'/3
+	uc	$'user_error'
+	uvalx	2
+	ul	255
+	ulvy	0
+	uc	$[]
+	dallexe	1,&'$throwError'/1
+53: 	dallpro	
+54: 	last
+45: 	.string	"~NSystem command ""~s"" failed.~n"
+40: 	.string	"~a -c ~s -o ~s"
+36: 	.string	"cd /tmp; ~a -c ~s"
+30: 	.word	$'format'/3
+	.word	$'user_error'
+	.word	#(CHR,&55)
+	.word	$[]
+55: 	.string	"~NCan't find C compiler.~n"
+24: 	.string	".o"
+20: 	.string	".c"
+13: 	.string	"#include ""~apublic.h""~n"
+5: 	.string	"/tmp/lcXXXXXX.c"
+
+	.pred	'fload$link',2
+	.clause
+0:	all	3
+	gvary	0,0
+	gs	1,$'link'/3
+	uvary	2
+	uvary	1
+	uvarx	3
+	pc	1,#(CHR,&6)
+	pl	2
+	uvalx	3
+	uc	$[]
+	pvaly	0,0
+	call	3,3,&'$quickFormat'/3
+	pvaly	0,0
+	pvaly	1,1
+	call	3,2,&'fload$decl'/2
+	pvaly	0,0
+	pvaly	2,1
+	pvaly	1,2
+	call	2,3,&'fload$call'/3
+	pvaly	0,0
+	pvaly	1,1
+	call	2,2,&'fload$args'/2
+	pvaly	0,2
+	pc	3,#(CHR,&18)
+	sputl	2,3
+	pvaly	0,0
+	pvaly	1,1
+	call	2,2,&'fload$returnArgs'/2
+	pvaly	0,0
+	pvaly	1,1
+	call	1,2,&'fload$return'/2
+	pvaly	0,2
+	pc	3,#(CHR,&19)
+	sputl	2,3
+	dallpro	
+	last
+19: 	.string	"return(1);\n}\n"
+18: 	.string	");\n"
+6: 	.string	"int ~s(X)~nregister Object *X;~n{~n"
+
+	.pred	'fload$decl',2
+2: 	t	2,0,&0
+	tr	2,0,&1
+	.clause
+0:	all	4
+	gvary	0,0
+	gvary	3,1
+	pvaly	3,2
+	pvarx	3,3
+	pvarx	1,1
+	functor	2,3,1
+	pc	0,$1
+	pvary	2,2
+	call	4,3,&'between'/3
+	pvaly	2,2
+	pvaly	3,3
+	arg	2,3,2
+	gsx1	2,0,$'-'/1
+	pvary	1,1
+	call	3,2,&'fload$type'/2
+	pc	1,#(CHR,&13)
+	ps	3,$'-'/2
+	ulvy	2
+	uc	$1
+	pl	2
+	ulvy	1
+	ul	255
+	uvalx	3
+	uc	$[]
+	pvaly	0,0
+	call	0,3,&'$quickFormat'/3
+	fail	
+	.clause
+1:	pro	
+	last
+13: 	.string	"~a X~d;~n"
+
+	.pred	'fload$call',3
+	.clause
+0:	all	6
+	gvary	0,0
+	gvary	1,1
+	gvary	4,2
+	labely	3
+22: 	te	0,0,0,&23
+	pvaly	4,3
+	pvarx	4,4
+	pvarx	1,1
+	functor	3,4,1
+	pc	0,$1
+	pvary	5,2
+	call	6,3,&'between'/3
+	puval	5,3
+	pvaly	4,4
+	arg	3,4,3
+	gl	3
+	uvarx	3
+	uc	$[]
+	gsx1	3,0,$'-'/1
+	cuty	3
+	pvary	2,1
+	call	3,2,&'fload$type'/2
+	pc	1,#(CHR,&12)
+	pl	2
+	ulvy	2
+	uc	$[]
+	pvaly	0,0
+	call	3,3,&'$quickFormat'/3
+	pc	1,#(CHR,&16)
+	pl	2
+	ulvy	2
+	ul	255
+	ulvy	1
+	uc	$[]
+	pvaly	0,0
+	call	2,3,&'$quickFormat'/3
+	pvaly	0,3
+	pc	4,#(CHR,&21)
+	sputl	3,4
+	j	&24
+23: 	tre	0,0
+24: 	pc	1,#(CHR,&20)
+	pl	2
+	ulvy	1
+	uc	$[]
+	pvaly	0,0
+	dallexe	3,&'$quickFormat'/3
+	last
+21: 	.string	"R = "
+20: 	.string	"~s("
+16: 	.string	"~a ~s();~n"
+12: 	.string	"~a R;~n"
+
+	.pred	'fload$args',2
+2: 	t	2,0,&0
+	tr	2,0,&1
+	.clause
+0:	all	4
+	gvary	0,0
+	gvary	3,1
+	pvaly	3,2
+	pvarx	3,3
+	pvarx	1,1
+	functor	2,3,1
+	labelx	0
+12: 	te	2,0,2,&13
+	pvaly	3,2
+	arg	1,2,2
+	gl	2
+	uvoid	1
+	uc	$[]
+	cutx	0
+	apushx	1
+	afunc	47
+	popy	1
+	j	&14
+13: 	tre	2,0
+	gvary	1,1
+14: 	pc	0,$1
+	pvary	2,2
+	call	4,3,&'between'/3
+	pvaly	2,2
+	pvaly	3,3
+	arg	2,3,1
+	pvaly	0,0
+	pvaly	2,2
+	call	3,3,&'fload$arg'/3
+	apushy	2
+	pushy	1
+	jpred	2,&15
+	pvaly	0,2
+	pc	3,#(CHR,&11)
+	sputl	2,3
+	j	&15
+15: 	fail	
+	.clause
+1:	pro	
+	last
+11: 	.string	", "
+
+	.pred	'fload$arg',3
+2: 	t	3,0,&0
+	tr	3,0,&1
+	.clause
+0:	all	3
+	gvary	0,0
+	gsx1	1,0,$'+'/1
+	gvary	2,2
+	pvary	1,1
+	call	3,2,&'fload$extract'/2
+	pc	1,#(CHR,&11)
+	ps	3,$'-'/2
+	ulvy	2
+	uc	$1
+	pl	2
+	ulvy	1
+	ul	255
+	uvalx	3
+	uc	$[]
+	pvaly	0,0
+	dallexe	3,&'$quickFormat'/3
+	.clause
+1:	gsx1	1,255,$'-'/1
+	pc	1,#(CHR,&18)
+	ps	3,$'-'/2
+	ulvx	2
+	uc	$1
+	pl	2
+	uvalx	3
+	uc	$[]
+	exec	3,&'$quickFormat'/3
+	last
+18: 	.string	"&X~d"
+11: 	.string	"~a(X[~d])"
+
+	.pred	'fload$returnArgs',2
+2: 	t	2,0,&0
+	tr	2,0,&1
+	.clause
+0:	all	4
+	gvary	0,0
+	gvary	3,1
+	pvaly	3,2
+	pvarx	3,3
+	pvarx	1,1
+	functor	2,3,1
+	pc	0,$1
+	pvary	2,2
+	call	4,3,&'between'/3
+	pvaly	2,2
+	pvaly	3,3
+	arg	2,3,2
+	gsx1	2,0,$'-'/1
+	pvary	1,1
+	call	3,2,&'fload$make'/2
+	pc	1,#(CHR,&13)
+	ps	3,$'-'/2
+	ulvy	2
+	uc	$1
+	ps	4,$'-'/2
+	ulvy	2
+	uc	$1
+	pl	2
+	uvalx	3
+	ul	255
+	ulvy	1
+	ul	255
+	uvalx	4
+	uc	$[]
+	pvaly	0,0
+	call	0,3,&'$quickFormat'/3
+	fail	
+	.clause
+1:	pro	
+	last
+13: 	.string	"X[~d] = ~a(X~d);~n"
+
+	.pred	'fload$return',2
+2: 	t	2,0,&0
+	tr	2,0,&1
+	.clause
+0:	all	4
+	gvary	0,0
+	gvary	3,1
+	pvaly	3,2
+	pvarx	3,3
+	pvarx	1,1
+	functor	2,3,1
+	pc	0,$1
+	pvary	2,2
+	call	4,3,&'between'/3
+	pvaly	2,2
+	pvaly	3,3
+	arg	2,3,2
+	gl	2
+	uvarx	2
+	uc	$[]
+	gsx1	2,0,$'-'/1
+	pvary	1,1
+	call	3,2,&'fload$make'/2
+	pc	1,#(CHR,&13)
+	ps	3,$'-'/2
+	ulvy	2
+	uc	$1
+	pl	2
+	uvalx	3
+	ul	255
+	ulvy	1
+	uc	$[]
+	pvaly	0,0
+	call	0,3,&'$quickFormat'/3
+	fail	
+	.clause
+1:	pro	
+	last
+13: 	.string	"X[~d] = ~a(R);~n"
+
+	.pred	'fload$type',1
+10: 	sot	0,&8,&11,&9,&9
+8: 	t	1,0,&0
+	r	1,0,&1
+	r	1,0,&2
+	r	1,0,&3
+	r	1,0,&4
+	r	1,0,&5
+	r	1,0,&6
+	tr	1,0,&7
+11: 	soc	0,&($'atom':&4,$'double':&3,$'float':&1,$'integer':&0,$'pointer':&6,$'single':&2,$'string':&5,$'term':&7),&9
+9: 	fail	
+	.clause
+0:	gc	0,$'integer'
+	pro	
+	.clause
+1:	gc	0,$'float'
+	pro	
+	.clause
+2:	gc	0,$'single'
+	pro	
+	.clause
+3:	gc	0,$'double'
+	pro	
+	.clause
+4:	gc	0,$'atom'
+	pro	
+	.clause
+5:	gc	0,$'string'
+	pro	
+	.clause
+6:	gc	0,$'pointer'
+	pro	
+	.clause
+7:	gc	0,$'term'
+	pro	
+	last
+
+	.pred	'fload$type',2
+10: 	sot	0,&8,&11,&9,&9
+8: 	t	2,0,&0
+	r	2,0,&1
+	r	2,0,&2
+	r	2,0,&3
+	r	2,0,&4
+	r	2,0,&5
+	r	2,0,&6
+	tr	2,0,&7
+11: 	soc	0,&($'atom':&4,$'double':&3,$'float':&1,$'integer':&0,$'pointer':&6,$'single':&2,$'string':&5,$'term':&7),&9
+9: 	fail	
+	.clause
+0:	gc	0,$'integer'
+	gc	1,$'int'
+	pro	
+	.clause
+1:	gc	0,$'float'
+	gc	1,$'double'
+	pro	
+	.clause
+2:	gc	0,$'single'
+	gc	1,$'float'
+	pro	
+	.clause
+3:	gc	0,$'double'
+	gc	1,$'double'
+	pro	
+	.clause
+4:	gc	0,$'atom'
+	gc	1,$'int'
+	pro	
+	.clause
+5:	gc	0,$'string'
+	gc	1,$'char *'
+	pro	
+	.clause
+6:	gc	0,$'pointer'
+	gc	1,$'char *'
+	pro	
+	.clause
+7:	gc	0,$'term'
+	gc	1,$'Object'
+	pro	
+	last
+
+	.pred	'fload$extract',2
+10: 	sot	0,&8,&11,&9,&9
+8: 	t	2,0,&0
+	r	2,0,&1
+	r	2,0,&2
+	r	2,0,&3
+	r	2,0,&4
+	r	2,0,&5
+	r	2,0,&6
+	tr	2,0,&7
+11: 	soc	0,&($'atom':&4,$'double':&3,$'float':&1,$'integer':&0,$'pointer':&6,$'single':&2,$'string':&5,$'term':&7),&9
+9: 	fail	
+	.clause
+0:	gc	0,$'integer'
+	gc	1,$'NUeInt'
+	pro	
+	.clause
+1:	gc	0,$'float'
+	gc	1,$'NUeNumber'
+	pro	
+	.clause
+2:	gc	0,$'single'
+	gc	1,$'NUeNumber'
+	pro	
+	.clause
+3:	gc	0,$'double'
+	gc	1,$'NUeNumber'
+	pro	
+	.clause
+4:	gc	0,$'atom'
+	gc	1,$'NUeRef'
+	pro	
+	.clause
+5:	gc	0,$'string'
+	gc	1,$'NUePrintName'
+	pro	
+	.clause
+6:	gc	0,$'pointer'
+	gc	1,$'NUeRef'
+	pro	
+	.clause
+7:	gc	0,$'term'
+	gc	1,$''
+	pro	
+	last
+
+	.pred	'fload$make',2
+10: 	sot	0,&8,&11,&9,&9
+8: 	t	2,0,&0
+	r	2,0,&1
+	r	2,0,&2
+	r	2,0,&3
+	r	2,0,&4
+	r	2,0,&5
+	r	2,0,&6
+	tr	2,0,&7
+11: 	soc	0,&($'atom':&4,$'double':&3,$'float':&1,$'integer':&0,$'pointer':&6,$'single':&2,$'string':&5,$'term':&7),&9
+9: 	fail	
+	.clause
+0:	gc	0,$'integer'
+	gc	1,$'NUMakeInt'
+	pro	
+	.clause
+1:	gc	0,$'float'
+	gc	1,$'NUMakeFloat'
+	pro	
+	.clause
+2:	gc	0,$'single'
+	gc	1,$'NUMakeFloat'
+	pro	
+	.clause
+3:	gc	0,$'double'
+	gc	1,$'NUMakeFloat'
+	pro	
+	.clause
+4:	gc	0,$'atom'
+	gc	1,$'NUMakeAtom'
+	pro	
+	.clause
+5:	gc	0,$'string'
+	gc	1,$'NUStringToAtom'
+	pro	
+	.clause
+6:	gc	0,$'pointer'
+	gc	1,$'NUMakePointer'
+	pro	
+	.clause
+7:	gc	0,$'term'
+	gc	1,$''
+	pro	
+	last
+
+	.pred	'fload$install',2
+	labelx	2
+3: 	sot	0,&2,&1,&1,&4
+2: 	t	3,0,&0
+	tr	3,0,&1
+4: 	js	0,$'/'/2,&0
+	j	&1
+	j	&0
+	.clause
+0:	gs	0,$'/'/2
+	all	2
+	uvary	1
+	uvary	0
+	cutx	2
+	pl	3
+	uvaly	0
+	uc	$[]
+	ps	4,$'emit'/3
+	uc	$'frun'
+	uvalx	3
+	us	255,$'call'/1
+	ulvx	1
+	pc	3,#(STR,&11)
+	pl	2
+	uvalx	4
+	ul	255
+	uvalx	3
+	uc	$[]
+	pvaly	1,0
+	pvaly	0,1
+	call	2,3,&'iload$iload'/3
+	pvaly	1,0
+	pvaly	0,1
+	pnil	2
+	dallexe	3,&'iload$iload'/3
+	.clause
+1:	all	11
+	gvary	4,0
+	gvary	5,1
+	pvaly	4,3
+	pvary	1,4
+	pvary	0,5
+	functor	3,4,5
+	labely	8
+48: 	te	0,0,0,&49
+	pc	0,$1
+	pvaly	0,1
+	pvary	10,2
+	call	11,3,&'between'/3
+	pvaly	10,3
+	pvaly	4,4
+	arg	3,4,3
+	gsx1	3,0,$'+'/1
+	pvary	9,1
+	call	11,2,&'fload$ctype'/2
+	apushy	10
+	afunc	47
+	popx	3
+	ps	4,$'emit'/2
+	uc	$'ctypx'
+	ul	255
+	uvalx	3
+	ul	255
+	ulvy	9
+	uc	$[]
+	pl	2
+	uvalx	4
+	uc	$[]
+	pvaly	1,0
+	pvaly	0,1
+	call	9,3,&'iload$iload'/3
+	fail	
+49: 	tre	0,0
+50: 	labely	6
+51: 	te	0,0,0,&55
+	pc	0,$1
+	pvaly	0,1
+	pvary	7,2
+	call	8,3,&'between'/3
+	puval	7,3
+	pvaly	4,4
+	arg	3,4,0
+52: 	te	1,0,1,&53
+	gsx1	0,255,$'-'/1
+	j	&54
+53: 	tre	1,0
+	gl	0
+	uvarx	3
+	uc	$[]
+	gsx1	3,255,$'-'/1
+54: 	apushy	0
+	pushy	7
+	afunc	0
+	afunc	47
+	popx	3
+	apushy	7
+	afunc	47
+	popx	4
+	ps	5,$'emit'/2
+	uc	$'gvarx'
+	ul	255
+	uvalx	3
+	ul	255
+	uvalx	4
+	uc	$[]
+	pl	2
+	uvalx	5
+	uc	$[]
+	pvaly	1,0
+	pvaly	0,1
+	call	7,3,&'iload$iload'/3
+	fail	
+55: 	tre	0,0
+56: 	pl	3
+	ulvy	0
+	uc	$[]
+	ps	4,$'emit'/3
+	uc	$'frun'
+	uvalx	3
+	us	255,$'call'/1
+	ulvy	5
+	pl	2
+	uvalx	4
+	uc	$[]
+	pvaly	1,0
+	pvaly	0,1
+	call	5,3,&'iload$iload'/3
+	labely	2
+57: 	te	0,0,0,&61
+	pc	0,$1
+	pvaly	0,1
+	pvary	3,2
+	call	5,3,&'between'/3
+	puval	3,3
+	pvaly	4,4
+	arg	3,4,0
+58: 	te	1,0,1,&59
+	gsx1	0,255,$'-'/1
+	j	&60
+59: 	tre	1,0
+	gl	0
+	uvarx	3
+	uc	$[]
+	gsx1	3,255,$'-'/1
+60: 	apushy	0
+	pushy	3
+	afunc	0
+	afunc	47
+	popx	3
+	apushy	3
+	afunc	47
+	popx	4
+	ps	5,$'emit'/2
+	uc	$'gvalx'
+	ul	255
+	uvalx	3
+	ul	255
+	uvalx	4
+	uc	$[]
+	pl	2
+	uvalx	5
+	uc	$[]
+	pvaly	1,0
+	pvaly	0,1
+	call	3,3,&'iload$iload'/3
+	fail	
+61: 	tre	0,0
+62: 	pc	2,#(LST,&44)
+	pvaly	1,0
+	pvaly	0,1
+	call	2,3,&'iload$iload'/3
+	puval	1,0
+	puval	0,1
+	pnil	2
+	dallexe	3,&'iload$iload'/3
+	last
+44: 	.word	#(STR,&63)
+	.word	$[]
+63: 	.word	$'emit'/2
+	.word	$'pro'
+	.word	$[]
+11: 	.word	$'emit'/2
+	.word	$'pro'
+	.word	$[]
+
+	.pred	'fload$ctype',2
+	labelx	2
+7: 	sot	0,&6,&8,&5,&5
+6: 	t	3,0,&0
+	r	3,0,&1
+	r	3,0,&2
+	r	3,0,&3
+	r	3,0,&4
+	tr	3,0,&5
+8: 	soce	0,&($'double':&2,$'float':&0,$'pointer':&4,$'single':&1,$'string':&3),&5
+	.clause
+0:	gc	0,$'float'
+	cutx	2
+	pc	0,$'number'
+	exec	2,&'$ctype'/2
+	.clause
+1:	gc	0,$'single'
+	cutx	2
+	pc	0,$'number'
+	exec	2,&'$ctype'/2
+	.clause
+2:	gc	0,$'double'
+	cutx	2
+	pc	0,$'number'
+	exec	2,&'$ctype'/2
+	.clause
+3:	gc	0,$'string'
+	cutx	2
+	pc	0,$'atom'
+	exec	2,&'$ctype'/2
+	.clause
+4:	gc	0,$'pointer'
+	cutx	2
+	pc	0,$'$block'
+	exec	2,&'$ctype'/2
+	.clause
+5:	exec	2,&'$ctype'/2
+	last
+

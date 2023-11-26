@@ -1,0 +1,16 @@
+p(X) :-
+	(if some(V, q(V,a)) then
+		writeln('correct so far'),
+		(if some(V1, q(a,V1)) then
+			X=wrong
+		else
+			X=correct
+		)
+	else
+		X=stuffed
+	).
+
+q(b,b).
+q(b,a).
+q(c,c).
+	

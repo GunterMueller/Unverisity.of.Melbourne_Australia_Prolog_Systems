@@ -1,0 +1,67 @@
+
+	.pred	'dynamic',1
+	.clause
+0:	gvarx	1,0
+	ps	2,$'co$dynamic'/1
+	uvara	0
+	exec	3,&'$applyToEachPredicate'/3
+	last
+
+	.pred	'co$dynamic',1
+	.clause
+0:	gsx2	0,2,1,$'/'/2
+	all	1
+	labely	0
+5: 	te	3,0,3,&6
+	gvara	0,2
+	call	1,2,&'dynamic'/2
+	cuty	0
+	dallpro	
+6: 	tre	3,0
+	ps	0,$'/'/2
+	uvalx	2
+	uvalx	1
+	dallexe	1,&'$dynamic'/1
+7: 	last
+
+	.pred	'makeLabel',1
+	.clause
+0:	all	3
+	gvary	2,0
+	labely	0
+	pc	1,$'label'
+	symbol	1,1
+	pc	2,$4
+	arg	2,1,1
+	pvary	1,0
+	call	3,2,&'$propertyMember'/2
+	pvaly	1,255
+	gs	255,$'$bmt'/6
+	uvoid	2
+	ulvy	2
+	uc	$'$label'
+	uvoid	2
+	apushy	2
+	afunc	46
+	popx	1
+	pc	2,$3
+	puval	1,3
+	replacn	2,3,1
+	cuty	0
+	dallpro	
+	last
+
+	.pred	'$init',0
+	.clause
+1:	all	1
+	labely	0
+	call	1,0,&'initializing'/0
+	pc	0,#(STR,&6)
+	call	1,1,&'$dynamic'/1
+	cuty	0
+	fail	
+	last
+6: 	.word	$'/'/2
+	.word	$'groundTerm'
+	.word	$3
+

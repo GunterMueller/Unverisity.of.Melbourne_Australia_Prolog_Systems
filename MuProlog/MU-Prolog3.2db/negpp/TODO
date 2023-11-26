@@ -1,0 +1,25 @@
+Reduce spurious error messages from $solutions.
+
+Make system more portable:
+	- portraycl
+	- occurs
+	- ???
+
+Allow multiple quantifiers (at least g_some and some) on the same goal?
+-> probably rewrite code more nicely with pred to strip off all "some/all"
+quantifiers and collect vars.  Should be able to reduce size of trf and
+trf_if considerably.
+
+Check $(Glob) is not necessary in solutions (asserting vars may cause
+trouble).  Also insert more hides/protects.
+
+test code for checking local vars (inc local to inner terms), also
+clean up this code.
+
+Recognise simple tests and use $ift, or some such thing (?).  Need to
+define what a simple test is.  Should X be local with var(X) or do we
+have to write if some X var(X) then ... ?
+
+follow up parser bug t((if a(a) then a)).
+
+fix up headers on nd files

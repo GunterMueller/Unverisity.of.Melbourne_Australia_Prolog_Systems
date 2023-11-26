@@ -1,0 +1,3246 @@
+
+	.pred	'parser$convert1a',4
+12: 	sot	0,&10,&13,&11,&11
+10: 	t	4,0,&0
+	r	4,0,&1
+	r	4,0,&2
+	r	4,0,&3
+	r	4,0,&4
+	r	4,0,&5
+	r	4,0,&6
+	r	4,0,&7
+	r	4,0,&8
+	tr	4,0,&9
+13: 	soc	0,&($'fx':&0,$'fxx':&2,$'fxy':&4,$'fy':&1,$'fyx':&3,$'xf':&5,$'xfx':&7,$'xfy':&9,$'yf':&6,$'yfx':&8),&11
+11: 	fail	
+	.clause
+0:	gc	0,$'fx'
+	gs	2,$'op'/9
+	ulvx	1
+	uvoid	1
+	uvarx	9
+	uvarx	8
+	uvarx	7
+	uvoid	1
+	uvarx	6
+	uvarx	5
+	uvarx	4
+	gs	3,$'op'/9
+	ulvx	1
+	uc	$'y'
+	uvalx	9
+	uvalx	8
+	uvalx	7
+	uc	$1
+	uvalx	6
+	uvalx	5
+	uvalx	4
+	pro	
+	.clause
+1:	gc	0,$'fy'
+	gs	2,$'op'/9
+	ulvx	1
+	uvoid	1
+	uvarx	9
+	uvarx	8
+	uvarx	7
+	uvoid	1
+	uvarx	6
+	uvarx	5
+	uvarx	4
+	gs	3,$'op'/9
+	ulvx	1
+	uc	$'y'
+	uvalx	9
+	uvalx	8
+	uvalx	7
+	uc	$0
+	uvalx	6
+	uvalx	5
+	uvalx	4
+	pro	
+	.clause
+2:	gc	0,$'fxx'
+	gs	2,$'op'/9
+	ulvx	1
+	uvarx	8
+	uvoid	1
+	uvarx	7
+	uvarx	6
+	uvoid	2
+	uvarx	5
+	uvarx	4
+	gs	3,$'op'/9
+	ulvx	1
+	uvalx	8
+	uc	$'y'
+	uvalx	7
+	uvalx	6
+	uc	$1
+	uc	$1
+	uvalx	5
+	uvalx	4
+	pro	
+	.clause
+3:	gc	0,$'fyx'
+	gs	2,$'op'/9
+	ulvx	1
+	uvarx	8
+	uvoid	1
+	uvarx	7
+	uvarx	6
+	uvoid	2
+	uvarx	5
+	uvarx	4
+	gs	3,$'op'/9
+	ulvx	1
+	uvalx	8
+	uc	$'y'
+	uvalx	7
+	uvalx	6
+	uc	$0
+	uc	$1
+	uvalx	5
+	uvalx	4
+	pro	
+	.clause
+4:	gc	0,$'fxy'
+	gs	2,$'op'/9
+	ulvx	1
+	uvarx	8
+	uvoid	1
+	uvarx	7
+	uvarx	6
+	uvoid	2
+	uvarx	5
+	uvarx	4
+	gs	3,$'op'/9
+	ulvx	1
+	uvalx	8
+	uc	$'y'
+	uvalx	7
+	uvalx	6
+	uc	$1
+	uc	$0
+	uvalx	5
+	uvalx	4
+	pro	
+	.clause
+5:	gc	0,$'xf'
+	gs	2,$'op'/9
+	ulvx	1
+	uvarx	9
+	uvarx	8
+	uvoid	1
+	uvarx	7
+	uvarx	6
+	uvarx	5
+	uvoid	1
+	uvarx	4
+	gs	3,$'op'/9
+	ulvx	1
+	uvalx	9
+	uvalx	8
+	uc	$'y'
+	uvalx	7
+	uvalx	6
+	uvalx	5
+	uc	$1
+	uvalx	4
+	pro	
+	.clause
+6:	gc	0,$'yf'
+	gs	2,$'op'/9
+	ulvx	1
+	uvarx	9
+	uvarx	8
+	uvoid	1
+	uvarx	7
+	uvarx	6
+	uvarx	5
+	uvoid	1
+	uvarx	4
+	gs	3,$'op'/9
+	ulvx	1
+	uvalx	9
+	uvalx	8
+	uc	$'y'
+	uvalx	7
+	uvalx	6
+	uvalx	5
+	uc	$0
+	uvalx	4
+	pro	
+	.clause
+7:	gc	0,$'xfx'
+	gs	2,$'op'/9
+	ulvx	1
+	uvarx	8
+	uvarx	7
+	uvarx	6
+	uvoid	1
+	uvarx	5
+	uvarx	4
+	uvoid	2
+	gs	3,$'op'/9
+	ulvx	1
+	uvalx	8
+	uvalx	7
+	uvalx	6
+	uc	$'y'
+	uvalx	5
+	uvalx	4
+	uc	$1
+	uc	$1
+	pro	
+	.clause
+8:	gc	0,$'yfx'
+	gs	2,$'op'/9
+	ulvx	1
+	uvarx	8
+	uvarx	7
+	uvarx	6
+	uvoid	1
+	uvarx	5
+	uvarx	4
+	uvoid	2
+	gs	3,$'op'/9
+	ulvx	1
+	uvalx	8
+	uvalx	7
+	uvalx	6
+	uc	$'y'
+	uvalx	5
+	uvalx	4
+	uc	$0
+	uc	$1
+	pro	
+	.clause
+9:	gc	0,$'xfy'
+	gs	2,$'op'/9
+	ulvx	1
+	uvarx	8
+	uvarx	7
+	uvarx	6
+	uvoid	1
+	uvarx	5
+	uvarx	4
+	uvoid	2
+	gs	3,$'op'/9
+	ulvx	1
+	uvalx	8
+	uvalx	7
+	uvalx	6
+	uc	$'y'
+	uvalx	5
+	uvalx	4
+	uc	$1
+	uc	$0
+	pro	
+	last
+
+	.pred	'parser$convert1',4
+2: 	t	4,0,&0
+	tr	4,0,&1
+	.clause
+0:	all	3
+	gvary	2,2
+	gvary	1,3
+	pvaly	2,2
+	pvaly	1,3
+	call	3,4,&'parser$convert1a'/4
+	labely	0
+13: 	te	0,0,0,&14
+	pvaly	2,0
+	pvaly	1,1
+	call	1,2,&'parser$incompat'/2
+	cuty	0
+	fail	
+14: 	tre	0,0
+	dallpro	
+15: 	.clause
+1:	gs	2,$'op'/9
+	uvoid	1
+	uvarx	4
+	uvarx	5
+	uvarx	6
+	uvarx	7
+	uvoid	4
+	gs	3,$'op'/9
+	ulvx	1
+	uvalx	4
+	uvalx	5
+	uvalx	6
+	uvalx	7
+	uvoid	4
+	ps	2,$'op'/9
+	ulvx	1
+	uc	$'n'
+	uc	$'n'
+	uc	$'n'
+	uc	$'n'
+	uc	$'n'
+	uc	$'n'
+	uc	$'n'
+	uc	$'n'
+	exec	4,&'parser$convert1a'/4
+	last
+
+	.pred	'parser$convert2',3
+12: 	sot	0,&10,&13,&11,&11
+10: 	t	3,0,&0
+	r	3,0,&1
+	r	3,0,&2
+	r	3,0,&3
+	r	3,0,&4
+	r	3,0,&5
+	r	3,0,&6
+	r	3,0,&7
+	r	3,0,&8
+	tr	3,0,&9
+13: 	soc	0,&($'fx':&0,$'fxx':&2,$'fxy':&4,$'fy':&1,$'fyx':&3,$'xf':&5,$'xfx':&7,$'xfy':&9,$'yf':&6,$'yfx':&8),&11
+11: 	fail	
+	.clause
+0:	gc	0,$'fx'
+	gs	2,$'op'/9
+	ulvx	1
+	uc	$'y'
+	uvoid	3
+	uc	$1
+	uvoid	3
+	pro	
+	.clause
+1:	gc	0,$'fy'
+	gs	2,$'op'/9
+	ulvx	1
+	uc	$'y'
+	uvoid	3
+	uc	$0
+	uvoid	3
+	pro	
+	.clause
+2:	gc	0,$'fxx'
+	gs	2,$'op'/9
+	ulvx	1
+	uvoid	1
+	uc	$'y'
+	uvoid	2
+	uc	$1
+	uc	$1
+	uvoid	2
+	pro	
+	.clause
+3:	gc	0,$'fyx'
+	gs	2,$'op'/9
+	ulvx	1
+	uvoid	1
+	uc	$'y'
+	uvoid	2
+	uc	$0
+	uc	$1
+	uvoid	2
+	pro	
+	.clause
+4:	gc	0,$'fxy'
+	gs	2,$'op'/9
+	ulvx	1
+	uvoid	1
+	uc	$'y'
+	uvoid	2
+	uc	$1
+	uc	$0
+	uvoid	2
+	pro	
+	.clause
+5:	gc	0,$'xf'
+	gs	2,$'op'/9
+	ulvx	1
+	uvoid	2
+	uc	$'y'
+	uvoid	3
+	uc	$1
+	uvoid	1
+	pro	
+	.clause
+6:	gc	0,$'yf'
+	gs	2,$'op'/9
+	ulvx	1
+	uvoid	2
+	uc	$'y'
+	uvoid	3
+	uc	$0
+	uvoid	1
+	pro	
+	.clause
+7:	gc	0,$'xfx'
+	gs	2,$'op'/9
+	ulvx	1
+	uvoid	3
+	uc	$'y'
+	uvoid	2
+	uc	$1
+	uc	$1
+	pro	
+	.clause
+8:	gc	0,$'yfx'
+	gs	2,$'op'/9
+	ulvx	1
+	uvoid	3
+	uc	$'y'
+	uvoid	2
+	uc	$0
+	uc	$1
+	pro	
+	.clause
+9:	gc	0,$'xfy'
+	gs	2,$'op'/9
+	ulvx	1
+	uvoid	3
+	uc	$'y'
+	uvoid	2
+	uc	$1
+	uc	$0
+	pro	
+	last
+
+	.pred	'parser$incompat',2
+10: 	sot	0,&8,&9,&9,&8
+8: 	t	2,0,&0
+	r	2,0,&1
+	r	2,0,&2
+	r	2,0,&3
+	r	2,0,&4
+	r	2,0,&5
+	r	2,0,&6
+	tr	2,0,&7
+9: 	fail	
+	j	&8
+	.clause
+0:	gs	0,$'op'/9
+	uvoid	5
+	uc	$0
+	uvoid	3
+	gs	1,$'op'/9
+	uvoid	5
+	uc	$1
+	uvoid	3
+	pro	
+	.clause
+1:	gs	0,$'op'/9
+	uvoid	5
+	uc	$1
+	uvoid	3
+	gs	1,$'op'/9
+	uvoid	5
+	uc	$0
+	uvoid	3
+	pro	
+	.clause
+2:	gs	0,$'op'/9
+	uvoid	6
+	uc	$0
+	uvoid	2
+	gs	1,$'op'/9
+	uvoid	6
+	uc	$1
+	uvoid	2
+	pro	
+	.clause
+3:	gs	0,$'op'/9
+	uvoid	6
+	uc	$1
+	uvoid	2
+	gs	1,$'op'/9
+	uvoid	6
+	uc	$0
+	uvoid	2
+	pro	
+	.clause
+4:	gs	0,$'op'/9
+	uvoid	7
+	uc	$0
+	uvoid	1
+	gs	1,$'op'/9
+	uvoid	7
+	uc	$1
+	uvoid	1
+	pro	
+	.clause
+5:	gs	0,$'op'/9
+	uvoid	7
+	uc	$1
+	uvoid	1
+	gs	1,$'op'/9
+	uvoid	7
+	uc	$0
+	uvoid	1
+	pro	
+	.clause
+6:	gs	0,$'op'/9
+	uvoid	8
+	uc	$0
+	gs	1,$'op'/9
+	uvoid	8
+	uc	$1
+	pro	
+	.clause
+7:	gs	0,$'op'/9
+	uvoid	8
+	uc	$1
+	gs	1,$'op'/9
+	uvoid	8
+	uc	$0
+	pro	
+	last
+
+	.pred	'parser$open',1
+6: 	sot	0,&4,&7,&5,&5
+4: 	t	1,0,&0
+	r	1,0,&1
+	r	1,0,&2
+	tr	1,0,&3
+7: 	soc	0,&($' (':&1,$'(':&0,$'[':&2,$'{':&3),&5
+5: 	fail	
+	.clause
+0:	gc	0,$'('
+	pro	
+	.clause
+1:	gc	0,$' ('
+	pro	
+	.clause
+2:	gc	0,$'['
+	pro	
+	.clause
+3:	gc	0,$'{'
+	pro	
+	last
+
+	.pred	'parser$close',1
+6: 	sot	0,&4,&7,&5,&5
+4: 	t	1,0,&0
+	r	1,0,&1
+	r	1,0,&2
+	tr	1,0,&3
+7: 	soc	0,&($')':&0,$'. ':&3,$']':&1,$'}':&2),&5
+5: 	fail	
+	.clause
+0:	gc	0,$')'
+	pro	
+	.clause
+1:	gc	0,$']'
+	pro	
+	.clause
+2:	gc	0,$'}'
+	pro	
+	.clause
+3:	gc	0,$'. '
+	pro	
+	last
+
+	.pred	'parser$close',2
+10: 	sot	0,&6,&11,&9,&9
+6: 	t	2,0,&0
+	r	2,0,&1
+	r	2,0,&2
+	r	2,0,&3
+	r	2,0,&4
+	tr	2,0,&5
+11: 	soc	0,&($')':&7,$'. ':&5,$']':&8,$'}':&4),&9
+7: 	t	2,0,&0
+	tr	2,0,&1
+8: 	t	2,0,&2
+	tr	2,0,&3
+9: 	fail	
+	.clause
+0:	gc	0,$')'
+	gc	1,$'b'
+	pro	
+	.clause
+1:	gc	0,$')'
+	gc	1,$'f'
+	pro	
+	.clause
+2:	gc	0,$']'
+	gc	1,$'s'
+	pro	
+	.clause
+3:	gc	0,$']'
+	gc	1,$'p'
+	pro	
+	.clause
+4:	gc	0,$'}'
+	gc	1,$'c'
+	pro	
+	.clause
+5:	gc	0,$'. '
+	gc	1,$'t'
+	pro	
+	last
+
+	.pred	'parser$middle2',1
+4: 	sot	0,&2,&5,&3,&3
+2: 	t	1,0,&0
+	tr	1,0,&1
+5: 	soc	0,&($'f':&0,$'s':&1),&3
+3: 	fail	
+	.clause
+0:	gc	0,$'f'
+	pro	
+	.clause
+1:	gc	0,$'s'
+	pro	
+	last
+
+	.pred	'parser$token',4
+4: 	sot	0,&2,&1,&0,&3
+2: 	t	4,0,&0
+	tr	4,0,&1
+3: 	fail	
+	.clause
+0:	gl	0
+	uvarx	4
+	ulvx	1
+	gl	4
+	ulvx	2
+	ulvx	3
+	pro	
+	.clause
+1:	gnil	0
+	gnil	1
+	gc	2,$'. '
+	gc	3,$'end'
+	pro	
+	last
+
+	.pred	'parser$gtx',5
+4: 	sot	0,&2,&0,&1,&3
+2: 	t	5,0,&0
+	tr	5,0,&1
+3: 	fail	
+	.clause
+0:	gnil	0
+	gvarx	5,3
+	gvarx	6,4
+	pnil	0
+	pc	3,$'. '
+	pc	4,$'end'
+	exec	7,&'parser$gt'/7
+	.clause
+1:	glvx2	0,5,0
+	glvx2	5,7,8
+	gvarx	5,3
+	gvarx	6,4
+	gvara	3,7
+	gvara	4,8
+	exec	7,&'parser$gt'/7
+	last
+
+	.pred	'parser$gt',7
+12: 	labelx	7
+	sot	4,&13,&14,&11,&11
+13: 	mkdel	8,&12
+	mark	4
+	delay	
+14: 	soc	4,&($'atom':&2,$'end':&1,$'end_of_file':&0,$'junk':&3,$'number':&8,$'quoted':&9,$'string':&7,$'var':&10),&11
+10: 	t	8,0,&4
+	r	8,0,&5
+	tr	8,0,&6
+11: 	fail	
+	.clause
+0:	all	3
+	gvary	2,1
+	glvx2	2,8,255
+	gc	4,$'end_of_file'
+	gl	5
+	uvarx	9
+	uc	$[]
+	gs	9,$'pun'/2
+	uc	$'c'
+	uc	$'end_of_file'
+	gvary	0,6
+	ps	0,$'unexp'/1
+	uvalx	8
+	pc	1,#(LST,&26)
+	pvary	1,2
+	call	3,3,&'parser$error'/3
+	pvaly	2,0
+	call	2,1,&'parser$endvars'/1
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+	.clause
+1:	gc	3,$'. '
+	gc	4,$'end'
+	gvara	3,5
+	gvara	4,6
+	exec	5,&'parser$gtEnd'/5
+	.clause
+2:	gc	4,$'atom'
+	gvara	4,5
+	gvara	5,6
+	exec	6,&'parser$gtAtom'/6
+	.clause
+3:	all	5
+	gvary	3,0
+	gvary	4,1
+	gc	4,$'junk'
+	gl	5
+	uvarx	8
+	uvary	2
+	gs	8,$'junk'/1
+	ulvx	3
+	gvary	0,6
+	ps	0,$'junk'/1
+	ulvx	3
+	ps	8,$'junk'/1
+	ulvx	3
+	pl	1
+	uvalx	8
+	uvaly	2
+	pvary	1,2
+	call	5,3,&'parser$error'/3
+	pvaly	4,0
+	call	4,1,&'parser$endvars'/1
+	pvaly	3,0
+	pvaly	2,1
+	call	2,2,&'parser$gtex'/2
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+	.clause
+4:	all	8
+	gvary	3,0
+	gvary	2,1
+	gvary	1,2
+	gvary	4,3
+	gc	4,$'var'
+	gvary	6,5
+	gvary	0,6
+	gvary	7,7
+	pvaly	4,0
+	pvary	5,1
+	pvaly	2,2
+	call	8,3,&'parser$lookup'/3
+	cuty	7
+	pvaly	6,255
+	glvx2	255,8,3
+	gs	8,$'var'/2
+	ulvy	5
+	ulvy	4
+	pvaly	3,0
+	pvaly	2,1
+	pvaly	1,2
+	pvaly	0,4
+	dallexe	5,&'parser$gtx'/5
+	.clause
+5:	gs	1,$'vars'/4
+	uvarx	8
+	uvarx	9
+	uvarx	10
+	uvarx	11
+	gc	4,$'var'
+	gvara	4,6
+	cutx	7
+	glvx2	5,12,13
+	gs	12,$'var'/2
+	uvarx	12
+	ulvx	3
+	pl	14
+	ulvx	3
+	uvalx	8
+	pl	8
+	uvalx	12
+	uvalx	9
+	ps	1,$'vars'/4
+	uvalx	14
+	uvalx	8
+	uvalx	10
+	uvalx	11
+	gvara	3,13
+	exec	5,&'parser$gtx'/5
+	.clause
+6:	gc	4,$'var'
+	glvx2	5,8,9
+	gs	8,$'thing'/2
+	ulvx	3
+	uc	$'var'
+	gvara	4,6
+	gvara	3,9
+	exec	5,&'parser$gtx'/5
+	.clause
+7:	gc	4,$'string'
+	glvx2	5,8,9
+	gs	8,$'thing'/2
+	ulvx	3
+	uc	$'string'
+	gvara	4,6
+	gvara	3,9
+	exec	5,&'parser$gtx'/5
+	.clause
+8:	gc	4,$'number'
+	glvx2	5,8,9
+	gs	8,$'thing'/2
+	ulvx	3
+	uc	$'number'
+	gvara	4,6
+	gvara	3,9
+	exec	5,&'parser$gtx'/5
+	.clause
+9:	gc	4,$'quoted'
+	glvx2	5,8,5
+	gs	8,$'atom'/3
+	ulvx	3
+	uc	$'quoted'
+	uvara	4
+	exec	7,&'parser$gtQA'/7
+	last
+26: 	.word	#(STR,&152)
+	.word	$[]
+152: 	.word	$'pun'/2
+	.word	$'c'
+	.word	$'end_of_file'
+
+	.pred	'parser$gtEnd',5
+	labelx	5
+2: 	t	6,0,&0
+	tr	6,0,&1
+	.clause
+0:	gvara	0,1
+	gl	2
+	uc	$'t'
+	uc	$[]
+	gl	3
+	uvarx	6
+	uc	$[]
+	gs	6,$'pun'/2
+	uc	$'c'
+	uc	$'. '
+	all	2
+	gvary	0,4
+	gvary	1,5
+	call	2,1,&'parser$endvars'/1
+	cuty	1
+	pvaly	0,255
+	gnil	255
+	dallpro	
+	.clause
+1:	all	3
+	gvary	2,1
+	glvx2	2,6,255
+	gl	3
+	uvarx	7
+	uc	$[]
+	gs	7,$'pun'/2
+	uc	$'c'
+	uc	$'. '
+	gvary	0,4
+	ps	0,$'unexp'/1
+	uvalx	6
+	pc	1,#(LST,&19)
+	pvary	1,2
+	call	3,3,&'parser$error'/3
+	pvaly	2,0
+	call	2,1,&'parser$endvars'/1
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+	last
+19: 	.word	#(STR,&21)
+	.word	$[]
+21: 	.word	$'pun'/2
+	.word	$'c'
+	.word	$'. '
+
+	.pred	'parser$gtAtom',6
+20: 	labelx	6
+	sot	3,&21,&22,&14,&14
+21: 	mkdel	7,&20
+	mark	3
+	delay	
+22: 	soce	3,&($' (':&9,$'(':&8,$')':&15,$',':&16,$'[':&10,$']':&17,$'{':&11,$'|':&18,$'}':&19),&14
+15: 	t	7,0,&0
+	r	7,0,&1
+	tr	7,0,&5
+16: 	t	7,0,&12
+	tr	7,0,&14
+17: 	t	7,0,&2
+	r	7,0,&3
+	tr	7,0,&6
+18: 	t	7,0,&13
+	tr	7,0,&14
+19: 	t	7,0,&4
+	tr	7,0,&7
+	.clause
+0:	gl	2
+	uc	$'b'
+	uvara	2
+	gc	3,$')'
+	cutx	6
+	pc	3,$')'
+	exec	6,&'parser$gtAtomClose'/6
+	.clause
+1:	gl	2
+	uc	$'f'
+	uvara	2
+	gc	3,$')'
+	cutx	6
+	pc	3,$')'
+	exec	6,&'parser$gtAtomClose'/6
+	.clause
+2:	gl	2
+	uc	$'s'
+	uvara	2
+	gc	3,$']'
+	cutx	6
+	pc	3,$']'
+	exec	6,&'parser$gtAtomClose'/6
+	.clause
+3:	gl	2
+	uc	$'p'
+	uvara	2
+	gc	3,$']'
+	cutx	6
+	pc	3,$']'
+	exec	6,&'parser$gtAtomClose'/6
+	.clause
+4:	gl	2
+	uc	$'c'
+	uvara	2
+	gc	3,$'}'
+	cutx	6
+	pc	3,$'}'
+	exec	6,&'parser$gtAtomClose'/6
+	.clause
+5:	gc	3,$')'
+	cutx	6
+	pc	3,$')'
+	exec	6,&'parser$gtAtomUnmatchedCB'/6
+	.clause
+6:	gc	3,$']'
+	cutx	6
+	pc	3,$']'
+	exec	6,&'parser$gtAtomUnmatchedCB'/6
+	.clause
+7:	gc	3,$'}'
+	cutx	6
+	pc	3,$'}'
+	exec	6,&'parser$gtAtomUnmatchedCB'/6
+	.clause
+8:	gvarx	7,2
+	gc	3,$'('
+	cutx	6
+	glvx2	4,8,3
+	gs	8,$'open'/1
+	uc	$'('
+	pl	2
+	uc	$'b'
+	ulvx	7
+	gvara	4,5
+	exec	5,&'parser$gtx'/5
+	.clause
+9:	gvarx	7,2
+	gc	3,$' ('
+	cutx	6
+	glvx2	4,8,3
+	gs	8,$'open'/1
+	uc	$' ('
+	pl	2
+	uc	$'b'
+	ulvx	7
+	gvara	4,5
+	exec	5,&'parser$gtx'/5
+	.clause
+10:	gvarx	7,2
+	gc	3,$'['
+	cutx	6
+	glvx2	4,8,3
+	gs	8,$'open'/1
+	uc	$'['
+	pl	2
+	uc	$'s'
+	ulvx	7
+	gvara	4,5
+	exec	5,&'parser$gtx'/5
+	.clause
+11:	gvarx	7,2
+	gc	3,$'{'
+	cutx	6
+	glvx2	4,8,3
+	gs	8,$'open'/1
+	uc	$'{'
+	pl	2
+	uc	$'c'
+	ulvx	7
+	gvara	4,5
+	exec	5,&'parser$gtx'/5
+	.clause
+12:	all	7
+	gvary	2,0
+	gvary	1,1
+	gl	2
+	uvary	4
+	uvary	3
+	gc	3,$','
+	gvary	5,4
+	gvary	0,5
+	gvary	6,6
+	pvaly	4,0
+	call	7,1,&'parser$middle2'/1
+	cuty	6
+	pvaly	5,255
+	glvx2	255,7,3
+	gs	7,$'pun'/2
+	uc	$'m'
+	uc	$','
+	pl	2
+	uvaly	4
+	uvaly	3
+	pvaly	2,0
+	pvaly	1,1
+	pvaly	0,4
+	dallexe	5,&'parser$gtx'/5
+	.clause
+13:	gl	2
+	uc	$'s'
+	uvarx	7
+	gc	3,$'|'
+	cutx	6
+	glvx2	4,8,3
+	gs	8,$'pun'/2
+	uc	$'m'
+	uc	$'|'
+	pl	2
+	uc	$'p'
+	uvalx	7
+	gvara	4,5
+	exec	5,&'parser$gtx'/5
+	.clause
+14:	glvx2	4,7,8
+	gs	7,$'atom'/3
+	ulvx	3
+	uc	$'atom'
+	uvara	4
+	gvarx	7,5
+	gvara	5,8
+	gvara	6,7
+	exec	7,&'parser$gtQA'/7
+	last
+
+	.pred	'parser$gtAtomClose',6
+	.clause
+0:	glvx2	4,6,7
+	gs	6,$'pun'/2
+	uc	$'c'
+	ulvx	3
+	gvara	4,5
+	gvara	3,7
+	exec	5,&'parser$gtx'/5
+	last
+
+	.pred	'parser$gtAtomUnmatchedCB',6
+	.clause
+0:	all	5
+	gvary	3,0
+	gvary	4,1
+	glvx2	2,6,255
+	gl	4
+	uvarx	7
+	uvary	2
+	gs	7,$'pun'/2
+	uc	$'c'
+	ulvx	3
+	gvary	0,5
+	ps	0,$'unexp'/1
+	uvalx	6
+	ps	6,$'pun'/2
+	uc	$'c'
+	ulvx	3
+	pl	1
+	uvalx	6
+	uvaly	2
+	pvary	1,2
+	call	5,3,&'parser$error'/3
+	pvaly	4,0
+	call	4,1,&'parser$endvars'/1
+	pvaly	3,0
+	pvaly	2,1
+	call	2,2,&'parser$gtex'/2
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+	last
+
+	.pred	'parser$gtQA',7
+	.clause
+0:	all	8
+	gvary	7,0
+	gvary	5,1
+	gvary	4,2
+	gvara	0,3
+	gvara	1,4
+	gvary	1,5
+	gvary	0,6
+	call	8,2,&'$opField'/2
+	pvaly	7,0
+	pvary	6,1
+	pvary	3,2
+	pvary	2,3
+	call	7,4,&'parser$token'/4
+	puval	6,0
+	pvaly	5,1
+	pvaly	4,2
+	puval	3,3
+	puval	2,4
+	pvaly	1,5
+	pvaly	0,6
+	dallexe	7,&'parser$gt1'/7
+	last
+
+	.pred	'parser$gt1',7
+	labelx	7
+2: 	t	8,0,&0
+	tr	8,0,&1
+	.clause
+0:	gvarx	8,2
+	gc	3,$'('
+	gc	4,$'atom'
+	gvara	4,6
+	cutx	7
+	glvx2	5,9,3
+	gs	9,$'open'/1
+	uc	$'('
+	pl	2
+	uc	$'f'
+	ulvx	8
+	exec	5,&'parser$gtx'/5
+	.clause
+1:	exec	7,&'parser$gt'/7
+	last
+
+	.pred	'parser$gtex',2
+4: 	sot	0,&2,&0,&1,&3
+2: 	t	2,0,&0
+	tr	2,0,&1
+3: 	fail	
+	.clause
+0:	gnil	0
+	pnil	0
+	pc	2,$'. '
+	pc	3,$'end'
+	exec	4,&'parser$gte'/4
+	.clause
+1:	glvx2	0,2,0
+	glvx2	2,2,3
+	exec	4,&'parser$gte'/4
+	last
+
+	.pred	'parser$gte',4
+10: 	sot	3,&11,&12,&9,&9
+11: 	mkdel	4,&10
+	mark	3
+	delay	
+12: 	soc	3,&($'atom':&2,$'end':&1,$'end_of_file':&0,$'junk':&4,$'number':&7,$'quoted':&3,$'string':&8,$'thing':&6,$'var':&5),&9
+9: 	fail	
+	.clause
+0:	gl	1
+	uvarx	4
+	uc	$[]
+	gs	4,$'pun'/2
+	uc	$'c'
+	uc	$'end_of_file'
+	gc	3,$'end_of_file'
+	pro	
+	.clause
+1:	gl	1
+	uvarx	4
+	uc	$[]
+	gs	4,$'pun'/2
+	uc	$'c'
+	uc	$'. '
+	gc	2,$'. '
+	gc	3,$'end'
+	pro	
+	.clause
+2:	gc	3,$'atom'
+	exec	3,&'parser$gteAtom'/3
+	.clause
+3:	glvx2	1,4,1
+	gs	4,$'atom'/3
+	uvarx	4
+	uc	$'quoted'
+	uc	$[]
+	gvalx	4,2
+	gc	3,$'quoted'
+	exec	2,&'parser$gtex'/2
+	.clause
+4:	glvx2	1,4,1
+	gsx1	4,4,$'junk'/1
+	gvalx	4,2
+	gc	3,$'junk'
+	exec	2,&'parser$gtex'/2
+	.clause
+5:	glvx2	1,4,1
+	gs	4,$'thing'/2
+	uvarx	4
+	uc	$'var'
+	gvalx	4,2
+	gc	3,$'var'
+	exec	2,&'parser$gtex'/2
+	.clause
+6:	glvx2	1,4,1
+	gs	4,$'thing'/2
+	uvarx	4
+	uc	$'thing'
+	gvalx	4,2
+	gc	3,$'thing'
+	exec	2,&'parser$gtex'/2
+	.clause
+7:	glvx2	1,4,1
+	gs	4,$'thing'/2
+	uvarx	4
+	uc	$'number'
+	gvalx	4,2
+	gc	3,$'number'
+	exec	2,&'parser$gtex'/2
+	.clause
+8:	glvx2	1,4,1
+	gs	4,$'thing'/2
+	uvarx	4
+	uc	$'string'
+	gvalx	4,2
+	gc	3,$'string'
+	exec	2,&'parser$gtex'/2
+	last
+
+	.pred	'parser$gteAtom',3
+5: 	labelx	3
+	jvx	2,&3
+4: 	t	4,0,&0
+	r	4,0,&1
+	tr	4,0,&2
+3: 	mkdel	4,&5
+	mark	2
+	delay	
+	.clause
+0:	all	3
+	gvary	1,0
+	gl	1
+	uvarx	4
+	uvary	0
+	gs	4,$'pun'/2
+	uc	$'c'
+	uvara	0
+	gvalx	0,2
+	gvary	2,3
+	call	3,1,&'parser$close'/1
+	cuty	2
+	pvaly	1,0
+	pvaly	0,1
+	dallexe	2,&'parser$gtex'/2
+	.clause
+1:	all	3
+	gvary	1,0
+	gl	1
+	uvarx	4
+	uvary	0
+	gsx1	4,0,$'open'/1
+	gvalx	0,2
+	gvary	2,3
+	call	3,1,&'parser$open'/1
+	cuty	2
+	pvaly	1,0
+	pvaly	0,1
+	dallexe	2,&'parser$gtex'/2
+	.clause
+2:	glvx2	1,4,1
+	gs	4,$'atom'/3
+	uvarx	4
+	uc	$'atom'
+	uc	$[]
+	gvalx	4,2
+	exec	2,&'parser$gtex'/2
+	last
+
+	.pred	'parser$lookup',3
+	labelx	3
+3: 	sot	0,&2,&1,&2,&1
+2: 	t	4,0,&0
+	tr	4,0,&1
+	.clause
+0:	gl	0
+	uc	$95
+	uc	$[]
+	cutx	3
+	pro	
+	.clause
+1:	gs	2,$'vars'/4
+	uvara	2
+	uvarx	4
+	uvoid	2
+	gvara	3,4
+	exec	4,&'parser$lookup1'/4
+	last
+
+	.pred	'parser$lookup1',4
+	labelx	4
+2: 	t	5,0,&0
+	tr	5,0,&1
+	.clause
+0:	gl	2
+	ulvx	0
+	uvoid	1
+	gl	3
+	ulvx	1
+	uvoid	1
+	cutx	4
+	pro	
+	.clause
+1:	glvx2	2,255,2
+	glvx2	3,255,3
+	exec	4,&'parser$lookup1'/4
+	last
+
+	.pred	'parser$endvars',1
+	.clause
+0:	gs	0,$'vars'/4
+	uvarx	2
+	uvarx	1
+	uvalx	2
+	uvalx	1
+	pro	
+	last
+
+	.pred	'parser$error',3
+	.clause
+0:	gl	2
+	uvarx	3
+	ulvx	1
+	gs	3,$'err'/1
+	ulvx	0
+	pro	
+	last
+
+	.pred	'parser$is_error',2
+	.clause
+0:	glvx2	0,4,2
+	gsx1	4,3,$'err'/1
+	gl	1
+	uvarx	4
+	uvalx	2
+	gs	4,$'err'/1
+	uvalx	3
+	pro	
+	last
+
+	.pred	'parser$val',3
+	.clause
+0:	gl	2
+	uvarx	3
+	ulvx	1
+	gs	3,$'val'/1
+	ulvx	0
+	pro	
+	last
+
+	.pred	'parser$pulloff',7
+	labelx	7
+13: 	sot	0,&8,&9,&9,&14
+8: 	t	8,0,&0
+	r	8,0,&1
+	r	8,0,&2
+	r	8,0,&3
+	r	8,0,&4
+	r	8,0,&5
+	r	8,0,&6
+	tr	8,0,&7
+9: 	fail	
+14: 	sose	0,&($'item'/5:&10,$'top'/1:&11),&12
+10: 	t	8,0,&0
+	r	8,0,&1
+	r	8,0,&2
+	r	8,0,&3
+	r	8,0,&6
+	tr	8,0,&7
+11: 	t	8,0,&4
+	tr	8,0,&5
+12: 	t	8,0,&1
+	tr	8,0,&2
+	.clause
+0:	gs	0,$'item'/5
+	uvarx	8
+	uvoid	1
+	uvarx	9
+	uvarx	10
+	uvara	0
+	gvalx	9,2
+	apushx	4
+	pushx	8
+	apred	4
+	cutx	7
+	gvara	2,10
+	exec	7,&'parser$pulloff'/7
+	.clause
+1:	gc	6,$'okay'
+	gs	0,$'item'/5
+	uvarx	8
+	uvoid	4
+	apushx	4
+	pushx	8
+	apred	2
+	cutx	7
+	gvalx	1,0
+	gvalx	3,2
+	pro	
+	.clause
+2:	gc	5,$1
+	gc	6,$'okay'
+	gs	0,$'item'/5
+	ulvx	4
+	uc	$0
+	uvoid	3
+	cutx	7
+	gvalx	1,0
+	gvalx	3,2
+	pro	
+	.clause
+3:	gs	0,$'item'/5
+	uvarx	8
+	uc	$1
+	uvarx	9
+	uvarx	10
+	uvara	0
+	gvalx	9,2
+	gvalx	8,4
+	gc	5,$0
+	cutx	7
+	gvara	2,10
+	gvara	4,8
+	pvarx	5,5
+	exec	7,&'parser$pulloff'/7
+	.clause
+4:	gsx1	0,8,$'top'/1
+	gs	1,$'top'/1
+	uvalx	8
+	gc	6,$'okay'
+	apushx	4
+	pushx	8
+	apred	3
+	cutx	7
+	gvalx	3,2
+	pro	
+	.clause
+5:	gsx1	0,8,$'top'/1
+	gs	6,$'prechigh3'/1
+	uvalx	8
+	pro	
+	.clause
+6:	gs	0,$'item'/5
+	uvarx	8
+	uc	$0
+	uvoid	3
+	gvalx	8,4
+	gc	5,$0
+	gc	6,$'ambiguous'
+	cutx	7
+	pro	
+	.clause
+7:	gs	0,$'item'/5
+	ulvx	4
+	uc	$1
+	uvoid	3
+	gc	5,$1
+	gc	6,$'impossible'
+	pro	
+	last
+
+	.pred	'parser$pullall',4
+	labelx	4
+4: 	sot	0,&2,&3,&3,&5
+2: 	t	5,0,&0
+	tr	5,0,&1
+3: 	fail	
+5: 	sos	0,&($'item'/5:&1,$'top'/1:&0),&3
+	.clause
+0:	gsx1	0,255,$'top'/1
+	gvara	0,1
+	gvara	1,2
+	all	3
+	gvary	0,3
+	gvary	2,4
+	pvary	1,2
+	call	3,3,&'parser$val'/3
+	cuty	2
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+	.clause
+1:	gs	0,$'item'/5
+	uvoid	2
+	uvarx	5
+	uvarx	6
+	uvara	0
+	gvalx	5,1
+	gvara	1,6
+	exec	4,&'parser$pullall'/4
+	last
+
+	.pred	'parser$r',2
+	.clause
+0:	gvarx	3,0
+	gvarx	2,1
+	currstr	0,0
+	gvara	1,3
+	exec	3,&'parser$r'/3
+	last
+
+	.pred	'parser$r',3
+	.clause
+0:	all	4
+	gvary	0,1
+	gl	2
+	uvary	3
+	uvary	2
+	pvary	1,1
+	call	4,2,&'parser$getTokens'/2
+	ps	1,$'vars'/4
+	uc	$[]
+	uc	$[]
+	uvaly	3
+	uvaly	2
+	puval	1,0
+	pvaly	0,2
+	dallexe	3,&'parser$read'/3
+	last
+
+	.pred	'parser$s',3
+	.clause
+0:	all	4
+	gvary	0,1
+	gl	2
+	uvary	3
+	uvary	2
+	pvary	1,1
+	call	4,2,&'parser$getStringTokens'/2
+	ps	1,$'vars'/4
+	uc	$[]
+	uc	$[]
+	uvaly	3
+	uvaly	2
+	puval	1,0
+	pvaly	0,2
+	dallexe	3,&'parser$read'/3
+	last
+
+	.pred	'parser$t',3
+	.clause
+0:	gvarx	3,1
+	glvx2	2,4,5
+	ps	1,$'vars'/4
+	uc	$[]
+	uc	$[]
+	uvalx	4
+	uvalx	5
+	gvara	2,3
+	exec	3,&'parser$read'/3
+	last
+
+	.pred	'parser$getTokens',2
+	.clause
+0:	gvarx	3,1
+	sgettok	0,1,2
+	exec	4,&'parser$getTokens'/4
+	last
+
+	.pred	'parser$getTokens',4
+	labelx	4
+3: 	t	5,0,&0
+	r	5,0,&1
+	tr	5,0,&2
+	.clause
+0:	gc	1,$'. '
+	gc	2,$'end'
+	gnil	3
+	cutx	4
+	pro	
+	.clause
+1:	gnil	1
+	gc	2,$'end_of_file'
+	gl	3
+	uvarx	5
+	uc	$[]
+	gl	5
+	uc	$[]
+	uc	$'end_of_file'
+	cutx	4
+	pro	
+	.clause
+2:	glvx2	3,5,6
+	gl	5
+	ulvx	1
+	ulvx	2
+	gvara	1,6
+	exec	2,&'parser$getTokens'/2
+	last
+
+	.pred	'parser$getStringTokens',2
+	.clause
+0:	all	4
+	gvary	0,1
+	pvary	2,1
+	pvary	1,2
+	pvary	3,3
+	call	4,4,&'tokenize'/4
+	puval	3,0
+	puval	2,1
+	puval	1,2
+	pvaly	0,3
+	dallexe	4,&'parser$getStringTokens'/4
+	last
+
+	.pred	'parser$getStringTokens',4
+	labelx	4
+6: 	sot	0,&4,&7,&5,&5
+4: 	t	5,0,&0
+	r	5,0,&1
+	r	5,0,&2
+	tr	5,0,&3
+7: 	jc	0,$[],&4
+5: 	t	5,0,&0
+	r	5,0,&1
+	tr	5,0,&3
+	j	&4
+	.clause
+0:	gc	1,$'. '
+	gc	2,$'end'
+	gnil	3
+	cutx	4
+	pro	
+	.clause
+1:	gnil	1
+	gc	2,$'end_of_file'
+	gnil	3
+	cutx	4
+	pro	
+	.clause
+2:	gnil	0
+	gl	3
+	uvarx	5
+	uc	$[]
+	gl	5
+	ulvx	1
+	ulvx	2
+	cutx	4
+	pro	
+	.clause
+3:	glvx2	3,5,6
+	gl	5
+	ulvx	1
+	ulvx	2
+	gvara	1,6
+	exec	2,&'parser$getStringTokens'/2
+	last
+
+	.pred	'parser$read',3
+	.clause
+0:	all	3
+	gvary	2,2
+	pc	2,#(LST,&9)
+	pvary	1,3
+	pvary	0,4
+	call	3,5,&'parser$gtx'/5
+	pvaly	2,0
+	puval	1,1
+	puval	0,2
+	dallexe	3,&'parser$pro'/3
+	last
+9: 	.word	$'t'
+	.word	$[]
+
+	.pred	'parser$pro',3
+	labelx	3
+3: 	t	4,0,&0
+	r	4,0,&1
+	tr	4,0,&2
+	.clause
+0:	gl	1
+	uvarx	4
+	uc	$[]
+	gs	4,$'pun'/2
+	uc	$'c'
+	uc	$'end_of_file'
+	all	1
+	gvary	0,3
+	call	1,1,&'eof'/1
+	cuty	0
+	dallpro	
+	.clause
+1:	all	3
+	gvary	2,1
+	gvary	1,2
+	gvary	0,3
+	pvaly	1,0
+	pvarx	1,1
+	call	3,2,&'parser$is_error'/2
+	pvaly	2,0
+	pvaly	1,1
+	call	1,2,&'parser$printe'/2
+	cuty	0
+	fail	
+	.clause
+2:	gvarx	4,0
+	all	4
+	gvary	2,1
+	gnil	2
+	gvary	0,3
+	pc	0,$1200
+	gvara	1,4
+	pvarx	2,2
+	pvaly	2,3
+	pvary	1,4
+	call	4,5,&'parser$fullterm'/5
+	cuty	0
+	labely	3
+30: 	te	0,0,0,&31
+	pvaly	1,0
+	pvaly	1,1
+	call	4,2,&'parser$is_error'/2
+	cuty	3
+	pvaly	2,0
+	puval	1,1
+	call	1,2,&'parser$printe'/2
+	cuty	0
+	fail	
+31: 	tre	0,0
+	dallpro	
+32: 	last
+
+	.pred	'parser$printe',2
+	labelx	2
+2: 	t	3,0,&0
+	tr	3,0,&1
+	.clause
+0:	all	5
+	gvary	2,0
+	gl	1
+	uvarx	3
+	uvary	1
+	gsx1	3,0,$'err'/1
+	gvary	0,2
+	pvary	4,1
+	call	5,2,&'parser$printmess'/2
+	pc	3,$'user_error'
+	pc	4,$10
+	sput	3,4
+	pc	0,$'user_error'
+	pc	1,$'ERROR '
+	call	5,2,&'write'/2
+	pc	0,$'user_error'
+	puval	4,1
+	call	4,2,&'writeln'/2
+	pnil	0
+	pvary	3,1
+	pvaly	2,2
+	pvaly	1,3
+	call	4,4,&'parser$findbr'/4
+	puval	3,0
+	pvaly	2,1
+	pvaly	1,2
+	call	2,3,&'parser$printbr'/3
+	pc	0,$'user_error'
+	pc	1,$' ***HERE***>'
+	call	2,2,&'write'/2
+	pnil	0
+	pvaly	1,1
+	pnil	2
+	call	1,3,&'parser$printbr'/3
+	pc	3,$'user_error'
+	pc	4,$10
+	sput	3,4
+	cuty	0
+	dallpro	
+	.clause
+1:	all	2
+	gvary	1,0
+	gvary	0,1
+	pc	3,$'user_error'
+	pc	4,$10
+	sput	3,4
+	pc	0,$'user_error'
+	pc	1,$'PROBLEM WRITING ERROR'
+	call	2,2,&'writeln'/2
+	pc	0,$'user_error'
+	pvaly	1,1
+	call	1,2,&'writeln'/2
+	pc	0,$'user_error'
+	pvaly	0,1
+	dallexe	2,&'writeln'/2
+	last
+
+	.pred	'parser$findbr',4
+	labelx	4
+8: 	sot	0,&4,&5,&6,&7
+4: 	t	5,0,&0
+	r	5,0,&1
+	r	5,0,&2
+	tr	5,0,&3
+5: 	t	5,0,&0
+	r	5,0,&1
+	tr	5,0,&3
+6: 	t	5,0,&0
+	r	5,0,&1
+	r	5,0,&2
+	tr	5,0,&3
+7: 	t	5,0,&0
+	r	5,0,&1
+	tr	5,0,&3
+	.clause
+0:	gvalx	2,3
+	cutx	4
+	exec	2,&'reverse'/2
+	.clause
+1:	gvarx	5,0
+	glvx2	2,6,2
+	gsx1	6,6,$'open'/1
+	cutx	4
+	ps	7,$'open'/1
+	uvalx	6
+	pl	6
+	uvalx	7
+	uvalx	2
+	pl	0
+	uvalx	6
+	ulvx	5
+	exec	4,&'parser$findbr'/4
+	.clause
+2:	glvx2	0,255,0
+	glvx2	2,5,2
+	gs	5,$'pun'/2
+	uc	$'c'
+	uvoid	1
+	cutx	4
+	exec	4,&'parser$findbr'/4
+	.clause
+3:	glvx2	2,255,2
+	exec	4,&'parser$findbr'/4
+	last
+
+	.pred	'parser$printbr',3
+	labelx	3
+7: 	sot	0,&5,&6,&5,&6
+5: 	t	4,0,&0
+	r	4,0,&1
+	r	4,0,&2
+	r	4,0,&3
+	tr	4,0,&4
+6: 	t	4,0,&0
+	r	4,0,&2
+	r	4,0,&3
+	tr	4,0,&4
+	.clause
+0:	gvalx	1,2
+	cutx	3
+	pro	
+	.clause
+1:	gl	0
+	uvarx	4
+	all	3
+	uvary	2
+	gl	4
+	uvarx	4
+	uvary	1
+	gsx1	4,4,$'open'/1
+	gl	1
+	uvarx	5
+	uvaly	1
+	gs	5,$'open'/1
+	uvalx	4
+	gvary	0,2
+	cutx	3
+	pc	0,$'user_error'
+	gvara	1,4
+	call	3,2,&'write'/2
+	pvaly	2,0
+	pvaly	1,1
+	pvaly	0,2
+	dallexe	3,&'parser$printbr'/3
+	.clause
+2:	all	3
+	gvary	2,0
+	gl	1
+	uvarx	4
+	ul	255
+	uvarx	5
+	uvary	1
+	gs	4,$'open'/1
+	uc	$'['
+	gs	5,$'pun'/2
+	uc	$'c'
+	uc	$']'
+	gvary	0,2
+	cutx	3
+	pc	0,$'user_error'
+	pc	1,$' []'
+	call	3,2,&'write'/2
+	pvaly	2,0
+	pvaly	1,1
+	pvaly	0,2
+	dallexe	3,&'parser$printbr'/3
+	.clause
+3:	all	4
+	gvary	2,0
+	gl	1
+	uvarx	4
+	uvary	3
+	gsx1	4,1,$'open'/1
+	gvary	0,2
+	cutx	3
+	pc	0,$'user_error'
+	call	4,2,&'write'/2
+	pc	0,$'user_error'
+	pc	1,$'...'
+	call	4,2,&'write'/2
+	pvaly	3,0
+	pvary	1,1
+	call	3,2,&'parser$skipbr'/2
+	pvaly	2,0
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'parser$printbr'/3
+	.clause
+4:	all	3
+	gvary	2,0
+	gvara	0,1
+	gvary	0,2
+	pvary	1,1
+	call	3,2,&'parser$printtok'/2
+	pvaly	2,0
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'parser$printbr'/3
+	last
+
+	.pred	'parser$printtok',2
+	labelx	2
+21: 	sot	0,&18,&19,&22,&19
+18: 	t	3,0,&0
+	r	3,0,&1
+	r	3,0,&2
+	r	3,0,&3
+	r	3,0,&4
+	r	3,0,&5
+	r	3,0,&6
+	r	3,0,&7
+	tr	3,0,&8
+19: 	fail	
+22: 	glvx2	0,0,3
+20: 	t	4,0,&9
+	r	4,0,&10
+	r	4,0,&11
+	r	4,0,&12
+	r	4,0,&13
+	r	4,0,&14
+	r	4,0,&15
+	r	4,0,&16
+	tr	4,0,&17
+	.clause
+0:	glvx2	0,4,5
+	gsx2	4,255,4,$'var'/2
+	cutx	2
+	pc	6,$'user_error'
+	pl	7
+	uc	$32
+	uvalx	4
+	sputl	6,7
+	gvalx	1,5
+	pro	
+	.clause
+1:	glvx2	0,4,5
+	gs	4,$'thing'/2
+	uvarx	4
+	uc	$'var'
+	cutx	2
+	pc	6,$'user_error'
+	pl	7
+	uc	$32
+	uvalx	4
+	sputl	6,7
+	gvalx	1,5
+	pro	
+	.clause
+2:	gl	0
+	uvarx	4
+	all	3
+	uvary	1
+	gs	4,$'thing'/2
+	uvary	2
+	uvoid	1
+	gvary	0,1
+	cutx	2
+	pc	0,$'user_error'
+	pc	1,$' '
+	call	3,2,&'write'/2
+	pc	0,$'user_error'
+	pvaly	2,1
+	call	2,2,&'write'/2
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+	.clause
+3:	gl	0
+	uvarx	4
+	all	3
+	uvary	1
+	gs	4,$'atom'/3
+	uvary	2
+	uc	$'quoted'
+	uvoid	1
+	gvary	0,1
+	cutx	2
+	pc	0,$'user_error'
+	pc	1,$' '''
+	call	3,2,&'write'/2
+	pc	0,$'user_error'
+	pvaly	2,1
+	call	2,2,&'write'/2
+	pc	0,$'user_error'
+	pc	1,$''''
+	call	2,2,&'write'/2
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+	.clause
+4:	gl	0
+	uvarx	4
+	all	3
+	uvary	1
+	gs	4,$'atom'/3
+	uvary	2
+	uc	$'atom'
+	uvoid	1
+	gvary	0,1
+	cutx	2
+	pc	0,$'user_error'
+	pc	1,$' '
+	call	3,2,&'write'/2
+	pc	0,$'user_error'
+	pvaly	2,1
+	call	2,2,&'write'/2
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+	.clause
+5:	gl	0
+	uvarx	4
+	all	2
+	uvary	1
+	gsx1	4,4,$'junk'/1
+	gvary	0,1
+	cutx	2
+	ps	1,$'ascii'/1
+	uvalx	4
+	pc	0,$'user_error'
+	call	2,2,&'write'/2
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+	.clause
+6:	gl	0
+	uvarx	4
+	all	2
+	uvary	1
+	gsx2	4,255,4,$'pun'/2
+	gvary	0,1
+	cutx	2
+	pc	0,$'user_error'
+	gvara	1,4
+	call	2,2,&'write'/2
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+	.clause
+7:	gl	0
+	uvarx	4
+	all	2
+	uvary	1
+	gsx1	4,4,$'open'/1
+	gvary	0,1
+	cutx	2
+	pc	0,$'user_error'
+	gvara	1,4
+	call	2,2,&'write'/2
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+	.clause
+8:	gl	0
+	all	3
+	uvary	2
+	uvary	1
+	gvary	0,1
+	pc	0,$'user_error'
+	pc	1,$' '
+	call	3,2,&'write'/2
+	ps	1,$'STRANGE_TOKEN'/1
+	uvaly	2
+	pc	0,$'user_error'
+	call	2,2,&'write'/2
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+	.clause
+9:	gsx2	0,255,4,$'var'/2
+	cutx	2
+	pc	5,$'user_error'
+	pl	6
+	uc	$32
+	uvalx	4
+	sputl	5,6
+	gvalx	1,3
+	pro	
+	.clause
+10:	gs	0,$'thing'/2
+	uvarx	4
+	uc	$'var'
+	cutx	2
+	pc	5,$'user_error'
+	pl	6
+	uc	$32
+	uvalx	4
+	sputl	5,6
+	gvalx	1,3
+	pro	
+	.clause
+11:	gs	0,$'thing'/2
+	all	3
+	uvary	2
+	uvoid	1
+	gvary	0,1
+	gvary	1,3
+	cutx	2
+	pc	0,$'user_error'
+	pc	1,$' '
+	call	3,2,&'write'/2
+	pc	0,$'user_error'
+	pvaly	2,1
+	call	2,2,&'write'/2
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+	.clause
+12:	gs	0,$'atom'/3
+	all	3
+	uvary	2
+	uc	$'quoted'
+	uvoid	1
+	gvary	0,1
+	gvary	1,3
+	cutx	2
+	pc	0,$'user_error'
+	pc	1,$' '''
+	call	3,2,&'write'/2
+	pc	0,$'user_error'
+	pvaly	2,1
+	call	2,2,&'write'/2
+	pc	0,$'user_error'
+	pc	1,$''''
+	call	2,2,&'write'/2
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+	.clause
+13:	gs	0,$'atom'/3
+	all	3
+	uvary	2
+	uc	$'atom'
+	uvoid	1
+	gvary	0,1
+	gvary	1,3
+	cutx	2
+	pc	0,$'user_error'
+	pc	1,$' '
+	call	3,2,&'write'/2
+	pc	0,$'user_error'
+	pvaly	2,1
+	call	2,2,&'write'/2
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+	.clause
+14:	gsx1	0,4,$'junk'/1
+	all	2
+	gvary	0,1
+	gvary	1,3
+	cutx	2
+	ps	1,$'ascii'/1
+	uvalx	4
+	pc	0,$'user_error'
+	call	2,2,&'write'/2
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+	.clause
+15:	gsx2	0,255,4,$'pun'/2
+	all	2
+	gvary	0,1
+	gvary	1,3
+	cutx	2
+	pc	0,$'user_error'
+	gvara	1,4
+	call	2,2,&'write'/2
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+	.clause
+16:	gsx1	0,4,$'open'/1
+	all	2
+	gvary	0,1
+	gvary	1,3
+	cutx	2
+	pc	0,$'user_error'
+	gvara	1,4
+	call	2,2,&'write'/2
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+	.clause
+17:	all	3
+	gvary	2,0
+	gvary	0,1
+	gvary	1,3
+	pc	0,$'user_error'
+	pc	1,$' '
+	call	3,2,&'write'/2
+	ps	1,$'STRANGE_TOKEN'/1
+	ulvy	2
+	pc	0,$'user_error'
+	call	2,2,&'write'/2
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+	last
+
+	.pred	'parser$skipbr',2
+8: 	labelx	2
+	sot	0,&9,&10,&11,&15
+9: 	mkdel	3,&8
+	mark	0
+	delay	
+10: 	labelx	2
+6: 	fail	
+11: 	glvx2	0,0,3
+12: 	labelx	2
+	sot	0,&13,&5,&5,&14
+13: 	mkdel	4,&12
+	mark	0
+	delay	
+14: 	sose	0,&($'open'/1:&4,$'pun'/2:&7),&5
+7: 	t	4,0,&3
+	tr	4,0,&5
+15: 	fail	
+	.clause
+3:	gs	0,$'pun'/2
+	uc	$'c'
+	uvarx	4
+	cutx	2
+	gl	1
+	uvarx	5
+	ulvx	3
+	gs	5,$'pun'/2
+	uc	$'c'
+	uvalx	4
+	pro	
+	.clause
+4:	gsx1	0,255,$'open'/1
+	all	2
+	gvary	0,1
+	gvara	0,3
+	cutx	2
+	pl	1
+	uvoid	1
+	uvary	1
+	call	2,2,&'parser$skipbr'/2
+	pvaly	1,0
+	pvaly	0,1
+	dallexe	2,&'parser$skipbr'/2
+	.clause
+5:	gvara	0,3
+	exec	2,&'parser$skipbr'/2
+	last
+
+	.pred	'parser$printmess',2
+24: 	sot	0,&12,&25,&11,&26
+12: 	t	2,0,&0
+	r	2,0,&1
+	r	2,0,&2
+	r	2,0,&3
+	r	2,0,&4
+	r	2,0,&5
+	r	2,0,&6
+	r	2,0,&7
+	r	2,0,&8
+	r	2,0,&9
+	r	2,0,&10
+	tr	2,0,&11
+25: 	soce	0,&($'ambigous':&13,$'impossible':&14,$'insertop':&15,$'noterm':&16,$'prechigh':&17),&11
+13: 	t	2,0,&10
+	tr	2,0,&11
+14: 	t	2,0,&9
+	tr	2,0,&11
+15: 	t	2,0,&5
+	tr	2,0,&11
+16: 	t	2,0,&4
+	tr	2,0,&11
+17: 	t	2,0,&0
+	tr	2,0,&11
+26: 	sose	0,&($'junk'/1:&18,$'postin'/1:&19,$'prechigh1'/1:&20,$'prechigh2'/1:&21,$'prechigh3'/1:&22,$'unexp'/1:&23),&11
+18: 	t	2,0,&6
+	tr	2,0,&11
+19: 	t	2,0,&8
+	tr	2,0,&11
+20: 	t	2,0,&1
+	tr	2,0,&11
+21: 	t	2,0,&2
+	tr	2,0,&11
+22: 	t	2,0,&3
+	tr	2,0,&11
+23: 	t	2,0,&7
+	tr	2,0,&11
+	.clause
+0:	gc	0,$'prechigh'
+	gc	1,$'Operator precedence too high'
+	pro	
+	.clause
+1:	gsx1	0,2,$'prechigh1'/1
+	gs	1,$'-'/2
+	uc	$'Prefix operator precedence too high, should be'
+	uvalx	2
+	pro	
+	.clause
+2:	gsx1	0,2,$'prechigh2'/1
+	gs	1,$'-'/2
+	uc	$'Missing term or infix/postfix operator precedence too high to be used as atom, should be'
+	uvalx	2
+	pro	
+	.clause
+3:	gsx1	0,2,$'prechigh3'/1
+	gs	1,$'-'/2
+	uc	$'Infix/postfix operator precedence too high, should be'
+	uvalx	2
+	pro	
+	.clause
+4:	gc	0,$'noterm'
+	gc	1,$'Missing term'
+	pro	
+	.clause
+5:	gc	0,$'insertop'
+	gc	1,$'Insert infix operator'
+	pro	
+	.clause
+6:	gsx1	0,2,$'junk'/1
+	gs	1,$'='/2
+	uc	$'Invalid character, ASCII value'
+	uvalx	2
+	pro	
+	.clause
+7:	gsx1	0,2,$'unexp'/1
+	gs	1,$'-'/2
+	uc	$'Unexpected punctuation, expecting'
+	uvara	0
+	gvara	1,2
+	exec	2,&'parser$close'/2
+	.clause
+8:	gsx1	0,2,$'postin'/1
+	gs	1,$'Left argument of post/infix op. has too high a precedence number'/1
+	uvalx	2
+	pro	
+	.clause
+9:	gc	0,$'impossible'
+	gc	1,$'Impossible use of operators: ?fx term xf?'
+	pro	
+	.clause
+10:	gc	0,$'ambigous'
+	gc	1,$'Ambiguous use of operators: ?fy term yf?'
+	pro	
+	.clause
+11:	gs	1,$'UNKNOWN_ERROR'/1
+	ulvx	0
+	pro	
+	last
+
+	.pred	'parser$chrest',4
+	labelx	4
+2: 	t	5,0,&0
+	tr	5,0,&1
+	.clause
+0:	gvara	0,2
+	all	3
+	gvary	0,3
+	gvary	2,4
+	pvary	1,1
+	call	3,2,&'parser$is_error'/2
+	cuty	2
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+	.clause
+1:	gvarx	5,2
+	gvarx	6,3
+	pc	2,$0
+	gvara	3,5
+	gvara	4,6
+	exec	5,&'parser$rest'/5
+	last
+
+	.pred	'parser$rest',5
+8: 	labelx	5
+	sot	3,&9,&3,&10,&3
+9: 	mkdel	6,&8
+	mark	3
+	delay	
+10: 	glvx2	3,6,7
+11: 	labelx	5
+	sot	6,&12,&3,&3,&13
+12: 	mkdel	8,&11
+	mark	6
+	delay	
+13: 	sose	6,&($'atom'/3:&7,$'pun'/2:&4),&3
+7: 	t	8,0,&5
+	r	8,0,&6
+	tr	8,0,&3
+	.clause
+3:	gvara	2,3
+	gvara	3,4
+	exec	4,&'parser$pullall'/4
+	.clause
+4:	gvara	3,4
+	gsx2	6,8,9,$'pun'/2
+	cutx	5
+	ps	10,$'pun'/2
+	uvalx	8
+	uvalx	9
+	pl	2
+	uvalx	10
+	ulvx	7
+	exec	4,&'parser$pullall'/4
+	.clause
+5:	gvara	3,4
+	gs	6,$'atom'/3
+	uvarx	8
+	uvarx	9
+	uvarx	10
+	glvx2	7,11,12
+	gs	11,$'open'/1
+	uc	$'('
+	cutx	5
+	ps	11,$'atom'/3
+	uvalx	8
+	uvalx	9
+	uvalx	10
+	pc	8,#(STR,&48)
+	pl	2
+	uvalx	11
+	ul	255
+	uvalx	8
+	uvalx	12
+	exec	4,&'parser$pullall'/4
+	.clause
+6:	gvarx	8,1
+	all	16
+	gvary	0,4
+	gs	6,$'atom'/3
+	uvary	15
+	uvary	14
+	us	255,$'op'/9
+	uvary	2
+	uvary	13
+	uvary	12
+	uvary	4
+	uvary	3
+	uvary	11
+	uvary	10
+	uvary	9
+	uvary	1
+	gvary	8,7
+	ctypy	9,17
+	cutx	5
+	apushx	2
+	pushy	2
+	pushy	9
+	afunc	1
+	jpred	4,&76
+	ps	0,$'postin'/1
+	ulvx	2
+	ps	8,$'atom'/3
+	uvaly	15
+	uvaly	14
+	us	255,$'op'/9
+	uvaly	2
+	uvaly	13
+	uvaly	12
+	uvaly	4
+	uvaly	3
+	uvaly	11
+	uvaly	10
+	uvaly	9
+	uvaly	1
+	pl	1
+	uvalx	8
+	ulvy	8
+	pvaly	0,2
+	dallexe	3,&'parser$error'/3
+76: 	pvary	7,1
+	gvara	2,8
+	pvary	6,3
+	pvaly	2,4
+	pvaly	9,5
+	pvary	5,6
+	call	16,7,&'parser$pulloff'/7
+	ps	8,$'atom'/3
+	uvaly	15
+	uvaly	14
+	us	255,$'op'/9
+	uvaly	2
+	uvaly	13
+	uvaly	12
+	uvaly	4
+	uvaly	3
+	uvaly	11
+	uvaly	10
+	uvaly	9
+	uvaly	1
+	pl	7
+	uvalx	8
+	ulvy	8
+	puval	7,0
+	puval	6,1
+	puval	5,2
+	pvaly	4,3
+	pvaly	3,4
+	pvaly	2,5
+	pvaly	1,6
+	pvaly	0,8
+	dallexe	9,&'parser$rest1'/9
+77: 	last
+48: 	.word	$'open'/1
+	.word	$'('
+
+	.pred	'parser$rest1',9
+	labelx	9
+4: 	t	10,0,&0
+	r	10,0,&1
+	r	10,0,&2
+	tr	10,0,&3
+	.clause
+0:	all	9
+	gvary	3,0
+	gvary	8,1
+	gc	2,$'okay'
+	gc	3,$'y'
+	gc	4,$'y'
+	gvary	5,5
+	gvary	4,6
+	glvx2	7,10,1
+	gs	10,$'atom'/3
+	uvary	7
+	uvoid	2
+	gvary	0,8
+	gvary	6,9
+	apushy	5
+	pushy	4
+	afunc	1
+	popy	2
+	pvaly	2,0
+	pvary	1,2
+	call	9,3,&'parser$type1'/3
+	pvarx	10,10
+	pl	11
+	uvarx	12
+	uc	$[]
+	pl	13
+	ulvy	8
+	uvalx	11
+	pl	11
+	uvaly	7
+	uvalx	13
+	univ	10,11
+	cuty	6
+	ps	1,$'item'/5
+	ulvy	5
+	ulvy	4
+	uvalx	12
+	uvalx	10
+	ulvy	3
+	pvaly	2,0
+	puval	1,2
+	pvaly	0,3
+	dallexe	4,&'parser$term'/4
+	.clause
+1:	gc	2,$'okay'
+	gc	3,$'y'
+	gvara	2,5
+	glvx2	7,10,3
+	gs	10,$'atom'/3
+	uvarx	10
+	uvoid	2
+	gvara	4,8
+	pvarx	11,11
+	pl	12
+	ulvx	1
+	uc	$[]
+	pl	13
+	uvalx	10
+	uvalx	12
+	univ	11,13
+	cutx	9
+	gvara	1,11
+	exec	5,&'parser$rest'/5
+	.clause
+2:	gvarx	10,0
+	gc	2,$'okay'
+	gc	3,$'n'
+	gc	4,$'y'
+	glvx2	7,11,2
+	gs	11,$'atom'/3
+	uvarx	11
+	uvoid	2
+	gvara	3,8
+	apushx	5
+	pushx	6
+	afunc	1
+	popx	0
+	pvarx	12,12
+	pl	13
+	uvarx	14
+	uc	$[]
+	pl	15
+	ulvx	1
+	uvalx	13
+	pl	13
+	uvalx	11
+	uvalx	15
+	univ	12,13
+	cutx	9
+	ps	1,$'item'/5
+	ulvx	5
+	ulvx	6
+	uvalx	14
+	uvalx	12
+	ulvx	10
+	exec	4,&'parser$term'/4
+	.clause
+3:	gvara	0,2
+	gvara	1,7
+	gvara	2,8
+	exec	3,&'parser$error'/3
+	last
+
+	.pred	'parser$fullterm',5
+	labelx	5
+	.clause
+0:	all	6
+	gvary	3,1
+	gvary	5,2
+	gvara	2,3
+	gvary	0,4
+	gvary	2,5
+	ps	1,$'top'/1
+	ulvx	0
+	pvary	4,3
+	call	6,4,&'parser$term'/4
+16: 	te	0,0,0,&17
+	pvaly	4,255
+	gl	255
+	uvarx	6
+	ul	255
+	uvarx	7
+	uvary	1
+	gs	6,$'val'/1
+	ulvy	3
+	gs	7,$'pun'/2
+	uvoid	1
+	ulvy	5
+	j	&19
+17: 	re	0,0,&18
+	puval	4,0
+	pvary	1,1
+	call	3,2,&'parser$is_error'/2
+	j	&19
+18: 	tre	0,0
+	pvaly	4,255
+	glvx2	255,6,1
+	gs	6,$'val'/1
+	ulvy	3
+	pc	0,$'insertop'
+	pvary	1,2
+	call	3,3,&'parser$error'/3
+19: 	cuty	2
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+	last
+
+	.pred	'parser$term',4
+25: 	labelx	4
+	sot	2,&26,&27,&28,&45
+26: 	mkdel	5,&25
+	mark	2
+	delay	
+27: 	labelx	4
+22: 	fail	
+28: 	glvx2	2,2,5
+29: 	labelx	4
+	sot	2,&30,&31,&22,&32
+30: 	mkdel	6,&29
+	mark	2
+	delay	
+31: 	fail	
+32: 	sos	2,&($'atom'/3:&33,$'open'/1:&35,$'pun'/2:&39,$'thing'/2:&41,$'var'/2:&43),&22
+33: 	gs	2,$'atom'/3
+	uvarx	2
+	uvarx	6
+	uvarx	7
+34: 	labelx	4
+23: 	t	8,0,&17
+	r	8,0,&18
+	tr	8,0,&19
+35: 	gsx1	2,2,$'open'/1
+36: 	labelx	4
+	sot	2,&37,&38,&22,&22
+37: 	mkdel	6,&36
+	mark	2
+	delay	
+38: 	soc	2,&($' (':&13,$'(':&14,$'[':&24,$'{':&12),&22
+24: 	t	6,0,&15
+	tr	6,0,&16
+39: 	gsx2	2,2,6,$'pun'/2
+40: 	labelx	4
+	j	&11
+41: 	gsx2	2,2,6,$'thing'/2
+42: 	labelx	4
+	j	&21
+43: 	gsx2	2,2,6,$'var'/2
+44: 	labelx	4
+	j	&20
+45: 	fail	
+	.clause
+11:	ps	8,$'pun'/2
+	ulvx	2
+	ulvx	6
+	pl	1
+	uvalx	8
+	ulvx	5
+	pc	0,$'noterm'
+	gvara	2,3
+	exec	3,&'parser$error'/3
+	.clause
+12:	all	4
+	gvary	2,1
+	gc	2,$'{'
+	gvary	0,3
+	gvara	3,5
+	pc	0,$1200
+	pvary	3,1
+	pvarx	2,2
+	pvary	1,4
+	call	4,5,&'parser$fullterm'/5
+	ps	1,$'{}'/1
+	ulvy	3
+	pvaly	2,0
+	puval	1,2
+	pvaly	0,3
+	dallexe	4,&'parser$chrest'/4
+	.clause
+13:	all	4
+	gvary	3,1
+	gc	2,$' ('
+	gvary	0,3
+	gvara	3,5
+	pc	0,$1200
+	pvary	2,1
+	pvarx	2,2
+	pvary	1,4
+	call	4,5,&'parser$fullterm'/5
+	pvaly	3,0
+	puval	2,1
+	puval	1,2
+	pvaly	0,3
+	dallexe	4,&'parser$chrest'/4
+	.clause
+14:	all	4
+	gvary	3,1
+	gc	2,$'('
+	gvary	0,3
+	gvara	3,5
+	pc	0,$1200
+	pvary	2,1
+	pvarx	2,2
+	pvary	1,4
+	call	4,5,&'parser$fullterm'/5
+	pvaly	3,0
+	puval	2,1
+	puval	1,2
+	pvaly	0,3
+	dallexe	4,&'parser$chrest'/4
+	.clause
+15:	gvara	0,1
+	gc	2,$'['
+	gvarx	8,3
+	glvx2	5,9,3
+	gs	9,$'pun'/2
+	uc	$'c'
+	uc	$']'
+	cutx	4
+	pnil	1
+	pc	2,$0
+	gvara	4,8
+	exec	5,&'parser$rest'/5
+	.clause
+16:	all	4
+	gvary	3,1
+	gc	2,$'['
+	gvary	0,3
+	gvara	1,5
+	pvary	2,0
+	pvary	1,2
+	call	4,3,&'parser$list'/3
+	pvaly	3,0
+	puval	2,1
+	puval	1,2
+	pvaly	0,3
+	dallexe	4,&'parser$chrest'/4
+	.clause
+17:	all	5
+	gvary	2,1
+	gvary	4,2
+	gvary	0,3
+	glvx2	5,8,1
+	gs	8,$'open'/1
+	uc	$'('
+	cutx	4
+	pvary	3,0
+	pvary	1,2
+	call	5,3,&'parser$list'/3
+	pvarx	1,1
+	pl	8
+	ulvy	4
+	ulvy	3
+	univ	1,8
+	pvaly	2,0
+	puval	1,2
+	pvaly	0,3
+	dallexe	4,&'parser$chrest'/4
+	.clause
+18:	gvarx	10,0
+	gvarx	11,1
+	gvara	0,2
+	gvarx	9,3
+	gvarx	12,5
+	gs	7,$'op'/9
+	uvara	1
+	uvara	2
+	uvara	3
+	uvarx	8
+	uvarx	13
+	uvarx	14
+	uvara	5
+	uvarx	15
+	uvarx	16
+	cutx	4
+	ps	17,$'atom'/3
+	ulvx	0
+	ulvx	6
+	us	255,$'op'/9
+	uvalx	1
+	uvalx	2
+	uvalx	3
+	uvalx	8
+	uvalx	13
+	uvalx	14
+	uvalx	5
+	uvalx	15
+	uvalx	16
+	pl	8
+	uvalx	17
+	ulvx	12
+	gvara	4,14
+	gvara	6,10
+	gvara	7,11
+	exec	10,&'parser$termop'/10
+	.clause
+19:	gvara	0,1
+	gvara	1,2
+	gvarx	8,3
+	gvara	3,5
+	pc	2,$0
+	gvara	4,8
+	exec	5,&'parser$rest'/5
+	.clause
+20:	gvara	0,1
+	gvara	1,2
+	gvarx	8,3
+	gvara	3,5
+	pc	2,$0
+	gvara	4,8
+	exec	5,&'parser$rest'/5
+	.clause
+21:	gvara	0,1
+	gvara	1,2
+	gvarx	8,3
+	gvara	3,5
+	pc	2,$0
+	gvara	4,8
+	exec	5,&'parser$rest'/5
+	last
+
+	.pred	'parser$termop',10
+	labelx	10
+5: 	t	11,0,&0
+	r	11,0,&1
+	r	11,0,&2
+	r	11,0,&3
+	tr	11,0,&4
+	.clause
+0:	gvara	2,9
+	ctypx	4,17
+	apushx	1
+	pushx	6
+	apred	4
+	cutx	10
+	ps	0,$'prechigh1'/1
+	ulvx	6
+	gvara	1,8
+	exec	3,&'parser$error'/3
+	.clause
+1:	all	14
+	gvary	5,0
+	gvary	3,1
+	gvary	2,2
+	gc	3,$'y'
+	gvary	10,5
+	gvary	4,7
+	gvary	0,9
+	gvary	7,10
+	apushy	3
+	pushx	4
+	afunc	1
+	popy	13
+	glvx2	8,255,1
+	pvaly	13,0
+	pvary	12,2
+	call	14,3,&'parser$type1'/3
+	cuty	7
+	ps	1,$'top'/1
+	uvaly	13
+	pvaly	13,0
+	puval	12,2
+	pvary	1,3
+	call	12,4,&'parser$term'/4
+55: 	te	0,0,0,&56
+	pvaly	1,0
+	pvary	11,1
+	call	12,2,&'parser$is_error'/2
+	cuty	7
+	pvaly	0,255
+	gvaly	11,255
+	dallpro	
+56: 	re	0,0,&57
+	pvaly	1,255
+	glvx2	255,11,1
+	gs	11,$'val'/1
+	uvary	6
+	apushy	3
+	pushy	10
+	afunc	1
+	popy	9
+	pvaly	9,0
+	pvary	8,2
+	call	11,3,&'parser$type1'/3
+	cuty	7
+	pvarx	11,11
+	pl	12
+	uvarx	13
+	uc	$[]
+	pl	14
+	uvaly	6
+	uvalx	12
+	pl	12
+	ulvy	5
+	uvalx	14
+	univ	11,12
+	ps	1,$'item'/5
+	ulvy	3
+	ulvy	10
+	uvalx	13
+	uvalx	11
+	ulvy	4
+	pvaly	9,0
+	puval	8,2
+	pvaly	0,3
+	dallexe	4,&'parser$term'/4
+57: 	re	0,0,&58
+	pvaly	2,255
+	gc	255,$'y'
+	cuty	7
+	pvaly	1,255
+	glvx2	255,11,3
+	gs	11,$'val'/1
+	uvary	6
+	pvarx	11,11
+	pl	12
+	uvaly	6
+	uc	$[]
+	pl	13
+	ulvy	5
+	uvalx	12
+	univ	11,13
+	pvaly	4,0
+	gvarx	1,11
+	pvaly	3,2
+	pvaly	0,4
+	dallexe	5,&'parser$rest'/5
+58: 	tre	0,0
+	pvaly	2,255
+	gc	255,$'n'
+	pvaly	1,255
+	glvx2	255,255,1
+	pc	0,$'noterm'
+	pvaly	0,2
+	dallexe	3,&'parser$error'/3
+59: 	.clause
+2:	all	8
+	gvary	6,0
+	gvary	5,1
+	gc	2,$'y'
+	gc	3,$'n'
+	gvary	4,4
+	gvary	3,7
+	gvary	0,9
+	gvary	7,10
+	apushy	5
+	pushy	4
+	afunc	1
+	popy	2
+	glvx2	8,255,1
+	pvaly	2,0
+	pvary	1,2
+	call	8,3,&'parser$type1'/3
+	cuty	7
+	pvarx	11,11
+	pl	12
+	uvarx	13
+	uc	$[]
+	pl	14
+	ulvy	6
+	uvalx	12
+	univ	11,14
+	ps	1,$'item'/5
+	ulvy	5
+	ulvy	4
+	uvalx	13
+	uvalx	11
+	ulvy	3
+	pvaly	2,0
+	puval	1,2
+	pvaly	0,3
+	dallexe	4,&'parser$term'/4
+	.clause
+3:	gvara	2,9
+	apushx	1
+	pushx	6
+	apred	4
+	cutx	10
+	ps	0,$'prechigh2'/1
+	ulvx	6
+	gvara	1,8
+	exec	3,&'parser$error'/3
+	.clause
+4:	gvarx	11,0
+	gvarx	12,1
+	gvara	0,7
+	glvx2	8,255,3
+	gvara	4,9
+	gvara	1,11
+	gvara	2,12
+	exec	5,&'parser$rest'/5
+	last
+
+	.pred	'parser$list',3
+	.clause
+0:	gl	0
+	uvarx	4
+	all	4
+	uvary	3
+	gvarx	3,1
+	gvary	0,2
+	pc	0,$1200
+	gvara	1,4
+	pvary	2,2
+	pvary	1,4
+	call	4,5,&'parser$fullterm'/5
+	pvaly	3,0
+	puval	2,1
+	puval	1,2
+	pvaly	0,3
+	dallexe	4,&'parser$restlist'/4
+	last
+
+	.pred	'parser$restlist',4
+	labelx	4
+6: 	sot	0,&4,&7,&5,&5
+4: 	t	5,0,&0
+	r	5,0,&1
+	r	5,0,&2
+	tr	5,0,&3
+7: 	jc	0,$[],&4
+5: 	t	5,0,&1
+	tr	5,0,&2
+	j	&4
+	.clause
+0:	gnil	0
+	gvara	0,2
+	all	3
+	gvary	0,3
+	gvary	2,4
+	pvary	1,1
+	call	3,2,&'parser$is_error'/2
+	cuty	2
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+	.clause
+1:	gc	1,$','
+	gvara	1,2
+	gvara	2,3
+	cutx	4
+	exec	3,&'parser$list'/3
+	.clause
+2:	gvarx	5,0
+	gc	1,$'|'
+	gvarx	6,2
+	gvarx	7,3
+	cutx	4
+	pc	0,$1200
+	gvara	1,5
+	pvarx	2,2
+	gvara	3,6
+	gvara	4,7
+	exec	5,&'parser$fullterm'/5
+	.clause
+3:	gnil	0
+	gvalx	2,3
+	pro	
+	last
+
+	.pred	'parser$type1',3
+14: 	sot	1,&15,&12,&16,&20
+15: 	mkdel	3,&14
+	mark	1
+	delay	
+12: 	fail	
+16: 	glvx2	1,1,3
+17: 	sot	1,&18,&12,&12,&19
+18: 	mkdel	4,&17
+	mark	1
+	delay	
+19: 	sos	1,&($'atom'/3:&13,$'open'/1:&6,$'thing'/2:&10,$'var'/2:&11),&12
+13: 	t	4,0,&7
+	r	4,0,&8
+	tr	4,0,&9
+20: 	fail	
+	.clause
+6:	gsx1	1,4,$'open'/1
+	gl	2
+	uvarx	5
+	ulvx	3
+	gs	5,$'open'/1
+	uvalx	4
+	pro	
+	.clause
+7:	gs	1,$'atom'/3
+	uvarx	7
+	uvarx	6
+	uvarx	5
+	gl	2
+	uvarx	8
+	ul	255
+	uvarx	9
+	uvarx	4
+	gs	8,$'atom'/3
+	uvalx	7
+	uvalx	6
+	uvalx	5
+	gs	9,$'open'/1
+	uc	$'('
+	gl	3
+	uvarx	8
+	uvalx	4
+	gs	8,$'open'/1
+	uc	$'('
+	pro	
+	.clause
+8:	gs	1,$'atom'/3
+	uvarx	5
+	uvarx	4
+	uc	$[]
+	gl	2
+	uvarx	6
+	ulvx	3
+	gs	6,$'atom'/3
+	uvalx	5
+	uvalx	4
+	uc	$[]
+	pro	
+	.clause
+9:	gs	1,$'atom'/3
+	uvarx	4
+	uvarx	5
+	us	255,$'op'/9
+	uvarx	6
+	uvarx	7
+	uvarx	8
+	uvarx	9
+	uvarx	10
+	uvarx	11
+	uvarx	12
+	uvarx	13
+	uvarx	14
+	apushx	6
+	pushx	0
+	apred	3
+	gl	2
+	uvarx	15
+	ulvx	3
+	gs	15,$'atom'/3
+	uvalx	4
+	uvalx	5
+	us	255,$'op'/9
+	uvalx	6
+	uvalx	7
+	uvalx	8
+	uvalx	9
+	uvalx	10
+	uvalx	11
+	uvalx	12
+	uvalx	13
+	uvalx	14
+	pro	
+	.clause
+10:	gsx2	1,5,4,$'thing'/2
+	gl	2
+	uvarx	6
+	ulvx	3
+	gs	6,$'thing'/2
+	uvalx	5
+	uvalx	4
+	pro	
+	.clause
+11:	gsx2	1,5,4,$'var'/2
+	gl	2
+	uvarx	6
+	ulvx	3
+	gs	6,$'var'/2
+	uvalx	5
+	uvalx	4
+	pro	
+	last
+

@@ -1,0 +1,8 @@
+#! /bin/sh
+# Note that the line above is needed for the cgi/execve interface
+# but is not output by nc.  The lines below are the output of nc
+# without modification
+case $# in
+  0) exec /home/staff/jws/lib/nuprolog/alpha/bin.10612/nep -R /local/dept/w3/unsupported/cgi-bin/nptest.save -P "$0" -a ;;
+  *) exec /home/staff/jws/lib/nuprolog/alpha/bin.10612/nep -R /local/dept/w3/unsupported/cgi-bin/nptest.save -P "$0" -a "$@" ;;
+esac

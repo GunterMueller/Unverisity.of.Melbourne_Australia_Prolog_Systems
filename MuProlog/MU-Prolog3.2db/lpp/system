@@ -1,0 +1,139 @@
+	% all system predicates
+
+system(gnot(X,Y)).
+system(assert(X)).
+system(asserta(X)).
+system(assertz(X)).
+system(clause(X,Y)).
+system(consult(X)).
+system(deny(X,Y)).
+system(hidden).
+system(hide(X)).
+system(lib(X)).
+system(libdirectory(X)).
+system(protect(X)).
+system(reconsult(X)).
+system(retract(X)).
+system(retractall(X)).
+system([X]).
+system(display(X)).
+system(eof(X)).
+system(get(X)).
+system(get0(X)).
+system(next(X,Y)).
+system(nl).
+system(op(X,Y,Z)).
+system(portraycl(X)).
+system(portraygoals(X)).
+system(print(X)).
+system(printf(X,Y)).
+system(putatom(X)).
+system(put(X)).
+system(read(X)).
+system(see(X)).
+system(seeing(X)).
+system(seen).
+system(skip(X)).
+system(tab(X)).
+system(tell(X)).
+system(telling(X)).
+system(told).
+system(wflags(X)).
+system(write(X)).
+system(writef(X,Y)).
+system(writeln(X)).
+system(abort).
+system(backtrace(X)).
+system(backtrace).
+system(break).
+system(debugging).
+system(h).
+system(ls).
+system(listing).
+system(ls(X)).
+system(listing(X)).
+system(nodebug).
+system(nospy(X)).
+system(notrace).
+system(restore(X)).
+system(save(X)).
+system(spy(X)).
+system(trace(X)).
+system(trace).
+system(maxint(X)).
+system(X < Y).
+system(X =< Y).
+system(X > Y).
+system(X >= Y).
+system(X =:= Y).
+system(X =\= Y).
+system(X and Y).
+system(X or Y).
+system(X is Y).
+system(plus(X,Y,Z)).
+system(length(X,Y)).
+system(ancestor(X,Y)).
+system(depth(X)).
+system(arg(X,Y,Z)).
+system(functor(X,Y,Z)).
+system(name(X,Y)).
+system(atom(X)).
+system(atomic(X)).
+system(int(X)).
+system(integer(X)).
+system(var(X)).
+system(nonvar(X)).
+system(not X).
+system(~X).
+system(occurs(X,Y)).
+system(error(X)).
+system(error(X,Y)).
+system(errhandler(X)).
+system(repeat).
+system(true).
+system(fail).
+system(wait(X)).
+system(call(X)).
+system((X, Y)).
+system((X ; Y)).
+system(X =.. Y).
+system(X == Y).
+system(X \== Y).
+system(X = Y).
+system(X \= Y).
+system(X ~= Y).
+system(if X then Y).
+system(if X then Y else Z).
+system((X -> Y)).
+system((X -> Y ; Z)).
+system(!).
+system(open(X,Y,Z)).
+system(getc(X,Y)).
+system(putc(X,Y)).
+system(read(X,Y)).
+system(write(X,Y)).
+system(write(X,Y,Z)).
+system(writeln(X,Y)).
+system(fprintf(X,Y,Z)).
+system(pipe(X)).
+system(pipe(X,Y)).
+system(fork).
+system(system(X,Y)).
+system(argv(X)).
+system(csh).
+system(sh).
+system(shell(X)).
+system(more(X)).
+system(edit(X)).
+system(exit(X)).
+system(getuid(X)).
+system(isuser(X)).
+system(sig(X,Y)).
+system(dbcreate(X)).
+system(dbrules(X,Y)).
+system(createrel(X,Y)).
+system(removerel(X,Y)).
+system(dbcons(X)).
+system(X) :-
+           functor(X,F,N),
+           name(F, [36|T]).	% name starts with $

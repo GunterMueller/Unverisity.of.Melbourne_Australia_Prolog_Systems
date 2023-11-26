@@ -1,0 +1,143 @@
+%	Epilog - and-connective specified coroutining
+%	'&', '\', ':' & ',' are all AND connectives which specify different
+%	coroutining behaviour.
+%	The iterpreter is called with i(EpilogGoal).
+%	From "Epilog: A language for extended programming in logic"
+%	By A. Porto
+%	Appeared in "Implementations of Prolog" or something or other
+%	edited by Campbell.
+%	Keyed in by tap
+
+?- op(200,xfy,&).
+?- op(210,xfy,\).
+?- op(220,xfy,:).
+?- op(220,fy,:).
+?- op(230,xfx,<-).
+?- op(230,xfx,(<<-)).
+
+
+%	same leaves program in epilog
+%	epilog program clauses must come before the epilog system clauses
+%	writes out leaves (and the number of the tree from which they came)
+%	as they are examined.
+
+same_leaves(T1,T2,T3) <- 
+	leaves(T1,L)\leaves(T2,L)\leaves(T3,L).
+
+leaves(t(Left,Right),L-X) <- 
+	(leaves(Left,L-R),:leaves(Right,R-X)).
+
+leaves(l(N,L),L+X-X) <- 
+	true 
+			:- writeln('examing leaf'(N,L)).
+
+test1 :- i(same_leaves(
+	t(t(l(1,a),l(1,b)),t(l(1,c),l(1,d))),
+	t(l(2,a),t(l(2,b),t(l(2,c),l(2,d)))),
+	t(t(t(l(3,a),l(3,b)),l(3,c)),l(3,d))
+)).
+%	test2 fails
+test2 :- i(same_leaves(
+	t(t(l(1,a),l(1,b)),t(l(1,c),l(1,d))),
+	t(l(2,a),t(l(2,e),t(l(2,c),l(2,d)))),
+	t(t(t(l(3,a),l(3,b)),l(3,c)),l(3,d))
+)).
+test3 :- i(same_leaves(
+	t(t(l(1,a),l(1,b)),t(l(1,c),t(l(1,d),l(1,e)))),
+	t(t(l(2,a),l(2,b)),t(t(l(2,c),l(2,d)),l(2,e))),
+	t(t(t(l(3,a),t(l(3,b),l(3,c))),l(3,d)),l(3,e))
+)).
+
+%	top level interpreter clauses
+
+i(call(C)) :-
+	!,C.
+i(true) :- !.
+
+i(G1,G2) :-
+	i(G1),i(G2).
+
+i(G1\G2) :-
+	!, G1 <- NG1, G2 <- NG2, c_join(NG1,NG2,NG), i(NG).
+
+i(G1:G2) :-
+	!, G1 <<- NG1, c_join(NG1,G2,NG), i(NG).
+
+i(:G) :-
+	!,i(G).
+
+i(G1&G2) :-
+	!, G1 <<- NG1, G2 <<- NG2, w_join(NG1,NG2,NG), i(NG).
+
+i(G) :-
+	G <- NG, i(NG).
+
+%	cycle clauses - reduces the goals in the current cycle to 'true'
+
+true <<- true :- !.
+
+:G <<- G :-
+	!.
+
+G1:G2 <<- NG :-
+	!, G1 <<- NG1, c_join(NG1,G2,NG).
+
+G1&G2 <<- NG :-
+	!, G1 <<- NG1, G2 <<- NG2, w_join(NG1,NG2,NG).
+
+G <<- NG :-
+	G <- IG, IG <<- NG.
+
+%	sweep clauses - performs one reduction on each available goal
+
+G1\G2 <- NG :-
+	!, G1 <- NG1, G2 <- NG2, c_join(NG1,NG2,NG).
+
+G1:G2 <- NG :-
+	!, G1 <- NG1, d_join(NG1,G2,NG).
+
+:G <- :G :-
+	!.
+
+G1&G2 <- NG :-
+	!, G1 <- NG1, w_join(NG1,G2,NG).
+
+(G1,G2) <- NG :-
+	!, G1 <- NG1, s_join(NG1,G2,NG).
+
+%	Join clauses - preserve coroutining among goals
+
+s_join(true,G2,G2) :- !.
+s_join(:D1,G2,: (D1,G2)) :- !. % note - mu-prolog thinks :(a,b) = a : b
+s_join((G1,Gn),G2,(G1,Gn,G2)) :- !.
+s_join(G1,G2,(G1,G2)) :- !.
+
+w_join(true,G2,G2) :- !.
+w_join(:D1,:D2,: (D1&D2)) :- !.
+w_join(G1&Gn,G2,G1&Gn&G2) :- !.
+w_join(G1,G2,G1&G2) :- !.
+
+d_join(true,D2,:D2) :- !.
+d_join(:D1,D2,:D1\D2) :- !.
+d_join(G1:D1,D2,G1:D1\D2) :- !.
+d_join(G1,D2,G1:D2) :- !.
+
+c_join(true,G2,G2) :- !.
+c_join(:D1,G2,NG) :- i_d_join(G2,D1,NG),!.
+c_join(G1:D1,G2,NG) :- i_d_join(G2,G1,D1,NG),!.
+c_join(G1,G2,NG) :- i_c_join(G2,G1,NG),!.
+
+i_d_join(true,D1,:D1) :- !.
+i_d_join(:D2,D1,:D1\D2) :- !.
+i_d_join(G2:D2,D1,G2:D1\D2) :- !.
+i_d_join(G2,D1,G2:D1) :- !.
+
+i_d_join(true,G1,D1,G1:D1) :- !.
+i_d_join(:D2,G1,D1,G1:D1\D2) :- !.
+i_d_join(G2:D2,G1,D1,G1\G2:D1\D2) :- !.
+i_d_join(G2,G1,D1,G1\G2:D1) :- !.
+
+i_c_join(true,G1,G1) :- !.
+i_c_join(:D2,G1,G1:D2) :- !.
+i_c_join(G2:D2,G1,G1\G2:D2) :- !.
+i_c_join(G2,G1,G1\G2) :- !.

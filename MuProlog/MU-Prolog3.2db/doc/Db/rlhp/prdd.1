@@ -1,0 +1,39 @@
+.TH PRDD MUDD "21 November 1984"
+.SH NAME
+prdd \- diagnostic print of a database relation
+.SH SYNOPSIS
+.B prdd
+db relation
+.br
+.SH DESCRIPTION
+.I Prdd
+prints out diagnostic information about the
+.I relation
+in the database directory
+.I db.
+For example:
+.PP
+        MUDD Version: 3.1c
+        relation: student
+        number of keys: 9
+        bucket size: 4096 (bytes)
+        descriptor size: 128 (bits)
+        number of levels: 2
+        number of buckets: 35
+        load control (L): 50
+        KEY     DBITS   OFFSETS CV
+        0       43      0       000125
+        1       0       43      000000
+        2       0       43      000000
+        3       43      43      000252
+        4       41      86      000000
+        5       0       127     000000
+        6       0       127     000000
+        7       0       127     000000
+        8       0       127     000000
+        LEVEL   DEPTH   SP      NBKTS   NREC
+        0       6       1       33      1646
+        1       1       0       2       57
+.SH "SEE ALSO"
+mudd(mudd), newrel(mudd), prbkt(mudd)
+.SH BUGS

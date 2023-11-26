@@ -1,0 +1,10 @@
+/*	_2 is list _1 reversed */
+reverse(A, B) :- 
+	/* rev2(B, [], A),	/* if B is instantiated */
+	rev2(A, [], B).		/* if A is instantiated (can have both) */
+
+/*	_3 is the reverse of _1 appended to _2 */
+?- wait rev2(0, 1, 1).
+rev2([], A, A).
+rev2(A.B, C, D) :-
+	rev2(B, A.C, D).

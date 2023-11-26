@@ -1,0 +1,51 @@
+
+	.pred	'$nconc',2
+	.clause
+0:	glvx2	0,255,2
+	pnil	3
+	idtest	2,3
+	jfail	&5
+	pc	2,$2
+	replacn	2,0,1
+	pro	
+5: 	gvara	0,2
+	exec	2,&'$nconc'/2
+6: 	last
+
+	.pred	'$makeObject',3
+	.clause
+0:	all	6
+	gvary	1,1
+	gvary	0,2
+	labely	5
+11: 	te	1,0,1,&12
+	pvary	4,1
+	pvary	2,2
+	call	6,3,&'$ctag'/3
+	cuty	5
+	puval	4,0
+	pvary	3,1
+	call	4,2,&'$tag'/2
+	j	&13
+12: 	tre	1,0
+	pvary	3,1
+	call	4,2,&'$tag'/2
+	pc	255,$0
+	gvary	2,255
+13: 	puval	3,3
+	puval	2,4
+	pvaly	1,5
+	mkobj	3,4,5,3
+	gvaly	0,3
+	dallpro	
+	last
+
+	.pred	'$makeStruct',2
+	.clause
+0:	pc	2,$6
+	pc	3,$0
+	mkobj	2,3,0,2
+	gvalx	1,2
+	pro	
+	last
+

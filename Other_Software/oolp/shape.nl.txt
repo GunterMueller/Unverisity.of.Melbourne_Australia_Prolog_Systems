@@ -1,0 +1,134 @@
+%%%%%%%%%%%%%%%%%%%%%%%%% Header
+:- op(800, fx, (def_object)).
+:- op(800, fx, (end_def)).
+:- op(401, xfx, (::)).
+:- op(600, xfx, (isa)).
+%%%%%%%%%%%%%%%%%%%%%%%%% OBJECT.op
+'OBJECT'(defines_property(A), B) :-
+	defines_prop(B, A).
+'OBJECT'(parent(A), B) :-
+	B isa A.
+%%%%%%%%%%%%%%%%%%%%%%%%% shape.op
+
+% point(x, y) isa object
+point(xval(A), B, A, C).
+point(yval(A), B, C, A).
+point(move(A, B, point(C, D)), E, F, G) :-
+	plus(F, A, C),
+	plus(G, B, D).
+
+% rectangle(origin, xlength, ylength) isa OBJECT
+rectangle(origin(A), B, A, C, D).
+rectangle(xlength(A), B, C, A, D).
+rectangle(ylength(A), B, C, D, A).
+rectangle(move(A, B, rectangle(C, D, E)), F, G, D, E) :-
+	G :: move(A, B, C).
+rectangle(perimeter(A), B, C, D, E) :-
+	A is 2 * (D + E).
+rectangle(area(A), B, C, D, E) :-
+	A is D * E.
+rectangle(rotate(rectangle(A, B, C)), D, E, C, B) :-
+	plus(F, C, B),
+	plus(G, B, C),
+	H is G / 2,
+	I is F / 2,
+	E :: move(H, I, A).
+rectangle(intersection(A, rectangle(point(B, C), D, E)), F, G, H, I) :-
+	A :: origin(J),
+	J :: xval(K),
+	J :: yval(L),
+	G :: xval(M),
+	G :: yval(N),
+	maximum(M, K, B),
+	maximum(N, L, C),
+	A :: xlength(O),
+	A :: ylength(P),
+	plus(K, O, Q),
+	plus(L, P, R),
+	plus(M, H, S),
+	plus(N, I, T),
+	minimum(S, Q, U),
+	minimum(T, R, V),
+	plus(B, W, U),
+	plus(C, X, V),
+	(if W >= 0, X >= 0 then
+		D = W,
+		E = X
+	else
+		D = 0,
+		E = 0
+	).
+
+% square(origin, length) isa rectangle(origin, length, length)
+square(perimeter(A), B, C, D) :-
+	A is 4 * D.
+square(rotate(square(A, B)), C, A, B).
+maximum(A, B, C) :-
+	(if A > B then
+		C = A
+	else
+		C = B
+	).
+minimum(A, B, C) :-
+	(if A =< B then
+		C = A
+	else
+		C = B
+	).
+
+
+point(A, B) isa object.
+rectangle(A, B, C) isa 'OBJECT'.
+square(A, B) isa rectangle(A, B, B).
+
+object('OBJECT').
+object(point(A, B)).
+object(rectangle(A, B, C)).
+object(square(A, B)).
+
+defines_prop('OBJECT', defines_property(A)).
+defines_prop('OBJECT', parent(A)).
+defines_prop(point(A, B), xval(C)).
+defines_prop(point(A, B), yval(C)).
+defines_prop(point(A, B), move(C, D, E)).
+defines_prop(rectangle(A, B, C), origin(D)).
+defines_prop(rectangle(A, B, C), xlength(D)).
+defines_prop(rectangle(A, B, C), ylength(D)).
+defines_prop(rectangle(A, B, C), move(D, E, F)).
+defines_prop(rectangle(A, B, C), perimeter(D)).
+defines_prop(rectangle(A, B, C), area(D)).
+defines_prop(rectangle(A, B, C), rotate(D)).
+defines_prop(rectangle(A, B, C), intersection(D, E)).
+defines_prop(square(A, B), perimeter(C)).
+defines_prop(square(A, B), rotate(C)).
+
+call_object('OBJECT', defines_property(A), B) :-
+	'OBJECT'(defines_property(A), B).
+call_object('OBJECT', parent(A), B) :-
+	'OBJECT'(parent(A), B).
+call_object(point(A, B), xval(C), D) :-
+	point(xval(C), D, A, B).
+call_object(point(A, B), yval(C), D) :-
+	point(yval(C), D, A, B).
+call_object(point(A, B), move(C, D, E), F) :-
+	point(move(C, D, E), F, A, B).
+call_object(rectangle(A, B, C), origin(D), E) :-
+	rectangle(origin(D), E, A, B, C).
+call_object(rectangle(A, B, C), xlength(D), E) :-
+	rectangle(xlength(D), E, A, B, C).
+call_object(rectangle(A, B, C), ylength(D), E) :-
+	rectangle(ylength(D), E, A, B, C).
+call_object(rectangle(A, B, C), move(D, E, F), G) :-
+	rectangle(move(D, E, F), G, A, B, C).
+call_object(rectangle(A, B, C), perimeter(D), E) :-
+	rectangle(perimeter(D), E, A, B, C).
+call_object(rectangle(A, B, C), area(D), E) :-
+	rectangle(area(D), E, A, B, C).
+call_object(rectangle(A, B, C), rotate(D), E) :-
+	rectangle(rotate(D), E, A, B, C).
+call_object(rectangle(A, B, C), intersection(D, E), F) :-
+	rectangle(intersection(D, E), F, A, B, C).
+call_object(square(A, B), perimeter(C), D) :-
+	square(perimeter(C), D, A, B).
+call_object(square(A, B), rotate(C), D) :-
+	square(rotate(C), D, A, B).

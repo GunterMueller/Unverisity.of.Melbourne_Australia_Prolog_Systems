@@ -1,0 +1,100 @@
+.\"	MU-Prolog release notes
+.nh
+.po 0.75i
+.ll 6.5i
+.m1 0.2i
+.m2 0
+.m3 0
+.m4 0
+.sp 2
+.ce
+\s+4\fBMU-Prolog Release 3.2\fP\s-4
+.sp 1.5
+.lp
+Release 3.2 of the MU-Prolog system will soon be available, for educational
+and research purposes only.
+It is written in \fBC\fP and is especially suitable for \fBUnix\fP
+environments, although it is also available for \fBVMS\fP systems.
+It is currently running under a number of different versions of Unix
+(System III, System V, BSD 4.1, BSD 4.2, OSx, UTX)
+on a variety of architectures
+(Vax 11/780, Vax 11/750, Perkin-Elmer 3240,
+Gould PN-3000, Pyramid 90x, Sun, other MC68000 systems).
+Note that because of its memory requirements (around 0.5Mb)
+it will not run on systems without virtual memory or large real memories.
+There is a handling charge of $A200.00 associated with the distribution.
+.sp
+.ce
+\s+2\fBFeatures of MU-Prolog\fP\s-2
+.ip (1)
+All UNIX Prolog and most C-Prolog and DEC-10 Prolog facilities are provided.
+The syntax is compatible with DEC-10 Prolog (the \fIde facto\fR standard).
+.ip (2)
+There are extra control facilities which enable a coroutining style of
+execution. User-defined procedures may have \fBwait declarations\fR
+which can delay calls to these procedures. Calls to many system predicates
+may also be delayed.
+.ip (3)
+Three sound forms of negation are provided:
+not (\fB~\fP), not equals (\fB~=\fP) and \fBif-then-else\fP.
+Calls to these predicates are delayed if they are insufficiently
+instantiated.
+.ip (4)
+A logic pre-processor (\fBlpp\fP) allows programmers to write in
+a style closer to first-order logic, which is then translated into
+standard Prolog, and control information is automatically added.
+.sp
+.ce
+\s+2\fB New Features in MU-Prolog 3.2\fP\s-2
+.ip (5)
+A dynamic loading facility for linking compiled object code
+into a running MU-Prolog interpreter (Berkeley Unix only).
+.ip (6)
+The database system has been extended to allow the user to incorporate
+(via dynamic loading) his/her own indexing schemes to access external
+databases from MU-Prolog. For systems on which dynamic loading is not
+available, database access schemes must be compiled into MU-Prolog.
+.ip (7)
+Two external database indexing schemes are supplied with the system:
+a recursive linear hashing scheme to store and retrieve ground Prolog
+facts; a superimposed codeword index scheme to store and retrieve
+general Prolog terms (including variables).
+Both indexing schemes provide efficient partial match retrieval,
+even on very large databases (greater than 1 million facts).
+.ip (8)
+A simple clause indexing scheme can be invoked to provide fast
+access to facts and rules in the internal database.
+.ip (9)
+A negation pre-processor (\fBnegpp\fP) allows the user to program
+in the cleaner style of the NU-Prolog (see below) control primitives,
+and then transform the program into standard MU-prolog for execution.
+.sp
+.lp
+To obtain a copy of the MU-Prolog system, two signed licence
+agreements and a cheque for $A200.00, payable to The University of Melbourne,
+must be sent to:
+.(b
+MU-Prolog Distribution
+Department of Computer Science
+University of Melbourne
+Parkville, 3052
+Australia
+.)b
+Please include details of your installation (that is, make/model/location
+of host machines) and what mediums you can read
+(1600 bpi tape in Unix \fBtar\fP format is easiest for us,
+but VMS \fBBACKUP\fP format can also be arranged).
+.lp
+The MU-Prolog system has been developed at the University of Melbourne
+primarily by Lee Naish. The recursive linear-hashed database system was
+developed in conjunction with James Thom. The superimposed codeword database
+system was designed by Dr. Kotagiri Ramamohanarao and implemented by him
+and John Shepherd. The clause indexing scheme was developed by Jeff Schultz.
+.lp
+MU-Prolog 3.2 will be fully available around March 1986.
+.lp
+Work is underway at the University of Melbourne to develop a compiler
+for the MU-Prolog language (called NU-Prolog) which will offer a substantial
+performance improvement over the interpreter, as well as some new control
+primitives. MU-Prolog 3.2 will be the last release of the MU-Prolog interpreter
+before the release of the compiler.

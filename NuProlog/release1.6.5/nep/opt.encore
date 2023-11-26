@@ -1,0 +1,40 @@
+#!/usr/local/bin/perl
+
+$file = $ARGV[0];
+
+open(FILE, $file) || die "Can't open file $file";
+while(<FILE>) {
+	$acc = $_;
+	next unless (/^	movzbd	.*,(\w*)/);
+	$r = $1;
+	$keep = $acc;
+	$_ = <FILE>;
+	$acc .= $_;
+	$s = "^	cmpqd	.0,$r";
+	next unless ($_ =~ $s);
+	$_ = <FILE>;
+	$acc .= $_;
+	next unless (/^	bhi	/);
+	$_ = <FILE>;
+	$acc .= $_;
+	$s = "^	cmpd	$r,.(\w*)";
+	next unless ($_ =~ $s);
+	/,.([0-9]*)$/;
+#	Note that this is not a provably correct optimization.  It just happens
+#	to work on inter.s.
+	next if ($1 < 100);
+	$_ = <FILE>;
+	$acc .= $_;
+	next unless (/^	bhi	/);
+	$_ = <FILE>;
+	$acc .= $_;
+	next unless (/^.L.*:$/);
+	$keep .= $_;
+	$_ = <FILE>;
+	$acc .= $_;
+	if (/^	cased	/) {
+		$acc = $keep . $_ . "	.align	4\n";
+	}
+} continue {
+	print $acc;
+}

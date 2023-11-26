@@ -1,0 +1,11 @@
+/*
+ * Benchmark Prolog database systems
+ */
+
+lib db, db_cons(db).
+
+rlhp(123,X,Y), writeln(rlhp(123,X,Y)), fail.
+rlhp(X,a,Y), writeln(rlhp(X,a,Y)), fail.
+rlhp(X,Y,aforementioned), writeln(rlhp(X,Y,aforementioned)), fail.
+%rlhp(X,Y,Z), writeln(rlhp(X,Y,Z)), fail.
+

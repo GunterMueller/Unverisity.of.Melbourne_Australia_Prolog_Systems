@@ -1,0 +1,20 @@
+	/* Front end for n-queens problem. This calls a general backtracking
+	   procedure and prints the result.
+	*/
+queen(N,Y) :- genlist(N, X), p(X, [], Y).
+
+genlist(0, []) :- !.
+genlist(N, N.X) :- M is N - 1, genlist(M, X).
+
+	/* General backtracking procedure p(A,B,C). A is the list of possible
+	   choices at this level. B is the list of choices made so far (in
+	   reverse).  C is (or will be) the list of subsequent choices.
+	*/
+p([],X,[]).
+p(S,X,Y.Z) :- select(Y,S,T), notake(Y,Y,X), p(T,Y.X,Z).
+
+select(U,U.X,X).
+select(V,U.X,U.Y) :-select(V,X,Y).
+
+notake(R,S,[]).
+notake(R,S,X.Y) :- T is R + 1, U is S - 1, X =\= T, X =\= U, notake(T,U,Y).

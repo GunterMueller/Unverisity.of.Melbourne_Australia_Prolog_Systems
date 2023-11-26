@@ -1,0 +1,99 @@
+#!/mip/usr/bin/perl
+
+$file = $ARGV[0];
+
+open(FILE, $file) || die "Can't open file $file";
+while(<FILE>) {
+	next unless(/^(\w*):/);
+	for($i = 0; /^(\w*):/; $i = $i+1) {
+		$labels[$i] = $1;
+		$_ = <FILE>;
+	}
+	next unless($_ =~ /^	b	(\w*)/);
+	$_ = <FILE>;
+	next unless($_ =~ /^	nop/);
+	$target = $1;
+	for($i = $i - 1; $i >= 0; $i = $i - 1) {
+		$jumps{$labels[$i]} = $target;
+	}
+}
+
+#	The following is probably only needed on the Sun4
+@labels = keys(jumps);
+while($#labels >= 0) {
+	$k = pop(@labels);
+	for($t = $k; $jumps{$t}; $t = $jumps{$t})
+		{ }
+	$jumps{$k} = $t;
+}
+
+@labels = keys(jumps);
+while($#labels >= 0) {
+	$l = pop(@labels);
+	$targets{$jumps{$l}} .= "$l:\n";
+}
+
+open(FILE, $file) || die "Can't open file $file";
+$acc = '';
+while(<FILE>) {
+	if(/^	b	/) {
+# This doesn't do a perfect job, but it's better than nothing.
+		$jmp = $_;
+		if(	$acc =~ "^	ld	"		||	$acc =~ "^	st	"
+		 ||	$acc =~ "^	sethi	"	||	$acc =~ "^	mov	"
+		 ||	$acc =~ "^	add	"		||	$acc =~ "^	sub	"
+		 ||	$acc =~ "^	cmp	"		||	$acc =~ "^	tst	"
+		 ||	$acc =~ "^	and	"		||	$acc =~ "^	or	"
+		 ||	$acc =~ "^	sra	"		||	$acc =~ "^	sll	"
+		 ) {
+			$_ = <FILE>;
+			if(/^	nop/) {
+				print $jmp;
+				print $acc;		# Drop the nop
+			} else {
+				print $acc;
+				print $jmp;
+				print;
+			}
+		} else {
+			print $acc;
+			print $jmp;
+		}
+		$acc = '';
+		next;
+	} else {
+		print $acc;
+		$acc = '';
+	}
+	if(/^(\w*):/) {
+		next if($jumps{$1});
+		print $targets{$1} if($targets{$1});
+		print;
+		next;
+	}
+	$acc = $_;
+	$keep = $acc;
+	next unless (/^	ldub	.*,(.*)/);
+	$r = $1;
+	$_ = <FILE>;
+	$acc .= $_;
+	$s = "^	cmp	$r,255";
+	next unless ($_ =~ $s);
+	$_ = <FILE>;
+	$acc .= $_;
+	next unless (/^	bgu	/);
+	$acc = $keep;
+}
+print $acc;
+
+#@keys = keys(jumps);
+#@values = values(jumps);
+#while($#keys >= 0) {
+#	print pop(@keys),' = ',pop(@values),"\n";
+#}
+#
+#@keys = keys(targets);
+#@values = values(targets);
+#while($#keys >= 0) {
+#	print pop(@keys),' = ',pop(@values),"\n";
+#}

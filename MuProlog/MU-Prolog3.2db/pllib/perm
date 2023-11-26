@@ -1,0 +1,11 @@
+/*	_2 is a permutation of _1 */
+?- wait perm(1,0).
+?- wait perm(0,1).
+perm([],[]).
+perm(A.B, C.D) :- delete(C, A.B, E), perm(E, D).
+
+/*	_3 is _2 with element _1 removed */
+?- wait delete(1,0,1).
+?- wait delete(0,1,0).
+delete(A, A.B, B).
+delete(A, B.C.D, B.E) :- delete(A, C.D, E).

@@ -1,0 +1,10 @@
+	% insertion sort with a 'process' for each integer
+	% (like some CSP programs)
+
+sort(X, Y) :- p(X, 9999, _, Y, []).
+
+?-wait(p(0,0,1,1,0)).
+p(X.Y, I, N, A, B) :- I =< X, N = (X.N1), p(Y, I, N1, A, B).
+p(X.Y, I, N, A, B) :- I > X, p(Y, X, N1, A, C), p(N1, I, N, C, B).
+p([], I, [], I.B, B).
+

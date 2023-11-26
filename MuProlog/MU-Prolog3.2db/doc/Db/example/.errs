@@ -1,0 +1,36 @@
+MU-Prolog 3.2db
+
+
+1?- reconsulting /mip/jas/lib/muprolog/pllib/db
+done
+
+true.
+
+2?- 
+true.
+
+3?- 
+fail.
+
+4?- 
+fail.
+
+5?- reconsulting /mip/jas/lib/muprolog/pllib/simc
+done
+/mip/jas/lib/muprolog/db/simc/newrel db simc simc `/mip/jas/lib/muprolog/db/simc/dbparams simc 30 3 1200 4096 1 ` "g:0:0(g:3:02582582,g:2:58258258,g:1:25825825)"
+
+true.
+
+6?- reconsulting /mip/jas/lib/muprolog/pllib/rlhp
+done
+
+true.
+
+7?- 
+End of session
+mkdb: ./gendata: not found
+MU-Prolog 3.2db
+
+
+1?- 
+End of session

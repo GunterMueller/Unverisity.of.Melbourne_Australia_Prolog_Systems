@@ -1,0 +1,69 @@
+:- initializing, add_function(eval, 1).
+:- initializing, add_function(evalLazy, 1).
+:- initializing, add_function(fapply, 2).
+:- initializing, add_function(@, 2).
+:- initializing, add_function(twice, 2).
+:- initializing, add_function(until, 3).
+:- initializing, add_function(round2, 1).
+:- initializing, add_function(foldr, 3).
+:- initializing, add_function(foldl, 3).
+:- initializing, add_function(sum1, 1).
+:- initializing, add_function(product, 1).
+:- initializing, add_function(flatten, 1).
+:- initializing, add_function(o, 3).
+:- initializing, add_function(cons, 2).
+:- initializing, add_function(map_f, 2).
+
+:- op(20, yfx, @).
+@(A9, B9, A) :-
+	fapply(A9, B9, A).
+:- twice(A, B, C) when ever.
+twice(A9, B9, A) :-
+	fapply(A9, B9, B),
+	fapply(A9, B, A).
+:- until(A, B, C, D) when ever.
+until(A9, B9, C9, A) :-
+	(if call(A9, C9) then
+		A = C9
+	else
+		fapply(B9, C9, B),
+		until(A9, B9, B, C),
+		A = C
+	).
+:- round2(A, B) when ever.
+round2(A9, A) :-
+	until(=<(A9), *(2), 1, A).
+:- foldr(A, B, [], C) when ever.
+foldr(A9, B9, [], B9).
+:- foldr(A, B, [C|D], E) when ever.
+foldr(A9, B9, [C9|D9], A) :-
+	fapply(A9, C9, B),
+	foldr(A9, B9, D9, C),
+	fapply(B, C, A).
+:- foldl(A, B, [], C) when ever.
+foldl(A9, B9, [], B9).
+:- foldl(A, B, [C|D], E) when ever.
+foldl(A9, B9, [C9|D9], A) :-
+	fapply(A9, B9, B),
+	fapply(B, C9, C),
+	foldl(A9, C, D9, A).
+:- sum1(A, B) when ever.
+sum1(A9, A) :-
+	foldl(+, 0, A9, A).
+:- product(A, B) when ever.
+product(A9, A) :-
+	foldl(*, 1, A9, A).
+:- flatten(A, B) when ever.
+flatten(A9, A) :-
+	foldr(concat, [], A9, A).
+
+:- op(40, xfy, o).
+:- o(A, B, C, D) when ever.
+o(A9, B9, C9, A) :-
+	fapply(B9, C9, B),
+	fapply(A9, B, A).
+:- cons(A, B, C) when ever.
+cons(A9, B9, [A9|B9]).
+:- map_f(A, B, C) when ever.
+map_f(A9, B9, A) :-
+	foldr(cons o A9, [], B9, A).

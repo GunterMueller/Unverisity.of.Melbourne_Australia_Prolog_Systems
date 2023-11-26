@@ -1,0 +1,18 @@
+	% logic of 8-queens problem (input to pre-processor)
+
+queen(X) :- perm(1.2.3.4.5.6.7.8.[], X), safe(X).
+
+perm([], []).
+perm(X.Y, U.V) :- perm(Z, V), delete(U, X.Y, Z).
+
+delete(A, A.L, L).
+delete(X, A.B.L, A.R) :- delete(X, B.L, R).
+
+safe([]).
+safe(N.L) :- safe(L), nodiag(N, 1, L).
+
+nodiag(_, _, []).
+nodiag(B, D, N.L) :-
+		(D =\= N-B) and (D =\= B-N),
+		D1 is D+1,
+		nodiag(B, D1, L).

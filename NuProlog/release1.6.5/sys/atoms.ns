@@ -1,0 +1,1275 @@
+
+	.pred	'$propertyMember',2
+	.clause
+0:	gs	1,$'$bmt'/6
+	uvoid	5
+	uvara	1
+	exec	2,&'$propertyMember1'/2
+	last
+
+	.pred	'$propertyMember1',2
+	.clause
+0:	gs	1,$'$bmt'/6
+	uvarx	3
+	uvoid	4
+	uvarx	2
+	ctypx	3,17
+5: 	te	3,0,3,&6
+	gvalx	1,0
+	pro	
+6: 	tre	3,0
+	gvara	1,2
+	exec	2,&'$propertyMember1'/2
+7: 	last
+
+	.pred	'$propField',2
+	.clause
+0:	all	2
+	gvary	1,0
+	gvary	0,1
+	jctypy	1,2,&7
+	j	&8
+7: 	pc	1,#(CHR,&6)
+	pl	2
+	ulvy	1
+	uc	$[]
+	pc	0,$'user_error'
+	call	2,3,&'$format'/3
+	fail	
+8: 	pvaly	1,2
+	symbol	2,2
+	pc	3,$4
+	arg	3,2,2
+	gvaly	0,2
+	dallpro	
+	last
+6: 	.string	"~NAtom rather than ~w expected in $propField/2.~n"
+
+	.pred	'$rawProperties',3
+	.clause
+0:	all	3
+	gvary	2,0
+	gvary	1,1
+	gvary	0,2
+	pvaly	1,3
+	fvar	3,255
+	jtypx	255,252,&8
+	j	&9
+8: 	pc	1,#(CHR,&7)
+	pl	2
+	ulvy	1
+	uc	$[]
+	pc	0,$'user_error'
+	call	3,3,&'$format'/3
+	fail	
+9: 	pvaly	2,3
+	pvaly	1,4
+	props	3,4,3
+	gvaly	0,3
+	dallpro	
+	last
+7: 	.string	"~NGround Key rather than ~w expected in $rawProperties/3.~n"
+
+	.pred	'properties',3
+	.clause
+0:	all	2
+	gvary	0,2
+	pvary	1,2
+	call	2,3,&'$rawProperties'/3
+	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'$uncopyProperties'/2
+	last
+
+	.pred	'$uncopyProperties',2
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	2,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	pro	
+	.clause
+1:	glvx2	0,4,0
+	gs	4,$'$prop'/3
+	uvoid	1
+	uvarx	2
+	uvarx	3
+	labelx	4
+9: 	te	2,0,5,&10
+	ps	5,$'$ref'/2
+	uvalx	2
+	uvalx	3
+	inst	5,5,6
+	cutx	4
+	gl	1
+	uvalx	6
+	uvara	1
+	j	&11
+10: 	tre	2,0
+11: 	execsot	2,0,&4,&0,&1,&2
+	last
+
+	.pred	'clauses',3
+	.clause
+0:	exec	3,&'$clauses'/3
+	last
+
+	.pred	'$clauses',3
+	.clause
+0:	gvarx	3,1
+	ps	1,$'$clause'/1
+	ulvx	3
+	exec	3,&'properties'/3
+	last
+
+	.pred	'getclause',3
+	.clause
+0:	pvarx	3,3
+	exec	4,&'$getclause'/4
+	last
+
+	.pred	'getclause',4
+	.clause
+0:	exec	4,&'$getclause'/4
+	last
+
+	.pred	'$getclause',3
+	.clause
+0:	pvarx	3,3
+	exec	4,&'$getclause'/4
+	last
+
+	.pred	'$getclause',4
+	.clause
+0:	gvarx	4,1
+	all	3
+	gvary	0,2
+	gvary	1,3
+	ps	1,$'$clause'/1
+	ulvx	4
+	pvary	2,2
+	call	3,3,&'$rawProperties'/3
+	pvaly	1,255
+	gsx2	255,4,5,$'$ref'/2
+	ps	0,$'$prop'/3
+	uvoid	1
+	uvalx	4
+	uvalx	5
+	puval	2,1
+	call	2,2,&'member'/2
+	pvaly	1,4
+	inst	4,4,5
+	gvaly	0,5
+	dallpro	
+	last
+
+	.pred	'whens',3
+	.clause
+0:	gvarx	3,1
+	ps	1,$'$when'/1
+	ulvx	3
+	exec	3,&'properties'/3
+	last
+
+	.pred	'getwhen',3
+	.clause
+0:	pvarx	3,3
+	exec	4,&'getwhen'/4
+	last
+
+	.pred	'getwhen',4
+	.clause
+0:	gvarx	4,1
+	all	3
+	gvary	0,2
+	gvary	1,3
+	ps	1,$'$when'/1
+	ulvx	4
+	pvary	2,2
+	call	3,3,&'$rawProperties'/3
+	pvaly	1,255
+	gsx2	255,4,5,$'$ref'/2
+	ps	0,$'$prop'/3
+	uvoid	1
+	uvalx	4
+	uvalx	5
+	puval	2,1
+	call	2,2,&'member'/2
+	pvaly	1,4
+	inst	4,4,5
+	gvaly	0,5
+	dallpro	
+	last
+
+	.pred	'getprop',3
+	.clause
+0:	all	4
+	gvary	3,0
+	gvary	0,1
+	gvary	1,2
+	jctypy	3,2,&10
+	j	&11
+10: 	pc	1,#(CHR,&7)
+	pl	2
+	ulvy	3
+	uc	$[]
+	pc	0,$'user_error'
+	call	4,3,&'$format'/3
+	fail	
+11: 	pvaly	3,3
+	symbol	3,3
+	pc	4,$4
+	arg	4,3,1
+	pvary	2,0
+	call	3,2,&'$propertyMember'/2
+	puval	2,3
+	inst	3,3,4
+	gvaly	1,4
+	gvaly	0,3
+	dallpro	
+	last
+7: 	.string	"~NAtom rather than ~w expected in getprop/3.~n"
+
+	.pred	'getprop',4
+	.clause
+0:	gvarx	4,1
+	all	2
+	gvary	0,2
+	gvary	1,3
+	pvaly	1,255
+	gsx2	255,5,6,$'$ref'/2
+	ps	1,$'$prop'/3
+	ulvx	4
+	uvalx	5
+	uvalx	6
+	call	2,2,&'$getprop'/2
+	pvaly	1,0
+	pvaly	0,1
+	dallexe	2,&'instance'/2
+	last
+
+	.pred	'$getprop',2
+	.clause
+0:	all	6
+	gvary	5,0
+	gvary	4,1
+	jctypy	5,2,&12
+	j	&13
+12: 	pc	1,#(CHR,&6)
+	pl	2
+	ulvy	5
+	uc	$[]
+	pc	0,$'user_error'
+	call	6,3,&'$format'/3
+	fail	
+13: 	pvaly	5,2
+	symbol	2,2
+	pc	3,$4
+	arg	3,2,1
+	pvaly	4,255
+	gs	255,$'$prop'/3
+	uvary	2
+	uvary	0
+	uvary	3
+	pvary	1,0
+	call	4,2,&'$propertyMember'/2
+	pvaly	1,255
+	gs	255,$'$bmt'/6
+	uvaly	3
+	uvoid	2
+	uvarx	2
+	uvoid	2
+	pc	3,$0
+	uncopy	2,3,2
+	gvaly	2,2
+	pc	0,$'$block'
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'$makeObject'/3
+	last
+6: 	.string	"~NAtom rather than ~w expected in $getprop/2.~n"
+
+	.pred	'putprop',3
+	.clause
+0:	pvarx	3,3
+	exec	4,&'putprop'/4
+	last
+
+	.pred	'putprop',4
+	.clause
+0:	all	9
+	gvary	0,0
+	gvary	4,1
+	gvary	8,2
+	gs	3,$'$ref'/2
+	uvary	7
+	uvary	6
+	pvaly	0,0
+	pvaly	4,1
+	pc	2,$'putprop'
+	call	9,3,&'$propErrorCheck'/3
+	pvaly	0,0
+	pvary	5,1
+	call	9,2,&'$propField'/2
+	pvaly	4,4
+	pvaly	8,5
+	makebmt	4,5,4,5
+	gvaly	7,5
+	gvary	1,4
+	pvaly	1,255
+	gs	255,$'$bmt'/6
+	uvaly	6
+	uvoid	5
+	labely	3
+12: 	te	0,0,0,&13
+	pvary	2,0
+	puval	5,1
+	call	5,2,&'$propertyMember'/2
+	pvaly	2,255
+	gs	255,$'$bmt'/6
+	uvoid	3
+	ulvy	4
+	uvarx	4
+	uvoid	1
+	cuty	3
+	pvaly	1,5
+	linkbmt	1,5,4
+	puval	2,4
+	erase	4
+	dallpro	
+13: 	tre	0,0
+	pvaly	1,4
+	pvaly	0,5
+	linkbmt	1,4,5
+	dallpro	
+14: 	last
+
+	.pred	'addpropa',3
+	.clause
+0:	pvarx	3,3
+	exec	4,&'addpropa'/4
+	last
+
+	.pred	'addpropa',4
+	.clause
+0:	all	5
+	gvary	0,0
+	gvary	4,1
+	gvary	3,2
+	gs	3,$'$ref'/2
+	uvary	2
+	uvary	1
+	pvaly	0,0
+	pvaly	4,1
+	pc	2,$'addpropa'
+	call	5,3,&'$propErrorCheck'/3
+	pvaly	4,4
+	pvaly	3,5
+	makebmt	4,5,4,5
+	gvaly	2,5
+	gs	4,$'$bmt'/6
+	uvaly	1
+	uvoid	5
+	pvaly	0,5
+	linkbmt	1,4,5
+	dallpro	
+	last
+
+	.pred	'addprop',4
+	.clause
+0:	exec	4,&'addpropz'/4
+	last
+
+	.pred	'addprop',3
+	.clause
+0:	pvarx	3,3
+	exec	4,&'addpropz'/4
+	last
+
+	.pred	'addpropz',3
+	.clause
+0:	pvarx	3,3
+	exec	4,&'addpropz'/4
+	last
+
+	.pred	'addpropz',4
+	.clause
+0:	all	5
+	gvary	0,0
+	gvary	4,1
+	gvary	3,2
+	gs	3,$'$ref'/2
+	uvary	2
+	uvary	1
+	pvaly	0,0
+	pvaly	4,1
+	pc	2,$'addpropz'
+	call	5,3,&'$propErrorCheck'/3
+	pvaly	4,4
+	pvaly	3,5
+	makebmt	4,5,4,5
+	gvaly	2,5
+	gs	4,$'$bmt'/6
+	uvaly	1
+	uvoid	5
+	pvaly	0,5
+	linkbmt	0,4,5
+	dallpro	
+	last
+
+	.pred	'$propErrorCheck',3
+	.clause
+0:	all	3
+	gvary	1,0
+	gvary	2,1
+	gvary	0,2
+	jctypy	1,2,&12
+	j	&13
+12: 	pc	1,#(CHR,&7)
+	pl	2
+	ulvy	1
+	ul	255
+	ulvy	0
+	uc	$[]
+	pc	0,$'user_error'
+	call	3,3,&'$format'/3
+	fail	
+13: 	pvaly	2,3
+	fvar	3,255
+	jtypx	255,252,&14
+	dallpro	
+14: 	pc	1,#(CHR,&11)
+	pl	2
+	ulvy	1
+	ul	255
+	ulvy	0
+	uc	$[]
+	pc	0,$'user_error'
+	call	0,3,&'$format'/3
+	fail	
+15: 	last
+11: 	.string	"~NGround key rather than ~w expected in ~a/3.~n"
+7: 	.string	"~NAtom rather than ~w expected in ~a/3.~n"
+
+	.pred	'remprop',2
+2: 	t	2,0,&0
+	tr	2,0,&1
+	.clause
+0:	fvar	1,255
+	jtypx	255,252,&7
+	props	0,1,2
+	j	&8
+7: 	pvarx	2,2
+	props	0,2,2
+8: 	all	1
+	pvary	0,255
+	gs	255,$'$ref'/2
+	uvarx	3
+	uvarx	4
+	ps	0,$'$prop'/3
+	ulvx	1
+	uvalx	3
+	uvalx	4
+	gvara	1,2
+	call	1,2,&'member'/2
+	pvaly	0,2
+	erase	2
+	fail	
+	.clause
+1:	pro	
+	last
+
+	.pred	'remprop',3
+2: 	t	3,0,&0
+	tr	3,0,&1
+	.clause
+0:	all	2
+	gvary	1,2
+	fvar	1,255
+	jtypx	255,252,&10
+	props	0,1,3
+	j	&11
+10: 	pvarx	3,3
+	props	0,3,3
+11: 	pvary	0,255
+	gs	255,$'$ref'/2
+	uvarx	4
+	uvarx	5
+	ps	0,$'$prop'/3
+	ulvx	1
+	uvalx	4
+	uvalx	5
+	gvara	1,3
+	call	2,2,&'member'/2
+	pvaly	0,0
+	pvaly	1,1
+	call	1,2,&'instance'/2
+	pvaly	0,3
+	erase	3
+	fail	
+	.clause
+1:	pro	
+	last
+
+	.pred	'$asserta',2
+	labelx	2
+2: 	sot	0,&0,&1,&1,&1
+	.clause
+0:	typx	0,3
+	cutx	2
+	pc	1,#(CHR,&9)
+	ps	3,$'asserta'/1
+	ulvx	0
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	pc	1,#(CHR,&13)
+	pc	0,$'user_error'
+	pnil	2
+	call	0,3,&'$format'/3
+	fail	
+	.clause
+1:	all	5
+	gvary	2,0
+	gvary	0,1
+	labelx	0
+37: 	te	0,0,1,&39
+	pvaly	2,255
+	gs	255,$':-'/2
+	uvary	4
+	uvoid	1
+	cutx	0
+	jtypy	4,3,&38
+	pc	1,#(CHR,&20)
+	ps	3,$'asserta'/1
+	ulvy	2
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	call	5,3,&'$format'/3
+	pc	1,#(CHR,&24)
+	pc	0,$'user_error'
+	pnil	2
+	call	5,3,&'$format'/3
+	fail	
+38: 	pvaly	4,3
+	pvary	1,4
+	pvary	3,5
+	functor	3,4,5
+	pvaly	1,0
+	pvaly	3,1
+	call	4,2,&'$makeDynamic'/2
+	ps	1,$'$clause'/1
+	ulvy	3
+	puval	1,0
+	pvaly	2,2
+	pvaly	0,3
+	dallexe	4,&'addpropa'/4
+39: 	tre	0,0
+	pvaly	2,3
+	pvary	1,4
+	pvary	3,5
+	functor	3,4,5
+	pvaly	1,0
+	pvaly	3,1
+	call	4,2,&'$makeDynamic'/2
+	ps	1,$'$clause'/1
+	ulvy	3
+	ps	2,$':-'/2
+	ulvy	2
+	uc	$'true'
+	puval	1,0
+	pvaly	0,3
+	dallexe	4,&'addpropa'/4
+40: 	last
+24: 	.string	"~NVariable head unexpected.~n"
+20: 	.string	"~NError in ~w.~n"
+13: 	.string	"~NVariable unexpected.~n"
+9: 	.string	"~NError in ~w.~n"
+
+	.pred	'asserta',1
+	.clause
+0:	pvarx	1,1
+	exec	2,&'$asserta'/2
+	last
+
+	.pred	'asserta',2
+	.clause
+0:	exec	2,&'$asserta'/2
+	last
+
+	.pred	'$assertz',2
+	labelx	2
+2: 	sot	0,&0,&1,&1,&1
+	.clause
+0:	typx	0,3
+	cutx	2
+	pc	1,#(CHR,&9)
+	ps	3,$'assertz'/1
+	ulvx	0
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	pc	1,#(CHR,&13)
+	pc	0,$'user_error'
+	pnil	2
+	call	0,3,&'$format'/3
+	fail	
+	.clause
+1:	all	5
+	gvary	2,0
+	gvary	0,1
+	labelx	0
+37: 	te	0,0,1,&39
+	pvaly	2,255
+	gs	255,$':-'/2
+	uvary	4
+	uvoid	1
+	cutx	0
+	jtypy	4,3,&38
+	pc	1,#(CHR,&20)
+	ps	3,$'asserta'/1
+	ulvy	2
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	call	5,3,&'$format'/3
+	pc	1,#(CHR,&24)
+	pc	0,$'user_error'
+	pnil	2
+	call	5,3,&'$format'/3
+	fail	
+38: 	pvaly	4,3
+	pvary	1,4
+	pvary	3,5
+	functor	3,4,5
+	pvaly	1,0
+	pvaly	3,1
+	call	4,2,&'$makeDynamic'/2
+	ps	1,$'$clause'/1
+	ulvy	3
+	puval	1,0
+	pvaly	2,2
+	pvaly	0,3
+	dallexe	4,&'addpropz'/4
+39: 	tre	0,0
+	pvaly	2,3
+	pvary	1,4
+	pvary	3,5
+	functor	3,4,5
+	pvaly	1,0
+	pvaly	3,1
+	call	4,2,&'$makeDynamic'/2
+	ps	1,$'$clause'/1
+	ulvy	3
+	ps	2,$':-'/2
+	ulvy	2
+	uc	$'true'
+	puval	1,0
+	pvaly	0,3
+	dallexe	4,&'addpropz'/4
+40: 	last
+24: 	.string	"~NVariable head unexpected.~n"
+20: 	.string	"~NError in ~w.~n"
+13: 	.string	"~NVariable unexpected.~n"
+9: 	.string	"~NError in ~w.~n"
+
+	.pred	'assertz',1
+	.clause
+0:	pvarx	1,1
+	exec	2,&'$assertz'/2
+	last
+
+	.pred	'assertz',2
+	.clause
+0:	exec	2,&'$assertz'/2
+	last
+
+	.pred	'assert',1
+	.clause
+0:	pvarx	1,1
+	exec	2,&'assertz'/2
+	last
+
+	.pred	'assert',2
+	.clause
+0:	exec	2,&'assertz'/2
+	last
+
+	.pred	'$makeDynamic',2
+	.clause
+0:	gvarx	2,0
+	all	1
+	labely	0
+7: 	te	3,0,3,&8
+	gvara	0,2
+	call	1,2,&'dynamic'/2
+	cuty	0
+	dallpro	
+8: 	tre	3,0
+	ps	0,$'/'/2
+	ulvx	2
+	ulvx	1
+	pc	1,$'fail'
+	dallexe	2,&'$dynamic'/2
+9: 	last
+
+	.pred	'$makeDynamicWithWhens',2
+	.clause
+0:	all	3
+	gvary	1,0
+	gvary	0,1
+	labely	2
+9: 	te	0,0,0,&10
+	pvaly	1,0
+	pvaly	0,1
+	call	3,2,&'dynamic'/2
+	pvaly	1,0
+	pvaly	0,1
+	call	3,2,&'$hasWhens'/2
+	cuty	2
+	dallpro	
+10: 	tre	0,0
+	ps	0,$'/'/2
+	ulvy	1
+	ulvy	0
+	pc	1,$'true'
+	dallexe	2,&'$dynamic'/2
+11: 	last
+
+	.pred	'$retract',1
+	labelx	1
+2: 	sot	0,&0,&1,&1,&1
+	.clause
+0:	typx	0,3
+	cutx	1
+	pc	1,#(CHR,&8)
+	ps	3,$'retract'/1
+	ulvx	0
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	pc	1,#(CHR,&12)
+	pc	0,$'user_error'
+	pnil	2
+	call	0,3,&'$format'/3
+	fail	
+	.clause
+1:	all	1
+	gvary	0,0
+	labelx	0
+25: 	te	0,0,1,&27
+	pvaly	0,255
+	gsx2	255,1,255,$':-'/2
+	cutx	0
+	jtypx	1,3,&26
+	pc	1,#(CHR,&18)
+	ps	3,$'retract'/1
+	ulvy	0
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	call	1,3,&'$format'/3
+	pc	1,#(CHR,&22)
+	pc	0,$'user_error'
+	pnil	2
+	call	1,3,&'$format'/3
+	fail	
+26: 	pvaly	0,0
+	dallexe	1,&'$iretract'/1
+27: 	tre	0,0
+	ps	0,$':-'/2
+	ulvy	0
+	uvoid	1
+	dallexe	1,&'$iretract'/1
+28: 	last
+22: 	.string	"~NVariable head unexpected.~n"
+18: 	.string	"~NError in ~w.~n"
+12: 	.string	"~NVariable unexpected.~n"
+8: 	.string	"~NError in ~w.~n"
+
+	.pred	'retract',1
+	.clause
+0:	exec	1,&'$retract'/1
+	last
+
+	.pred	'$iretract',1
+	.clause
+0:	all	3
+	gvary	2,0
+	pvaly	2,255
+	gsx2	255,1,255,$':-'/2
+	pvarx	2,2
+	pvarx	3,3
+	functor	1,2,3
+	pvarx	1,1
+	props	2,1,1
+	ps	2,$'$clause'/1
+	uvalx	3
+	ps	0,$'$prop'/3
+	uvalx	2
+	uvary	1
+	uvary	0
+	call	3,2,&'member'/2
+	ps	1,$'$ref'/2
+	uvaly	1
+	uvaly	0
+	inst	1,1,2
+	gvaly	2,2
+	ps	1,$'$ref'/2
+	uvaly	1
+	uvaly	0
+	erase	1
+	dallpro	
+	last
+
+	.pred	'$retractall',2
+	.clause
+0:	all	2
+	gvary	0,0
+	gvary	1,1
+	jctypy	0,2,&19
+	j	&20
+19: 	pc	1,#(CHR,&6)
+	ps	3,$'retractall'/2
+	ulvy	0
+	ulvy	1
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	call	2,3,&'$format'/3
+	fail	
+20: 	jctypy	1,17,&21
+	j	&22
+21: 	pc	1,#(CHR,&10)
+	ps	3,$'retractall'/2
+	ulvy	0
+	ulvy	1
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	call	2,3,&'$format'/3
+	pc	1,#(CHR,&14)
+	pc	0,$'user_error'
+	pnil	2
+	call	2,3,&'$format'/3
+	fail	
+22: 	ps	1,$'$clause'/1
+	ulvy	1
+	pvaly	0,0
+	call	2,2,&'remprop'/2
+	ps	1,$'$when'/1
+	ulvy	1
+	pvaly	0,0
+	dallexe	2,&'remprop'/2
+	last
+14: 	.string	"~NInteger expected.~n"
+10: 	.string	"~NError in ~w.~n"
+6: 	.string	"~NError in ~w -- atom expected.~n"
+
+	.pred	'retractall',2
+	.clause
+0:	exec	2,&'$retractall'/2
+	last
+
+	.pred	'retractall',1
+2: 	t	1,0,&0
+	tr	1,0,&1
+	.clause
+0:	all	0
+	call	0,1,&'retract'/1
+	fail	
+	.clause
+1:	pro	
+	last
+
+	.pred	'$abolish',2
+	.clause
+0:	all	4
+	gvary	1,0
+	gvary	0,1
+	jctypy	1,2,&38
+	j	&39
+38: 	pc	1,#(CHR,&6)
+	ps	3,$'abolish'/2
+	ulvy	1
+	ulvy	0
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	call	4,3,&'$format'/3
+	fail	
+39: 	jctypy	0,17,&40
+	j	&41
+40: 	pc	1,#(CHR,&10)
+	ps	3,$'abolish'/2
+	ulvy	1
+	ulvy	0
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	call	4,3,&'$format'/3
+	pc	1,#(CHR,&14)
+	pc	0,$'user_error'
+	pnil	2
+	call	4,3,&'$format'/3
+	fail	
+41: 	labely	3
+42: 	te	0,0,0,&45
+	pvaly	1,0
+	pvaly	0,1
+	call	4,2,&'systemPredicate'/2
+	cuty	3
+	pc	1,#(CHR,&20)
+	ps	3,$'abolish'/2
+	ulvy	1
+	ulvy	0
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	call	3,3,&'$format'/3
+	pc	1,#(CHR,&24)
+	pc	0,$'user_error'
+	pnil	2
+	call	3,3,&'$format'/3
+	labely	2
+43: 	te	0,0,0,&44
+	pc	0,$'wizard'
+	pc	1,$'on'
+	call	3,2,&'prologFlag'/2
+	cuty	2
+	pc	1,#(CHR,&30)
+	pc	0,$'user_error'
+	pnil	2
+	call	2,3,&'$format'/3
+	j	&46
+44: 	tre	0,0
+	fail	
+	j	&46
+45: 	tre	0,0
+46: 	ps	1,$'$clause'/1
+	ulvy	0
+	pvaly	1,0
+	call	2,2,&'remprop'/2
+	ps	1,$'$when'/1
+	ulvy	0
+	pvaly	1,0
+	call	2,2,&'remprop'/2
+	ps	1,$'$property'/1
+	ulvy	0
+	pvaly	1,0
+	call	2,2,&'remprop'/2
+47: 	te	0,0,0,&48
+	ps	0,$'$spypoint'/2
+	ulvy	1
+	ulvy	0
+	call	2,1,&'retract'/1
+	fail	
+48: 	tre	0,0
+49: 	pvaly	1,2
+	pvaly	0,3
+	abolish	2,3
+	dallpro	
+	last
+30: 	.string	"~NBut you're a wizard so . . . .~n"
+24: 	.string	"~NAbolishing system predicate.~n"
+20: 	.string	"~NError in ~w.~n"
+14: 	.string	"~NInteger expected.~n"
+10: 	.string	"~NError in ~w.~n"
+6: 	.string	"~NError in ~w -- atom expected.~n"
+
+	.pred	'abolish',2
+	.clause
+0:	exec	2,&'$abolish'/2
+	last
+
+	.pred	'abolish',1
+	.clause
+0:	gvarx	1,0
+	all	3
+	labely	0
+6: 	te	0,0,2,&7
+	ps	0,$'/'/2
+	uvary	2
+	uvary	1
+	call	3,2,&'member'/2
+	pvaly	2,0
+	pvaly	1,1
+	call	1,2,&'abolish'/2
+	fail	
+7: 	tre	0,0
+	dallpro	
+8: 	last
+
+	.pred	'$clause',3
+	.clause
+0:	gvarx	4,0
+	gvarx	5,1
+	gvarx	3,2
+	pvarx	0,0
+	pvarx	1,1
+	functor	4,0,1
+	ps	2,$':-'/2
+	ulvx	4
+	ulvx	5
+	exec	4,&'getclause'/4
+	last
+
+	.pred	'clause',2
+	.clause
+0:	pvarx	2,2
+	exec	3,&'$clause'/3
+	last
+
+	.pred	'clause',3
+	.clause
+0:	exec	3,&'$clause'/3
+	last
+
+	.pred	'record',3
+	.clause
+0:	exec	3,&'recordz'/3
+	last
+
+	.pred	'recorda',3
+	labelx	3
+5: 	sot	0,&3,&4,&3,&3
+3: 	t	4,0,&0
+	tr	4,0,&2
+4: 	t	4,0,&0
+	r	4,0,&1
+	tr	4,0,&2
+	.clause
+0:	gvarx	4,1
+	gvarx	5,2
+	pvarx	6,6
+	pvarx	7,7
+	functor	0,6,7
+	ctypx	6,2
+	cutx	3
+	ps	1,$'$recorded'/1
+	uvalx	7
+	gvara	0,6
+	gvara	2,4
+	gvara	3,5
+	exec	4,&'addpropa'/4
+	.clause
+1:	gvarx	4,1
+	gvarx	5,2
+	ctypx	0,17
+	cutx	3
+	ps	1,$'$recorded'/1
+	us	255,$'integer'/1
+	ulvx	0
+	pc	0,$'$recorded'
+	gvara	2,4
+	gvara	3,5
+	exec	4,&'addpropa'/4
+	.clause
+2:	all	1
+	gvary	0,0
+	gvarx	4,1
+	pc	1,#(CHR,&29)
+	ps	5,$'recorda'/3
+	ulvy	0
+	ulvx	4
+	ulvx	2
+	pl	2
+	uvalx	5
+	uc	$[]
+	pc	0,$'user_error'
+	call	1,3,&'$format'/3
+	pc	1,#(CHR,&33)
+	pl	2
+	ulvy	0
+	uc	$[]
+	pc	0,$'user_error'
+	call	0,3,&'$format'/3
+	fail	
+	last
+33: 	.string	"~NAtomic key expected rather than ~w.~n"
+29: 	.string	"~NError in ~w.~n"
+
+	.pred	'recordz',3
+	labelx	3
+5: 	sot	0,&3,&4,&3,&3
+3: 	t	4,0,&0
+	tr	4,0,&2
+4: 	t	4,0,&0
+	r	4,0,&1
+	tr	4,0,&2
+	.clause
+0:	gvarx	4,1
+	gvarx	5,2
+	pvarx	6,6
+	pvarx	7,7
+	functor	0,6,7
+	ctypx	6,2
+	cutx	3
+	ps	1,$'$recorded'/1
+	uvalx	7
+	gvara	0,6
+	gvara	2,4
+	gvara	3,5
+	exec	4,&'addpropz'/4
+	.clause
+1:	gvarx	4,1
+	gvarx	5,2
+	ctypx	0,17
+	cutx	3
+	ps	1,$'$recorded'/1
+	us	255,$'integer'/1
+	ulvx	0
+	pc	0,$'$recorded'
+	gvara	2,4
+	gvara	3,5
+	exec	4,&'addpropz'/4
+	.clause
+2:	all	1
+	gvary	0,0
+	gvarx	4,1
+	pc	1,#(CHR,&29)
+	ps	5,$'recordz'/3
+	ulvy	0
+	ulvx	4
+	ulvx	2
+	pl	2
+	uvalx	5
+	uc	$[]
+	pc	0,$'user_error'
+	call	1,3,&'$format'/3
+	pc	1,#(CHR,&33)
+	pl	2
+	ulvy	0
+	uc	$[]
+	pc	0,$'user_error'
+	call	0,3,&'$format'/3
+	fail	
+	last
+33: 	.string	"~NAtomic key expected rather than ~w.~n"
+29: 	.string	"~NError in ~w.~n"
+
+	.pred	'recorded',3
+	labelx	3
+5: 	sot	0,&3,&4,&3,&3
+3: 	t	4,0,&0
+	tr	4,0,&2
+4: 	t	4,0,&0
+	r	4,0,&1
+	tr	4,0,&2
+	.clause
+0:	gvarx	4,1
+	gvarx	5,2
+	pvarx	6,6
+	pvarx	7,7
+	functor	0,6,7
+	ctypx	6,2
+	cutx	3
+	ps	1,$'$recorded'/1
+	uvalx	7
+	gvara	0,6
+	gvara	2,4
+	gvara	3,5
+	exec	4,&'getprop'/4
+	.clause
+1:	gvarx	4,1
+	gvarx	5,2
+	ctypx	0,17
+	cutx	3
+	ps	1,$'$recorded'/1
+	us	255,$'integer'/1
+	ulvx	0
+	pc	0,$'$recorded'
+	gvara	2,4
+	gvara	3,5
+	exec	4,&'getprop'/4
+	.clause
+2:	all	1
+	gvary	0,0
+	gvarx	4,1
+	pc	1,#(CHR,&29)
+	ps	5,$'recorded'/3
+	ulvy	0
+	ulvx	4
+	ulvx	2
+	pl	2
+	uvalx	5
+	uc	$[]
+	pc	0,$'user_error'
+	call	1,3,&'$format'/3
+	pc	1,#(CHR,&33)
+	pl	2
+	ulvy	0
+	uc	$[]
+	pc	0,$'user_error'
+	call	0,3,&'$format'/3
+	fail	
+	last
+33: 	.string	"~NAtomic key expected rather than ~w.~n"
+29: 	.string	"~NError in ~w.~n"
+
+	.pred	'currentKey',1
+	.clause
+0:	all	3
+	gvary	2,0
+	jtypy	2,252,&16
+	jctypy	2,17,&15
+	ps	1,$'$recorded'/1
+	us	255,$'integer'/1
+	ulvy	2
+	pc	0,$'$recorded'
+	pvarx	2,2
+	dallexe	3,&'getprop'/3
+15: 	pvaly	2,1
+	pvary	1,2
+	pvary	0,3
+	functor	1,2,3
+	ctypy	1,2
+	ps	1,$'$recorded'/1
+	ulvy	0
+	puval	1,0
+	pvarx	2,2
+	dallexe	3,&'getprop'/3
+	j	&18
+16: 	te	0,0,0,&17
+	ps	1,$'$recorded'/1
+	us	255,$'integer'/1
+	ulvy	2
+	pc	0,$'$recorded'
+	pvarx	2,2
+	dallexe	3,&'getprop'/3
+17: 	tre	0,0
+	pvary	1,0
+	call	3,1,&'currentAtom'/1
+	ps	1,$'$recorded'/1
+	uvary	0
+	pvaly	1,0
+	pvarx	2,2
+	call	3,3,&'getprop'/3
+	pvaly	2,1
+	puval	1,2
+	puval	0,3
+	functor	1,2,3
+	dallpro	
+18: 	last
+

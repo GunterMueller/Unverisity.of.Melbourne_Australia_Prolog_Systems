@@ -1,0 +1,18 @@
+This directory contains all the stuff to make the database for MU-Prolog
+
+The sub-directory lib contains the code to make the library "dblib"
+
+To make (and install in /usr/lib/prolog/db) it type:
+	make install
+
+Default values which may be changed by adding -D's to CFLAGS in Makefile
+
+#define MAXPAGE		256	/* maximum number of pages on one level */
+#define	MAXBSIZE	1024	/* maximum bucket size */
+#define MAXDWORDS	8	/* maximum (long) words in a descrpitor */
+
+for example
+
+CFLAGS= -O -DMAXBSIZE=4096 -DMAXPAGE=1024 -DMAXDWORDS=16
+
+The destination directory (/usr/lib/prolog/db) is in DESTDIR

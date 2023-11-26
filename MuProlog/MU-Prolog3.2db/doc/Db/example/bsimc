@@ -1,0 +1,10 @@
+/*
+ * Benchmark Prolog database systems
+ */
+
+lib db, db_cons(db).
+
+simc(123,X,Y), writeln(simc(123,X,Y)), fail.
+simc(X,a,Y), writeln(simc(X,a,Y)), fail.
+simc(X,Y,aforementioned), writeln(simc(X,Y,aforementioned)), fail.
+%simc(X,Y,Z), writeln(simc(X,Y,Z)), fail.

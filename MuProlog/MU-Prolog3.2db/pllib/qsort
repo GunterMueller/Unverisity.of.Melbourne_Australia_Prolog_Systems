@@ -1,0 +1,20 @@
+	% quicksort
+
+sort([], []).
+sort(A.B, C.D) :-
+	part(A, B, L1, L2),
+	sort(L1, S1),
+	sort(L2, S2),
+	append(S1, A.S2, C.D).
+
+part(A, [], [], []).
+part(A, B.C, B.D, E) :-
+	A >= B,
+	part(A, C, D, E).
+part(A, B.C, D, B.E) :-
+	A < B,
+	part(A, C, D, E).
+
+append([], A, A).
+append(A.B, C, A.D) :-
+	append(B, C, D).

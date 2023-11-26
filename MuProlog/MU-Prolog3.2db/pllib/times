@@ -1,0 +1,14 @@
+divides(Num, Den, Div, Mod) :- 	% Num/Den=Div, Num mod Den=Mod
+	Div is Num/Den,
+	Mod is Num mod Den,
+	Num is Den*Div+Mod,
+	(	Div ~= 0,
+		Den is (Num-Mod)/Div
+	;
+		Div = 0
+	).
+
+times(X,Y,Z) :-		% X*Y=Z
+	Z is X*Y,
+	Y is Z/X,
+	X is Z/Y.

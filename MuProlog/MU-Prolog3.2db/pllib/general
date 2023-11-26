@@ -1,0 +1,51 @@
+	% "anti-unification"
+
+?- hide([conflicts(5), lconf(5), unify_vars(1), unifyvar(1)]).
+
+	% Z is the most specific generalization/anti-instance of X and Y
+general(X, Y, Z) :-
+	conflicts(X, Y, [], Conf, Z),
+	unify_vars(Conf).
+
+	% find all conflicts in X and Y and allocate a new variable for each
+conflicts(X, Y, C, C, X) :-
+	X == Y,
+	!.
+conflicts(X, Y, C, c(X,Y,V).C, V) :-
+	(	atomic(X)
+	;	var(X)
+	;	atomic(Y)
+	;	var(Y)
+	),
+	!.
+conflicts(X, Y, C, c(X,Y,V).C, Z) :-
+	X =.. FX.XA,
+	Y =.. FY.YA,
+	FX ~= FY.
+conflicts(X, Y, C, C1, Z) :-
+	X =.. F.XA,
+	Y =.. F.YA,
+	Z =.. F.ZA,
+	lconf(XA, YA, C, C1, ZA).
+
+lconf([], [], C, C, []).
+lconf(X.XA, Y.YA, C, C2, Z.ZA) :-
+	conflicts(X, Y, C, C1, Z),
+	lconf(XA, YA, C1, C2, ZA).
+
+	% for all pairs of conflicts, if the subterms are identical,
+	% unify the corresponding variables in Z
+unify_vars([]).
+unify_vars(C.L) :-
+	unifyvar(C, L),
+	unify_vars(L).
+
+	% compare a single conflict with the rest
+unifyvar(_, []).
+unifyvar(c(X1,Y1,V), c(X2,Y2,V).L) :-
+	X1 == X2,
+	Y1 == Y2,
+	!,
+	unifyvar(c(X1,Y1,V), L).
+unifyvar(C, _.L) :-
+	unifyvar(C, L).

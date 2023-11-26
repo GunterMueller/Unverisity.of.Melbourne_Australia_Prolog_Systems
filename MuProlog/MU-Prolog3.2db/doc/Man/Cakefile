@@ -1,0 +1,17 @@
+$
+$ Make MU-Prolog manual
+$
+
+#define	SRCS	defs.me title.me man.me dbman.me index.me
+
+view&		: man.view
+	more man.view
+
+man.view	: SRCS
+	nroff -me SRCS > man.view
+
+man&		: SRCS
+	ditroff -me SRCS
+
+spell&		: SRCS
+	spell -b SRCS

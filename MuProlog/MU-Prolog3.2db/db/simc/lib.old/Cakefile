@@ -1,0 +1,107 @@
+$
+$ Cakefile  -  deductive database package
+$
+$ $Header: Cakefile,v 1.2 85/12/06 15:09:05 jas Exp $
+$ $Log:	Cakefile,v $
+$ Revision 1.2  85/12/06  15:09:05  jas
+$ Last_before_sfb
+$ 
+$ Revision 1.1  85/09/02  16:09:26  jas
+$ Initial revision
+$ 
+
+#define	Obj1	bits.o fact.o files.o malloc.o parse.o pools.o
+#define	Obj2	rec.o reln.o seg.o trans.o util.o
+#define	OBJS	Obj1 Obj2
+
+#define	Src1	bits.c fact.c files.c malloc.c parse.c pools.c
+#define	Src2	rec.c reln.c seg.c trans.c util.c
+#define	SRCS	Src1 Src2
+
+#define	Inc1	bits.h fact.h files.h parse.h pools.h
+#define	Inc2	rec.h reln.h seg.h trans.h util.h
+#define	Inc3	muddlib.h defs.h
+#define	INCS	Inc1 Inc2 Inc3
+
+#define	PRINT	/usr/local/lpr
+
+$define	CFLAGS	-pg -DDBUG
+$define	CFLAGS	-DDBUG
+$define	CFLAGS	-O
+#define	CFLAGS	-DDBUG
+
+#ifndef	VERS
+#define	VERS
+#endif
+#ifndef	MSG
+#define	MSG	"Latest version"
+#endif
+
+#include <Cnone>
+
+all&		: dblib
+
+dblib		: OBJS
+	rm -f dblib
+	ar cr dblib OBJS
+	ranlib dblib
+$	cp dblib libddb.a
+
+bits.o		: bits.h util.h
+fact.o		: muddlib.h
+files.o		: muddlib.h
+malloc.o	: util.h
+parse.o		: muddlib.h
+pools.o		: muddlib.h
+rec.o		: muddlib.h
+reln.o		: muddlib.h
+seg.o		: muddlib.h
+trans.o		: muddlib.h
+util.o		: muddlib.h
+
+muddlib.h&	: Inc1 Inc2 defs.h
+
+$
+$ Waste time ... lint(1) never says anything interesting
+$
+lint&		:
+	lint -bh SRCS
+
+$
+$ Help us to find all those funny little functions
+$
+tags&		:
+	ctags INCS SRCS
+
+$
+$ Clean up some mess
+$
+clean&		:
+	rm -f core OBJS
+
+realclean&	:
+	{
+	echo -n "Removing all sources. Sure? [ny] "
+	if ( "x$<" == "xy" ) rm -f dblib INCS SRCS
+	}
+
+$
+$ Generate some listings ... waste a few trees
+$
+listh&		:
+	PRINT -Pbds -p -h INCS
+
+listc&		:
+	PRINT -Pbds -p -h SRCS
+
+$
+$ Make some mess ... grab an old version of the source
+$
+version&	:
+	co -l/**/VERS INCS SRCS
+
+$
+$ Check in a NEW version of the source
+$
+newvers&	:
+	ci -l -m/**/MSG Cakefile Makefile INCS SRCS

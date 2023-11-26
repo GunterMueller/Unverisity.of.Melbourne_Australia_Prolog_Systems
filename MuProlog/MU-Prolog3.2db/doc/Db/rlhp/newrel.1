@@ -1,0 +1,31 @@
+.TH NEWREL MUDD "21 November 1984"
+.SH NAME
+newrel \- create a database relation
+.SH SYNOPSIS
+.B newrel
+db relation nkeys lc bsize dsize ... cvs ... [nbuckets]
+.br
+.SH DESCRIPTION
+.I Mudd
+creates a
+.I relation
+in the database directory
+.I db
+with the number of fields
+.I nkeys;
+with a load control
+.I lc;
+with a bucket size
+.I bsize
+bytes;
+with a descriptor sizes for each key
+.I dsize ...
+bits; and choice vectors
+.I cvs ... ;
+and with an (optional) initial number of buckets
+.I nbuckets.
+.PP
+.SH "SEE ALSO"
+mudd(mudd), prdd(mudd), prbkt(mudd)
+.SH BUGS
+Should not have to specify so much, should contain more defaults.

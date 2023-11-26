@@ -1,0 +1,50 @@
+%	some examples of higher order stuff
+%
+%	It would be nice to have a better syntax for "fapply"
+%	eg, :/2 (currently op declarations for : is a problem)
+%	Also, : is currently used for "else".  Maybe @, # or $ ?
+
+:- function fapply/2.
+
+	% shorthand for function application
+:- op(20, yfx, @).	% change precedence?
+F @ X == fapply(F, X).
+
+	% apply function twice to arg
+% twice(F, X) = F : (F : X).
+twice(F, X) = fapply(F, fapply(F, X)).
+
+	% until first arg applied to X is true
+	% apply second arg to X
+	% as in Miranda
+until(P, F, X) = ( call(P, X) ? X : until(P, F, fapply(F, X))).
+
+	% round up to next power of 2
+round2(N) = until(=<(N), *(2), 1).
+
+	% foldr as in Miranda
+foldr(F, B, []) = B.
+foldr(F, B, H.T) = F @ H @ foldr(F, B, T).
+
+	% foldl as in Miranda
+foldl(F, B, []) = B.
+foldl(F, B, H.T) = foldl(F, F @ B @ H, T).
+
+	% sum of elements in a list
+	% sum/1 is defined in test.ne
+sum1(X) = foldl(+, 0, X).
+
+	% product of elements in a list
+product(X) = foldl(*, 1, X).
+
+	% flatten list of lists into a list
+	% concat/2 is defined in test.ne
+flatten(X) = foldr(concat, [], X).
+
+	% function composition
+:- op(40, xfy, o).
+o(F, G, X) = F @ (G @ X).
+
+cons(A, As) = A.As.
+
+map_f(F, As) = foldr(cons o F, [], As).

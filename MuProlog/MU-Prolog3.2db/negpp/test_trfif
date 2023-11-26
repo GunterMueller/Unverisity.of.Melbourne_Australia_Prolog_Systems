@@ -1,0 +1,6 @@
+p(X) :- (if some(V, p(C)) then q(V) else r(C)).
+p(X) :- (if some(V, p(C)) then q(V) else r(V)).
+p(X) :- (if some(V, p(C)) then q(V)).
+p(X) :- (if g_some(V, p(C)) then q(V)).
+p(X) :- (if g_some(V, p(C)) then q(C)).
+p(X) :- (if g_some(V, p(C)) then q(V) else r(V)).

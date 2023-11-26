@@ -1,0 +1,253 @@
+	% generates wait declarations for a procedure in the database
+	% usage: genwait(Procedure_name, Number_of_args)
+	% waits are printed on current output
+
+?- hide([genw(2), genwaits(2), wprint(2), possloops(2), allwaits(2),
+	eqvwaits(2), ploops(4), cloops(3), recursive(2),
+	lcwaits(2), combinew(2), callwaits(3), bpat(3), patwait(4),
+	bpatwaits(2), andw(2), andrest(3), and(3), compactw(3),
+	eqvwaits(2), remove(3), notinw(2), append(3), member(2),
+	copy(2), tmp(1), compress(2), asgen(2), all(3)]).
+
+genwait(Proc, Nargs) :-
+	genw(Proc, Nargs).
+
+% add waits and calculate cost for a proc
+genw(F, N) :-
+	functor(P, F, N),
+	genwaits(P, W),
+	wprint(F, W).
+
+% generate waits for a proc
+genwaits(Proc, Waits) :-
+	possloops(Proc, Loops),
+	allwaits(Loops, Awaits),
+	eqvwaits(Awaits, Waits).
+
+% find possible infinite loops
+possloops(Proc, Loops) :-
+	all((Proc:-B), clause(Proc, B), Cl),
+	ploops(Proc, Cl, Rheads, Rcalls),
+	compress(Rheads, Rh),
+	compress(Rcalls, Rc),
+	all(loop(H, C), (member(H, Rh), member(C, Rc)), Loops).
+
+% find possible looping heads and calls from list of clauses
+ploops(P, [], [], []).
+ploops(P, (H:-B).L, He, Ca) :-
+	cloops(P, B, C1),
+	ploops(P, L, H1, C2),
+	(	C1 = [],
+		He = H1,
+		Ca = C2
+	;
+		C1 ~= [],
+		copy(H, Hc),
+		He = Hc.H1,
+		append(C1, C2, Ca)
+	).
+
+% find possible loops in a single clause
+cloops(P, (C, Cl), R) :-
+	var(C),
+	!,
+	writeln('% Meta-variable ignored'),
+	cloops(P, Cl, R).
+cloops(P, (C1, C2), R) :-
+	!,
+	cloops(P, C1, R1),
+	cloops(P, C2, R2),
+	append(R1, R2, R).
+cloops(P, (C1 ; C2), R) :-
+	!,
+	cloops(P, C1, R1),
+	cloops(P, C2, R2),
+	append(R1, R2, R).
+cloops(P, (if C then C1 else C2), R) :-
+	!,
+	cloops(P, C1, R1),
+	cloops(P, C2, R2),
+	append(R1, R2, R).
+cloops(P, call(C), R) :-
+	!,
+	cloops(P, C, R).
+cloops(P, (if C then C1), R) :-
+	!,
+	cloops(P, C1, R).
+cloops(P, C, [C1]) :-
+	recursive(P, C),
+	copy(C, C1),
+	!.
+cloops(P, C, []).
+
+% is C a recursive call? - should handle mutual recursion too
+recursive(P, C) :-
+	not P \= C.
+
+% get list of waits from list of possible loops
+allwaits(L, W) :-
+	lcwaits(L, Wl),
+	combinew(Wl, W).
+
+% get list of list of waits from possible loops
+lcwaits([],[]).
+lcwaits(loop(H, C).L, Wl) :-
+	callwaits(H, C, W),
+	lcwaits(L, W2),
+	append(W, W2, Wl).
+
+% get list of a list of waits for a single call - [[waits]]
+% or [] if there are no waits generated
+callwaits(H, C, WL) :-
+	H =.. F.H1,
+	C =.. F.C1,
+	bpat(H1, C1, B),
+	(if member(1, B) then
+		bpatwaits(B, W),
+		WL = [W]
+	else
+		write('% possible infinite loop: '),
+		write(H),
+		write(' :- ... '),
+		write(C),
+		nl,
+		WL = []
+	).
+
+% find which head arguments are less general than call arguments
+bpat([], [], []).
+bpat(H.I, C.D, 0.A) :-
+	asgen(H, C),
+	!,
+	bpat(I, D, A).
+bpat(H.I, C.D, 1.A) :-
+	bpat(I, D, A).
+
+% generate list of waits from what args need to be bound
+bpatwaits(A, B) :-
+	length(A, N),
+	length(L, N),
+	patwait(A, L, [], B).
+
+% as above
+% arg 1 is a list of ones (head is less general) and zeros (head as general)
+% args 2 and 3 are lists of ones. Their lengths sum to the length of arg 1.
+patwait([], [], A, []).
+patwait(0.A, 1.B, C, D) :-
+	patwait(A, B, 1.C, D).
+patwait(1.A, 1.B, C, D.E) :-
+	append(C, 0.B, D),
+	patwait(A, B, 1.C, E).
+
+% combine list of list of waits (one for each loop) to get one list of waits
+combinew(A, B) :-
+	all(W, andw(A, W), B).
+
+% and together one wait from each group of waits
+andw(A.B, C) :-
+	member(D, A),
+	andrest(D, B, C).
+
+andrest(D, [], D).
+andrest(D, A.B, C) :-
+	member(E, A),
+	and(D, E, F),
+	andrest(F, B, C).
+
+% and two waits
+and([], [], []).
+and(1.A, 1.B, 1.C) :-
+	!,
+	and(A, B, C).
+and(_.A, _.B, 0.C) :-
+	and(A, B, C).
+
+% remove redundancies from a list of waits
+eqvwaits(A, B) :-
+	compactw(A, [], B).
+
+% as above
+compactw([], A, A).
+compactw(A.B, C, D) :-
+	remove(A, B, E),
+	remove(A, C, F),
+	compactw(E, A.F, D).
+
+% remove waits which are subsumed by a given wait
+remove(A, [], []).
+remove(A, B.C, B.D) :-
+	notinw(B, A),
+	!,
+	remove(A, C, D).
+remove(A, B.C, D) :-
+	remove(A, C, D).
+
+% is a wait subsumed by another?
+notinw(1.A, 0.B).
+notinw(A.B, C.D) :-
+	notinw(B, D).
+
+% add list of wait declarations
+wprint(P, []).
+wprint(P, A.B) :-
+	W =.. P.A,
+	writef('?- wait ', 0),
+	write(W),
+	writeln(.),
+	wprint(P, B).
+
+append([], A, A).
+append(A.B, C, A.D) :-
+	append(B, C, D).
+
+member(A, A.B).
+member(A, B.C) :-
+	member(A, C).
+
+copy(A, C) :-
+	asserta(tmp(A)),
+	retract(tmp(C)),
+	!.
+
+tmp(0).
+?-retract(tmp(0)).
+
+?- hide([join1(3), rmlg(3), inmg(3), asgen1(2), bindvars(3),
+	bindlv(3)]).
+
+/*	a) for all terms T, T unifies with a member of _1
+			iff T unifies with a member of _2,
+	b) _2 is the shortest such list.
+*/
+compress(S, C) :- join1(S, [], C).
+
+join1([], A, A).
+join1(A.B, C, F) :- rmlg(A, C, D), inmg(A, D, E), join1(B, E, F).
+
+/*	_3 is the members of _2 that _1 is not as general as
+*/
+rmlg(_, [], []).
+rmlg(A, B.C, D) :- asgen(A, B), !, rmlg(A, C, D).
+rmlg(A, B.C, B.D) :- rmlg(A, C, D).
+
+/*	_3 is _2 with _1 inserted if no member of _2 is as general
+*/
+inmg(A, [], [A]).
+inmg(A, B.C, B.C) :- asgen(B, A), !.
+inmg(A, B.C, B.D) :- inmg(A, C, D).
+
+/*	_1 is (at least) as general as _2
+*/
+asgen(A, B) :- not(not(asgen1(A, B))).
+
+asgen1(A, B) :- bindvars(0, _, B), A = B.
+
+bindvars(N, M, b(N)) :- M is N+1, !.
+bindvars(N, N, M) :- int(M), !.
+bindvars(N, M, T) :- T =.. (F.A), bindlv(N, M, A).
+
+bindlv(N, N, []).
+bindlv(N, M, H.T) :- bindvars(N, N1, H), bindlv(N1, M, T).
+
+?-lib all.
+?- hidden.

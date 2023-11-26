@@ -1,0 +1,1421 @@
+
+	.pred	'desireList',2
+	.clause
+0:	all	3
+	gvary	0,1
+	pvary	2,1
+	pnil	2
+	call	3,3,&'desireList'/3
+	puval	2,0
+	pvary	1,1
+	call	2,2,&'keySort'/2
+	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'groupDesires'/2
+	last
+
+	.pred	'groupDesires',2
+4: 	sot	0,&2,&0,&1,&3
+2: 	t	2,0,&0
+	tr	2,0,&1
+3: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	pro	
+	.clause
+1:	glvx2	0,2,3
+	gsx2	2,0,5,$'-'/2
+	gvarx	4,1
+	gsx2	5,255,1,$'-'/2
+	pl	2
+	uvalx	5
+	uc	$[]
+	exec	5,&'groupDesires'/5
+	last
+
+	.pred	'groupDesires',5
+	.clause
+0:	all	5
+	gvary	3,1
+	gvarx	5,2
+	gvary	1,3
+	gvary	4,4
+	labelx	1
+17: 	te	6,0,6,&18
+	pvaly	1,255
+	glvx2	255,6,3
+	gs	6,$'-'/2
+	ulvx	0
+	uvarx	6
+	cutx	1
+	pl	2
+	uvalx	6
+	ulvx	5
+	pvaly	3,1
+	pvaly	4,4
+	dallexe	5,&'groupDesires'/5
+18: 	tre	6,0
+	gvara	0,5
+	pvary	2,1
+	call	5,2,&'keySort'/2
+	pvaly	4,255
+	gl	255
+	uvara	5
+	uvary	0
+	gs	5,$'desire'/2
+	ulvy	3
+	uvara	1
+	puval	2,0
+	call	2,2,&'gatherDesire'/2
+	pvaly	1,0
+	pvaly	0,1
+	dallexe	2,&'groupDesires'/2
+19: 	last
+
+	.pred	'gatherDesire',2
+4: 	sot	0,&2,&0,&1,&3
+2: 	t	2,0,&0
+	tr	2,0,&1
+3: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	pro	
+	.clause
+1:	glvx2	0,3,2
+	gsx2	3,0,255,$'-'/2
+	gvarx	3,1
+	pc	1,$1
+	exec	4,&'gatherDesire'/4
+	last
+
+	.pred	'gatherDesire',4
+	.clause
+0:	labelx	4
+11: 	te	4,0,5,&12
+	glvx2	2,5,2
+	gsx2	5,5,255,$'-'/2
+	id	5,0
+	cutx	4
+	apushx	1
+	afunc	46
+	popx	1
+	exec	4,&'gatherDesire'/4
+12: 	tre	4,0
+	glvx2	3,4,5
+	gs	4,$'handful'/2
+	ulvx	1
+	ulvx	0
+	gvara	0,2
+	gvara	1,5
+	exec	2,&'gatherDesire'/2
+13: 	last
+
+	.pred	'desireList',3
+	labelx	3
+7: 	sot	0,&5,&4,&4,&8
+5: 	t	4,0,&0
+	r	4,0,&1
+	r	4,0,&2
+	r	4,0,&3
+	tr	4,0,&4
+8: 	sose	0,&($'->'/2:&2,$'='/2:&6,$'conj'/1:&0,$'disj'/3:&1),&4
+6: 	t	4,0,&3
+	tr	4,0,&4
+	.clause
+0:	gsx1	0,0,$'conj'/1
+	cutx	3
+	exec	3,&'desireListL'/3
+	.clause
+1:	gs	0,$'disj'/3
+	uvoid	2
+	uvara	0
+	cutx	3
+	exec	3,&'desireListL'/3
+	.clause
+2:	gs	0,$'->'/2
+	uvara	0
+	all	3
+	uvary	2
+	gvary	0,2
+	cutx	3
+	pvary	1,2
+	call	3,3,&'desireList'/3
+	pvaly	2,0
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'desireList'/3
+	.clause
+3:	gs	0,$'='/2
+	uvarx	8
+	us	255,$'vr'/4
+	uvarx	6
+	uvarx	7
+	uc	$'temp'
+	uvarx	4
+	gs	8,$'vr'/4
+	uvarx	8
+	uvarx	5
+	uc	$'temp'
+	uvara	0
+37: 	te	9,0,9,&38
+	gc	0,$'var'
+	gsx1	4,255,$'val'/1
+	j	&39
+38: 	tre	9,0
+	gc	4,$'var'
+	gsx1	0,255,$'val'/1
+39: 	cutx	3
+	jtypx	5,252,&40
+	gl	1
+	uvara	8
+	ulvx	2
+	gs	8,$'-'/2
+	uvalx	6
+	us	255,$'-'/2
+	uvalx	5
+	uvalx	7
+	pro	
+40: 	gl	1
+	uvarx	9
+	ulvx	2
+	gs	9,$'-'/2
+	uvalx	8
+	us	255,$'-'/2
+	uvalx	7
+	uvalx	5
+	pro	
+41: 	.clause
+4:	gvalx	1,2
+	pro	
+	last
+
+	.pred	'desireListL',3
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	3,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	1,2
+	pro	
+	.clause
+1:	gl	0
+	uvara	0
+	all	3
+	uvary	2
+	gvary	0,2
+	pvary	1,2
+	call	3,3,&'desireList'/3
+	pvaly	2,0
+	puval	1,1
+	pvaly	0,2
+	dall	
+	execsot	3,0,&4,&0,&1,&2
+	last
+
+	.pred	'desireCount',2
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	2,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gc	1,$1
+	pro	
+	.clause
+1:	gl	0
+	uvarx	2
+	all	4
+	uvary	3
+	gsx2	2,255,0,$'desire'/2
+	gvary	0,1
+	pvary	2,1
+	call	4,2,&'length'/2
+	pvaly	3,0
+	pvary	1,1
+	call	3,2,&'desireCount'/2
+	apushy	2
+	afunc	46
+	pushy	1
+	afunc	2
+	popvy	0
+	dallpro	
+	last
+
+	.pred	'tempsOfClause',2
+4: 	sot	0,&2,&3,&3,&5
+2: 	t	2,0,&0
+	tr	2,0,&1
+3: 	fail	
+5: 	sos	0,&($'conj'/1:&0,$'disj'/3:&1),&3
+	.clause
+0:	gsx1	0,0,$'conj'/1
+	gsx1	1,1,$'conj'/1
+	pnil	2
+	exec	3,&'tempsOfTermL'/3
+	.clause
+1:	gs	0,$'disj'/3
+	uvarx	2
+	uvarx	3
+	uvara	0
+	gs	1,$'disj'/3
+	uvalx	2
+	uvalx	3
+	uvara	1
+	pnil	2
+	exec	3,&'tempsOfTermL'/3
+	last
+
+	.pred	'tempsOfTerm',3
+16: 	sot	0,&17,&2,&15,&18
+17: 	mkdel	3,&16
+	mark	0
+	delay	
+15: 	fail	
+18: 	sose	0,&($'->'/2:&13,$'='/2:&4,$'builtin'/3:&5,$'conj'/1:&12,$'const'/1:&10,$'disj'/3:&14,$'goal'/5:&11,$'ground'/3:&8,$'head'/1:&1,$'init'/1:&3,$'list'/1:&7,$'string'/1:&9,$'struct'/1:&6),&0
+	.clause
+0:	gs	0,$'vr'/4
+	uvoid	2
+	uvarx	3
+	uvoid	1
+	pc	4,$'temp'
+	idtest	3,4
+	jfail	&22
+	gl	1
+	ulvx	0
+	ulvx	2
+	pro	
+22: 	gvalx	2,1
+	pro	
+23: 	.clause
+1:	gsx1	0,255,$'head'/1
+	gvalx	1,2
+	pro	
+	.clause
+2:	gc	0,$'fence'
+	gl	1
+	uc	$'fence'
+	ulvx	2
+	pro	
+	.clause
+3:	gsx1	0,0,$'init'/1
+	exec	3,&'tempsOfTermL'/3
+	.clause
+4:	gs	0,$'='/2
+	all	4
+	uvary	2
+	uvary	3
+	gvary	0,2
+	labelx	0
+45: 	te	2,0,2,&46
+	pvaly	2,255
+	gs	255,$'vr'/4
+	uvoid	4
+	cutx	0
+	pvaly	2,0
+	pvary	1,2
+	call	4,3,&'tempsOfTerm'/3
+	pvaly	3,0
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'tempsOfTerm'/3
+46: 	tre	2,0
+	pvaly	3,0
+	pvary	1,2
+	call	3,3,&'tempsOfTerm'/3
+	pvaly	2,0
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'tempsOfTerm'/3
+47: 	.clause
+5:	gs	0,$'builtin'/3
+	uvoid	2
+	uvara	0
+	exec	3,&'tempsOfTermL'/3
+	.clause
+6:	gs	0,$'struct'/1
+	ul	255
+	uvoid	1
+	uvara	0
+	exec	3,&'tempsOfTermL'/3
+	.clause
+7:	gsx1	0,0,$'list'/1
+	exec	3,&'tempsOfTermL'/3
+	.clause
+8:	gs	0,$'ground'/3
+	uvoid	3
+	gvalx	1,2
+	pro	
+	.clause
+9:	gsx1	0,255,$'string'/1
+	gvalx	1,2
+	pro	
+	.clause
+10:	gsx1	0,255,$'const'/1
+	gvalx	1,2
+	pro	
+	.clause
+11:	gs	0,$'goal'/5
+	uvoid	3
+	uvara	0
+	uvoid	1
+	exec	3,&'tempsOfTermL'/3
+	.clause
+12:	gsx1	0,0,$'conj'/1
+	glvx2	1,3,4
+	gsx1	3,1,$'conj'/1
+	gvalx	4,2
+	pnil	2
+	exec	3,&'tempsOfTermL'/3
+	.clause
+13:	gs	0,$'->'/2
+	uvarx	3
+	us	255,$'conj'/1
+	all	2
+	uvary	1
+	gsx1	3,0,$'conj'/1
+	glvx2	1,3,4
+	gs	3,$'->'/2
+	uvarx	3
+	us	255,$'conj'/1
+	uvary	0
+	gsx1	3,1,$'conj'/1
+	gvalx	4,2
+	pnil	2
+	call	2,3,&'tempsOfTermL'/3
+	pvaly	1,0
+	pvaly	0,1
+	pnil	2
+	dallexe	3,&'tempsOfTermL'/3
+	.clause
+14:	gs	0,$'disj'/3
+	uvarx	3
+	uvarx	4
+	uvara	0
+	glvx2	1,5,6
+	gs	5,$'disj'/3
+	uvalx	3
+	uvalx	4
+	uvara	1
+	gvalx	2,6
+	pnil	2
+	exec	3,&'tempsOfTermL'/3
+	last
+
+	.pred	'tempsOfTermL',3
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	3,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	1,2
+	pro	
+	.clause
+1:	gl	0
+	uvara	0
+	all	3
+	uvary	2
+	gvary	0,2
+	pvary	1,2
+	call	3,3,&'tempsOfTerm'/3
+	pvaly	2,0
+	puval	1,1
+	pvaly	0,2
+	dall	
+	execsot	3,0,&4,&0,&1,&2
+	last
+
+	.pred	'constrainRegs',2
+	.clause
+0:	gvarx	5,1
+	pnil	1
+	pnil	2
+	pnil	3
+	pc	4,$'first'
+	pnil	6
+	exec	7,&'constrainRegs'/7
+	last
+
+	.pred	'constrainRegs',7
+14: 	sot	0,&15,&16,&13,&20
+15: 	mkdel	7,&14
+	mark	0
+	delay	
+16: 	soce	0,&($'fence':&17,$'rest':&7),&13
+17: 	sot	4,&18,&19,&13,&13
+18: 	mkdel	7,&17
+	mark	4
+	delay	
+19: 	soc	4,&($'first':&5,$'rest':&6),&13
+13: 	fail	
+	j	&7
+20: 	sos	0,&($'->'/2:&21,$'conj'/1:&22,$'disj'/3:&23,$'vr'/4:&24),&13
+21: 	gsx2	0,0,7,$'->'/2
+	j	&13
+22: 	gsx1	0,0,$'conj'/1
+	j	&8
+23: 	gs	0,$'disj'/3
+	uvarx	0
+	uvarx	7
+	uvarx	8
+	j	&9
+24: 	gs	0,$'vr'/4
+	uvarx	0
+	uvarx	7
+	uvarx	8
+	uvarx	9
+25: 	sot	9,&26,&27,&13,&11
+26: 	mkdel	10,&25
+	mark	9
+	delay	
+27: 	soc	9,&($'uniq':&12,$'var':&10),&13
+	.clause
+5:	gc	0,$'fence'
+	gvara	0,1
+	all	3
+	gvary	2,2
+	gvara	1,3
+	gc	4,$'first'
+	gvara	2,5
+	gvary	0,6
+	pvary	1,3
+	call	3,4,&'applyParamConstraints'/4
+	pnil	0
+	pvaly	2,1
+	pnil	2
+	pc	3,$'first'
+	puval	1,4
+	pvaly	0,5
+	dallexe	6,&'constrainCont'/6
+	.clause
+6:	gc	0,$'fence'
+	gvara	0,1
+	gvara	1,3
+	gc	4,$'rest'
+	gvara	2,5
+	gvara	3,6
+	exec	4,&'applyParamConstraints'/4
+	.clause
+7:	gc	0,$'rest'
+	gvara	0,1
+	gvara	1,2
+	gvara	2,3
+	gvara	4,5
+	gvara	5,6
+	pc	3,$'rest'
+	exec	6,&'constrainCont'/6
+	.clause
+8:	all	6
+	gvary	5,1
+	gvara	1,2
+	gvary	3,3
+	gvary	2,4
+	gvary	1,5
+	gvary	0,6
+	pvary	4,2
+	call	6,3,&'append'/3
+	pvaly	5,0
+	puval	4,1
+	pvaly	3,2
+	pvaly	2,3
+	pvaly	1,4
+	pvaly	0,5
+	dallexe	6,&'constrainCont'/6
+	.clause
+9:	gvarx	10,0
+	gvarx	11,1
+	gvarx	12,2
+	gvarx	13,4
+	glvx2	5,14,15
+	gs	14,$'>='/2
+	ulvx	10
+	uvarx	14
+	gvarx	16,6
+	gvalx	14,7
+	glvx2	8,0,1
+	ps	17,$'disj'/1
+	ulvx	10
+	pl	2
+	uvalx	17
+	ulvx	11
+	ps	10,$'disj'/1
+	uvalx	14
+	pl	3
+	uvalx	10
+	ulvx	11
+	gvara	4,12
+	gvara	5,13
+	gvara	6,15
+	gvara	7,16
+	exec	8,&'constrainRegsD'/8
+	.clause
+10:	gvarx	10,0
+	gvarx	11,2
+	gvarx	12,4
+	gvara	4,5
+	gvara	5,6
+	gc	9,$'var'
+	jctypx	10,17,&124
+	glvx2	4,13,4
+	gs	13,$'use'/1
+	ulvx	7
+	ps	13,$'vr'/2
+	ulvx	10
+	ulvx	7
+	pl	0
+	uvalx	13
+	ulvx	1
+	gvara	1,11
+	gvara	2,3
+	gvara	3,12
+	exec	6,&'constrainCont'/6
+124: 	gsx1	10,255,$'t'/1
+	ps	13,$'vr'/2
+	ulvx	10
+	ulvx	7
+	pl	0
+	uvalx	13
+	ulvx	1
+	ps	13,$'vr'/2
+	ulvx	10
+	ulvx	7
+	pl	2
+	uvalx	13
+	ulvx	3
+	gvara	1,11
+	gvara	3,12
+	exec	6,&'constrainCont'/6
+125: 	.clause
+11:	all	6
+	gvary	5,1
+	gvary	4,2
+	gvary	3,3
+	gvary	2,4
+	gvara	3,5
+	gvary	0,6
+	gvara	1,7
+	gsx1	9,255,$'val'/1
+	pvaly	5,2
+	pvary	1,4
+	call	6,5,&'applyConstraints'/5
+	pvaly	5,0
+	pvaly	4,1
+	pvaly	3,2
+	pvaly	2,3
+	puval	1,4
+	pvaly	0,5
+	dallexe	6,&'constrainCont'/6
+	.clause
+12:	gvara	0,1
+	gvara	1,2
+	gvara	2,3
+	gvara	3,4
+	gvara	4,5
+	gvara	5,6
+	gc	9,$'uniq'
+	exec	6,&'constrainCont'/6
+	last
+
+	.pred	'constrainCont',6
+3: 	sot	1,&4,&0,&1,&2
+4: 	mkdel	6,&3
+	mark	1
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	1
+	gvalx	4,5
+	pro	
+	.clause
+1:	gvarx	7,0
+	glvx2	1,0,8
+	gvarx	9,2
+	gvarx	10,3
+	gvarx	11,4
+	gvarx	6,5
+	gvara	1,7
+	gvara	2,8
+	gvara	3,9
+	gvara	4,10
+	gvara	5,11
+	exec	7,&'constrainRegs'/7
+	last
+
+	.pred	'constrainRegsD',8
+4: 	sot	0,&2,&3,&3,&5
+2: 	t	8,0,&0
+	tr	8,0,&1
+3: 	fail	
+5: 	sos	0,&($'->'/2:&1,$'conj'/1:&0),&3
+	.clause
+0:	gsx1	0,8,$'conj'/1
+	all	5
+	gvary	3,1
+	gvara	1,2
+	gvary	2,3
+	gvary	4,4
+	gvara	4,5
+	gvara	5,6
+	gvary	0,7
+	ps	0,$'conj'/1
+	uvalx	8
+	pvaly	4,2
+	pnil	3
+	pvary	1,6
+	call	5,7,&'constrainRegs'/7
+	pl	3
+	uc	$'rest'
+	ulvy	4
+	pvaly	3,0
+	pvaly	2,1
+	pnil	2
+	puval	1,4
+	pvaly	0,5
+	dallexe	6,&'constrainRegsDL'/6
+	.clause
+1:	gs	0,$'->'/2
+	all	6
+	uvary	5
+	uvarx	8
+	gvary	3,1
+	gvara	1,2
+	gvary	2,3
+	gvary	4,4
+	gvara	4,5
+	gvara	5,6
+	gvary	0,7
+	pl	2
+	uvalx	8
+	ulvy	4
+	pvaly	5,0
+	pnil	3
+	pvary	1,6
+	call	6,7,&'constrainRegs'/7
+	pl	2
+	uvaly	5
+	uc	$[]
+	pl	3
+	uc	$'rest'
+	ulvy	4
+	pvaly	3,0
+	pvaly	2,1
+	puval	1,4
+	pvaly	0,5
+	dallexe	6,&'constrainRegsDL'/6
+	last
+
+	.pred	'constrainRegsDR',7
+4: 	sot	0,&2,&3,&3,&5
+2: 	t	7,0,&0
+	tr	7,0,&1
+3: 	fail	
+5: 	sos	0,&($'->'/2:&1,$'conj'/1:&0),&3
+	.clause
+0:	gsx1	0,7,$'conj'/1
+	all	7
+	gvary	4,1
+	gvary	3,2
+	gvara	0,3
+	gvary	2,4
+	gvary	5,5
+	gvary	0,6
+	ps	8,$'conj'/1
+	uvalx	7
+	pl	1
+	uvalx	8
+	ulvy	2
+	pvary	6,2
+	call	7,3,&'append'/3
+	pvaly	3,0
+	puval	6,1
+	pnil	2
+	pc	3,$'first'
+	pvaly	5,4
+	pvary	1,5
+	call	5,6,&'constrainCont'/6
+	pvaly	4,0
+	pvaly	3,1
+	pnil	2
+	pvaly	2,3
+	puval	1,4
+	pvaly	0,5
+	dallexe	6,&'constrainRegsDL'/6
+	.clause
+1:	gs	0,$'->'/2
+	all	10
+	uvary	7
+	uvarx	7
+	gvary	5,1
+	gvary	4,2
+	gvary	6,3
+	gvary	2,4
+	gvary	8,5
+	gvary	0,6
+	pl	1
+	uvaly	7
+	ul	255
+	uvalx	7
+	ulvy	2
+	pvaly	6,0
+	pvary	9,2
+	call	10,3,&'append'/3
+	pvaly	4,0
+	puval	9,1
+	pnil	2
+	pc	3,$'first'
+	pvaly	8,4
+	pvary	1,5
+	call	8,6,&'constrainCont'/6
+	pl	1
+	uvaly	7
+	uc	$[]
+	pvaly	6,0
+	pvary	3,2
+	call	6,3,&'append'/3
+	pvaly	5,0
+	pvaly	4,1
+	puval	3,2
+	pvaly	2,3
+	puval	1,4
+	pvaly	0,5
+	dallexe	6,&'constrainRegsDL'/6
+	last
+
+	.pred	'constrainRegsDL',6
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	6,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	4,5
+	pro	
+	.clause
+1:	glvx2	0,0,7
+	gvarx	8,1
+	gvarx	9,2
+	gvarx	10,3
+	gvarx	11,4
+	gvarx	6,5
+	gvara	1,7
+	gvara	2,8
+	gvara	3,9
+	gvara	4,10
+	gvara	5,11
+	exec	7,&'constrainRegsDR'/7
+	last
+
+	.pred	'applyParamConstraints',4
+3: 	sot	1,&4,&0,&1,&2
+4: 	mkdel	4,&3
+	mark	1
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	1
+	gvalx	2,3
+	pro	
+	.clause
+1:	all	4
+	gvary	3,0
+	gl	1
+	uvarx	4
+	uvary	2
+	gsx2	4,0,1,$'vr'/2
+	gvarx	4,2
+	gvary	0,3
+	pvaly	3,2
+	gvara	3,4
+	pvary	1,4
+	call	4,5,&'applyConstraints'/5
+	pvaly	3,0
+	pvaly	2,1
+	puval	1,2
+	pvaly	0,3
+	dall	
+	execsot	4,1,&4,&0,&1,&2
+	last
+
+	.pred	'applyConstraints',5
+6: 	sot	2,&7,&0,&8,&12
+7: 	mkdel	5,&6
+	mark	2
+	delay	
+	j	&0
+8: 	glvx2	2,2,5
+9: 	sot	2,&10,&5,&5,&11
+10: 	mkdel	6,&9
+	mark	2
+	delay	
+5: 	fail	
+11: 	sos	2,&($'disj'/1:&4,$'vr'/2:&3),&5
+12: 	fail	
+	.clause
+0:	gnil	2
+	gvalx	3,4
+	pro	
+	.clause
+3:	gsx2	2,6,7,$'vr'/2
+	gvara	2,5
+	idtest	0,6
+	jtrue	&28
+	jtypx	1,3,&24
+	j	&25
+24: 	jtypx	7,3,&27
+25: 	te	5,0,8,&26
+	iseq	1,7,7
+	gc	7,$'fail'
+	j	&27
+26: 	tre	5,0
+	fail	
+	j	&27
+27: 	exec	5,&'applyConstraints'/5
+28: 	gvalx	4,3
+	pro	
+29: 	.clause
+4:	gsx1	2,6,$'disj'/1
+	glvx2	3,7,3
+	gs	7,$'<'/2
+	ulvx	1
+	uvalx	6
+	gvara	2,5
+	execsot	5,2,&7,&0,&8,&12
+	last
+
+	.pred	'fulfillDesires',1
+	labelx	1
+	.clause
+0:	all	1
+	gvary	0,1
+	call	1,1,&'fulfillDesiresL'/1
+	cuty	0
+	dallpro	
+	last
+
+	.pred	'fulfillDesiresL',1
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	1,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	pro	
+	.clause
+1:	gl	0
+	uvarx	2
+	all	1
+	uvary	0
+	gsx2	2,2,1,$'desire'/2
+9: 	te	0,0,3,&10
+	ps	0,$'handful'/2
+	uvoid	1
+	uvalx	2
+	call	1,2,&'member'/2
+	j	&11
+10: 	tre	0,0
+11: 	pvaly	0,0
+	dall	
+	execsot	1,0,&4,&0,&1,&2
+	last
+
+	.pred	'tempList',2
+	.clause
+0:	gvarx	2,1
+	pnil	1
+	exec	3,&'tempList'/3
+	last
+
+	.pred	'tempList',3
+6: 	sot	0,&7,&4,&5,&8
+7: 	mkdel	3,&6
+	mark	0
+	delay	
+5: 	fail	
+8: 	sos	0,&($'->'/2:&2,$'conj'/1:&0,$'disj'/3:&1,$'vr'/4:&3),&5
+	.clause
+0:	gsx1	0,0,$'conj'/1
+	exec	3,&'tempListL'/3
+	.clause
+1:	gs	0,$'disj'/3
+	uvoid	2
+	uvara	0
+	exec	3,&'tempListL'/3
+	.clause
+2:	gs	0,$'->'/2
+	uvara	0
+	all	3
+	uvary	2
+	gvary	0,2
+	pvary	1,2
+	call	3,3,&'tempList'/3
+	pvaly	2,0
+	puval	1,1
+	pvaly	0,2
+	dall	
+	execsot	3,0,&7,&4,&5,&8
+	.clause
+3:	gs	0,$'vr'/4
+	uvara	0
+	uvarx	5
+	uvoid	1
+	uvarx	3
+	labelx	4
+33: 	te	3,0,6,&37
+	ctypx	0,17
+	pc	6,$'var'
+	id	3,6
+	labelx	3
+34: 	te	6,0,6,&35
+	occurs	0,1
+	cutx	3
+	fail	
+35: 	tre	6,0
+36: 	cutx	4
+	gl	2
+	uvarx	6
+	ulvx	1
+	gs	6,$'vr'/2
+	uvalx	0
+	uvalx	5
+	pro	
+37: 	tre	3,0
+	gvalx	1,2
+	pro	
+38: 	.clause
+4:	gc	0,$'fence'
+	gvalx	1,2
+	pro	
+	last
+
+	.pred	'tempListL',3
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	3,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	1,2
+	pro	
+	.clause
+1:	gl	0
+	uvara	0
+	all	3
+	uvary	2
+	gvary	0,2
+	pvary	1,2
+	call	3,3,&'tempList'/3
+	pvaly	2,0
+	puval	1,1
+	pvaly	0,2
+	dall	
+	execsot	3,0,&4,&0,&1,&2
+	last
+
+	.pred	'allocateTemps',3
+	labelx	3
+2: 	t	4,0,&0
+	tr	4,0,&1
+	.clause
+0:	all	5
+	gvary	2,0
+	gvary	4,1
+	gvary	1,2
+	gvary	0,3
+	pvaly	2,0
+	pc	1,$0
+	pvary	3,2
+	call	5,3,&'allocateTemps1'/3
+	apushy	4
+	pushy	3
+	jpred	4,&12
+	pvaly	4,255
+	gvaly	1,255
+	j	&13
+12: 	puval	3,255
+	gvaly	1,255
+13: 	pvaly	2,0
+	pvaly	1,1
+	call	1,2,&'allocateTemps2'/2
+	cuty	0
+	dallpro	
+	.clause
+1:	pc	0,#(STR,&19)
+	exec	1,&'throwCompilerError'/1
+	last
+19: 	.word	$'format'/3
+	.word	$'user_error'
+	.word	#(CHR,&20)
+	.word	$[]
+20: 	.string	"~NError -- unable to allocate temporaries.~nConsult your guru.~n"
+
+	.pred	'allocateTemps1',3
+8: 	sot	0,&9,&0,&10,&14
+9: 	mkdel	3,&8
+	mark	0
+	delay	
+	j	&0
+10: 	glvx2	0,0,3
+11: 	sot	0,&12,&7,&7,&13
+12: 	mkdel	4,&11
+	mark	0
+	delay	
+7: 	fail	
+13: 	sos	0,&($'<'/2:&6,$'>='/2:&5,$'use'/1:&4),&7
+14: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	1,2
+	pro	
+	.clause
+4:	gsx1	0,255,$'use'/1
+	gvara	0,3
+	execsot	3,0,&9,&0,&10,&14
+	.clause
+5:	gsx2	0,255,255,$'>='/2
+	gvara	0,3
+	execsot	3,0,&9,&0,&10,&14
+	.clause
+6:	gs	0,$'<'/2
+	all	6
+	uvary	2
+	uvary	4
+	gvary	3,1
+	gvary	0,2
+	gvary	1,3
+	labely	5
+	pc	0,$0
+	pc	1,$253
+	pvaly	2,2
+	call	6,3,&'between'/3
+	cuty	5
+	apushy	2
+	pushy	4
+	apred	2
+	apushy	3
+	pushy	2
+	jpred	4,&39
+	pvaly	3,1
+	j	&40
+39: 	pvaly	2,1
+40: 	pvaly	1,0
+	pvaly	0,2
+	dall	
+	execsot	3,0,&9,&0,&10,&14
+	last
+
+	.pred	'allocateTemps2',2
+8: 	sot	0,&9,&0,&10,&14
+9: 	mkdel	2,&8
+	mark	0
+	delay	
+	j	&0
+10: 	glvx2	0,0,2
+11: 	sot	0,&12,&7,&7,&13
+12: 	mkdel	3,&11
+	mark	0
+	delay	
+7: 	fail	
+13: 	sos	0,&($'<'/2:&6,$'>='/2:&5,$'use'/1:&4),&7
+14: 	fail	
+	.clause
+0:	gnil	0
+	pro	
+	.clause
+4:	gsx1	0,3,$'use'/1
+	all	3
+	gvary	0,1
+	gvary	1,2
+	jtypx	3,3,&23
+	labely	2
+	pvaly	0,0
+	pc	1,$253
+	gvara	2,3
+	call	3,3,&'between'/3
+	cuty	2
+	j	&23
+23: 	pvaly	1,0
+	pvaly	0,1
+	dall	
+	execsot	2,0,&9,&0,&10,&14
+	.clause
+5:	gs	0,$'>='/2
+	all	6
+	uvary	3
+	uvary	4
+	gvary	0,1
+	gvary	1,2
+	labely	5
+	pc	0,$0
+	pc	1,$253
+	pvaly	4,2
+	call	6,3,&'between'/3
+	cuty	5
+	labely	2
+	pvaly	4,0
+	pc	1,$253
+	pvaly	3,2
+	call	3,3,&'between'/3
+	cuty	2
+	pvaly	1,0
+	pvaly	0,1
+	dall	
+	execsot	2,0,&9,&0,&10,&14
+	.clause
+6:	gsx2	0,255,255,$'<'/2
+	gvara	0,2
+	execsot	2,0,&9,&0,&10,&14
+	last
+
+	.pred	'allocatePerms',2
+	.clause
+0:	gvarx	4,1
+	pc	1,$0
+	pvarx	2,2
+	pc	3,$0
+	exec	5,&'allocatePerms'/5
+	last
+
+	.pred	'allocatePerms',5
+10: 	sot	0,&11,&7,&9,&12
+11: 	mkdel	5,&10
+	mark	0
+	delay	
+9: 	fail	
+12: 	sos	0,&($'->'/2:&2,$'='/2:&5,$'builtin'/3:&6,$'conj'/1:&0,$'disj'/3:&1,$'goal'/5:&3,$'head'/1:&8,$'init'/1:&4),&9
+	.clause
+0:	gsx1	0,0,$'conj'/1
+	exec	5,&'allocatePermsL'/5
+	.clause
+1:	gs	0,$'disj'/3
+	uvoid	2
+	uvara	0
+	exec	5,&'allocatePermsD'/5
+	.clause
+2:	gsx2	0,5,6,$'->'/2
+	pl	0
+	uvalx	5
+	ul	255
+	uvalx	6
+	uc	$[]
+	exec	5,&'allocatePermsL'/5
+	.clause
+3:	gs	0,$'goal'/5
+	uvoid	2
+	ulvx	2
+	uvoid	2
+	gvalx	1,2
+	gvalx	3,4
+	pro	
+	.clause
+4:	gsx1	0,0,$'init'/1
+	exec	5,&'allocatePermsTL'/5
+	.clause
+5:	gs	0,$'='/2
+	all	5
+	uvary	4
+	uvara	0
+	gvary	2,2
+	gvary	0,4
+	pvary	3,2
+	pvary	1,4
+	call	5,5,&'allocatePermsT'/5
+	pvaly	4,0
+	puval	3,1
+	pvaly	2,2
+	puval	1,3
+	pvaly	0,4
+	dallexe	5,&'allocatePermsT'/5
+	.clause
+6:	gs	0,$'builtin'/3
+	uvoid	2
+	uvara	0
+	exec	5,&'allocatePermsTL'/5
+	.clause
+7:	gc	0,$'fence'
+	gvalx	1,2
+	gvalx	3,4
+	pro	
+	.clause
+8:	gsx1	0,255,$'head'/1
+	gvalx	1,2
+	gvalx	3,4
+	pro	
+	last
+
+	.pred	'allocatePermsL',5
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	5,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	1,2
+	gvalx	3,4
+	pro	
+	.clause
+1:	gl	0
+	all	5
+	uvary	4
+	uvara	0
+	gvary	2,2
+	gvary	0,4
+	pvary	3,2
+	pvary	1,4
+	call	5,5,&'allocatePermsL'/5
+	pvaly	4,0
+	puval	3,1
+	pvaly	2,2
+	puval	1,3
+	pvaly	0,4
+	dallexe	5,&'allocatePerms'/5
+	last
+
+	.pred	'allocatePermsD',5
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	5,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	1,2
+	gvalx	3,4
+	pro	
+	.clause
+1:	gl	0
+	all	7
+	uvary	6
+	uvara	0
+	gvary	5,1
+	gvary	1,2
+	gvary	3,4
+	pvaly	5,1
+	pvary	2,2
+	pvary	4,4
+	call	7,5,&'allocatePermsD'/5
+	pvaly	6,0
+	pvaly	5,1
+	pvary	0,2
+	puval	4,3
+	pvaly	3,4
+	call	3,5,&'allocatePerms'/5
+	apushy	2
+	pushy	0
+	jpred	4,&20
+	puval	2,255
+	gvaly	1,255
+	dallpro	
+20: 	puval	0,255
+	gvaly	1,255
+	dallpro	
+21: 	last
+
+	.pred	'allocatePermsT',5
+8: 	sot	0,&6,&7,&7,&9
+6: 	t	5,0,&0
+	r	5,0,&1
+	r	5,0,&2
+	r	5,0,&3
+	r	5,0,&4
+	tr	5,0,&5
+7: 	fail	
+9: 	sos	0,&($'const'/1:&0,$'ground'/3:&5,$'list'/1:&3,$'string'/1:&4,$'struct'/1:&2,$'vr'/4:&1),&7
+	.clause
+0:	gsx1	0,5,$'const'/1
+	gvalx	1,2
+	gvalx	3,4
+	typx	5,12
+	pro	
+	.clause
+1:	gs	0,$'vr'/4
+	uvoid	1
+	uvarx	5
+	uvara	0
+	uvoid	1
+	pc	6,$'temp'
+	idtest	0,6
+	jfail	&20
+	gvalx	1,2
+	gvalx	3,4
+	pro	
+20: 	labelx	0
+21: 	te	6,0,6,&22
+	gvalx	3,5
+	cutx	0
+	apushx	3
+	afunc	46
+	popvx	4
+	gvalx	4,2
+	pro	
+22: 	tre	6,0
+	gvalx	3,4
+	apushx	5
+	pushx	1
+	jpred	5,&23
+	apushx	5
+	afunc	46
+	popvx	2
+	pro	
+23: 	gvalx	1,2
+	pro	
+24: 	.clause
+2:	gs	0,$'struct'/1
+	ul	255
+	uvoid	1
+	uvara	0
+	exec	5,&'allocatePermsTL'/5
+	.clause
+3:	gsx1	0,0,$'list'/1
+	exec	5,&'allocatePermsTL'/5
+	.clause
+4:	gsx1	0,255,$'string'/1
+	gvalx	1,2
+	gvalx	3,4
+	pro	
+	.clause
+5:	gs	0,$'ground'/3
+	uvoid	3
+	gvalx	1,2
+	gvalx	3,4
+	pro	
+	last
+
+	.pred	'allocatePermsTL',5
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	5,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	1,2
+	gvalx	3,4
+	pro	
+	.clause
+1:	gl	0
+	all	5
+	uvary	4
+	uvara	0
+	gvary	2,2
+	gvary	0,4
+	pvary	3,2
+	pvary	1,4
+	call	5,5,&'allocatePermsTL'/5
+	pvaly	4,0
+	puval	3,1
+	pvaly	2,2
+	puval	1,3
+	pvaly	0,4
+	dallexe	5,&'allocatePermsT'/5
+	last
+

@@ -1,0 +1,164 @@
+%	setof and bagof - modified code from Edinburgh
+%	Most implementations of setof have problems similar to those of
+%	not and \= (ie. if there are variables in the call then the set
+%	of answers returned may not be correct). This version uses the
+%	standard (unsound) definition of inequality, which leads to problems
+%	in some cases.
+
+?- hide([compress(2), join1(3), rmlg(3), inmg(3), asgeneral(2), asgen1(2),
+	bindvars(3), bindlv(3), noteq(2)]).
+
+?-op(200, xfy, ^).
+
+setof(Term, Goal, Set) :-
+	$setof(Term, Goal, Set).
+
+$setof(X, P, Set) :-
+	$bagof(X, P, Bag),
+	compress(Bag, Set0),
+	Set = Set0,
+	Set ~= [].
+
+bagof(Term, Goal, Bag) :-
+	$bagof(Term, Goal, Bag),
+	Bag ~= [].
+
+$bagof(X, P, Bag) :-
+	$excess_vars(P, X, [], L),
+	$nonempty(L),
+	!,
+	Key =.. $.L,
+	$bagof(X, P, Key, Bag).
+$bagof(X, P, Bag) :-
+	asserta(bagtmp($bag)),
+	call(P),
+	asserta(bagtmp(X)),
+	fail.
+$bagof(X, P, Bag) :-
+	$reap([], Bag).
+
+$bagof(X, P, Key, Bag) :-
+	asserta(bagtmp($bag)),
+	call(P),
+	asserta(bagtmp(Key - X)),
+	fail.
+$bagof(X, P, Key, Bag) :-
+	$reap([], Bags),
+	$pick(Bags, Key, Bag).
+
+$nonempty(_._).
+
+$reap(L0, L) :-
+	retract(bagtmp(X)),
+	!,
+	$reap1(X, L0, L).
+
+$reap1(X, L0, L) :-
+	X \== $bag,
+	!,
+	$reap(X.L0, L).
+$reap1(_, L, L).
+
+$pick([], _, []).
+$pick(Key-T1.Tn, Key, T1.S) :-
+	$pick(Tn, Key, S).
+$pick(K-T1.Tn, Key, S) :-
+	noteq(Key, K),
+	$pick(Tn, Key, S).
+
+$excess_vars(T, X, L0, L) :-
+	var(T),
+	!,
+	(	not occurs(T, X),
+		!,
+		$introduce(T, L0, L)
+	;
+		L = L0
+	).
+$excess_vars(X ^ P, Y, L0, L) :-
+	!,
+	$excess_vars(P, (X, Y), L0, L).
+$excess_vars(setof(X, P, S), Y, L0, L) :-
+	!,
+	$excess_vars((P, S), (X, Y), L0, L).
+$excess_vars(bagof(X, P, S), Y, L0, L) :-
+	!,
+	$excess_vars((P, S), (X, Y), L0, L).
+$excess_vars(T, X, L0, L) :-
+	T =.. F.A,
+	$rem_excess_vars(A, T, X, L0, L).
+$excess_vars(T, X, L, L) :-
+	integer(T).
+
+$rem_excess_vars([], _, _, L, L).
+$rem_excess_vars(T1.A, T, X, L0, L) :-
+	$excess_vars(T1, X, L0, L1),
+	$rem_excess_vars(A, T, X, L1, L).
+
+$introduce(X, L, L) :-
+	occurs(X, L),
+	!.
+$introduce(X, L, X.L).
+
+X ^ P :-
+	P.
+
+compress(S, C) :-
+	join1(S, [], C).
+
+join1([], A, A).
+join1(A.B, C, F) :-
+	rmlg(A, C, D),
+	inmg(A, D, E),
+	join1(B, E, F).
+
+rmlg(_, [], []).
+rmlg(A, B.C, D) :-
+	asgeneral(A, B),
+	!,
+	rmlg(A, C, D).
+rmlg(A, B.C, B.D) :-
+	rmlg(A, C, D).
+
+inmg(A, [], A.[]).
+inmg(A, B.C, B.C) :-
+	asgeneral(B, A),
+	!.
+inmg(A, B.C, B.D) :-
+	inmg(A, C, D).
+
+asgeneral(A, B) :-
+	A \= B,
+	!,
+	fail.
+asgeneral(A, B) :-
+	A == B,
+	!.
+asgeneral(A, B) :-
+	not not asgen1(A, B).
+
+asgen1(A, B) :-
+	bindvars(0, _, B),
+	A = B.
+
+bindvars(N, M, b(N)) :-
+	M is N + 1,
+	!.
+bindvars(N, N, M) :-
+	atomic(M),
+	!.
+bindvars(N, M, T) :-
+	T =.. F.A,
+	bindlv(N, M, A).
+
+bindlv(N, N, []).
+bindlv(N, M, H.T) :-
+	bindvars(N, N1, H),
+	bindlv(N1, M, T).
+
+noteq(X, Y) :-
+	X \= Y.
+
+?- protect([$setof(3), $bagof(3), $bagof(4), $nonempty(1), $reap(2), $reap1(3),
+	$pick(3), $excess_vars(4), $rem_excess_vars(5), $introduce(3)]).
+?- hidden.

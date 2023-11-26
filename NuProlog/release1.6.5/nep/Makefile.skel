@@ -1,0 +1,396 @@
+#
+# Please note that this code is the property of the University
+# of Melbourne and is Copyright 1985, 1986, 1987 by it.
+# 
+# All rights are reserved.
+#
+# Author: John Shepherd
+#
+
+#
+# NU-Prolog 1.5 Bytecode interpreter Makefile
+#
+
+# Configuration Parameters:
+#
+#	These definitions are local only.
+#	The real definitions will be passed in
+#	at installation time by the main NU-Prolog Makefile.
+
+SRC	= /home/muse/cs/mip/jws/nepolog
+
+BIN	= /home/muse/cs/mip/jws/bin
+
+LIB	= /home/muse/cs/mip/jws/lib/nuprolog
+
+CDEFS	= -DBSD4
+
+#ifdef MACHINE_SUN3
+CDEFS	= -DMACHINE_SUN3 -DBSD4 -DINLINE -DFLOAD
+#endif MACHINE_SUN3
+#ifdef MACHINE_SUN4
+CDEFS	= -DMACHINE_SUN4 -DBSD4 -DINLINE -DFLOAD
+#endif MACHINE_SUN4
+#ifdef MACHINE_SUN4_SOLARIS
+CDEFS = -DMACHINE_SUN4_SOLARIS
+#endif MACHINE_SUN4_SOLARIS
+#ifdef MACHINE_VAX
+CDEFS	= -DMACHINE_VAX -DBSD4 -DFLOAD
+#endif MACHINE_VAX
+#ifdef MACHINE_MACII
+CDEFS	= -DMACHINE_MACII -DBSD4
+#endif MACHINE_MACII
+#ifdef MACHINE_ENCORE
+CDEFS	= -DMACHINE_ENCORE -DBSD4 -DFLOAD
+#endif MACHINE_ENCORE
+#ifdef MACHINE_386
+CDEFS	= -DMACHINE_386 -DBSD4
+#endif MACHINE_386
+#ifdef MACHINE_ELXSI
+CDEFS	= -DMACHINE_ELXSI -DBSD4
+#endif MACHINE_ELXSI
+#ifdef MACHINE_MIPS
+CDEFS	= -DMACHINE_MIPS -DBSD4
+#endif MACHINE_MIPS
+#ifdef MACHINE_SGI
+CDEFS	= -DMACHINE_SGI -DBSD4 -DFLOAD
+#endif MACHINE_SGI
+#ifdef MACHINE_DEC
+CDEFS	= -DMACHINE_DEC -DBSD4
+#endif MACHINE_DEC
+#ifdef MACHINE_ALPHA
+CDEFS	= -DMACHINE_ALPHA -DBSD4
+#endif MACHINE_ALPHA
+
+CONFIG	= SRC="$(SRC)" BIN="$(BIN)" LIB="$(LIB)" CDEFS="$(CDEFS)"
+
+# End Configuration Parameters
+
+SHELL = /bin/sh
+
+# Definitions of some important directories/files
+
+NP	= $(BIN)/np
+NC	= $(BIN)/nc
+NA	= $(BIN)/na
+NUBIN	= $(LIB)/bin.$(NUVERSION)
+NULIB	= $(LIB)/lib.$(NUVERSION)
+NDIS	= $(NUBIN)/dis
+NEP	= $(NUBIN)/nep
+NUC	= $(NUBIN)/nuc
+NUP	= $(NUBIN)/nuprolog
+
+# Rules for configuring and compiling NU-Prolog source programs
+# Don't assume that anything is installed yet
+
+.SUFFIXES:  .no .ns .nl
+
+.nl.ns:  ; ../nep/nep -R ../co/nuc -a $*.nl
+.ns.no: ../na/na
+	../na/na $*.ns
+.c.o:
+	--rm -f $*.o
+	$(CC) -c $(CFLAGS) $*.c
+
+# Files needed to build the Bytecode interpreter
+
+DEFS	= bytecodes.h defs.h nltypes.h tags.h types.h machdep.h db.h malloc.h
+SRCS	= inter.c unify.c nep.c syms.c debug.c bytecodes.c wake.c \
+	  nonLogic.c memory.c symTab.c load.c display.c error.c arith.c \
+	  terms.c atoms.c ioprim.c assert.c simc.c sql.c paths.c \
+	  break.c iload.c negation.c unix.c malloc.c write.c fload.c
+OBJS	= unify.o nep.o syms.o debug.o bytecodes.o wake.o \
+	  nonLogic.o memory.o symTab.o load.o display.o error.o arith.o \
+	  terms.o atoms.o ioprim.o assert.o simc.o sql.o paths.o break.o \
+	  iload.o negation.o unix.o malloc.o write.o fload.o inter.o
+LIBS	= $(SRC)/db/simc/lib/dblib.a
+JUNK	= bytecodes.h syms.h syms.c tags.h tags.o tags \
+	  orig.inter.s next.inter.s inter.s wake.ns
+
+# Possibilities for CC and LD flags:
+#CFLAGS	= $(CDEFS)
+#CFLAGS	= -DDEBUG -DDEBUG3 $(CDEFS)
+CFLAGS	= -O $(CDEFS)
+
+#ifdef MACHINE_ENCORE
+CFLAGS	= -O $(CDEFS)
+#CFLAGS	= -O -q optimize=time $(CDEFS)
+#endif MACHINE_ENCORE
+#ifdef MACHINE_SUN3
+CFLAGS	= -O2 $(CDEFS) sun3.il
+#CFLAGS	= -f68881 -O $(CDEFS) sun3.il
+#CFLAGS	= -f68881 -g $(CDEFS) sun3.il
+#CFLAGS	= -f68881 -g -DDEBUG -DDEBUG3 -DDEBUG4 -J $(CDEFS) sun3.il
+#endif MACHINE_SUN3
+#ifdef MACHINE_SUN4
+CFLAGS	= -O2 $(CDEFS) sun4.il
+#endif MACHINE_SUN4
+#ifdef MACHINE_SUN4_SOLARIS
+CFLAGS	= -O $(CDEFS)
+#endif MACHINE_SUN4_SOLARIS
+#ifdef MACHINE_386
+CFLAGS	= $(CDEFS)
+#endif MACHINE_386
+#ifdef MACHINE_MIPS
+CFLAGS	= -O -Olimit 4000 -G 500 $(CDEFS)
+#endif MACHINE_MIPS
+#ifdef MACHINE_SGI
+CFLAGS	= -O -Olimit 4000 -G 500 $(CDEFS)
+#endif MACHINE_SGI
+#ifdef MACHINE_ALPHA
+CFLAGS	= -g $(CDEFS)
+#endif MACHINE_ALPHA
+
+#ifdef MACHINE_MACII
+CFLAGS	= -B /usr/lib/big/ -g -DDEBUG -DDEBUG3 $(CDEFS)
+#endif MACHINE_MACII
+
+#ifdef MACHINE_GENERIC
+#	generic	generic	generic	generic	generic	generic	generic
+nep:  $(OBJS) $(LIBS)
+	-rm -f nep
+	cc $(CFLAGS) $(OBJS) -o nep $(LIBS) -lm
+
+inter.o: inter.c $(DEFS) $(SRC)/Config.sed
+	$(CC) $(CFLAGS) -c inter.c
+#endif MACHINE_GENERIC
+#ifdef MACHINE_ENCORE
+#	encore	encore	encore	encore	encore	encore	encore
+DISPFLAG = -q long_jump
+
+nep:  $(OBJS) $(LIBS)
+	-rm -f nep
+#	cc $(CFLAGS) $(OBJS) -o nep $(LIBS) -lm -lpp -lcdb
+#	cc $(CFLAGS) $(OBJS) -o nep $(LIBS) -lm
+	cc $(CFLAGS) $(OBJS) -o nep $(LIBS) -lm -lld
+
+inter.o: inter.c $(DEFS) $(SRC)/Config.sed
+	-rm -f inter.o
+#	$(CC) -O $(CDEFS) $(DISPFLAG) -S inter.c
+#	$(CC) -g -DDEBUG3 -DDEBUG $(CDEFS) $(DISPFLAG) -S inter.c
+	$(CC) -O $(CDEFS) $(DISPFLAG) -S inter.c
+	mv inter.s orig.inter.s
+	./opt.encore orig.inter.s >inter.s
+	$(CC) -O $(CDEFS) $(DISPFLAG) -c inter.s
+#endif MACHINE_ENCORE
+#ifdef MACHINE_SUN3
+#	sun3	sun3	sun3	sun3	sun3	sun3	sun3
+DISPFLAG =
+
+nep:  $(OBJS) $(LIBS)
+	-rm -f nep
+	cc -Bstatic $(CFLAGS) $(OBJS) -o nep $(LIBS) -lm
+
+inter.o: inter.c $(DEFS) $(SRC)/Config.sed opt.sun3 sun3.il
+	-rm -f inter.o
+	$(CC) $(CDEFS) sun3.il $(DISPFLAG) -S inter.c
+	mv inter.s orig.inter.s
+	./opt.sun3 orig.inter.s >next.inter.s
+	/lib/c2 -20 <next.inter.s >inter.s
+	$(CC) -O1 $(CDEFS) $(DISPFLAG) -c inter.s
+#endif MACHINE_SUN3
+#ifdef MACHINE_SUN4
+#	sun4	sun4	sun4	sun4	sun4	sun4	sun4
+nep:  $(OBJS) $(LIBS)
+	-rm -f nep
+	cc -Bstatic $(CFLAGS) $(OBJS) -o nep $(LIBS) -lm
+
+inter.o: inter.c $(DEFS) $(SRC)/Config.sed opt.sun4 sun4.il
+	-rm -f inter.o
+	$(CC) $(CDEFS) sun4.il -S inter.c
+	mv inter.s orig.inter.s
+	./opt.sun4 orig.inter.s >next.inter.s
+	/bin/as -O1 -S -o /dev/null next.inter.s >inter.s
+	$(CC) -O1 $(CDEFS) -c inter.s
+#endif MACHINE_SUN4
+#ifdef MACHINE_SUN4_SOLARIS
+# sun4_solaris    sun4_solaris    sun4_solaris    sun4_solaris
+nep:  $(OBJS) $(LIBS)
+	-rm -f nep
+# cc -Bstatic $(CFLAGS) $(OBJS) -o nep $(LIBS) -lm
+	cc $(CFLAGS) $(OBJS) -o nep $(LIBS) -lm -lelf
+
+inter.o: inter.c $(DEFS) $(SRC)/Config.sed opt.sun4
+	-rm -f inter.o
+	$(CC) $(CFLAGS) -c inter.c
+# $(CC) $(CDEFS) sun4.il -S inter.c
+# mv inter.s orig.inter.s
+# ./opt.sun4 orig.inter.s >next.inter.s
+# /bin/as -O1 -S -o /dev/null next.inter.s >inter.s
+# $(CC) -O1 $(CDEFS) -c inter.s
+#endif MACHINE_SUN4_SOLARIS
+#ifdef MACHINE_386
+#	386	386	386	386	386	386	386
+DISPFLAG =
+inter.o: inter.c $(DEFS) $(SRC)/Config.sed
+	$(CC) $(CFLAGS) -c inter.c
+
+nep:  $(OBJS) $(LIBS)
+	-rm -f nep
+	$(CC) $(CFLAGS) -o nep $(OBJS) $(LIBS) -lm
+#endif MACHINE_386
+#ifdef MACHINE_MIPS
+#	mips	mips	mips	mips	mips	mips	mips
+nep:  $(OBJS) $(LIBS)
+	-rm -f nep
+	ld -o nep -jmpopt -G 500 -kD 800000 /usr/lib/crt1.o $(OBJS) $(LIBS) \
+		-lm -lmld -lc /usr/lib/crtn.o
+
+inter.o: inter.c $(DEFS) $(SRC)/Config.sed
+	-rm -f inter.o
+	$(CC) $(CFLAGS) -c inter.c
+#endif MACHINE_MIPS
+#ifdef MACHINE_SGI
+#	sgi	sgi	sgi	sgi	sgi	sgi	sgi
+nep:  $(OBJS) $(LIBS)
+	-rm -f nep
+	$(CC) -v $(CFLAGS) -o nep -Wl,-jmpopt -Wl,-kD -Wl,800000 \
+		$(OBJS) $(LIBS) -lm -lmld
+#	ld -o nep -jmpopt -G 500 -kD 800000 /usr/lib/crt1.o $(OBJS) $(LIBS) \
+#		-lm -lmld -lc /usr/lib/crtn.o
+
+inter.o: inter.c $(DEFS) $(SRC)/Config.sed
+	-rm -f inter.o
+	$(CC) $(CFLAGS) -S inter.c
+	mv inter.s orig.inter.s
+	./opt.sgi orig.inter.s >inter.s
+	$(CC) $(CFLAGS) -c inter.s
+#endif MACHINE_SGI
+#ifdef MACHINE_DEC
+#	dec	dec	dec	dec	dec	dec	dec
+nep:  $(OBJS) $(LIBS)
+	-rm -f nep
+	$(CC) -v $(CFLAGS) -o nep -Wl,-jmpopt -Wl,-kD -Wl,800000 \
+		$(OBJS) $(LIBS) -lm
+
+inter.o: inter.c $(DEFS) $(SRC)/Config.sed
+	-rm -f inter.o
+	$(CC) $(CFLAGS) -c inter.c
+#endif MACHINE_DEC
+#ifdef MACHINE_ALPHA
+#	alpha	alpha	alpha	alpha	alpha	alpha	alpha
+nep:  $(OBJS) $(LIBS)
+	-rm -f nep
+	$(CC) -v $(CFLAGS) -o nep $(OBJS) $(LIBS) -lm
+
+inter.o: inter.c $(DEFS) $(SRC)/Config.sed
+	-rm -f inter.o
+	$(CC) $(CFLAGS) -c inter.c
+#endif MACHINE_ALPHA
+#ifdef MACHINE_ELXSI
+#	elxsi	elxsi	elxsi	elxsi	elxsi	elxsi	elxsi
+inter.o: inter.c $(DEFS) $(SRC)/Config.sed opt.sun4
+	-rm -f inter.o
+	$(CC) $(CDEFS) -S inter.c
+	mv inter.s orig.inter.s
+	sed -f ./opt.elxsi orig.inter.s >inter.s
+	$(CC) $(CDEFS) -c inter.s
+
+nep:  $(OBJS) $(LIBS)
+	-rm -f nep
+	cc $(CFLAGS) $(OBJS) -o nep $(LIBS) -lm
+#endif MACHINE_ELXSI
+#ifdef MACHINE_VAX
+#	vax	vax	vax	vax	vax	vax	vax
+DISPFLAG =
+AFLAGS = $(DISPFLAG)
+AS = as
+inter.o: inter.c $(DEFS) $(SRC)/Config.sed
+	-rm -f inter.o
+	$(CC) -S $(CFLAGS) $(DISPFLAG) -c inter.c
+	mv inter.s orig.inter.s
+	sed -f opt.vax <orig.inter.s >inter.s
+	$(AS) $(AFLAGS) -o inter.o inter.s
+
+nep:  $(OBJS) $(LIBS)
+	-rm -f nep
+	cc $(CFLAGS) $(OBJS) -o nep $(LIBS) -lm
+#endif MACHINE_VAX
+#ifdef MACHINE_MACII
+#     mac II  mac II  mac II  mac II  mac II  mac II  mac II 
+#	Experimental version for MacII A/UX.  NU-Prolog is not fully debugged
+#	on A/UX, but there are known to be bugs in the C compiler which affect
+#	it.  It seems to work as long as it's compiled with -DDEBUG and no
+#	optimizer.  The best solution is to buy a real computer -- cheaper too!
+DISPFLAG =
+inter.o: inter.c $(DEFS) $(SRC)/Config.sed
+	-rm -f inter.o
+	$(CC) -S $(CFLAGS) $(DISPFLAG) inter.c
+	mv inter.s orig.inter.s
+	./opt.macII orig.inter.s >inter.s
+	$(CC) $(CFLAGS) $(DISPFLAG) -c inter.s
+
+nep:  $(OBJS) $(LIBS)
+	-rm -f nep
+	cc $(CFLAGS) $(OBJS) -o nep $(LIBS) -lm
+#endif MACHINE_MACII
+
+# Configure and compile the interpreter
+
+all:	nep
+	@-echo Interpreter built
+
+# Install the interpreter
+
+install:  $(NEP)
+	@-echo Interpreter installed
+
+$(NEP):  nep $(NUBIN)/wake.no
+#	chmod 751 nep
+#	chgrp nepolog nep
+#	rm -f $(NEP) $(NUBIN)/wake.no
+	cp nep $(NEP)
+
+$(NUBIN)/wake.no:  wake.no
+	cp wake.no $(NUBIN)/wake.no
+
+wake.no:  wake.ns
+
+wake.ns: wake.ns.source $(SRC)/Config.sed
+	awk -f ifdef.awk defines="$(CDEFS)" wake.ns.source >wake.ns
+
+bytecodes.h:  bytecodes.c bytec.h.awk $(SRC)/Config.sed
+	-rm -f bytecodes.h
+	awk -f bytec.h.awk defines="$(CDEFS)" bytecodes.c >bytecodes.h
+#	chmod og+r bytecodes.h
+
+syms.c:  syms.source syms.c.awk
+	-rm -f syms.c
+	awk -f syms.c.awk <syms.source >syms.c
+#	chmod og+r syms.c
+
+syms.h:  syms.source syms.h.awk
+	-rm -f syms.h
+	awk -f syms.h.awk <syms.source >syms.h
+#	chmod og+r syms.h
+
+tags.h: tags
+	./tags >tags.h
+
+tags: tags.o
+	$(CC) $(CFLAGS) -o tags tags.o
+
+tags.o: tags.c machdep.h
+
+$(OBJS):	mu.h version.h machdep.h tags.h types.h syms.h bytecodes.h \
+			macros.h malloc.h
+#ifdef MACHINE_SUN3
+$(OBJS):  sun3.il
+#endif MACHINE_SUN3
+#ifdef MACHINE_SUN4
+$(OBJS):  sun4.il
+#endif MACHINE_SUN4
+
+display.o iload.o load.o: nltypes.h
+simc.o sql.o:  db.h
+
+paths.o: paths.c $(SRC)/Config.sed
+	-rm -f paths.o
+	$(CC) $(CFLAGS) -DNEP="\"$(NEP)\"" -DNUBIN="\"$(NUBIN)/\"" -DWAKE="\"$(NUBIN)/wake.no\"" -DBIN=\"$(BIN)/\" -DNULIB="\"$(NULIB)/\"" -DHEADER="\"#! $(NEP) -R\\n\"" -c paths.c
+
+# Other things to do with the Bytecode interpreter
+
+# Clean up some mess
+
+clean:  
+	rm -f $(OBJS) a.out core nep ERRS .errs $(LINT) $(JUNK) wake.no

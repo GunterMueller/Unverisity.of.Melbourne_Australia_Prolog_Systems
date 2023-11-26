@@ -1,0 +1,43 @@
+This is MU-Prolog release version 3.2 , current on 18-Sep-85.
+Also the first released version of the database system, version 3.1a.
+Well, actually this is version 3.1.z.
+
+10/85:
+Fixed underscore bug in setof1.
+
+Fixed up precedence of -> and ; and implemented it properly.
+
+Jamie (and I) rearranged db interface so several access schemes can be
+used together, using dynamic loading.
+
+9/85:
+Mods to database interface so we can easily have multiple db access
+schemes in the same version (using dynaminc loading eventually).
+muprolog pred added (to ease porting between MU-Prolog and NU-Prolog etc).
+
+8/85:
+Fixed up comment handling in read and write some more (maybe listing will
+always work now...).
+
+7/85:
+New form of wait declarations added so member etc, is nicer.
+(Later made default old version, since its better with append - when
+declarations are much nicer).
+
+use_if, use_else, use_end implemented.
+
+3/85:
+Bug in ~= fixed.  Logical version of setof completed.
+
+2/85:
+Logic preprocessor made more efficient and added to release stuff.
+
+1984:
+The output of listing is now slightly different and can always (I hope)
+be read back in.
+
+A bug also crept into next/$fmove some time since I
+last used that predicate (several years ago).  Its now fixed.
+
+A few other bugs fixed and mods to make the system more portable and
+easier to install.

@@ -1,0 +1,4162 @@
+
+	.pred	'printf',2
+	.clause
+0:	gvarx	3,0
+	gvarx	2,1
+	currstr	1,0
+	gvara	1,3
+	exec	3,&'printf'/3
+	last
+
+	.pred	'printf',3
+	.clause
+0:	all	4
+	gvary	2,0
+	gvara	0,1
+	gvary	0,2
+	labely	3
+	pvary	1,255
+10: 	te	1,0,1,&11
+	pvaly	1,1
+	call	4,2,&'$nameToString'/2
+	cuty	3
+	j	&12
+11: 	tre	1,0
+	pc	1,#(CHR,&9)
+	ps	3,$'printf'/3
+	ulvy	2
+	ulvx	0
+	ulvy	0
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	call	3,3,&'$format'/3
+	fail	
+12: 	pvaly	2,3
+	puval	1,4
+	pvaly	0,5
+	printf	3,4,5
+	dallpro	
+	last
+9: 	.string	"~NError in ~w -- format not a string or atom.~n"
+
+	.pred	'skip',1
+	.clause
+0:	gvarx	1,0
+	currstr	0,0
+	exec	2,&'skip'/2
+	last
+
+	.pred	'skip',2
+	labelx	2
+2: 	t	3,0,&0
+	tr	3,0,&1
+	.clause
+0:	all	3
+	gvary	2,0
+	gvary	1,1
+	gvary	0,2
+	ctypy	1,17
+	cuty	0
+	call	3,0,&'repeat'/0
+	pvaly	2,3
+	sget	3,3,0
+	apushx	3
+	pushy	1
+	afunc	35
+	pushx	3
+	pushi	$$-1
+	afunc	35
+	apred	1
+	cuty	0
+	pc	4,$-1
+	notid	3,4
+	dallpro	
+	.clause
+1:	all	4
+	gvary	3,0
+	gvary	2,1
+	gvary	1,2
+	call	4,0,&'repeat'/0
+	pvaly	3,3
+	sget	3,3,0
+	gvary	0,3
+	pvaly	0,3
+	pc	4,$-1
+	idtest	3,4
+	jtrue	&11
+	pvaly	0,0
+	pvaly	2,1
+	call	2,2,&'member'/2
+	j	&11
+11: 	cuty	1
+	pvaly	0,3
+	pc	4,$-1
+	notid	3,4
+	dallpro	
+	last
+
+	.pred	'tab',1
+	.clause
+0:	gvarx	1,0
+	currstr	1,0
+	exec	2,&'tab'/2
+	last
+
+	.pred	'tab',2
+	.clause
+0:	apushx	1
+	popx	1
+	ctypx	1,17
+	exec	2,&'$tab'/2
+	last
+
+	.pred	'$tab',2
+	.clause
+0:	apushx	1
+	pushi	$$0
+	jpred	4,&5
+	apushx	1
+	afunc	47
+	popx	1
+	pc	2,$32
+	sput	0,2
+	exec	2,&'$tab'/2
+5: 	gc	1,$0
+	pro	
+6: 	last
+
+	.pred	'eof',1
+	.clause
+0:	gc	0,$'end_of_file'
+	pro	
+	last
+
+	.pred	'isEof',1
+	.clause
+0:	pc	1,$'end_of_file'
+	id	0,1
+	pro	
+	last
+
+	.pred	'getl',1
+	.clause
+0:	gvarx	1,0
+	currstr	0,0
+	exec	2,&'getl'/2
+	last
+
+	.pred	'getl',2
+	.clause
+0:	sget	0,2,0
+	pc	3,$-1
+	idtest	2,3
+	jfail	&5
+	gnil	1
+	pro	
+5: 	pc	3,$10
+	idtest	2,3
+	jfail	&6
+	gl	1
+	uc	$10
+	uc	$[]
+	pro	
+6: 	gl	1
+	uvalx	2
+	uvara	1
+	exec	2,&'getl'/2
+7: 	last
+
+	.pred	'getToken',2
+	.clause
+0:	currstr	0,2
+	sgettok	2,2,3
+	gvalx	0,2
+	gvalx	1,3
+	pro	
+	last
+
+	.pred	'getTokenList',1
+	.clause
+0:	gvarx	1,0
+	currstr	0,0
+	exec	2,&'getTokenList'/2
+	last
+
+	.pred	'getTokenList',2
+	.clause
+0:	gvarx	3,1
+	sgettok	0,1,2
+	exec	4,&'$getTokenList'/4
+	last
+
+	.pred	'$getTokenList',4
+6: 	labelx	4
+	sot	1,&7,&8,&3,&3
+7: 	mkdel	5,&6
+	mark	1
+	delay	
+8: 	soce	1,&($'. ':&4,$[]:&5),&3
+4: 	t	5,0,&0
+	r	5,0,&1
+	tr	5,0,&3
+5: 	t	5,0,&2
+	tr	5,0,&3
+	.clause
+0:	gc	1,$'. '
+	gc	2,$'end'
+	gnil	3
+	cutx	4
+	pro	
+	.clause
+1:	gc	1,$'. '
+	gc	2,$'atom'
+	gnil	3
+	cutx	4
+	pro	
+	.clause
+2:	gnil	1
+	gc	2,$'end_of_file'
+	gl	3
+	uvarx	5
+	uc	$[]
+	gl	5
+	uc	$[]
+	uc	$'end_of_file'
+	cutx	4
+	pro	
+	.clause
+3:	glvx2	3,5,6
+	gl	5
+	ulvx	1
+	ulvx	2
+	gvara	1,6
+	exec	2,&'getTokenList'/2
+	last
+
+	.pred	'read',1
+	labelx	1
+	.clause
+0:	all	3
+	gvary	1,0
+	gvary	2,1
+	call	3,0,&'repeat'/0
+	pvary	0,0
+	pvarx	1,1
+	call	3,2,&'parser$r'/2
+	cuty	2
+	puval	0,255
+	gvaly	1,255
+	dallpro	
+	last
+
+	.pred	'read',2
+	labelx	2
+	.clause
+0:	all	4
+	gvary	3,0
+	gvary	1,1
+	gvary	2,2
+	call	4,0,&'repeat'/0
+	pvaly	3,0
+	pvary	0,1
+	pvarx	2,2
+	call	3,3,&'parser$r'/3
+	cuty	2
+	puval	0,255
+	gvaly	1,255
+	dallpro	
+	last
+
+	.pred	'read1',1
+	.clause
+0:	pvarx	1,1
+	exec	2,&'parser$r'/2
+	last
+
+	.pred	'read1',2
+	.clause
+0:	pvarx	2,2
+	exec	3,&'parser$r'/3
+	last
+
+	.pred	'readTerm',3
+	labelx	3
+	.clause
+0:	all	5
+	gvary	1,0
+	gvary	4,1
+	gvary	3,2
+	gvary	2,3
+	call	5,0,&'repeat'/0
+	pl	1
+	ulvy	4
+	ulvy	3
+	pvary	0,0
+	call	3,2,&'parser$r'/2
+	cuty	2
+	puval	0,255
+	gvaly	1,255
+	dallpro	
+	last
+
+	.pred	'readTerm',4
+	labelx	4
+	.clause
+0:	all	6
+	gvary	3,0
+	gvary	1,1
+	gvary	5,2
+	gvary	4,3
+	gvary	2,4
+	call	6,0,&'repeat'/0
+	pl	2
+	ulvy	5
+	ulvy	4
+	pvaly	3,0
+	pvary	0,1
+	call	3,3,&'parser$r'/3
+	cuty	2
+	puval	0,255
+	gvaly	1,255
+	dallpro	
+	last
+
+	.pred	'read1Term',3
+	.clause
+0:	gvarx	3,1
+	pl	1
+	ulvx	3
+	ulvx	2
+	exec	2,&'parser$r'/2
+	last
+
+	.pred	'read1Term',4
+	.clause
+0:	gvarx	4,2
+	pl	2
+	ulvx	4
+	ulvx	3
+	exec	3,&'parser$r'/3
+	last
+
+	.pred	'sread',2
+	labelx	2
+	.clause
+0:	all	3
+	gvary	1,1
+	gvary	2,2
+	pvary	0,1
+	pvarx	2,2
+	call	3,3,&'parser$s'/3
+	cuty	2
+	puval	0,255
+	gvaly	1,255
+	dallpro	
+	last
+
+	.pred	'sreadTerm',4
+	labelx	4
+	.clause
+0:	all	3
+	gvary	1,1
+	gvarx	5,2
+	gvary	2,4
+	pl	2
+	ulvx	5
+	ulvx	3
+	pvary	0,1
+	call	3,3,&'parser$s'/3
+	cuty	2
+	puval	0,255
+	gvaly	1,255
+	dallpro	
+	last
+
+	.pred	'tread',2
+	labelx	2
+	.clause
+0:	all	3
+	gvary	1,1
+	gvary	2,2
+	pvary	0,1
+	pvarx	2,2
+	call	3,3,&'parser$t'/3
+	cuty	2
+	puval	0,255
+	gvaly	1,255
+	dallpro	
+	last
+
+	.pred	'treadTerm',4
+	labelx	4
+	.clause
+0:	all	3
+	gvary	1,1
+	gvarx	5,2
+	gvary	2,4
+	pl	2
+	ulvx	5
+	ulvx	3
+	pvary	0,1
+	call	3,3,&'parser$t'/3
+	cuty	2
+	puval	0,255
+	gvaly	1,255
+	dallpro	
+	last
+
+	.pred	'tokenize',4
+	.clause
+0:	pvarx	4,4
+	ltos	0,4
+	token	4,4,5,6
+	gvalx	1,4
+	gvalx	2,5
+	gvalx	3,6
+	pro	
+	last
+
+	.pred	'tokenize',2
+	.clause
+0:	pvarx	2,2
+	ltos	0,2
+	gvara	0,2
+	exec	2,&'$getStringTokens'/2
+	last
+
+	.pred	'$getStringTokens',2
+	.clause
+0:	gvarx	3,1
+	token	0,1,2,0
+	exec	4,&'$getStringTokens'/4
+	last
+
+	.pred	'$getStringTokens',4
+6: 	labelx	4
+	sot	1,&7,&8,&3,&3
+7: 	mkdel	5,&6
+	mark	1
+	delay	
+8: 	soce	1,&($'. ':&4,$[]:&5),&3
+4: 	t	5,0,&0
+	r	5,0,&1
+	tr	5,0,&3
+5: 	t	5,0,&2
+	tr	5,0,&3
+	.clause
+0:	gc	1,$'. '
+	gc	2,$'end'
+	gnil	3
+	cutx	4
+	pro	
+	.clause
+1:	gc	1,$'. '
+	gc	2,$'atom'
+	gnil	3
+	cutx	4
+	pro	
+	.clause
+2:	gnil	1
+	gc	2,$'end_of_file'
+	gnil	3
+	cutx	4
+	pro	
+	.clause
+3:	glvx2	3,5,6
+	gl	5
+	ulvx	1
+	ulvx	2
+	gvara	1,6
+	exec	2,&'$getStringTokens'/2
+	last
+
+	.pred	'$writev',3
+	labelx	3
+	.clause
+0:	all	13
+	gvary	11,0
+	gvary	1,1
+	gvary	0,2
+	gvary	9,3
+	jctypy	11,17,&42
+	labelx	0
+40: 	te	0,0,1,&41
+	pvaly	11,4
+	pvaly	1,5
+	sprt	4,5,4
+	gvaly	0,4
+	cutx	0
+	dallpro	
+41: 	tre	0,0
+	pc	1,#(CHR,&7)
+	pc	0,$'warning'
+	call	0,2,&'sys$error'/2
+	fail	
+	j	&51
+42: 	pvaly	11,0
+	pc	1,$'cons'
+	pc	2,$'list'
+	pc	3,$1
+	pvary	7,4
+	call	13,5,&'$writeFlag'/5
+	pvaly	11,0
+	pc	1,$'nostring'
+	pc	2,$'string'
+	pc	3,$1
+	pvary	6,4
+	call	13,5,&'$writeFlag'/5
+	pvaly	11,0
+	pc	1,$'noquote'
+	pc	2,$'quote'
+	pc	3,$0
+	pvary	5,4
+	call	13,5,&'$writeFlag'/5
+	pvaly	11,0
+	pc	1,$'noquoteall'
+	pc	2,$'quoteall'
+	pc	3,$0
+	pvary	4,4
+	call	13,5,&'$writeFlag'/5
+	pvaly	11,0
+	pc	1,$'prefix'
+	pc	2,$'ops'
+	pc	3,$1
+	pvary	3,4
+	call	13,5,&'$writeFlag'/5
+	labely	12
+43: 	te	0,0,0,&44
+	ps	0,$'='/2
+	uc	$'prec'
+	uvary	2
+	pvaly	11,1
+	call	13,2,&'member'/2
+	ctypy	2,17
+	apushy	2
+	pushi	$$1
+	afunc	34
+	pushy	2
+	pushi	$$1200
+	afunc	32
+	apred	0
+	cuty	12
+	j	&45
+44: 	tre	0,0
+	pc	255,$1200
+	gvary	2,255
+45: 	labely	10
+46: 	te	0,0,0,&47
+	ps	0,$'='/2
+	uc	$'base'
+	uvary	8
+	pvaly	11,1
+	call	11,2,&'member'/2
+	ctypy	8,17
+	apushy	8
+	pushi	$$2
+	afunc	34
+	pushy	8
+	pushi	$$36
+	afunc	32
+	apred	0
+	cuty	10
+	j	&48
+47: 	tre	0,0
+	pc	255,$10
+	gvary	8,255
+48: 	cuty	9
+	apushy	8
+	pushy	7
+	pushi	$$6
+	afunc	9
+	afunc	0
+	pushy	6
+	pushi	$$7
+	afunc	9
+	afunc	0
+	pushy	5
+	pushi	$$8
+	afunc	9
+	afunc	0
+	pushy	4
+	pushi	$$9
+	afunc	9
+	afunc	0
+	pushy	3
+	pushi	$$10
+	afunc	9
+	afunc	0
+	pushy	2
+	pushi	$$11
+	afunc	9
+	afunc	0
+	popx	0
+	labelx	1
+49: 	te	0,0,2,&50
+	pvaly	1,4
+	sprt	0,4,4
+	gvaly	0,4
+	cutx	1
+	dallpro	
+50: 	tre	0,0
+	pc	1,#(CHR,&39)
+	pc	0,$'warning'
+	call	0,2,&'sys$error'/2
+	fail	
+51: 	last
+39: 	.string	"Term too big to write"
+7: 	.string	"Term too big to write"
+
+	.pred	'writev',3
+	.clause
+0:	all	2
+	gvary	1,0
+	gvara	0,1
+	gvara	1,2
+7: 	te	0,0,2,&8
+	pvary	0,2
+	call	2,3,&'$writev'/3
+	pvaly	1,3
+	puval	0,4
+	sputl	3,4
+	fail	
+8: 	tre	0,0
+	dallpro	
+9: 	last
+
+	.pred	'writev',2
+	.clause
+0:	gvarx	3,0
+	gvarx	2,1
+	currstr	1,0
+	gvara	1,3
+	exec	3,&'writev'/3
+	last
+
+	.pred	'writeCanonical',1
+	.clause
+0:	all	2
+	gvary	1,0
+	pc	0,$'vars'
+	pvary	0,1
+	pc	2,$'off'
+	call	2,3,&'prologFlag'/3
+	pc	0,$2046218
+	pvaly	1,1
+	call	1,2,&'writev'/2
+	pc	0,$'vars'
+	pc	1,$'off'
+	puval	0,2
+	dallexe	3,&'prologFlag'/3
+	last
+
+	.pred	'writeCanonical',2
+	.clause
+0:	all	3
+	gvary	2,0
+	gvary	1,1
+	pc	0,$'vars'
+	pvary	0,1
+	pc	2,$'off'
+	call	3,3,&'prologFlag'/3
+	pvaly	2,0
+	pc	1,$2046218
+	pvaly	1,2
+	call	1,3,&'writev'/3
+	pc	0,$'vars'
+	pc	1,$'off'
+	puval	0,2
+	dallexe	3,&'prologFlag'/3
+	last
+
+	.pred	'writeq',1
+	.clause
+0:	gvarx	1,0
+	pc	0,$1482
+	exec	2,&'writev'/2
+	last
+
+	.pred	'writeq',2
+	.clause
+0:	gvarx	2,1
+	pc	1,$1482
+	exec	3,&'writev'/3
+	last
+
+	.pred	'write',1
+	.clause
+0:	gvarx	1,0
+	pc	0,$1226
+	exec	2,&'writev'/2
+	last
+
+	.pred	'write',2
+	.clause
+0:	gvarx	2,1
+	pc	1,$1226
+	exec	3,&'writev'/3
+	last
+
+	.pred	'display',1
+	.clause
+0:	all	2
+	gvary	1,0
+	pc	0,$'vars'
+	pvary	0,1
+	pc	2,$'off'
+	call	2,3,&'prologFlag'/3
+	pc	0,$10
+	pvaly	1,1
+	call	1,2,&'writev'/2
+	pc	0,$'vars'
+	pc	1,$'off'
+	puval	0,2
+	dallexe	3,&'prologFlag'/3
+	last
+
+	.pred	'display',2
+	.clause
+0:	all	3
+	gvary	2,0
+	gvary	1,1
+	pc	0,$'vars'
+	pvary	0,1
+	pc	2,$'off'
+	call	3,3,&'prologFlag'/3
+	pvaly	2,0
+	pc	1,$10
+	pvaly	1,2
+	call	1,3,&'writev'/3
+	pc	0,$'vars'
+	pc	1,$'off'
+	puval	0,2
+	dallexe	3,&'prologFlag'/3
+	last
+
+	.pred	'writeln',1
+	.clause
+0:	all	0
+	call	0,1,&'write'/1
+3: 	te	0,0,0,&4
+	pc	1,$10
+	put	1
+	fail	
+4: 	tre	0,0
+	dallpro	
+5: 	last
+
+	.pred	'writeln',2
+	.clause
+0:	all	1
+	gvary	0,0
+	pvaly	0,0
+	call	1,2,&'write'/2
+5: 	te	0,0,0,&6
+	pvaly	0,2
+	pc	3,$10
+	sput	2,3
+	fail	
+6: 	tre	0,0
+	dallpro	
+7: 	last
+
+	.pred	'$writeFlag',5
+	labelx	5
+3: 	t	6,0,&0
+	r	6,0,&1
+	tr	6,0,&2
+	.clause
+0:	gvarx	6,0
+	gvara	0,1
+	gc	4,$0
+	all	1
+	gvary	0,5
+	gvara	1,6
+	call	1,2,&'member'/2
+	cuty	0
+	dallpro	
+	.clause
+1:	gvarx	6,0
+	gvara	0,2
+	gc	4,$1
+	all	1
+	gvary	0,5
+	gvara	1,6
+	call	1,2,&'member'/2
+	cuty	0
+	dallpro	
+	.clause
+2:	gvalx	3,4
+	pro	
+	last
+
+	.pred	'print',4
+	.clause
+0:	currstr	1,4
+	all	1
+	gvary	0,4
+	setstr	1,0
+	gvara	0,1
+	gvara	1,2
+	gvara	2,3
+	call	1,3,&'print$printPrec'/3
+	pvaly	0,4
+	setstr	1,4
+	dallpro	
+	last
+
+	.pred	'print',3
+	.clause
+0:	pc	3,$1200
+	exec	4,&'print'/4
+	last
+
+	.pred	'print',2
+	.clause
+0:	apushi	$$2147483647
+	popx	2
+	pc	3,$1200
+	exec	4,&'print'/4
+	last
+
+	.pred	'print',1
+	.clause
+0:	apushi	$$2147483647
+	popx	1
+	pc	2,$1200
+	exec	3,&'print$printPrec'/3
+	last
+
+	.pred	'print$printPrec',3
+2: 	t	3,0,&0
+	tr	3,0,&1
+	.clause
+0:	gvarx	3,1
+	gvara	1,2
+	gvara	2,3
+	all	0
+	call	0,3,&'print$print'/3
+	fail	
+	.clause
+1:	pro	
+	last
+
+	.pred	'print$print',3
+	labelx	3
+23: 	sot	0,&0,&16,&17,&24
+16: 	t	4,0,&2
+	r	4,0,&10
+	r	4,0,&11
+	r	4,0,&12
+	r	4,0,&13
+	tr	4,0,&15
+17: 	t	4,0,&1
+	r	4,0,&2
+	r	4,0,&5
+	r	4,0,&6
+	tr	4,0,&7
+24: 	sose	0,&($'$VAR'/1:&18,$','/2:&19,$'write$var'/1:&20,$'{}'/1:&21),&22
+18: 	t	4,0,&2
+	tr	4,0,&3
+19: 	t	4,0,&2
+	r	4,0,&6
+	r	4,0,&8
+	r	4,0,&10
+	r	4,0,&11
+	tr	4,0,&14
+20: 	t	4,0,&2
+	tr	4,0,&4
+21: 	t	4,0,&2
+	r	4,0,&6
+	tr	4,0,&9
+22: 	t	4,0,&2
+	r	4,0,&6
+	r	4,0,&10
+	r	4,0,&11
+	r	4,0,&12
+	r	4,0,&13
+	tr	4,0,&14
+	.clause
+0:	typx	0,3
+	cutx	3
+	exec	1,&'write'/1
+	.clause
+1:	all	3
+	gvary	1,0
+	gvary	2,2
+	gvary	0,3
+	pvaly	1,0
+	call	3,1,&'$list'/1
+	apushy	2
+	pushi	$$0
+	apred	4
+	pc	4,$'portray'
+	pc	5,$1
+	defined	4,5,4,5
+	pvaly	1,0
+	call	1,1,&'portray'/1
+	cuty	0
+	dallpro	
+	.clause
+2:	all	1
+	gvary	0,3
+	apushx	2
+	pushi	$$0
+	apred	4
+	pc	4,$'portray'
+	pc	5,$1
+	defined	4,5,4,5
+	call	1,1,&'portray'/1
+	cuty	0
+	dallpro	
+	.clause
+3:	gsx1	0,4,$'$VAR'/1
+	cutx	3
+	ps	0,$'$VAR'/1
+	uvalx	4
+	exec	1,&'write'/1
+	.clause
+4:	gsx1	0,4,$'write$var'/1
+	cutx	3
+	ps	0,$'write$var'/1
+	uvalx	4
+	exec	1,&'write'/1
+	.clause
+5:	all	2
+	gvary	0,0
+	gvary	1,3
+	typy	0,48
+	pvaly	0,4
+	fvar	4,255
+	typx	255,252
+	pvaly	0,0
+	call	2,1,&'isPrintL'/1
+	cuty	1
+	pvaly	0,0
+	dallexe	1,&'write'/1
+	.clause
+6:	typx	0,112
+	apushx	2
+	pushi	$$0
+	apred	3
+	cutx	3
+	currstr	1,4
+	pc	5,#(CHR,&61)
+	sputl	4,5
+	pro	
+	.clause
+7:	typx	0,48
+	cutx	3
+	pc	4,$91
+	put	4
+	apushx	2
+	afunc	47
+	popx	1
+	all	0
+	call	0,2,&'print$printL'/2
+	pc	4,$93
+	put	4
+	dallpro	
+	.clause
+8:	gs	0,$','/2
+	all	9
+	uvary	6
+	uvary	4
+	gvary	0,1
+	gvary	7,2
+	gvary	8,3
+	pc	0,$','
+	pc	1,$'infix'
+	pvary	5,2
+	pvary	1,3
+	pvary	3,4
+	call	9,5,&'print$op'/5
+	cuty	8
+	pvaly	1,0
+	pvaly	0,1
+	call	8,2,&'print$open'/2
+	apushy	7
+	afunc	47
+	popy	2
+	pvaly	6,0
+	puval	5,1
+	pvaly	2,2
+	call	5,3,&'print$print'/3
+	currstr	1,4
+	pc	5,#(CHR,&87)
+	sputl	4,5
+	pvaly	4,0
+	puval	3,1
+	pvaly	2,2
+	call	2,3,&'print$print'/3
+	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'print$close'/2
+	.clause
+9:	gsx1	0,0,$'{}'/1
+	cutx	3
+	pc	4,$123
+	put	4
+	apushx	2
+	afunc	47
+	popx	2
+	pc	1,$1200
+	all	0
+	call	0,3,&'print$print'/3
+	pc	4,$125
+	put	4
+	dallpro	
+	.clause
+10:	all	11
+	gvary	9,0
+	gvary	0,1
+	gvary	8,2
+	gvary	10,3
+	pvaly	9,4
+	pvary	5,5
+	pc	6,$2
+	functor	4,5,6
+	pvaly	5,0
+	pc	1,$'infix'
+	pvary	6,2
+	pvary	1,3
+	pvary	3,4
+	call	11,5,&'print$op'/5
+	cuty	10
+	pc	4,$1
+	pvaly	9,5
+	arg	4,5,4
+	gvary	7,4
+	pc	4,$2
+	pvaly	9,5
+	arg	4,5,4
+	gvary	4,4
+	pvaly	1,0
+	pvaly	0,1
+	call	9,2,&'print$open'/2
+	apushy	8
+	afunc	47
+	popy	2
+	pvaly	7,0
+	puval	6,1
+	pvaly	2,2
+	call	6,3,&'print$print'/3
+	pc	4,$32
+	put	4
+	puval	5,0
+	call	5,1,&'write'/1
+	pc	4,$32
+	put	4
+	pvaly	4,0
+	puval	3,1
+	pvaly	2,2
+	call	2,3,&'print$print'/3
+	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'print$close'/2
+	.clause
+11:	all	11
+	gvary	9,0
+	gvary	0,1
+	gvary	7,2
+	gvary	10,3
+	pvaly	9,4
+	pvary	8,5
+	pc	6,$2
+	functor	4,5,6
+	pvaly	8,0
+	pc	1,$'bprefix'
+	pvary	5,2
+	pvary	1,3
+	pvary	3,4
+	call	11,5,&'print$op'/5
+	cuty	10
+	pc	4,$1
+	pvaly	9,5
+	arg	4,5,4
+	gvary	6,4
+	pc	4,$2
+	pvaly	9,5
+	arg	4,5,4
+	gvary	4,4
+	pvaly	1,0
+	pvaly	0,1
+	call	9,2,&'print$open'/2
+	puval	8,0
+	call	8,1,&'write'/1
+	pc	4,$32
+	put	4
+	apushy	7
+	afunc	47
+	popy	2
+	pvaly	6,0
+	puval	5,1
+	pvaly	2,2
+	call	5,3,&'print$print'/3
+	pc	4,$32
+	put	4
+	pvaly	4,0
+	puval	3,1
+	pvaly	2,2
+	call	2,3,&'print$print'/3
+	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'print$close'/2
+	.clause
+12:	all	8
+	gvary	6,0
+	gvary	0,1
+	gvary	4,2
+	gvary	7,3
+	pvaly	6,4
+	pvary	5,5
+	pc	6,$1
+	functor	4,5,6
+	pvaly	5,0
+	pc	1,$'prefix'
+	pvarx	2,2
+	pvary	1,3
+	pvary	2,4
+	call	8,5,&'print$op'/5
+	cuty	7
+	pc	4,$1
+	pvaly	6,5
+	arg	4,5,4
+	gvary	3,4
+	pvaly	1,0
+	pvaly	0,1
+	call	6,2,&'print$open'/2
+	puval	5,0
+	call	5,1,&'write'/1
+	pc	4,$32
+	put	4
+	apushy	4
+	afunc	47
+	popx	2
+	pvaly	3,0
+	puval	2,1
+	call	2,3,&'print$print'/3
+	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'print$close'/2
+	.clause
+13:	all	8
+	gvary	6,0
+	gvary	0,1
+	gvary	5,2
+	gvary	7,3
+	pvaly	6,4
+	pvary	2,5
+	pc	6,$1
+	functor	4,5,6
+	pvaly	2,0
+	pc	1,$'postfix'
+	pvary	3,2
+	pvary	1,3
+	pvarx	4,4
+	call	8,5,&'print$op'/5
+	cuty	7
+	pc	4,$1
+	pvaly	6,5
+	arg	4,5,4
+	gvary	4,4
+	pvaly	1,0
+	pvaly	0,1
+	call	6,2,&'print$open'/2
+	apushy	5
+	afunc	47
+	popx	2
+	pvaly	4,0
+	puval	3,1
+	call	3,3,&'print$print'/3
+	pc	4,$32
+	put	4
+	puval	2,0
+	call	2,1,&'write'/1
+	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'print$close'/2
+	.clause
+14:	all	2
+	gvary	1,2
+	typx	0,112
+	cutx	3
+	pl	4
+	uvarx	5
+	uvary	0
+	univ	0,4
+	gvara	0,5
+	call	2,1,&'write'/1
+	pc	4,$40
+	put	4
+	apushy	1
+	afunc	47
+	popx	1
+	pvaly	0,0
+	call	0,2,&'print$printL'/2
+	pc	4,$41
+	put	4
+	dallpro	
+	.clause
+15:	exec	1,&'write'/1
+	last
+87: 	.string	", "
+61: 	.string	"**depth*bound**"
+
+	.pred	'print$printL',2
+	.clause
+0:	gl	0
+	uvara	0
+	all	2
+	uvary	1
+	gvary	0,1
+	jtypy	1,48,&19
+	pc	1,$999
+	pvaly	0,2
+	call	2,3,&'print$print'/3
+	currstr	1,2
+	pc	3,#(CHR,&17)
+	sputl	2,3
+	pvaly	1,0
+	pvaly	0,1
+	dallexe	2,&'print$printL'/2
+19: 	pvaly	1,2
+	pnil	3
+	idtest	2,3
+	jfail	&20
+	pc	1,$999
+	pvaly	0,2
+	dallexe	3,&'print$print'/3
+20: 	pc	1,$999
+	pvaly	0,2
+	call	2,3,&'print$print'/3
+	currstr	1,2
+	pc	3,#(CHR,&18)
+	sputl	2,3
+	pvaly	1,0
+	pc	1,$999
+	pvaly	0,2
+	dallexe	3,&'print$print'/3
+21: 	last
+18: 	.string	"| "
+17: 	.string	", "
+
+	.pred	'print$open',2
+	.clause
+0:	apushx	0
+	pushx	1
+	jpred	4,&3
+	pc	2,$40
+	put	2
+	pro	
+3: 	pro	
+4: 	last
+
+	.pred	'print$close',2
+	.clause
+0:	apushx	0
+	pushx	1
+	jpred	4,&3
+	pc	2,$41
+	put	2
+	pro	
+3: 	pro	
+4: 	last
+
+	.pred	'print$op',5
+	.clause
+0:	gvarx	5,0
+	all	5
+	gvary	3,1
+	gvary	2,2
+	gvary	1,3
+	gvary	0,4
+	pvaly	1,0
+	pvary	4,1
+	gvara	2,5
+	call	5,3,&'currentOp'/3
+	puval	4,0
+	pvaly	3,1
+	pvaly	2,2
+	pvaly	1,3
+	pvaly	0,4
+	dallexe	5,&'print$nop'/5
+	last
+
+	.pred	'print$nop',5
+13: 	sot	0,&11,&14,&12,&12
+11: 	t	5,0,&0
+	r	5,0,&1
+	r	5,0,&2
+	r	5,0,&3
+	r	5,0,&4
+	r	5,0,&5
+	r	5,0,&6
+	r	5,0,&7
+	r	5,0,&8
+	r	5,0,&9
+	tr	5,0,&10
+14: 	soc	0,&($'fx':&7,$'fxx':&3,$'fxy':&4,$'fy':&8,$'fyx':&5,$'fyy':&6,$'xf':&9,$'xfx':&0,$'xfy':&1,$'yf':&10,$'yfx':&2),&12
+12: 	fail	
+	.clause
+0:	gc	0,$'xfx'
+	gc	1,$'infix'
+	gvalx	2,4
+	apushx	3
+	afunc	47
+	popvx	2
+	pro	
+	.clause
+1:	gc	0,$'xfy'
+	gc	1,$'infix'
+	gvalx	3,4
+	apushx	3
+	afunc	47
+	popvx	2
+	pro	
+	.clause
+2:	gc	0,$'yfx'
+	gc	1,$'infix'
+	gvalx	2,3
+	apushx	2
+	afunc	47
+	popvx	4
+	pro	
+	.clause
+3:	gc	0,$'fxx'
+	gc	1,$'bprefix'
+	gvalx	2,4
+	apushx	3
+	afunc	47
+	popvx	2
+	pro	
+	.clause
+4:	gc	0,$'fxy'
+	gc	1,$'bprefix'
+	gvalx	3,4
+	apushx	3
+	afunc	47
+	popvx	2
+	pro	
+	.clause
+5:	gc	0,$'fyx'
+	gc	1,$'bprefix'
+	gvalx	2,3
+	apushx	2
+	afunc	47
+	popvx	4
+	pro	
+	.clause
+6:	gc	0,$'fyy'
+	gc	1,$'bprefix'
+	gvalx	2,4
+	gvalx	3,4
+	pro	
+	.clause
+7:	gc	0,$'fx'
+	gc	1,$'prefix'
+	gc	2,$'x'
+	apushx	3
+	afunc	47
+	popvx	4
+	pro	
+	.clause
+8:	gc	0,$'fy'
+	gc	1,$'prefix'
+	gc	2,$'x'
+	gvalx	3,4
+	pro	
+	.clause
+9:	gc	0,$'xf'
+	gc	1,$'postfix'
+	gc	4,$'x'
+	apushx	3
+	afunc	47
+	popvx	2
+	pro	
+	.clause
+10:	gc	0,$'yf'
+	gc	1,$'postfix'
+	gvalx	2,3
+	gc	4,$'x'
+	pro	
+	last
+
+	.pred	'termToString',2
+	.clause
+0:	gvarx	3,0
+	gvarx	2,1
+	pc	0,$1226
+	gvara	1,3
+	exec	3,&'$writev'/3
+	last
+
+	.pred	'termToString',3
+	.clause
+0:	exec	3,&'$writev'/3
+	last
+
+	.pred	'format',2
+	.clause
+0:	exec	2,&'$format'/2
+	last
+
+	.pred	'$format',2
+	.clause
+0:	gvarx	3,0
+	gvarx	2,1
+	currstr	1,0
+	gvara	1,3
+	exec	3,&'$format'/3
+	last
+
+	.pred	'format',3
+	.clause
+0:	exec	3,&'$format'/3
+	last
+
+	.pred	'$format',3
+2: 	t	3,0,&0
+	tr	3,0,&1
+	.clause
+0:	gvarx	3,0
+	gvarx	4,1
+	ps	0,$'format$format'/3
+	ulvx	3
+	ulvx	4
+	ulvx	2
+	ps	1,$'format'/3
+	ulvx	3
+	ulvx	4
+	ulvx	2
+	pvarx	2,3
+	all	0
+	call	0,4,&'$catchError'/4
+	fail	
+	.clause
+1:	pro	
+	last
+
+	.pred	'$quickFormat',3
+2: 	t	3,0,&0
+	tr	3,0,&1
+	.clause
+0:	gvarx	3,0
+	gvarx	4,1
+	ps	0,$'format$quickFormat'/3
+	ulvx	3
+	ulvx	4
+	ulvx	2
+	ps	1,$'format'/3
+	ulvx	3
+	ulvx	4
+	ulvx	2
+	pvarx	2,3
+	all	0
+	call	0,4,&'$catchError'/4
+	fail	
+	.clause
+1:	pro	
+	last
+
+	.pred	'sformat',3
+	.clause
+0:	exec	3,&'$sformat'/3
+	last
+
+	.pred	'$sformat',3
+	.clause
+0:	gvarx	3,0
+	gvarx	4,1
+	ps	0,$'format$sformat'/3
+	ulvx	3
+	ulvx	4
+	ulvx	2
+	ps	1,$'sformat'/3
+	ulvx	3
+	ulvx	4
+	ulvx	2
+	pvarx	2,3
+	exec	4,&'$catchError'/4
+	last
+
+	.pred	'format$sformat',3
+	labelx	3
+2: 	t	4,0,&0
+	tr	4,0,&1
+	.clause
+0:	all	5
+	gvary	1,2
+	gvary	0,3
+	jtypx	1,48,&17
+	pvary	3,255
+	gvalx	1,255
+	j	&19
+17: 	pnil	4
+	idtest	1,4
+	jfail	&18
+	pvary	3,255
+	gvalx	1,255
+	j	&19
+18: 	pvary	3,255
+	gl	255
+	ulvx	1
+	uc	$[]
+19: 	pvary	4,1
+	call	5,2,&'$nameToString'/2
+	puval	4,0
+	puval	3,1
+	pvary	2,2
+	call	3,3,&'format$parse'/3
+	pc	0,$0
+	pc	1,$0
+	pnil	2
+	puval	2,3
+	pvaly	1,4
+	call	1,5,&'format$fill'/5
+	cuty	0
+	dallpro	
+	.clause
+1:	pc	0,#(STR,&25)
+	exec	1,&'$throwError'/1
+	last
+25: 	.word	$'format'/3
+	.word	$'user_error'
+	.word	#(CHR,&26)
+	.word	$[]
+26: 	.string	"~NUnexplained error!~n"
+
+	.pred	'format$format',3
+	labelx	3
+2: 	t	4,0,&0
+	tr	4,0,&1
+	.clause
+0:	all	9
+	gvary	2,0
+	gvary	7,1
+	gvary	0,3
+	jtypx	2,48,&22
+	pvary	5,255
+	gvalx	2,255
+	j	&24
+22: 	pnil	4
+	idtest	2,4
+	jfail	&23
+	pvary	5,255
+	gvalx	2,255
+	j	&24
+23: 	pvary	5,255
+	gl	255
+	ulvx	2
+	uc	$[]
+24: 	labely	8
+25: 	te	0,0,0,&26
+	pvaly	2,0
+	call	9,1,&'$validOutputStream'/1
+	cuty	8
+	j	&27
+26: 	tre	0,0
+	pc	0,#(STR,&9)
+	call	8,1,&'$throwError'/1
+27: 	pvaly	7,0
+	pvary	6,1
+	call	7,2,&'$nameToString'/2
+	puval	6,0
+	puval	5,1
+	pvary	3,2
+	call	5,3,&'format$parse'/3
+	pvaly	2,0
+	pvary	4,1
+	call	5,2,&'linePosition'/2
+	puval	4,0
+	pc	1,$0
+	pnil	2
+	puval	3,3
+	pvary	1,4
+	call	3,5,&'format$fill'/5
+	pvaly	2,4
+	puval	1,5
+	sputl	4,5
+	cuty	0
+	dallpro	
+	.clause
+1:	pc	0,#(STR,&33)
+	exec	1,&'$throwError'/1
+	last
+33: 	.word	$'format'/3
+	.word	$'user_error'
+	.word	#(CHR,&34)
+	.word	$[]
+34: 	.string	"~NUnexplained error!~n"
+9: 	.word	$'format'/3
+	.word	$'user_error'
+	.word	#(CHR,&35)
+	.word	$[]
+35: 	.string	"~NInvalid stream!~n"
+
+	.pred	'format$quickFormat',3
+	labelx	3
+2: 	t	4,0,&0
+	tr	4,0,&1
+	.clause
+0:	all	7
+	gvary	2,0
+	gvary	5,1
+	gvary	0,3
+	jtypx	2,48,&15
+	pvary	3,255
+	gvalx	2,255
+	j	&17
+15: 	pnil	4
+	idtest	2,4
+	jfail	&16
+	pvary	3,255
+	gvalx	2,255
+	j	&17
+16: 	pvary	3,255
+	gl	255
+	ulvx	2
+	uc	$[]
+17: 	labely	6
+18: 	te	0,0,0,&19
+	pvaly	2,0
+	call	7,1,&'$validOutputStream'/1
+	cuty	6
+	j	&20
+19: 	tre	0,0
+	pc	0,#(STR,&9)
+	call	6,1,&'$throwError'/1
+20: 	pvaly	5,0
+	pvary	4,1
+	call	5,2,&'$nameToString'/2
+	puval	4,0
+	puval	3,1
+	pvary	1,2
+	call	3,3,&'format$parse'/3
+	pvaly	2,4
+	puval	1,5
+	sputl	4,5
+	cuty	0
+	dallpro	
+	.clause
+1:	pc	0,#(STR,&26)
+	exec	1,&'$throwError'/1
+	last
+26: 	.word	$'format'/3
+	.word	$'user_error'
+	.word	#(CHR,&27)
+	.word	$[]
+27: 	.string	"~NUnexplained error!~n"
+9: 	.word	$'format'/3
+	.word	$'user_error'
+	.word	#(CHR,&28)
+	.word	$[]
+28: 	.string	"~NInvalid stream!~n"
+
+	.pred	'format$fill',5
+14: 	labelx	5
+	sot	3,&15,&16,&17,&22
+15: 	mkdel	6,&14
+	mark	3
+	delay	
+16: 	labelx	5
+	j	&0
+17: 	glvx2	3,3,6
+18: 	labelx	5
+	sot	3,&19,&20,&13,&21
+19: 	mkdel	7,&18
+	mark	3
+	delay	
+20: 	soce	3,&($10:&7,$'nl':&9),&8
+13: 	fail	
+21: 	sos	3,&($'+'/1:&11,$'fill'/1:&12,$'tab'/1:&10),&13
+22: 	fail	
+	.clause
+0:	gnil	3
+	gnil	4
+	pro	
+	.clause
+7:	gc	3,$10
+	all	2
+	gvary	1,6
+	cutx	5
+	gl	4
+	uc	$10
+	uvary	0
+	jtypx	2,48,&37
+	pc	0,#(STR,&31)
+	call	2,1,&'$throwError'/1
+	j	&37
+37: 	pc	0,$0
+	pc	1,$0
+	pnil	2
+	pvaly	1,3
+	pvaly	0,4
+	dallexe	5,&'format$fill'/5
+	.clause
+8:	gl	4
+	ulvx	3
+	uvara	4
+	ctypx	3,17
+	cutx	5
+	apushx	0
+	afunc	46
+	popx	0
+	gvara	3,6
+	exec	5,&'format$fill'/5
+	.clause
+9:	gc	3,$'nl'
+	pc	7,$0
+	idtest	0,7
+	jfail	&67
+	gvara	3,6
+	exec	5,&'format$fill'/5
+67: 	pl	3
+	uc	$10
+	ulvx	6
+	exec	5,&'format$fill'/5
+68: 	.clause
+10:	gvarx	7,0
+	gsx1	3,0,$'tab'/1
+	all	4
+	gvary	0,4
+	gvary	1,6
+	pc	8,$'dot'
+	idtest	0,8
+	jfail	&84
+	pvary	2,255
+	gvalx	7,255
+	j	&85
+84: 	pvary	2,255
+	gvalx	0,255
+85: 	apushy	2
+	pushx	7
+	jpred	4,&86
+	pvaly	2,255
+	glvary	3,255
+	j	&87
+86: 	pvary	3,255
+	gvalx	7,255
+87: 	pvaly	2,0
+	gvara	1,7
+	call	4,3,&'format$tabs'/3
+	puval	3,0
+	puval	2,1
+	pnil	2
+	pvaly	1,3
+	pvaly	0,4
+	dallexe	5,&'format$fill'/5
+	.clause
+11:	gvarx	7,0
+	gsx1	3,8,$'+'/1
+	all	4
+	gvary	0,4
+	gvary	1,6
+	apushx	1
+	pushx	8
+	afunc	0
+	popy	2
+	apushy	2
+	pushx	7
+	jpred	4,&103
+	pvaly	2,255
+	glvary	3,255
+	j	&104
+103: 	pvary	3,255
+	gvalx	7,255
+104: 	pvaly	2,0
+	gvara	1,7
+	call	4,3,&'format$tabs'/3
+	puval	3,0
+	pvaly	2,1
+	pnil	2
+	pvaly	1,3
+	pvaly	0,4
+	dallexe	5,&'format$fill'/5
+	.clause
+12:	gvarx	7,2
+	gsx1	3,8,$'fill'/1
+	gvara	3,6
+	ps	9,$'fill'/3
+	uvalx	8
+	ulvx	4
+	uvara	4
+	pl	2
+	uvalx	9
+	ulvx	7
+	exec	5,&'format$fill'/5
+	last
+31: 	.word	$'format'/3
+	.word	$'user_error'
+	.word	#(CHR,&117)
+	.word	$[]
+117: 	.string	"~N~~t without following ~~|.~n"
+
+	.pred	'format$tabs',3
+	.clause
+0:	all	4
+	gvary	0,2
+	apushx	0
+	pushx	1
+	afunc	1
+	popy	2
+	pvaly	0,3
+	pnil	4
+	idtest	3,4
+	jfail	&14
+	apushy	2
+	pushi	$$0
+	jpred	4,&14
+	pc	0,#(STR,&5)
+	dallexe	1,&'$throwError'/1
+14: 	labely	3
+15: 	te	0,0,0,&16
+	pvaly	0,0
+	pvary	1,1
+	call	4,2,&'length'/2
+	cuty	3
+	pvaly	2,0
+	puval	1,1
+	pc	2,$0
+	pvaly	0,3
+	dallexe	4,&'format$tabs'/4
+16: 	tre	0,0
+	pc	0,#(STR,&13)
+	dallexe	1,&'$throwError'/1
+17: 	last
+13: 	.word	$'format'/3
+	.word	$'user_error'
+	.word	#(CHR,&18)
+	.word	$[]
+18: 	.string	"~NTabs and ~~p format don't mix.~n"
+5: 	.word	$'format'/3
+	.word	$'user_error'
+	.word	#(CHR,&19)
+	.word	$[]
+19: 	.string	"~NTabs set with no fill position between them.~n"
+
+	.pred	'format$tabs',4
+3: 	sot	3,&4,&0,&1,&2
+4: 	mkdel	4,&3
+	mark	3
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	3
+	pro	
+	.clause
+1:	all	4
+	gvary	2,0
+	gvary	1,1
+	gvary	3,2
+	gl	3
+	uvarx	4
+	uvary	0
+	gs	4,$'fill'/3
+	uvara	1
+	uvara	2
+	uvara	3
+	apushy	2
+	pushy	3
+	afunc	0
+	pushy	1
+	afunc	4
+	popx	0
+	call	4,4,&'format$gap'/4
+	apushy	2
+	pushy	3
+	afunc	0
+	pushy	1
+	afunc	5
+	popx	2
+	pvaly	2,0
+	pvaly	1,1
+	pvaly	0,3
+	dall	
+	execsot	4,3,&4,&0,&1,&2
+	last
+
+	.pred	'format$gap',4
+3: 	jnvx	0,&0
+1: 	jnvx	2,&0
+2: 	mkdel	4,&3
+	mark	2
+	mark	0
+	delay	
+	.clause
+0:	apushx	0
+	pushi	$$0
+	jpred	4,&12
+	gl	2
+	ulvx	1
+	uvara	2
+	apushx	0
+	afunc	47
+	popx	0
+	exec	4,&'format$gap'/4
+12: 	gvalx	3,2
+	pro	
+13: 	last
+
+	.pred	'format$parse',3
+	labelx	3
+8: 	sot	0,&5,&0,&9,&7
+5: 	t	4,0,&0
+	r	4,0,&1
+	tr	4,0,&2
+9: 	glvx2	0,0,4
+6: 	t	5,0,&3
+	tr	5,0,&4
+7: 	fail	
+	.clause
+0:	gnil	0
+	gnil	2
+	jtypx	1,48,&16
+	pc	5,#(CHR,&15)
+	ps	0,$'format'/3
+	uc	$'user_error'
+	uvalx	5
+	ul	255
+	ulvx	1
+	uc	$[]
+	exec	1,&'$throwError'/1
+16: 	pro	
+17: 	.clause
+1:	gl	0
+	uc	$126
+	uvara	0
+	gvarx	5,1
+	all	9
+	gvary	3,2
+	cutx	3
+	pvary	2,1
+	gvara	2,5
+	pvary	6,3
+	pvary	7,4
+	pvary	5,5
+	call	9,6,&'format$control'/6
+	labely	8
+	pvary	4,255
+	pvary	1,255
+43: 	te	0,0,0,&44
+	pvaly	5,0
+	pvaly	7,1
+	pvaly	6,2
+	pvaly	1,3
+	pvaly	4,4
+	call	9,5,&'format$field'/5
+	cuty	8
+	j	&46
+44: 	tre	0,0
+	jctypy	7,17,&45
+	pc	5,#(CHR,&34)
+	ps	0,$'format'/3
+	uc	$'user_error'
+	uvalx	5
+	ul	255
+	ulvy	6
+	ul	255
+	ulvy	7
+	ul	255
+	ulvy	5
+	uc	$[]
+	call	5,1,&'$throwError'/1
+	j	&46
+45: 	pc	5,#(CHR,&36)
+	ps	0,$'format'/3
+	uc	$'user_error'
+	uvalx	5
+	ul	255
+	ulvy	6
+	ul	255
+	ulvy	5
+	uc	$[]
+	call	5,1,&'$throwError'/1
+46: 	puval	4,0
+	pvary	0,1
+	pvaly	3,2
+	call	3,3,&'append'/3
+	puval	2,0
+	puval	1,1
+	puval	0,2
+	dallexe	3,&'format$parse'/3
+	.clause
+2:	glvx2	0,5,0
+	gl	2
+	uvalx	5
+	uvara	2
+	exec	3,&'format$parse'/3
+	.clause
+3:	gc	0,$126
+	gvarx	5,1
+	all	9
+	gvary	3,2
+	gvara	0,4
+	cutx	3
+	pvary	2,1
+	gvara	2,5
+	pvary	6,3
+	pvary	7,4
+	pvary	5,5
+	call	9,6,&'format$control'/6
+	labely	8
+	pvary	4,255
+	pvary	1,255
+80: 	te	0,0,0,&81
+	pvaly	5,0
+	pvaly	7,1
+	pvaly	6,2
+	pvaly	1,3
+	pvaly	4,4
+	call	9,5,&'format$field'/5
+	cuty	8
+	j	&83
+81: 	tre	0,0
+	jctypy	7,17,&82
+	pc	5,#(CHR,&71)
+	ps	0,$'format'/3
+	uc	$'user_error'
+	uvalx	5
+	ul	255
+	ulvy	6
+	ul	255
+	ulvy	7
+	ul	255
+	ulvy	5
+	uc	$[]
+	call	5,1,&'$throwError'/1
+	j	&83
+82: 	pc	5,#(CHR,&73)
+	ps	0,$'format'/3
+	uc	$'user_error'
+	uvalx	5
+	ul	255
+	ulvy	6
+	ul	255
+	ulvy	5
+	uc	$[]
+	call	5,1,&'$throwError'/1
+83: 	puval	4,0
+	pvary	0,1
+	pvaly	3,2
+	call	3,3,&'append'/3
+	puval	2,0
+	puval	1,1
+	puval	0,2
+	dallexe	3,&'format$parse'/3
+	.clause
+4:	gl	2
+	ulvx	0
+	uvara	2
+	gvara	0,4
+	exec	3,&'format$parse'/3
+	last
+73: 	.string	"~NUnable to format first element of ~w using ~~~c.~n"
+71: 	.string	"~NUnable to format first element of ~w using ~~~d~c.~n"
+36: 	.string	"~NUnable to format first element of ~w using ~~~c.~n"
+34: 	.string	"~NUnable to format first element of ~w using ~~~d~c.~n"
+15: 	.string	"~NUnused arguments to format: ~w.~n"
+
+	.pred	'format$control',6
+13: 	labelx	6
+	sot	0,&14,&8,&15,&8
+14: 	mkdel	7,&13
+	mark	0
+	delay	
+8: 	t	7,0,&0
+	tr	7,0,&4
+15: 	glvx2	0,7,8
+16: 	labelx	6
+	sot	7,&17,&18,&12,&12
+17: 	mkdel	9,&16
+	mark	7
+	delay	
+18: 	soce	7,&($39:&9,$42:&10),&11
+9: 	t	9,0,&0
+	r	9,0,&6
+	r	9,0,&7
+	tr	9,0,&4
+10: 	t	9,0,&0
+	r	9,0,&5
+	r	9,0,&7
+	tr	9,0,&4
+11: 	t	9,0,&0
+	r	9,0,&7
+	tr	9,0,&4
+12: 	t	9,0,&0
+	r	9,0,&7
+	tr	9,0,&4
+	.clause
+0:	gvarx	9,0
+	gvalx	2,3
+	all	3
+	gvary	1,4
+	gvary	2,6
+	pl	2
+	ulvx	5
+	ulvx	1
+	pvary	0,0
+	gvara	1,9
+	call	3,3,&'format$digits'/3
+	typy	0,48
+	cuty	2
+	pvaly	1,0
+	puval	0,1
+	dallexe	2,&'intToString'/2
+	.clause
+4:	pc	9,#(CHR,&39)
+	ps	10,$'format'/2
+	ulvx	0
+	ulvx	2
+	ps	0,$'format'/3
+	uc	$'user_error'
+	uvalx	9
+	ul	255
+	uvalx	10
+	uc	$[]
+	exec	1,&'$throwError'/1
+	.clause
+5:	glvx2	2,2,9
+	gvalx	9,3
+	gvalx	2,4
+	gc	7,$42
+	gl	8
+	ulvx	5
+	ulvx	1
+	cutx	6
+	jctypx	2,17,&51
+	j	&52
+51: 	pc	9,#(CHR,&50)
+	ps	0,$'format'/3
+	uc	$'user_error'
+	uvalx	9
+	ul	255
+	uvalx	2
+	uc	$[]
+	exec	1,&'$throwError'/1
+52: 	pro	
+53: 	.clause
+6:	gvalx	2,3
+	gc	7,$39
+	gl	8
+	ulvx	4
+	ul	255
+	ulvx	5
+	ulvx	1
+	cutx	6
+	pro	
+	.clause
+7:	gvalx	2,3
+	gvara	0,5
+	all	1
+	gvary	0,6
+	gvalx	0,7
+	gvalx	1,8
+	gvara	1,4
+	call	1,2,&'format$defaultControl'/2
+	cuty	0
+	dallpro	
+	last
+50: 	.string	"~NInteger expected -- ~w found.~n"
+39: 	.string	"~NUnable to parse field description in ~w.~n"
+
+	.pred	'format$digits',3
+	.clause
+0:	gvarx	4,1
+	glvx2	4,3,1
+	apushx	3
+	pushi	$$48
+	afunc	34
+	pushx	3
+	pushi	$$57
+	afunc	32
+	jpred	0,&7
+	gl	0
+	uvalx	3
+	uvara	0
+	exec	3,&'format$digits'/3
+7: 	gnil	0
+	gvalx	2,4
+	pro	
+8: 	last
+
+	.pred	'format$defaultControl',2
+25: 	sot	0,&23,&26,&24,&24
+23: 	t	2,0,&0
+	r	2,0,&1
+	r	2,0,&2
+	r	2,0,&3
+	r	2,0,&4
+	r	2,0,&5
+	r	2,0,&6
+	r	2,0,&7
+	r	2,0,&8
+	r	2,0,&9
+	r	2,0,&10
+	r	2,0,&11
+	r	2,0,&12
+	r	2,0,&13
+	r	2,0,&14
+	r	2,0,&15
+	r	2,0,&16
+	r	2,0,&17
+	r	2,0,&18
+	r	2,0,&19
+	r	2,0,&20
+	r	2,0,&21
+	tr	2,0,&22
+26: 	soc	0,&($43:&21,$68:&8,$69:&3,$71:&6,$78:&19,$82:&10,$97:&0,$99:&1,$100:&7,$101:&2,$102:&4,$103:&5,$105:&12,$107:&13,$110:&18,$112:&14,$113:&15,$114:&9,$115:&11,$116:&22,$119:&16,$124:&20,$126:&17),&24
+24: 	fail	
+	.clause
+0:	gc	0,$97
+	gc	1,$0
+	pro	
+	.clause
+1:	gc	0,$99
+	gc	1,$1
+	pro	
+	.clause
+2:	gc	0,$101
+	gc	1,$6
+	pro	
+	.clause
+3:	gc	0,$69
+	gc	1,$6
+	pro	
+	.clause
+4:	gc	0,$102
+	gc	1,$6
+	pro	
+	.clause
+5:	gc	0,$103
+	gc	1,$6
+	pro	
+	.clause
+6:	gc	0,$71
+	gc	1,$6
+	pro	
+	.clause
+7:	gc	0,$100
+	gc	1,$0
+	pro	
+	.clause
+8:	gc	0,$68
+	gc	1,$0
+	pro	
+	.clause
+9:	gc	0,$114
+	gc	1,$8
+	pro	
+	.clause
+10:	gc	0,$82
+	gc	1,$8
+	pro	
+	.clause
+11:	gc	0,$115
+	gc	1,$'length'
+	pro	
+	.clause
+12:	gc	0,$105
+	gc	1,$0
+	pro	
+	.clause
+13:	gc	0,$107
+	gc	1,$0
+	pro	
+	.clause
+14:	gc	0,$112
+	gc	1,$0
+	pro	
+	.clause
+15:	gc	0,$113
+	gc	1,$0
+	pro	
+	.clause
+16:	gc	0,$119
+	gc	1,$0
+	pro	
+	.clause
+17:	gc	0,$126
+	gc	1,$0
+	pro	
+	.clause
+18:	gc	0,$110
+	gc	1,$1
+	pro	
+	.clause
+19:	gc	0,$78
+	gc	1,$0
+	pro	
+	.clause
+20:	gc	0,$124
+	gc	1,$'dot'
+	pro	
+	.clause
+21:	gc	0,$43
+	gc	1,$8
+	pro	
+	.clause
+22:	gc	0,$116
+	gc	1,$32
+	pro	
+	last
+
+	.pred	'format$field',5
+25: 	sot	0,&23,&26,&24,&24
+23: 	t	5,0,&0
+	r	5,0,&1
+	r	5,0,&2
+	r	5,0,&3
+	r	5,0,&4
+	r	5,0,&5
+	r	5,0,&6
+	r	5,0,&7
+	r	5,0,&8
+	r	5,0,&9
+	r	5,0,&10
+	r	5,0,&11
+	r	5,0,&12
+	r	5,0,&13
+	r	5,0,&14
+	r	5,0,&15
+	r	5,0,&16
+	r	5,0,&17
+	r	5,0,&18
+	r	5,0,&19
+	r	5,0,&20
+	r	5,0,&21
+	tr	5,0,&22
+26: 	soc	0,&($43:&21,$68:&8,$69:&3,$71:&6,$78:&19,$82:&10,$97:&0,$99:&1,$100:&7,$101:&2,$102:&4,$103:&5,$105:&12,$107:&13,$110:&18,$112:&14,$113:&15,$114:&9,$115:&11,$116:&22,$119:&16,$124:&20,$126:&17),&24
+24: 	fail	
+	.clause
+0:	gc	0,$97
+	glvx2	2,5,6
+	gvalx	6,3
+	name	5,4
+	pro	
+	.clause
+1:	gc	0,$99
+	gvara	0,1
+	glvx2	2,1,5
+	gvalx	5,3
+	gvara	2,4
+	ctypx	1,17
+	apushx	1
+	pushi	$$0
+	afunc	34
+	pushx	1
+	pushi	$$127
+	afunc	32
+	apred	0
+	exec	3,&'format$c'/3
+	.clause
+2:	gc	0,$101
+	glvx2	2,2,5
+	gvalx	5,3
+	gvara	3,4
+	pc	0,$101
+	exec	4,&'format$floatingField'/4
+	.clause
+3:	gc	0,$69
+	glvx2	2,2,5
+	gvalx	5,3
+	gvara	3,4
+	pc	0,$69
+	exec	4,&'format$floatingField'/4
+	.clause
+4:	gc	0,$102
+	glvx2	2,2,5
+	gvalx	5,3
+	gvara	3,4
+	pc	0,$102
+	exec	4,&'format$floatingField'/4
+	.clause
+5:	gc	0,$103
+	glvx2	2,2,5
+	gvalx	5,3
+	gvara	3,4
+	pc	0,$103
+	exec	4,&'format$floatingField'/4
+	.clause
+6:	gc	0,$71
+	glvx2	2,2,5
+	gvalx	5,3
+	gvara	3,4
+	pc	0,$71
+	exec	4,&'format$floatingField'/4
+	.clause
+7:	gc	0,$100
+	all	3
+	gvary	1,1
+	gl	2
+	uvary	2
+	uvarx	5
+	gvalx	5,3
+	gvary	0,4
+	pvaly	2,5
+	fvar	5,255
+	typx	255,252
+	pvaly	2,0
+	call	3,1,&'isExpression'/1
+	apushy	2
+	popx	1
+	ctypx	1,17
+	apushy	1
+	pushi	$$0
+	apred	5
+	pvaly	1,0
+	pnil	2
+	pvaly	0,3
+	dallexe	4,&'format$d'/4
+	.clause
+8:	gc	0,$68
+	all	3
+	gvary	1,1
+	gl	2
+	uvary	2
+	uvarx	5
+	gvalx	5,3
+	gvary	0,4
+	pvaly	2,5
+	fvar	5,255
+	typx	255,252
+	pvaly	2,0
+	call	3,1,&'isExpression'/1
+	apushy	2
+	popx	1
+	ctypx	1,17
+	apushy	1
+	pushi	$$0
+	apred	5
+	pvaly	1,0
+	pc	2,$44
+	pvaly	0,3
+	dallexe	4,&'format$d'/4
+	.clause
+9:	gc	0,$114
+	all	3
+	gvary	1,1
+	gl	2
+	uvary	2
+	uvarx	5
+	gvalx	5,3
+	gvary	0,4
+	pvaly	2,5
+	fvar	5,255
+	typx	255,252
+	pvaly	2,0
+	call	3,1,&'isExpression'/1
+	apushy	2
+	popx	2
+	ctypx	2,17
+	apushy	1
+	pushi	$$1
+	afunc	33
+	pushy	1
+	pushi	$$36
+	afunc	32
+	apred	0
+	pvaly	1,0
+	pc	1,$97
+	pvaly	0,3
+	dallexe	4,&'intToString'/4
+	.clause
+10:	gc	0,$82
+	all	3
+	gvary	1,1
+	gl	2
+	uvary	2
+	uvarx	5
+	gvalx	5,3
+	gvary	0,4
+	pvaly	2,5
+	fvar	5,255
+	typx	255,252
+	pvaly	2,0
+	call	3,1,&'isExpression'/1
+	apushy	2
+	popx	2
+	ctypx	2,17
+	apushy	1
+	pushi	$$1
+	afunc	33
+	pushy	1
+	pushi	$$36
+	afunc	32
+	apred	0
+	pvaly	1,0
+	pc	1,$65
+	pvaly	0,3
+	dallexe	4,&'intToString'/4
+	.clause
+11:	gc	0,$115
+	all	5
+	gvary	2,1
+	gl	2
+	uvary	1
+	uvarx	5
+	gvalx	5,3
+	gvary	0,4
+	pvaly	1,5
+	fvar	5,255
+	typx	255,252
+	pvaly	1,0
+	call	5,1,&'isAsciiL'/1
+	jctypy	2,17,&145
+	pvaly	1,0
+	pvary	4,1
+	call	5,2,&'length'/2
+	pvaly	0,0
+	pvaly	2,1
+	call	5,2,&'length'/2
+	apushy	2
+	pushy	4
+	jpred	3,&144
+	pvaly	0,0
+	pvarx	1,1
+	pvaly	1,2
+	dallexe	3,&'append'/3
+144: 	apushy	2
+	pushy	4
+	afunc	1
+	popx	0
+	pc	1,$32
+	pvary	3,2
+	call	4,3,&'format$c'/3
+	puval	3,0
+	pvaly	1,1
+	pvaly	0,2
+	dallexe	3,&'append'/3
+	j	&146
+145: 	pvaly	2,255
+	gc	255,$'length'
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+146: 	.clause
+12:	gc	0,$105
+	gl	2
+	uvoid	1
+	ulvx	3
+	gnil	4
+	pro	
+	.clause
+13:	gc	0,$107
+	gl	2
+	all	3
+	uvary	2
+	uvarx	5
+	gvalx	5,3
+	gvary	1,4
+	pc	0,$'vars'
+	pvary	0,1
+	pc	2,$'off'
+	call	3,3,&'prologFlag'/3
+	pc	0,$2046218
+	pvaly	2,1
+	pvaly	1,2
+	call	1,3,&'termToString'/3
+	pc	0,$'vars'
+	pc	1,$'off'
+	puval	0,2
+	dallexe	3,&'prologFlag'/3
+	.clause
+14:	gc	0,$112
+	gl	2
+	all	3
+	uvary	2
+	uvarx	5
+	gvalx	5,3
+	gvary	0,4
+	pvary	1,0
+	call	3,1,&'openStreamToString'/1
+	pvaly	1,0
+	pvaly	2,1
+	call	2,2,&'print'/2
+	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'closeStreamToString'/2
+	.clause
+15:	gc	0,$113
+	glvx2	2,1,5
+	gvalx	5,3
+	gvara	2,4
+	pc	0,$1482
+	exec	3,&'termToString'/3
+	.clause
+16:	gc	0,$119
+	glvx2	2,1,5
+	gvalx	5,3
+	gvara	2,4
+	pc	0,$1226
+	exec	3,&'termToString'/3
+	.clause
+17:	gc	0,$126
+	gvalx	2,3
+	gl	4
+	uc	$126
+	uc	$[]
+	pro	
+	.clause
+18:	gc	0,$110
+	gvara	0,1
+	gvalx	2,3
+	gvara	2,4
+	pc	1,$10
+	exec	3,&'format$c'/3
+	.clause
+19:	gc	0,$78
+	gvalx	2,3
+	gl	4
+	uc	$'nl'
+	uc	$[]
+	pro	
+	.clause
+20:	gc	0,$124
+	gvalx	2,3
+	gl	4
+	uvarx	5
+	uc	$[]
+	gs	5,$'tab'/1
+	ulvx	1
+	pro	
+	.clause
+21:	gc	0,$43
+	gvalx	2,3
+	gl	4
+	uvarx	5
+	uc	$[]
+	gs	5,$'+'/1
+	ulvx	1
+	pro	
+	.clause
+22:	gc	0,$116
+	gvalx	2,3
+	gl	4
+	uvarx	5
+	uc	$[]
+	gs	5,$'fill'/1
+	ulvx	1
+	pro	
+	last
+
+	.pred	'format$floatingField',4
+	.clause
+0:	all	4
+	gvary	2,0
+	gvary	1,1
+	gvary	3,2
+	gvary	0,3
+	pvaly	3,4
+	fvar	4,255
+	typx	255,252
+	pvaly	3,0
+	call	4,1,&'isExpression'/1
+	apushy	3
+	popx	4
+	pvaly	2,5
+	pvaly	1,6
+	prtnum	5,6,4,4
+	gvaly	0,4
+	dallpro	
+	last
+
+	.pred	'format$c',3
+	.clause
+0:	apushx	0
+	pushi	$$0
+	jpred	4,&7
+	gl	2
+	ulvx	1
+	uvara	2
+	apushx	0
+	afunc	47
+	popx	0
+	exec	3,&'format$c'/3
+7: 	gnil	2
+	pro	
+8: 	last
+
+	.pred	'format$d',4
+	.clause
+0:	all	10
+	gvary	4,0
+	gvary	6,2
+	apushx	1
+	pushi	$$0
+	jpred	5,&30
+	pvary	0,255
+	gvalx	3,255
+	gvara	0,1
+	j	&31
+30: 	gl	3
+	uc	$45
+	uvary	0
+	apushx	1
+	afunc	14
+	popx	0
+31: 	pvary	7,1
+	call	10,2,&'intToString'/2
+	pvaly	7,0
+	pvary	9,1
+	call	10,2,&'length'/2
+	pvary	3,0
+	pvaly	4,1
+	call	10,2,&'length'/2
+	apushy	9
+	pushy	4
+	jpred	3,&32
+	pvary	8,0
+	pvaly	7,1
+	pvaly	3,2
+	call	10,3,&'append'/3
+	apushy	4
+	pushy	9
+	afunc	1
+	popx	0
+	pc	1,$48
+	puval	8,2
+	call	7,3,&'format$c'/3
+	pvary	5,255
+	gl	255
+	uc	$48
+	uc	$[]
+	j	&33
+32: 	pvary	5,0
+	pvaly	3,1
+	puval	7,2
+	call	7,3,&'append'/3
+33: 	jctypy	6,17,&34
+	puval	5,0
+	pvaly	6,1
+	pvary	2,2
+	call	5,3,&'format$insertCommas'/3
+	j	&35
+34: 	puval	5,255
+	glvary	2,255
+35: 	apushy	4
+	pushi	$$0
+	jpred	6,&36
+	puval	2,255
+	gvaly	0,255
+	dallpro	
+36: 	pc	0,#(CHR,&26)
+	puval	3,1
+	pvary	1,2
+	call	3,3,&'append'/3
+	puval	2,0
+	puval	1,1
+	puval	0,2
+	dallexe	3,&'append'/3
+37: 	last
+26: 	.string	"."
+
+	.pred	'format$insertCommas',3
+	.clause
+0:	all	4
+	gvary	2,1
+	gvary	0,2
+	pvary	3,1
+	call	4,2,&'reverse'/2
+	puval	3,0
+	pvaly	2,1
+	pvary	1,2
+	call	2,3,&'format$insertCommasReversed'/3
+	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'reverse'/2
+	last
+
+	.pred	'format$insertCommasReversed',3
+	labelx	3
+3: 	sot	0,&2,&1,&2,&1
+2: 	t	4,0,&0
+	tr	4,0,&1
+	.clause
+0:	gl	0
+	uvarx	4
+	ul	255
+	uvarx	5
+	ul	255
+	uvarx	6
+	uvara	0
+	gl	2
+	uvalx	4
+	ul	255
+	uvalx	5
+	ul	255
+	uvalx	6
+	ul	255
+	ulvx	1
+	uvara	2
+	typx	0,48
+	cutx	3
+	exec	3,&'format$insertCommasReversed'/3
+	.clause
+1:	gvalx	0,2
+	pro	
+	last
+
+	.pred	'close',1
+	labelx	1
+6: 	sot	0,&0,&7,&5,&5
+7: 	jc	0,$'user',&1
+5: 	t	2,0,&2
+	r	2,0,&3
+	tr	2,0,&4
+	j	&1
+	.clause
+0:	typx	0,3
+	cutx	1
+	pc	1,#(CHR,&13)
+	ps	3,$'close'/1
+	ulvx	0
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	fail	
+	.clause
+1:	gc	0,$'user'
+	cutx	1
+	pc	1,#(CHR,&19)
+	pc	2,#(LST,&20)
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	fail	
+	.clause
+2:	all	2
+	gvary	0,0
+	gvary	1,1
+	pvarx	0,0
+	pvarx	1,1
+	pvaly	0,2
+	call	2,3,&'$anyCurrentStream'/3
+	cuty	1
+	pvaly	0,2
+	close	2,2
+	dallpro	
+	.clause
+3:	all	5
+	gvary	0,0
+	gvary	4,1
+	pvaly	0,0
+	pvary	3,1
+	call	5,2,&'$expandFileName'/2
+	cuty	4
+	labely	2
+39: 	te	0,0,0,&40
+	puval	3,0
+	pvarx	1,1
+	pvary	1,2
+	call	3,3,&'currentStream'/3
+	cuty	2
+	puval	1,2
+	close	2,2
+	dallpro	
+40: 	tre	0,0
+	pc	0,$'fileErrors'
+	pc	1,$'on'
+	call	1,2,&'prologFlag'/2
+	pc	1,#(CHR,&38)
+	ps	3,$'close'/1
+	ulvy	0
+	pl	2
+	uvalx	3
+	ul	255
+	ulvy	0
+	uc	$[]
+	pc	0,$'user_error'
+	call	0,3,&'$format'/3
+	fail	
+41: 	.clause
+4:	pc	1,#(CHR,&47)
+	ps	3,$'close'/1
+	ulvx	0
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	fail	
+	last
+47: 	.string	"~NError in ~w -- file name or stream expected.~n"
+38: 	.string	"~NError in ~w -- no stream open on ~w.~n"
+20: 	.word	#(STR,&48)
+	.word	$[]
+48: 	.word	$'close'/1
+	.word	$'user'
+19: 	.string	"~NError in ~w -- ambiguous.~n"
+13: 	.string	"~NError in ~w -- variable unexpected.~n"
+
+	.pred	'open',3
+	labelx	3
+2: 	t	4,0,&0
+	tr	4,0,&1
+	.clause
+0:	all	6
+	gvary	3,0
+	gvary	1,1
+	gvary	0,2
+	gvary	5,3
+	pvaly	3,4
+	fvar	4,255
+	typx	255,252
+	pvaly	3,0
+	pvary	2,1
+	call	6,2,&'$expandFileName'/2
+	cuty	5
+	labely	4
+15: 	te	0,0,0,&16
+	ctypy	1,2
+	pvaly	1,0
+	pc	1,$'file'
+	call	5,2,&'$validIOMode'/2
+	cuty	4
+	j	&17
+16: 	tre	0,0
+	pc	1,#(CHR,&14)
+	ps	4,$'open'/3
+	ulvy	3
+	ulvy	1
+	ulvy	0
+	pl	2
+	uvalx	4
+	uc	$[]
+	pc	0,$'user_error'
+	call	3,3,&'$format'/3
+	fail	
+17: 	puval	2,4
+	pvaly	1,5
+	open	4,5,4
+	gvaly	0,4
+	dallpro	
+	.clause
+1:	gvarx	4,1
+	pc	1,#(CHR,&25)
+	ps	5,$'open'/3
+	ulvx	0
+	ulvx	4
+	ulvx	2
+	pl	2
+	uvalx	5
+	uc	$[]
+	pc	0,$'user_error'
+	exec	3,&'$format'/3
+	last
+25: 	.string	"~NError in ~w -- file name or stream expected.~n"
+14: 	.string	"~NError in ~w -- invalid mode.~n"
+
+	.pred	'$validIOMode',2
+7: 	sot	0,&5,&8,&6,&6
+5: 	t	2,0,&0
+	r	2,0,&1
+	r	2,0,&2
+	r	2,0,&3
+	tr	2,0,&4
+8: 	soc	0,&($'append':&4,$'read':&0,$'stringRead':&1,$'stringWrite':&3,$'write':&2),&6
+6: 	fail	
+	.clause
+0:	gc	0,$'read'
+	gc	1,$'file'
+	pro	
+	.clause
+1:	gc	0,$'stringRead'
+	gc	1,$'string'
+	pro	
+	.clause
+2:	gc	0,$'write'
+	gc	1,$'file'
+	pro	
+	.clause
+3:	gc	0,$'stringWrite'
+	gc	1,$'string'
+	pro	
+	.clause
+4:	gc	0,$'append'
+	gc	1,$'file'
+	pro	
+	last
+
+	.pred	'$validIMode',2
+4: 	sot	0,&2,&5,&3,&3
+2: 	t	2,0,&0
+	tr	2,0,&1
+5: 	soc	0,&($'read':&0,$'stringRead':&1),&3
+3: 	fail	
+	.clause
+0:	gc	0,$'read'
+	gc	1,$'file'
+	pro	
+	.clause
+1:	gc	0,$'stringRead'
+	gc	1,$'string'
+	pro	
+	last
+
+	.pred	'$validOMode',2
+5: 	sot	0,&3,&6,&4,&4
+3: 	t	2,0,&0
+	r	2,0,&1
+	tr	2,0,&2
+6: 	soc	0,&($'append':&2,$'stringWrite':&1,$'write':&0),&4
+4: 	fail	
+	.clause
+0:	gc	0,$'write'
+	gc	1,$'file'
+	pro	
+	.clause
+1:	gc	0,$'stringWrite'
+	gc	1,$'string'
+	pro	
+	.clause
+2:	gc	0,$'append'
+	gc	1,$'file'
+	pro	
+	last
+
+	.pred	'openNullStream',1
+	.clause
+0:	pc	1,$'/dev/null'
+	pc	2,$'write'
+	open	1,2,1
+	gvalx	0,1
+	pro	
+	last
+
+	.pred	'openStreamFromString',2
+	labelx	2
+2: 	t	3,0,&0
+	tr	3,0,&1
+	.clause
+0:	all	3
+	gvary	1,0
+	gvary	0,1
+	gvary	2,2
+	pvaly	1,3
+	fvar	3,255
+	typx	255,252
+	pvaly	1,0
+	call	3,1,&'isAsciiL'/1
+	cuty	2
+	pvaly	1,3
+	pc	4,$'stringRead'
+	open	3,4,3
+	gvaly	0,3
+	dallpro	
+	.clause
+1:	gvarx	3,1
+	pc	1,#(CHR,&13)
+	ps	4,$'openStreamFromString'/2
+	ulvx	0
+	ulvx	3
+	pl	2
+	uvalx	4
+	uc	$[]
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	fail	
+	last
+13: 	.string	"~NError in ~w -- String must be a list of character codes.~n"
+
+	.pred	'openStreamToString',1
+	.clause
+0:	pc	1,$100
+	pc	2,$'stringWrite'
+	open	1,2,1
+	gvalx	0,1
+	pro	
+	last
+
+	.pred	'closeStreamToString',2
+	labelx	2
+2: 	sot	0,&0,&1,&1,&1
+	.clause
+0:	gvarx	3,1
+	typx	0,3
+	cutx	2
+	pc	1,#(CHR,&9)
+	ps	4,$'closeStreamToString'/2
+	ulvx	0
+	ulvx	3
+	pl	2
+	uvalx	4
+	uc	$[]
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	fail	
+	.clause
+1:	all	3
+	gvary	1,0
+	gvary	0,1
+	gvary	2,2
+	pvarx	0,0
+	pvarx	1,1
+	pvaly	1,2
+	call	3,3,&'$anyCurrentStream'/3
+	cuty	2
+	pvaly	1,3
+	close	3,3
+	gvaly	0,3
+	dallpro	
+	last
+9: 	.string	"~NError in ~w -- variable unexpected.~n"
+
+	.pred	'ftell',2
+	labelx	2
+6: 	sot	0,&0,&7,&5,&5
+7: 	jc	0,$'user',&1
+5: 	t	3,0,&2
+	r	3,0,&3
+	tr	3,0,&4
+	j	&1
+	.clause
+0:	gvarx	3,1
+	typx	0,3
+	cutx	2
+	pc	1,#(CHR,&14)
+	ps	4,$'ftell'/2
+	ulvx	0
+	ulvx	3
+	pl	2
+	uvalx	4
+	uc	$[]
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	fail	
+	.clause
+1:	gc	0,$'user'
+	gvarx	3,1
+	cutx	2
+	pc	1,#(CHR,&21)
+	ps	4,$'ftell'/2
+	uc	$'user'
+	ulvx	3
+	pl	2
+	uvalx	4
+	uc	$[]
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	fail	
+	.clause
+2:	all	3
+	gvary	1,0
+	gvary	0,1
+	gvary	2,2
+	pvarx	0,0
+	pvarx	1,1
+	pvaly	1,2
+	call	3,3,&'$anyCurrentStream'/3
+	cuty	2
+	pvaly	1,0
+	pvaly	0,1
+	dallexe	2,&'$ftell'/2
+	.clause
+3:	all	6
+	gvary	0,0
+	gvary	1,1
+	gvary	5,2
+	pvaly	0,3
+	fvar	3,255
+	typx	255,252
+	pvaly	0,0
+	pvary	4,1
+	call	6,2,&'$expandFileName'/2
+	cuty	5
+	labely	3
+46: 	te	0,0,0,&47
+	puval	4,0
+	pvarx	1,1
+	pvary	2,2
+	call	4,3,&'currentStream'/3
+	cuty	3
+	puval	2,0
+	pvaly	1,1
+	dallexe	2,&'$ftell'/2
+47: 	tre	0,0
+	pc	0,$'fileErrors'
+	pc	1,$'on'
+	call	2,2,&'prologFlag'/2
+	pc	1,#(CHR,&45)
+	ps	3,$'ftell'/2
+	ulvy	0
+	ulvy	1
+	pl	2
+	uvalx	3
+	ul	255
+	ulvy	0
+	uc	$[]
+	pc	0,$'user_error'
+	call	0,3,&'$format'/3
+	fail	
+48: 	.clause
+4:	gvarx	3,1
+	pc	1,#(CHR,&55)
+	ps	4,$'ftell'/2
+	ulvx	0
+	ulvx	3
+	pl	2
+	uvalx	4
+	uc	$[]
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	fail	
+	last
+55: 	.string	"~NError in ~w -- file name or stream expected.~n"
+45: 	.string	"~NError in ~w -- no stream open on ~w.~n"
+21: 	.string	"~NError in ~w -- ambiguous.~n"
+14: 	.string	"~NError in ~w -- variable unexpected.~n"
+
+	.pred	'fseek',3
+	labelx	3
+9: 	sot	0,&5,&10,&8,&8
+5: 	t	4,0,&0
+	r	4,0,&1
+	r	4,0,&2
+	r	4,0,&3
+	tr	4,0,&4
+10: 	jc	0,$'user',&7
+6: 	t	4,0,&0
+	r	4,0,&2
+	r	4,0,&3
+	tr	4,0,&4
+7: 	t	4,0,&0
+	tr	4,0,&1
+8: 	t	4,0,&0
+	r	4,0,&2
+	r	4,0,&3
+	tr	4,0,&4
+	.clause
+0:	gvarx	4,1
+	pl	5
+	ulvx	4
+	ulvx	2
+	pl	6
+	ulvx	0
+	uvalx	5
+	fvar	6,255
+	jtypx	255,252,&19
+	fail	
+19: 	cutx	3
+	pc	1,#(CHR,&18)
+	ps	5,$'fseek'/3
+	ulvx	0
+	ulvx	4
+	ulvx	2
+	pl	2
+	uvalx	5
+	uc	$[]
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	fail	
+	.clause
+1:	gc	0,$'user'
+	gvarx	4,1
+	cutx	3
+	pc	1,#(CHR,&27)
+	ps	5,$'fseek'/3
+	uc	$'user'
+	ulvx	4
+	ulvx	2
+	pl	2
+	uvalx	5
+	uc	$[]
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	fail	
+	.clause
+2:	all	9
+	gvary	5,0
+	gvary	2,1
+	gvary	1,2
+	gvary	8,3
+	pvarx	0,0
+	pvarx	1,1
+	pvaly	5,2
+	call	9,3,&'$anyCurrentStream'/3
+	cuty	8
+	labely	7
+	pvary	4,255
+	pvary	0,255
+53: 	te	0,0,0,&54
+	pvaly	1,0
+	pvaly	4,1
+	call	8,2,&'io$whence'/2
+	cuty	7
+	j	&55
+54: 	tre	0,0
+	ps	1,$'io$whence'/2
+	uvarx	0
+	uvoid	1
+	pvary	6,2
+	call	7,3,&'findall'/3
+	pc	1,#(CHR,&43)
+	ps	4,$'fseek'/3
+	ulvy	0
+	ulvy	2
+	ulvy	1
+	pl	2
+	uvalx	4
+	ul	255
+	ulvy	6
+	uc	$[]
+	pc	0,$'user_error'
+	call	6,3,&'$format'/3
+	fail	
+55: 	labely	3
+56: 	te	0,0,0,&57
+	pvaly	5,0
+	pvaly	2,1
+	puval	4,2
+	call	4,3,&'$fseek'/3
+	cuty	3
+	dallpro	
+57: 	tre	0,0
+	pc	0,$'fileErrors'
+	pc	1,$'on'
+	call	3,2,&'prologFlag'/2
+	pc	1,#(CHR,&52)
+	ps	4,$'fseek'/3
+	ulvy	0
+	ulvy	2
+	ulvy	1
+	pl	2
+	uvalx	4
+	ul	255
+	ulvy	0
+	uc	$[]
+	pc	0,$'user_error'
+	call	0,3,&'$format'/3
+	fail	
+58: 	.clause
+3:	all	7
+	gvary	0,0
+	gvary	2,1
+	gvary	1,2
+	gvary	6,3
+	pvaly	0,0
+	pvary	5,1
+	call	7,2,&'$expandFileName'/2
+	cuty	6
+	labely	4
+77: 	te	0,0,0,&78
+	puval	5,0
+	pvarx	1,1
+	pvary	3,2
+	call	5,3,&'currentStream'/3
+	cuty	4
+	puval	3,0
+	pvaly	2,1
+	pvaly	1,2
+	dallexe	3,&'fseek'/3
+78: 	tre	0,0
+	pc	0,$'fileErrors'
+	pc	1,$'on'
+	call	3,2,&'prologFlag'/2
+	pc	1,#(CHR,&76)
+	ps	4,$'fseek'/3
+	ulvy	0
+	ulvy	2
+	ulvy	1
+	pl	2
+	uvalx	4
+	ul	255
+	ulvy	0
+	uc	$[]
+	pc	0,$'user_error'
+	call	0,3,&'$format'/3
+	fail	
+79: 	.clause
+4:	gvarx	4,1
+	pc	1,#(CHR,&87)
+	ps	5,$'fseek'/3
+	ulvx	0
+	ulvx	4
+	ulvx	2
+	pl	2
+	uvalx	5
+	uc	$[]
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	fail	
+	last
+87: 	.string	"~NError in ~w -- file name or stream expected.~n"
+76: 	.string	"~NError in ~w -- no stream open on ~w.~n"
+52: 	.string	"~NError in ~w -- unable to seek as requested.~n"
+43: 	.string	"~NError in ~w -- one of ~w expected.~n"
+27: 	.string	"~NError in ~w -- ambiguous.~n"
+18: 	.string	"~NError in ~w -- all arguments must be ground.~n"
+
+	.pred	'io$whence',2
+5: 	sot	0,&3,&6,&4,&4
+3: 	t	2,0,&0
+	r	2,0,&1
+	tr	2,0,&2
+6: 	soc	0,&($'beginning':&0,$'current':&1,$'end':&2),&4
+4: 	fail	
+	.clause
+0:	gc	0,$'beginning'
+	gc	1,$0
+	pro	
+	.clause
+1:	gc	0,$'current'
+	gc	1,$1
+	pro	
+	.clause
+2:	gc	0,$'end'
+	gc	1,$2
+	pro	
+	last
+
+	.pred	'fileErrors',0
+	.clause
+0:	pc	0,$'fileErrors'
+	pc	1,$'on'
+	exec	2,&'$setFlag'/2
+	last
+
+	.pred	'noFileErrors',0
+	.clause
+0:	pc	0,$'fileErrors'
+	pc	1,$'off'
+	exec	2,&'$setFlag'/2
+	last
+
+	.pred	'see',1
+	labelx	1
+6: 	sot	0,&0,&7,&5,&5
+7: 	jc	0,$'user',&1
+5: 	t	2,0,&2
+	r	2,0,&3
+	tr	2,0,&4
+	j	&1
+	.clause
+0:	typx	0,3
+	cutx	1
+	pc	1,#(CHR,&13)
+	ps	3,$'see'/1
+	ulvx	0
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	fail	
+	.clause
+1:	gc	0,$'user'
+	cutx	1
+	pc	2,$'user'
+	setstr	0,2
+	pro	
+	.clause
+2:	all	2
+	gvary	0,0
+	gvary	1,1
+	pvarx	0,0
+	pvarx	1,1
+	pvaly	0,2
+	call	2,3,&'$anyCurrentStream'/3
+	cuty	1
+	pvaly	0,2
+	setstr	0,2
+	dallpro	
+	.clause
+3:	all	4
+	gvary	3,1
+	fvar	0,255
+	typx	255,252
+	pvary	1,1
+	call	4,2,&'$expandFileName'/2
+	cuty	3
+	labely	2
+31: 	te	0,0,0,&32
+	pvaly	1,0
+	pc	1,$'read'
+	pvary	0,2
+	call	3,3,&'currentStream'/3
+	cuty	2
+	j	&33
+32: 	tre	0,0
+	puval	1,0
+	pc	1,$'read'
+	pvary	0,2
+	call	1,3,&'open'/3
+33: 	puval	0,2
+	setstr	0,2
+	dallpro	
+	.clause
+4:	pc	1,#(CHR,&39)
+	ps	3,$'see'/1
+	ulvx	0
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	fail	
+	last
+39: 	.string	"~NError in ~w -- file name or stream expected.~n"
+13: 	.string	"~NError in ~w -- variable unexpected.~n"
+
+	.pred	'seeing',1
+	.clause
+0:	currstr	0,1
+	gvalx	0,1
+	pro	
+	last
+
+	.pred	'seen',0
+	.clause
+0:	currstr	0,0
+	all	0
+	call	0,1,&'close'/1
+	pc	0,$'user_input'
+	setstr	0,0
+	dallpro	
+	last
+
+	.pred	'tell',1
+	labelx	1
+6: 	sot	0,&0,&7,&5,&5
+7: 	jc	0,$'user',&1
+5: 	t	2,0,&2
+	r	2,0,&3
+	tr	2,0,&4
+	j	&1
+	.clause
+0:	typx	0,3
+	cutx	1
+	pc	1,#(CHR,&13)
+	ps	3,$'tell'/1
+	ulvx	0
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	fail	
+	.clause
+1:	gc	0,$'user'
+	cutx	1
+	pc	2,$'user'
+	setstr	1,2
+	pro	
+	.clause
+2:	all	2
+	gvary	0,0
+	gvary	1,1
+	pvarx	0,0
+	pvarx	1,1
+	pvaly	0,2
+	call	2,3,&'$anyCurrentStream'/3
+	cuty	1
+	pvaly	0,2
+	setstr	1,2
+	dallpro	
+	.clause
+3:	all	5
+	gvary	4,1
+	fvar	0,255
+	typx	255,252
+	pvary	1,1
+	call	5,2,&'$expandFileName'/2
+	cuty	4
+	labely	2
+33: 	te	0,0,0,&34
+	pvaly	1,0
+	pvary	3,1
+	pvary	0,2
+	call	4,3,&'currentStream'/3
+	puval	3,0
+	pc	1,$'file'
+	call	3,2,&'$validOMode'/2
+	cuty	2
+	j	&35
+34: 	tre	0,0
+	puval	1,0
+	pc	1,$'write'
+	pvary	0,2
+	call	1,3,&'open'/3
+35: 	puval	0,2
+	setstr	1,2
+	dallpro	
+	.clause
+4:	pc	1,#(CHR,&41)
+	ps	3,$'tell'/1
+	ulvx	0
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	fail	
+	last
+41: 	.string	"~NError in ~w -- file name or stream expected.~n"
+13: 	.string	"~NError in ~w -- variable unexpected.~n"
+
+	.pred	'telling',1
+	.clause
+0:	currstr	1,1
+	gvalx	0,1
+	pro	
+	last
+
+	.pred	'told',0
+	.clause
+0:	currstr	1,0
+	all	0
+	call	0,1,&'close'/1
+	pc	0,$'user_output'
+	setstr	1,0
+	dallpro	
+	last
+
+	.pred	'$anyCurrentStream',3
+	.clause
+0:	all	5
+	gvary	2,0
+	gvary	1,1
+	gvary	0,2
+	pc	0,$'nstreams'
+	pvary	4,1
+	call	5,2,&'prologFlag'/2
+	apushy	4
+	afunc	47
+	popx	1
+	pc	0,$0
+	pvary	3,2
+	call	4,3,&'between'/3
+	puval	3,3
+	getstr	3,3
+	gs	3,$'$stream'/7
+	ulvy	2
+	ulvy	1
+	ulvy	0
+	uvoid	4
+	pvaly	0,3
+	pnil	4
+	notid	3,4
+	dallpro	
+	last
+
+	.pred	'$anyCurrentStream',2
+	.clause
+0:	all	3
+	gvary	1,0
+	gvary	0,1
+	pc	0,$'nstreams'
+	pvary	2,1
+	call	3,2,&'prologFlag'/2
+	apushy	2
+	afunc	47
+	popx	1
+	pc	0,$0
+	pvaly	1,2
+	call	2,3,&'between'/3
+	pvaly	1,2
+	getstr	2,2
+	gs	2,$'$stream'/7
+	uvoid	2
+	ulvy	0
+	uvoid	4
+	pvaly	0,2
+	pnil	3
+	notid	2,3
+	dallpro	
+	last
+
+	.pred	'$getStreamInfo',2
+	labelx	2
+	.clause
+0:	all	5
+	gvary	0,0
+	gvary	2,1
+	gvary	1,2
+	pc	0,$'nstreams'
+	pvary	4,1
+	call	5,2,&'prologFlag'/2
+	apushy	4
+	afunc	47
+	popx	1
+	pc	0,$0
+	pvary	3,2
+	call	4,3,&'between'/3
+	puval	3,3
+	getstr	3,3
+	gvaly	2,3
+	pc	3,$3
+	pvaly	2,4
+	arg	3,4,0
+	pnil	3
+	notid	0,3
+	pvaly	0,3
+	idtest	3,0
+	jfail	&9
+	cuty	1
+	dallpro	
+9: 	gvaly	0,0
+	dallpro	
+10: 	last
+
+	.pred	'currentStream',3
+	.clause
+0:	all	5
+	gvary	2,0
+	gvary	1,1
+	gvary	0,2
+	pc	0,$'nstreams'
+	pvary	4,1
+	call	5,2,&'prologFlag'/2
+	apushy	4
+	afunc	47
+	popx	1
+	pc	0,$3
+	pvary	3,2
+	call	4,3,&'between'/3
+	puval	3,3
+	getstr	3,3
+	gs	3,$'$stream'/7
+	ulvy	2
+	ulvy	1
+	ulvy	0
+	uvoid	4
+	pvaly	0,3
+	pnil	4
+	notid	3,4
+	dallpro	
+	last
+
+	.pred	'$validInputStream',1
+3: 	sot	0,&2,&4,&1,&1
+2: 	t	1,0,&0
+	tr	1,0,&1
+4: 	jc	0,$'user',&2
+	j	&1
+	j	&2
+	.clause
+0:	gc	0,$'user'
+	pro	
+	.clause
+1:	gvarx	2,0
+	pvarx	0,0
+	all	1
+	pvary	0,1
+	call	1,3,&'$anyCurrentStream'/3
+	puval	0,0
+	pvarx	1,1
+	dallexe	2,&'$validIMode'/2
+	last
+
+	.pred	'$validOutputStream',1
+3: 	sot	0,&2,&4,&1,&1
+2: 	t	1,0,&0
+	tr	1,0,&1
+4: 	jc	0,$'user',&2
+	j	&1
+	j	&2
+	.clause
+0:	gc	0,$'user'
+	pro	
+	.clause
+1:	gvarx	2,0
+	pvarx	0,0
+	all	1
+	pvary	0,1
+	call	1,3,&'$anyCurrentStream'/3
+	puval	0,0
+	pvarx	1,1
+	dallexe	2,&'$validOMode'/2
+	last
+
+	.pred	'characterCount',2
+	.clause
+0:	all	2
+	gvary	0,1
+5: 	te	1,0,1,&6
+	gc	0,$'user'
+	pc	0,$'user_input'
+	j	&7
+6: 	tre	1,0
+7: 	pvary	1,1
+	call	2,2,&'$getStreamInfo'/2
+	pc	2,$5
+	puval	1,3
+	arg	2,3,2
+	gvaly	0,2
+	dallpro	
+	last
+
+	.pred	'lineCount',2
+	.clause
+0:	all	2
+	gvary	0,1
+5: 	te	1,0,1,&6
+	gc	0,$'user'
+	pc	0,$'user_input'
+	j	&7
+6: 	tre	1,0
+7: 	pvary	1,1
+	call	2,2,&'$getStreamInfo'/2
+	pc	2,$6
+	puval	1,3
+	arg	2,3,2
+	gvaly	0,2
+	dallpro	
+	last
+
+	.pred	'linePosition',2
+	.clause
+0:	all	2
+	gvary	0,1
+5: 	te	1,0,1,&6
+	gc	0,$'user'
+	pc	0,$'user_input'
+	j	&7
+6: 	tre	1,0
+7: 	pvary	1,1
+	call	2,2,&'$getStreamInfo'/2
+	pc	2,$7
+	puval	1,3
+	arg	2,3,2
+	gvaly	0,2
+	dallpro	
+	last
+
+	.pred	'streamEof',1
+	.clause
+0:	pc	1,$'user'
+	idtest	0,1
+	jfail	&4
+	pc	0,$'user_input'
+	j	&6
+4: 	te	1,0,1,&5
+	gc	0,$'user'
+	pc	0,$'user_input'
+	j	&6
+5: 	tre	1,0
+6: 	all	1
+	pvary	0,1
+	call	1,2,&'$getStreamInfo'/2
+	pc	1,$4
+	puval	0,2
+	arg	1,2,1
+	gc	1,$'eof'
+	dallpro	
+	last
+
+	.pred	'streamPosition',3
+	.clause
+0:	all	4
+	gvary	3,1
+	gvary	2,2
+	pc	3,$'user'
+	idtest	0,3
+	jfail	&11
+	pc	255,$'user_input'
+	gvary	0,255
+	j	&13
+11: 	te	1,0,1,&12
+	gc	0,$'user'
+	pc	255,$'user_input'
+	gvary	0,255
+	j	&13
+12: 	tre	1,0
+	pvary	0,255
+	gvalx	0,255
+13: 	pvaly	0,0
+	pvary	1,1
+	call	4,2,&'$getStreamInfo'/2
+	pvaly	3,255
+	gs	255,$'$streamPosition'/4
+	uvarx	1
+	uvarx	3
+	uvarx	4
+	uvarx	5
+	pc	6,$5
+	pvaly	1,7
+	arg	6,7,6
+	gvalx	3,6
+	pc	3,$6
+	pvaly	1,6
+	arg	3,6,3
+	gvalx	4,3
+	pc	3,$7
+	pvaly	1,4
+	arg	3,4,3
+	gvalx	5,3
+	pvaly	0,0
+	call	3,2,&'ftell'/2
+	pvaly	2,3
+	fvar	3,255
+	typx	255,252
+	pvaly	2,255
+	gs	255,$'$streamPosition'/4
+	uvarx	1
+	uvarx	3
+	uvarx	4
+	uvarx	5
+	ctypx	1,17
+	apushx	1
+	pushi	$$0
+	apred	5
+	ctypx	3,17
+	apushx	3
+	pushi	$$0
+	apred	5
+	ctypx	4,17
+	apushx	4
+	pushi	$$0
+	apred	4
+	ctypx	5,17
+	apushx	5
+	pushi	$$0
+	apred	5
+	pc	6,$5
+	puval	1,7
+	replacn	6,7,3
+	pc	3,$6
+	puval	1,6
+	replacn	3,6,4
+	pc	3,$7
+	puval	1,4
+	replacn	3,4,5
+	puval	0,0
+	pc	2,$'beginning'
+	dallexe	3,&'fseek'/3
+	last
+
+	.pred	'isAlnum',1
+2: 	jnvx	0,&0
+1: 	mkdel	1,&2
+	mark	0
+	delay	
+	.clause
+0:	ctypx	0,17
+	apushx	0
+	pushi	$$97
+	afunc	34
+	pushx	0
+	pushi	$$122
+	afunc	32
+	afunc	11
+	pushx	0
+	pushi	$$65
+	afunc	34
+	pushx	0
+	pushi	$$90
+	afunc	32
+	afunc	11
+	pushx	0
+	pushi	$$48
+	afunc	34
+	pushx	0
+	pushi	$$57
+	afunc	32
+	afunc	11
+	afunc	12
+	apred	1
+	pro	
+	last
+
+	.pred	'isPrint',1
+2: 	jnvx	0,&0
+1: 	mkdel	1,&2
+	mark	0
+	delay	
+	.clause
+0:	ctypx	0,17
+	apushx	0
+	pushi	$$32
+	afunc	34
+	pushx	0
+	pushi	$$127
+	afunc	31
+	afunc	11
+	pushx	0
+	pushi	$$9
+	afunc	35
+	pushx	0
+	pushi	$$10
+	afunc	35
+	pushx	0
+	pushi	$$12
+	afunc	35
+	pushx	0
+	pushi	$$13
+	afunc	35
+	afunc	12
+	afunc	12
+	afunc	12
+	apred	1
+	pro	
+	last
+
+	.pred	'isPrintL',1
+2: 	fvar	0,255
+	jnvx	255,&0
+1: 	mkdel	1,&2
+	mark	255
+	delay	
+	.clause
+0:	gvarx	1,0
+	fvar	1,255
+	typx	255,252
+	pc	0,$'isPrint'
+	exec	2,&'mapList'/2
+	last
+
+	.pred	'isAlpha',1
+2: 	jnvx	0,&0
+1: 	mkdel	1,&2
+	mark	0
+	delay	
+	.clause
+0:	ctypx	0,17
+	apushx	0
+	pushi	$$97
+	afunc	34
+	pushx	0
+	pushi	$$122
+	afunc	32
+	afunc	11
+	pushx	0
+	pushi	$$65
+	afunc	34
+	pushx	0
+	pushi	$$90
+	afunc	32
+	afunc	11
+	apred	1
+	pro	
+	last
+
+	.pred	'isAlphaL',1
+2: 	fvar	0,255
+	jnvx	255,&0
+1: 	mkdel	1,&2
+	mark	255
+	delay	
+	.clause
+0:	gvarx	1,0
+	fvar	1,255
+	typx	255,252
+	pc	0,$'isAlpha'
+	exec	2,&'mapList'/2
+	last
+
+	.pred	'isAscii',1
+2: 	jnvx	0,&0
+1: 	mkdel	1,&2
+	mark	0
+	delay	
+	.clause
+0:	ctypx	0,17
+	apushx	0
+	pushi	$$0
+	afunc	33
+	pushx	0
+	pushi	$$127
+	afunc	32
+	apred	0
+	pro	
+	last
+
+	.pred	'isAsciiL',1
+2: 	fvar	0,255
+	jnvx	255,&0
+1: 	mkdel	1,&2
+	mark	255
+	delay	
+	.clause
+0:	gvarx	1,0
+	fvar	1,255
+	typx	255,252
+	pc	0,$'isAscii'
+	exec	2,&'mapList'/2
+	last
+
+	.pred	'isCntrl',1
+2: 	jnvx	0,&0
+1: 	mkdel	1,&2
+	mark	0
+	delay	
+	.clause
+0:	ctypx	0,17
+	apushx	0
+	pushi	$$1
+	afunc	34
+	pushx	0
+	pushi	$$32
+	afunc	31
+	apred	0
+	pro	
+	last
+
+	.pred	'isDigit',1
+2: 	jnvx	0,&0
+1: 	mkdel	1,&2
+	mark	0
+	delay	
+	.clause
+0:	ctypx	0,17
+	apushx	0
+	pushi	$$48
+	afunc	34
+	pushx	0
+	pushi	$$57
+	afunc	32
+	apred	0
+	pro	
+	last
+
+	.pred	'isLower',1
+2: 	jnvx	0,&0
+1: 	mkdel	1,&2
+	mark	0
+	delay	
+	.clause
+0:	ctypx	0,17
+	apushx	0
+	pushi	$$97
+	afunc	34
+	pushx	0
+	pushi	$$122
+	afunc	32
+	apred	0
+	pro	
+	last
+
+	.pred	'isUpper',1
+2: 	jnvx	0,&0
+1: 	mkdel	1,&2
+	mark	0
+	delay	
+	.clause
+0:	ctypx	0,17
+	apushx	0
+	pushi	$$65
+	afunc	34
+	pushx	0
+	pushi	$$90
+	afunc	32
+	apred	0
+	pro	
+	last
+

@@ -1,0 +1,152 @@
+% logic query processor
+% usage:      vars : goal      or     : goal
+% goal must use the extended syntax
+%
+% Code modified 7 October 1985 by jwl
+%
+% This code isnt too robust! Dont use the same name for distinct
+% bound variables. Also the syntax leaves something to be desired.
+% These problems are due to be fixed up early 1986. jwl
+
+?- hide([term_vars(3), list_vars(3), transform(2), free_vars(2)]).
+
+?- lib(gnot).
+
+?- op(920, xfy, ->).
+?- op(920, xfy, <-).
+?- op(910, xfy, v).
+?- op(905, xfy, &).
+?- op(900, fy, ~).
+?- op(1100, xfy, (:)).
+?- op(1100, fx, (:)).
+
+X : T :-
+        transform(T, T1),
+        !,
+        T1,
+        ( $ndelay(Z),
+          Z=\=0,
+          writeln('Query has floundered!'),
+          writeln('Transformed query is :'),
+          writeln(T1),
+          nl,
+          !,
+          fail
+        ;
+          writeln(X),
+          nl,
+          fail).
+
+: T :-
+        transform(T, T1),
+        !,
+        T1,
+        ( $ndelay(Z),
+          Z=\=0,
+          writeln('Query has floundered!'),
+          writeln('Transformed query is :'),
+          writeln(T1),
+          nl,
+          !,
+          fail
+         ;
+          !,
+          writeln(yes),
+          nl,
+          fail).
+
+
+transform(~(V & W), (V1 ; W1)) :-
+       transform(~V, V1), transform(~W, W1).
+
+transform(all(Vars, W), W1) :-
+       transform(~some(Vars, ~W), W1).
+
+transform(~all(Vars, W), W1) :-
+       transform(some(Vars, ~W), W1).
+
+transform((V <- W), (V1 ; W1)) :-
+       transform(V, V1), transform(~W, W1).
+
+transform((V -> W), (W1 ; V1)) :-
+       transform(W, W1), transform(~V, V1).
+
+transform(~(V <- W), (W1, V1)) :-
+       transform(W, W1), transform(~V, V1).
+
+transform(~(V -> W), (V1, W1)) :-
+       transform(V, V1), transform(~W, W1).
+
+transform((V v W), (V1 ; W1)) :-
+       transform(V, V1), transform(W, W1).
+
+transform((V & W), (V1, W1)) :-
+       transform(V,V1), transform(W, W1).
+
+transform(~(V v W), (V1, W1)) :-
+       transform(~V, V1), transform(~W, W1).
+
+transform(~(~(W)), W1) :-
+       transform(W, W1).
+
+transform(some(Vars, W), W1) :-
+       transform(W, W1).
+
+transform(~some(Vars, W), gnot(G, W1)) :-
+       free_vars(some(Vars, W), G),
+       transform(W, W1). 
+
+transform(~V, gnot(G, V)) :- 
+       V =.. [F | X],
+       not occurs(F, [&, v, <-, ->, ~, all, some]),
+       free_vars(V, G).
+
+transform(V, V) :-
+       V =.. [F | X],
+       not occurs(F, [&, v, <-, ->, ~, all, some]).
+
+
+/*	Find free vars in first order formula		*/
+
+free_vars(T, L) :- term_vars(T, [], L).
+
+/*
+ *	term_vars : term, bound_vars -> free_vars_in_term
+ */
+
+term_vars(T, _, []) :- var(T), $is_(T), !. 
+    
+term_vars(T, L, []) :- var(T), occurs(T,L), !.
+
+term_vars(T, _, T) :- var(T), !.
+    
+term_vars(T, _, []) :- atomic(T), !.
+
+term_vars(T, L, Z) :-
+	T =.. [F | A],
+	not occurs(F, (all, some)), !,
+	list_vars(A, L, Z).
+
+term_vars(all(V, T), L, Z) :- !, term_vars(T, (V, L), Z).
+
+term_vars(some(V, T), L, Z) :- !, term_vars(T, (V, L), Z).
+
+/*
+ *	list_vars : (non-empty) term_list, bound_vars -> free_vars_in_term_list
+ */
+
+list_vars([T], L, Z) :- term_vars(T, L, Z), !.
+
+list_vars([T | Ts], L, Z) :-
+	term_vars(T, L, X),
+	list_vars(Ts, L, Y),
+	(
+	  X == [], Z = Y, !
+	;
+	  Y == [], Z = X, !
+	;
+	  Z = (X, Y), !
+	).
+
+
+?- hidden.

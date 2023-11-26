@@ -1,0 +1,285 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Generic bird
+%
+% The following methods/messages/properties/slots are defined:
+%	goes/1, can_swim/0, can_fly/0, weight/1
+def_object bird.
+
+	% the sound the bird makes
+	% Illustrates a method (goes) with a single value (chirp)
+	% The goal bird :: goes(X) will bind X to chirp
+goes(chirp).
+
+	% weight (in gram) = 400
+weight(400).
+
+	% can't swim
+	% Illustrates methods can simply fail
+can_swim :-
+	fail.
+
+	% can fly if weight < 4Kg
+	% Illustrates 1) sending a message/using a method
+	% and 2) the special object 'self'
+can_fly :-
+	self :: weight(W),
+	W < 4000.
+
+end_def bird.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Tweety (the famous)
+%
+% Tweety is a bird so, by default, it inherits all the methods
+% of the object bird.
+%
+def_object tweety isa bird.
+
+	% redefines a method
+	% The goal tweety :: goes(X) will bind X to tweet
+goes(tweet).
+
+end_def tweety.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Generic sparrow
+%
+def_object sparrow isa bird.
+
+weight(150).
+
+end_def sparrow.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Generic duck
+%
+def_object duck isa bird.
+
+goes(quack).
+
+can_swim.
+
+weight(2000).
+
+end_def duck.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Generic kookaburra
+%
+def_object kookaburra isa bird.
+
+goes(kookookakakookookookookakakakakakakakakaka).
+
+weight(600).
+
+end_def kookaburra.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Generic hummingbird
+%
+def_object hummingbird isa bird.
+
+goes(hum).
+
+weight(10).
+
+end_def hummingbird.
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Generic lyrebird
+%
+def_object lyrebird isa bird.
+
+	% The lyrebird is a natural mimic
+	% Illustrates nondeterminism/multiple answers
+goes(chirp).
+goes(tweet).
+goes(squawk).
+goes(quack).
+goes(kookookakakookookookookakakakakakakakakaka).
+goes(woof).
+% etc
+
+weight(2000).
+
+end_def lyrebird.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Generic pelican
+%
+def_object pelican isa bird.
+
+goes(clack). % the sound of its beak
+
+can_swim.
+
+weight(5000).
+
+	% pelicans are heavy so according to the default
+	% method in bird they can't fly, so we explicitly
+	% override that method
+can_fly.
+
+end_def pelican.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Generic penguin
+%
+def_object penguin isa bird.
+
+can_swim.
+
+weight(5000).
+
+	% penguins are heavy so according to the default
+	% method in bird they can't fly, thus we don't need to
+	% override that method
+% can_fly :- fail.
+
+end_def penguin.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Generic fairy penguin
+%
+def_object fairy_penguin isa penguin.
+
+weight(600).
+
+	% weight has been overridden again so by the default
+	% method in bird they can fly, so we explicitly
+	% override that method
+	% (would not be needed if this clause was in penguin)
+can_fly :- fail.
+
+end_def fairy_penguin.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Generic Emu
+%
+def_object emu isa bird.
+
+goes(squawk).
+
+% weight(12).	% bug - weight in Kg
+weight(12000).
+
+end_def emu.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Brucey (a distant relative of tweety)
+%
+def_object brucey isa emu.
+
+end_def brucey.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% English description of an object
+% eg description(kookaburra, "a bird, noted for its song")
+% description(pelican, "a large bird at home on land, water or in the air")
+% (doesn't work too well for non-birds currently:-)
+%
+% We could use a method for this rather than a separate predicate.
+% Eg, the following clause could be added to an object somewhere
+% suitably high in the object heirarchy:
+% desc(D) :- description(self, D).
+%
+description(O, D) :-
+	(if some D1 bird_desc(O, D1) then
+		D = D1
+	else
+		D = "has an elusive indescribable quality"
+	).
+
+% description of a bird
+%
+bird_desc(tweety,
+	 "a character who is, paradoxically, famous for being typical").
+bird_desc(O, D) :-
+	O ~= tweety,
+	some []	% once
+		tc_isa(O, bird),	% check its a bird
+	weight_desc(O, D1),
+	fly_swim_desc(O, D2),
+	goes_desc(O, D3),
+	append(D2, D3, D23),
+	append(D1, D23, D123),
+	(if D123 = "a bird" then
+		D = "a typical bird"
+	else
+		D = D123
+	).
+
+% transitive closure of isa (should be in library)
+%
+tc_isa(O, O).
+tc_isa(O0, O) :-
+	isa(O0, O1),
+	tc_isa(O1, O).
+
+% first part of description - includes weight if unusual
+%
+weight_desc(O, D) :-
+	O :: weight(W),
+	(if W < 200 then
+		D = "a small"
+	else if W > 3500 then
+		D = "a large"
+	else
+		D = "a"
+	).
+% second part of description - includes flying/swimming if unusual
+%
+fly_swim_desc(O, D) :-
+	(if O :: can_fly then
+		(if O :: can_swim then
+			D = " bird at home on land, water or in the air"
+		else
+			D = " bird"
+		)
+	else
+		(if O :: can_swim then
+			D = " bird which swims but cannot fly"
+		else
+			D = " flightless bird"
+		)
+	).
+
+% third part of description - includes sound(s) if total length
+% of all sounds is long
+%
+goes_desc(O, D) :-
+	sum(Len, Sound, some [S]
+			(O :: goes(S),
+			atomToString(S, Sound),
+			length(Sound, Len)),
+		TotLen), % total length of all sounds
+	(if TotLen > 20 then
+		D = ", noted for its song"
+	else
+		D = ""
+	).
+
+% find objects whose description contains a certain sub-string
+% eg, match_description("small", O)
+%	O = sparrow ;
+%	O = hummingbird ;
+%
+match_description(Str, O) :-
+	append(Str, _DR, DSR),
+	object(O),
+	description(O, D),
+	append(_DL, DSR, D).

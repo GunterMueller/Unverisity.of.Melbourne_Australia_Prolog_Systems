@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/1998/REC-html40-19980424/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="description" content="Pawns programming language home page">
+<meta name="keywords" content="Pawns functional programming language,
+destructive update, side effects, imperative programming language, pointer,
+ref, reference, gloal variables, compiler, source code">
+<meta name="maintained-by" content="Lee Naish lee@unimelb.edu.au">
+<meta name="expiry-date" content="9999-12-31">
+<title>Pawns home </title>
+<link rev=made href="mailto:lee@unimelb.edu.au">
+</head>
+<body>
+<center>
+<img src="./Pawns1.png" width="50%" alt="Pawns (logo)">
+</center>
+<hr>
+
+<h1>What is Pawns?</h1>
+
+Pawns is a functional programming language. It supports algebraic data
+types, higher order programming and pure declarative code.  It is also an
+imperative programming language. It supports pointers, destructive update
+and global variables.  It combines these two programming paradigms in a
+tricky way and ensures code that looks like a pure function definition
+really behaves as a pure function, even if it calls imperative code with
+"effects" for efficiency.
+<p>
+
+<h1>Why bother?</h1>
+
+Pure functional programming allows concise high level code that you
+can reason about very easily, so its a great way to program.  But there
+are some things for which imperative code is simpler and <em>much</em>
+more efficient (a factor of at least twenty, even with state of the art
+functional programming language implementations).  For some applications
+such a speed difference rules out functional programming being used,
+which is a shame.  Besides, it just shouldn't be that way!  With Pawns
+you can write most of your code in the pure functional style, but some
+parts for which efficiency is critical can be coded in an imperative
+style and the imperative code can be encapsulated in a declarative
+interface.  Some other functional languages support this general idea but do
+not encapsulate imperative code to the same extent - if a data structure
+is built using imperative features it is forever "tainted" and cannot be
+viewed in a purely functional way.
+<p>
+
+<h1>What are the key ideas?</h1>
+
+A key challenge is to ensure code which uses imperative features behaves
+in a purely functional way.  Pawns stands for "Pointer assignment
+without nasty surprises".  In a language like C we can have code such as
+<code>*ptr1 = val;</code> which changes what <code>ptr1</code> points to
+and may also change what other variables point to.  One of the design
+principles of Pawns is that if code can affect the value of a variable
+(or depends on the variable), this should be obvious.  For example, a Pawns
+statement can have the annotation <code>!ptr2</code> to indicate it may affect
+variable <code>ptr2</code>.  Even imperative Pawns code avoids the problem
+of subtle undocumented interactions which can occur in other languages.
+
+<!-- There can also be subtle interractions via global -->
+<!-- variables or other forms of "state". -->
+<p>
+
+Programming with pointers requires the programmer to understand pointer
+aliasing and sharing of data structures.  In Pawns, sharing information is
+declared, providing documentation and allowing the compiler to understand
+the sharing and check the declarations are correct.  As well as declaring
+side-effects, the programmer declares what sharing may occur between
+arguments when a function is called and what sharing may occur when it
+returns.  By tracking possible sharing we can determine if arguments of a
+function can be updated during its execution.  If update is restricted to
+variables which are local to the function execution, purely functional
+behaviour is guaranteed.  For example, a data structure can be built
+locally using an imperative style, then returned. Thus imperative code
+can be encapsulated inside a declarative interface.  <p>
+
+Pure functional programming is the default in Pawns.  Arbitrary sharing
+of function arguments and results is possible and update of such data
+structures is not allowed.  However, if enough extra declarations
+and annotations are supplied, there are no restrictions on what can be
+updated anywhere.
+
+<h1>How can I find out more?</h1>
+
+<ul>
+
+<li>
+A paper on
+Sharing analysis in the Pawns compiler:
+<a href="../../papers/pawnsshare">
+local version (includes slides for talk)</a>, 
+<a href="https://peerj.com/articles/cs-22/">
+as published in Peerj Computer Science</a>
+
+<li>
+<a href="../../papers/pawns">
+An introductory paper</a> (perhaps not the most readable but it covers
+most features)
+
+<li>
+<a href="../../papers/pawns/talkfpm.pdf">
+Slides for a talk about Pawns at the Melbourne Functional Programming
+Meetup group, April 2016 (PDF)</a>
+(also presented at
+<a href="Compose :: Melbourne">
+http://www.composeconference.org/2016-melbourne/unconference/</a>)
+
+<li>
+<a href="../../papers/pawns/talk.pdf">
+Slides for a talk about Pawns at the Melbourne Programming Languages Workshop,
+December 2013 (PDF)</a>
+(the first public presentation of Pawns)
+
+<li>
+<a href="../../papers/pawns/talksv.pdf">
+Slides for talk about state variables at Melbourne Uni,
+December 2015 (PDF)</a>
+
+
+<li>
+The implementation is not in a great state, but if you
+are brave you can check out
+<a href="https://github.com/lee-naish/Pawns">
+the Github repository</a>
+
+</ul>
+<p>
+
+<h1>Related languages</h1>
+
+The <a href="http://mars-lang.appspot.com/">Mars</a> programming language
+has "assignment without nasty surprises" but no explicit pointers.
+Nasty surprises are avoided by copying data structures where necessary,
+as determined by sharing analysis (similar to that done in Pawns).
+Destructive update of shared data structures is not possible.  Programs
+look imperative but the semantics is more like a pure functional language.
+<p>
+
+The <a href="http://disciple.ouroborus.net/">Disciple</a> programming
+language supports similar low level imperative features to Pawns but uses
+"region" information rather than sharing information to limit interaction
+and effects.  Disciple does more inference of region and side effect
+information than is done in Pawns, so there is more potential for "nasty
+surprises" and doesn't encapsulate effects to the same extent.
+<p>
+
+ML supports destructive update using data types containing
+<code>ref</code> and Haskell's <code>STRef</code> monad is similar.
+The type system limits interaction and effects.  This has similar
+consequences to the Disciple approach with respect to nasty surprises
+and encapsulation and can also lead to multiple versions of a data type
+and extra indirection in the representation.
+<p>
+
+The scripting language <a
+href="http://www.compuphase.com/pawn/pawn.htm">Pawn</a> has a similar
+name to Pawns but they are not at all closely related in other respects.
+Both are influenced by C.  Pawn started life as a cut-down version of
+C and has no types or pointers (except it supports call by reference).
+Pawns combines C-style pointers with a nice type system and other benefits
+of pure functional programming.
+<p>
+
+<hr>
+<br>
+<a href="http://people.eng.unimelb.edu.au/lee"> Lee </a>
+
+</body>
+</html>

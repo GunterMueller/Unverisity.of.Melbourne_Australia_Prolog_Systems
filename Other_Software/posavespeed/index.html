@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/1998/REC-html40-19980424/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1
+">
+<meta name="keywords" content="average speed, bike computer, cycling
+statistics">
+<meta name="description" content="proposal for new average speed metric">
+<meta name="maintained-by" content="Lee Naish lee@unimelb.edu.au">
+<meta name="expiry-date" content="9999-12-31">
+<title>A new average speed metric</title>
+<link rev=made href="mailto:lee@unimelb.edu.au">
+</head>
+<body>
+
+<h1>A new average speed metric</h1>
+
+<h2>Introduction</h2>
+
+<p>
+The most commonly used metric for average speed of a bike ride (or other
+activity) is vague, arbitrary and often gives a very poor indication of
+effort. Here we propose an elegant alternative that is a better indication
+of effort and is very easily computed.
+</p>
+
+<h2>Average Speed</h2>
+
+<p>
+Often in cycling we are interested in some measure
+of our average speed over a ride or part thereof.  This simplest way to
+do this is divide the distance travelled by the elapsed time. This is
+rarely used because it it so influenced by breaks in the riding due to red
+lights, getting more fluids (or getting rid of fluids), rests, lunch, etc.
+</p>
+
+<h2>Average active speed</h2>
+
+<p>
+Average "active" speed is a much more commonly used metric.  It is the
+total distance travelled divided by the total active time. The notion
+of active time is rather vague.  Typically there is some speed threshold
+and if the speed is below that threshold it is generally not considered
+active time. There may also be time threshold in the transition between
+active and inactive time, so if the speed is low only briefly it is still
+considered active time.  Different hardware and software combinations
+on bike computers and activity tracking software have different ways
+of computing average active speed. Any precise definition has arbitrary
+thresholds, making it an unappealing hack for those who like elegance.
+</p>
+
+<p>
+Average active speed is also a frustratingly poor measure of effort when
+the speed is uneven.  Although time when you are stopped is (mostly)
+discounted, moving very slowly (but above the threshold speed) for a
+relatively short distance can have a significant effect on the average.
+For example, if you do a flat ride at constant 30kph for 30km (1
+hour) but also include 500m at 5kph (6 minutes), your average active
+speed drops to 27.73kph (for simplicity we ignore accelleration and
+decelleration). Riding 30.5km at 27.73kph is significantly less effort.
+Similarly, average active speed greatly underestimates effort when
+there are hills. Suppose you grind up a climb at 12.5kph for 40 minutes
+(8.3km) then zoom back down at 50kph for 10 minutes (again, ignoring
+accelleration). The average active speed (and average speed) metric
+gives your climbing speed four times the weight of your descending speed
+because climbing takes four times as long, resulting in a 20kph average.
+</p>
+
+<h2>Positional average speed</h2>
+
+<p> Average speed can be viewed as taking the speed each second (or
+suitably small time interval) of the ride and taking the average.
+More technically, if we plot a curve of the speed versus time, the
+average speed is the area under the curve divided by the total time.
+Average active speed is the same except inactive periods are ignored. Our
+proposed metric, "positional average speed", can be viewed as taking
+the speed each metre (or suitably small distance interval) and taking
+the average.  More technically, if we plot a curve of the speed versus
+distance travelled, the positional average speed is the area under
+the curve divided by the total distance.  When the speed is zero,
+no distance is covered so stops are naturally ignored by this metric
+without the need for arbitrary thresholds. It is also a better measure of
+effort than average active speed. In the flat ride example given above,
+the positional average speed is 29.51kph.  For the hilly ride, equal
+weight is given to the climbing and descending speed, giving an average
+of 31.25kph. It's hard to measure overall effort without additional
+information such as power output, but it seems positional average speed
+gives a significantly better indication than average active speed.
+If speed does not vary at all, average speed and positional average speed
+are identical, otherwise positional average speed is stricty greater.
+</p>
+
+<h2>Computing average speed metrics</h2>
+
+<p> For any metric, it is advantageous if it can be computed in "real
+time", updating a display on a bike computer, using minimal storage and
+computational resources.  Data such as position and time are typically
+sampled at frequent intervals and speed is computed from these (using some
+method that attempts to overcome the significant noise in GPS position
+data) or other inputs. Average speed can be computed by regularly reading
+the speed and using just two accumulators: the sum of all speed readings
+so far and the number of speed readings.  The average speed is the former
+divided by the latter.  For average active speed, inactive periods
+can be ignored (with some suitable simple calculation of inactive).
+Positional average speed can also be computed using two accumulators:
+the sum of all the speed readings and the the sum of the squares of all
+the speed readings. The positional average speed is the latter divided
+by the former. Technically, such sampling methods are essentially a form
+of numerical integration, which results in an approximation to the true
+value. However, the position and speed data contains significant noise,
+so approximation is inevitable.
+</p>
+
+<h2>Experimentation with gpx files</h2>
+
+<p> We have written <a href="./avespeed.txt"> a simple script</a> that
+uses <a href="https://www.gpsbabel.org"> <code>gpsbabel</code></a> to
+read gpx files and compute speed data, which is then used to compute
+the average speed metrics.  The most difficult challenge is finding
+an appropriate way of smoothing the noisey gpx data to the computed
+speeds are reasonably accurate.  We use the "distance" parameter of
+<code>gpsbabel</code> to filter out data points that are close together.
+It seems that most of the bike computer hardware and software systems
+use proprietary methods to smooth the data in some way.
+</p>
+
+<hr>
+<br>
+<a href="http://people.eng.unimelb.edu.au/lee/">Lee</a>
+</body>
+</html>
+

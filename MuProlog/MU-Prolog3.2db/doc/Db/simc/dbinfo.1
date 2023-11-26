@@ -1,0 +1,37 @@
+.TH DBINFO 1-ucb
+.SH ORIGIN
+4.2BSD
+.SH NAME
+dbinfo \- simple debugging facility for
+.I simc
+relations
+.SH SYNOPSIS
+.B dbinfo
+db rel
+.SH DESCRIPTION
+.I dbinfo
+provides an interactive front-end for
+examining the parameters of relations in a
+.I simc
+style database.
+.TP 4
+.B i/info
+Display relation parameters
+.TP 4
+.B c/count
+Show counts of records in segments
+.TP 4
+.B C/Count
+Show total count of records
+.SH FILES
+db/rel/desc	Index files
+.br
+db/rel/00*	Data files
+.SH SEE ALSO
+consult(1), dbparams(1), ddb(1), newrel(1), prefix(1)
+.SH DIAGNOSTICS
+Occasional terse messages if you do something wrong.
+.SH BUGS
+It was originally intended as a simple debugging tool,
+but has grown haphazardly into a messy front-end.
+

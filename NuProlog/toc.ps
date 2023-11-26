@@ -1,0 +1,845 @@
+%!PS-Adobe-1.0
+%%Title: Ditroff Postscript
+%%Creator: posttroff-ps
+%%Orientation: Portrait
+%%DocumentPaperSizes: A4
+%%PageOrder: Ascend
+%%CreationDate: Tue Jan 31 15:15:49 1995
+%%DocumentFonts: Times-Roman
+%%DocumentFonts: Times-Bold
+%%DocumentFonts: Courier-Bold
+%%DocumentFonts: Times-Italic
+%%DocumentFonts: Symbol
+%%Pages: 3
+%%EndComments
+/fp
+{
+	10 mul scalefont setfont
+} def
+/dsf
+{
+	dup FontDirectory exch known
+		{ findfont def }
+		{ pop /Courier findfont def }
+	ifelse
+} def
+/df
+{
+	findfont def
+} def
+/slab
+{
+	gsave
+	currentpoint newpath moveto
+	0 1 index rlineto
+	1 index 0 rlineto
+	0 1 index neg rlineto
+	closepath
+	pop pop
+	
+	gsave setgray fill grestore
+	gsave 0 setlinewidth stroke grestore
+	grestore
+} def
+/cursor
+{
+	gsave
+	0 -2 2 index mul rmoveto
+	.8 6 2 index mul 10 3 index mul slab
+	grestore
+	pop
+} def
+/square
+{
+	gsave
+	0 0 2 index mul rmoveto
+	1 3 2 index mul 3 3 index mul slab
+	grestore
+	pop
+} def
+/perp
+{
+	gsave
+	dup
+	S exch fp
+	6.6 mul dup rmoveto
+	180 rotate
+	(\136) show
+	grestore
+} def
+/join {
+	gsave
+	newpath
+	moveto
+	dup 7 mul dup rlineto
+	dup 7 mul neg 0 exch rlineto
+	dup 7 mul dup neg exch rlineto
+	closepath
+	2 setlinewidth stroke
+	pop
+	grestore
+} def
+/mtrx matrix def
+/ellipse {
+	/yrad exch def
+	/xrad exch def
+	/y exch def
+	/x exch def
+	/savematrix mtrx currentmatrix def
+	x y translate
+	xrad yrad scale
+	0 0 1 0 360 arc
+	savematrix setmatrix
+} def
+/inch { 720 mul } def
+/reporterr {
+	H 12 fp
+	850 6850 moveto
+	(The LaserWriter has encountered a PostScript language error.) show
+	HI 10 fp
+	850 6660 moveto
+	(Error name: ) show
+	show
+	850 6540 moveto
+	(Explanation: ) show
+	show
+	showpage
+	stop
+} def
+errordict begin
+/syntaxerror { (PostScript syntax error) (syntaxerror) reporterr } store
+/stackunderflow { (Too many entries removed from operand stack)
+	(stackunderflow) reporterr } store
+/dictfull { (Too many entries in a dictionary) (dictfull) reporterr } store
+/dictstackoverflow { (Dictionary stack has grown too large)
+	(dictstackoverflow) reporterr } store
+/dictstackunderflow { (Too many entries removed from dictionary stack)
+	(dictstackunderflow) reporterr } store
+/execstackoverflow { (Execution stack has overflowed) (execstackoverflow)
+	reporterr } store
+/interrupt { (Control-C hit in interactive use) (interrupt) reporterr } store
+/invalidaccess { (Improper reference to readonly entity) (invalidaccess)
+	reporterr } store
+/invalidexit { (Illegally placed exit statement) (invalidexit)
+	reporterr } store
+/invalidfileaccess { (Illegal file access string) (invalidfileaccess)
+	reporterr } store
+/invalidfont { (Illegal font specification) (invalidfont) reporterr } store
+/invalidrestore { (Illegal restore operation) (invalidrestore)
+	reporterr } store
+/ioerror { (I/O error) (ioerror) reporterr } store
+/limitcheck { (Implementation limit exceeded) (limitcheck) reporterr } store
+/nocurrentpoint { (Current path is empty) (nocurrentpoint) reporterr } store
+/rangecheck { (Out of bounds array or string reference) (rangecheck)
+	reporterr } store
+/stackoverflow { (Too many entries on operand stack) (stackoverflow)
+	reporterr } store
+/typecheck { (Operand has wrong type) (typecheck) reporterr } store
+/undefined { (Required name is missing) (undefined) reporterr } store
+/undefinedfilename { (File does not exist or cannot be opened)
+	(undefinedfilename) reporterr } store
+/undefinedresult { (Numeric overflow, divide by zero, or similar)
+	(undefinedresult) reporterr } store
+/unmatchedmark { (Missing mark on operand stack) (unmatchedmark)
+	reporterr } store
+/unregistered { (Internal error - may be serious) (unregistered)
+	reporterr } store
+/VMerror { (Internal memory error - may be serious) (VMerror)
+	reporterr } store
+end
+/s { show } def
+/m { 0 rmoveto } def
+/R /Times-Roman df
+/B /Times-Bold df
+/CB /Courier-Bold df
+/I /Times-Italic df
+/S /Symbol df
+%%EndProlog
+%%Page: 4 1
+/Page save def
+.1 .1 scale
+R 11 fp
+B 13 fp
+2374 7508 moveto
+(Table)s 43 m
+(of)s 43 m
+(Contents)s -51 m
+R 11 fp
+720 7088 moveto
+(Chapter)s 36 m
+(1)s 36 m
+(INTRODUCTION)s 54 m
+(.............................................................................................)s 305 m
+(1)s -55 m
+720 6932 moveto
+(Chapter)s 36 m
+(2)s 36 m
+(USING)s 36 m
+(NU-PROLOG)s 45 m
+(.......................................................................................)s 305 m
+(3)s -55 m
+1160 6776 moveto
+(2.1)s 36 m
+(Getting)s 36 m
+(Started)s 37 m
+(..............................................................................................)s 305 m
+(4)s -55 m
+1160 6620 moveto
+(2.2)s 36 m
+I 11 fp
+(nc)s 47 m
+S 11 fp
+(-)s 37 m
+R 11 fp
+(NU-Prolog)s 36 m
+(Compiler)s 58 m
+(...........................................................................)s 305 m
+(6)s -55 m
+1160 6464 moveto
+(2.3)s 36 m
+I 11 fp
+(np)s 47 m
+S 11 fp
+(-)s 37 m
+R 11 fp
+(NU-Prolog)s 36 m
+(Interpreter)s 63 m
+(.........................................................................)s 305 m
+(8)s -55 m
+1160 6308 moveto
+(2.4)s 36 m
+I 11 fp
+(nit)s 47 m
+S 11 fp
+(-)s 37 m
+R 11 fp
+(NU-Prolog)s 36 m
+(Program)s 36 m
+(Checker)s 46 m
+(..............................................................)s 250 m
+(11)s -55 m
+1160 6152 moveto
+(2.5)s 36 m
+I 11 fp
+(nac)s 47 m
+S 11 fp
+(-)s 37 m
+R 11 fp
+(NU-Prolog)s 36 m
+(control)s 36 m
+(preprocessor)s 46 m
+(........................................................)s 250 m
+(14)s -55 m
+1160 5996 moveto
+(2.6)s 36 m
+I 11 fp
+(revise)s 47 m
+S 11 fp
+(-)s 37 m
+R 11 fp
+(Incremental)s 36 m
+(Program)s 36 m
+(Revision)s 36 m
+(Facility)s 55 m
+(.........................................)s 250 m
+(17)s -55 m
+720 5840 moveto
+(Chapter)s 36 m
+(3)s 36 m
+(SYNTAX)s 36 m
+(OF)s 36 m
+(NU-PROLOG)s 38 m
+(.............................................................................)s 250 m
+(19)s -55 m
+1160 5684 moveto
+(3.1)s 36 m
+(Variables)s 43 m
+(.......................................................................................................)s 250 m
+(19)s -55 m
+1160 5528 moveto
+(3.2)s 36 m
+(Constants)s 55 m
+(......................................................................................................)s 250 m
+(20)s -55 m
+1380 5372 moveto
+(3.2.1)s 36 m
+(Atoms)s 61 m
+(................................................................................................)s 250 m
+(20)s -55 m
+1380 5216 moveto
+(3.2.2)s 36 m
+(Integers)s 59 m
+(..............................................................................................)s 250 m
+(20)s -55 m
+1380 5060 moveto
+(3.2.3)s 36 m
+(Floats)s 57 m
+(.................................................................................................)s 250 m
+(20)s -55 m
+1160 4904 moveto
+(3.3)s 36 m
+(Terms)s 42 m
+(............................................................................................................)s 250 m
+(22)s -55 m
+1160 4748 moveto
+(3.4)s 36 m
+(Clauses)s 36 m
+(..........................................................................................................)s 250 m
+(22)s -55 m
+1160 4592 moveto
+(3.5)s 36 m
+(Predicates)s 40 m
+(......................................................................................................)s 250 m
+(22)s -55 m
+1160 4436 moveto
+(3.6)s 36 m
+(Lists)s 51 m
+(..............................................................................................................)s 250 m
+(23)s -55 m
+1160 4280 moveto
+(3.7)s 36 m
+(Strings)s 37 m
+(...........................................................................................................)s 250 m
+(23)s -55 m
+1160 4124 moveto
+(3.8)s 36 m
+(Operators)s 59 m
+(......................................................................................................)s 250 m
+(24)s -55 m
+1160 3968 moveto
+(3.9)s 36 m
+(Comments)s 40 m
+(.....................................................................................................)s 250 m
+(25)s -55 m
+720 3812 moveto
+(Chapter)s 36 m
+(4)s 36 m
+(SEMANTICS)s 36 m
+(OF)s 36 m
+(NU-PROLOG)s 55 m
+(......................................................................)s 250 m
+(27)s -55 m
+1160 3656 moveto
+(4.1)s 36 m
+(Semantics)s 38 m
+(......................................................................................................)s 250 m
+(27)s -55 m
+1380 3500 moveto
+(4.1.1)s 36 m
+(Declarative)s 36 m
+(Semantics)s 36 m
+(........................................................................)s 250 m
+(28)s -55 m
+1380 3344 moveto
+(4.1.2)s 36 m
+(Operational)s 36 m
+(Semantics)s 50 m
+(.......................................................................)s 250 m
+(28)s -55 m
+1160 3188 moveto
+(4.2)s 36 m
+(Declarative)s 36 m
+(Constructs)s 40 m
+(..................................................................................)s 250 m
+(29)s -55 m
+1380 3032 moveto
+(4.2.1)s 36 m
+(Standard)s 36 m
+(Constructs)s 46 m
+(...........................................................................)s 250 m
+(29)s -55 m
+1380 2876 moveto
+(4.2.2)s 36 m
+(Quantifiers)s 58 m
+(.........................................................................................)s 250 m
+(30)s -55 m
+1380 2720 moveto
+(4.2.3)s 36 m
+(Negation,)s 36 m
+(Implication,)s 36 m
+(and)s 36 m
+(Related)s 36 m
+(Constructs)s 46 m
+(.................................)s 250 m
+(30)s -55 m
+1380 2564 moveto
+(4.2.4)s 36 m
+(Aggregate)s 36 m
+(Functions)s 45 m
+(..........................................................................)s 250 m
+(32)s -55 m
+1380 2408 moveto
+(4.2.5)s 36 m
+(When)s 36 m
+(Declarations)s 37 m
+(.............................................................................)s 250 m
+(34)s -55 m
+1160 2252 moveto
+(4.3)s 36 m
+(Non-declarative)s 36 m
+(Constructs)s 63 m
+(..........................................................................)s 250 m
+(36)s -55 m
+1380 2096 moveto
+(4.3.1)s 36 m
+(Non-logical)s 36 m
+(Quantifiers)s 58 m
+(.....................................................................)s 250 m
+(36)s -55 m
+1380 1940 moveto
+(4.3.2)s 36 m
+(Cut)s 55 m
+(.....................................................................................................)s 250 m
+(36)s -55 m
+1380 1784 moveto
+(4.3.3)s 36 m
+(Non-logical)s 36 m
+(Constructs)s 52 m
+(......................................................................)s 250 m
+(36)s -55 m
+720 1628 moveto
+(Chapter)s 36 m
+(5)s 36 m
+(SYSTEM)s 36 m
+(PREDICATES)s 52 m
+(..................................................................................)s 250 m
+(39)s -55 m
+1160 1472 moveto
+(5.1)s 36 m
+(Predicates)s 36 m
+(which)s 36 m
+(Succeed)s 36 m
+(or)s 36 m
+(Fail)s 37 m
+(.................................................................)s 250 m
+(39)s -55 m
+1160 1316 moveto
+(5.2)s 36 m
+(Predicates)s 36 m
+(for)s 36 m
+(Conditional)s 36 m
+(Compilation)s 36 m
+(or)s 36 m
+(Loading)s 51 m
+(....................................)s 250 m
+(40)s -55 m
+1160 1160 moveto
+(5.3)s 36 m
+(Interpreter)s 36 m
+(Predicates)s 48 m
+(....................................................................................)s 250 m
+(41)s -55 m
+1380 1004 moveto
+(5.3.1)s 36 m
+(Examining)s 36 m
+(the)s 36 m
+(Program)s 36 m
+(State)s 40 m
+(............................................................)s 250 m
+(41)s -55 m
+1380 848 moveto
+(5.3.2)s 36 m
+(Examining)s 36 m
+(and)s 36 m
+(Controlling)s 36 m
+(the)s 36 m
+(Execution)s 36 m
+(State)s 46 m
+(...............................)s 250 m
+(41)s -55 m
+2837 420 moveto
+(iv)s -55 m
+Page restore
+showpage
+%%Page: 5 2
+/Page save def
+.1 .1 scale
+R 11 fp
+1380 7508 moveto
+(5.3.3)s 36 m
+(Debugging)s 36 m
+(Predicates)s 53 m
+(........................................................................)s 250 m
+(43)s -55 m
+1160 7352 moveto
+(5.4)s 36 m
+(Terms)s 36 m
+(and)s 36 m
+(Lists)s 45 m
+(............................................................................................)s 250 m
+(47)s -55 m
+1380 7196 moveto
+(5.4.1)s 36 m
+(Manipulating)s 36 m
+(Lists)s 43 m
+(.............................................................................)s 250 m
+(47)s -55 m
+1380 7040 moveto
+(5.4.2)s 36 m
+(Examining)s 36 m
+(Characters)s 41 m
+(........................................................................)s 250 m
+(49)s -55 m
+1380 6884 moveto
+(5.4.3)s 36 m
+(Examining)s 36 m
+(Terms)s 60 m
+(..............................................................................)s 250 m
+(49)s -55 m
+1380 6728 moveto
+(5.4.4)s 36 m
+(Modifying)s 36 m
+(Terms)s 44 m
+(...............................................................................)s 250 m
+(53)s -55 m
+1380 6572 moveto
+(5.4.5)s 36 m
+(Comparison)s 36 m
+(of)s 36 m
+(Terms)s 46 m
+(........................................................................)s 250 m
+(53)s -55 m
+1160 6416 moveto
+(5.5)s 36 m
+(Arithmetic)s 36 m
+(Operators)s 36 m
+(and)s 36 m
+(Predicates)s 43 m
+(............................................................)s 250 m
+(55)s -55 m
+1380 6260 moveto
+(5.5.1)s 36 m
+(Arithmetic)s 36 m
+(Operators)s 56 m
+(.........................................................................)s 250 m
+(55)s -55 m
+1380 6104 moveto
+(5.5.2)s 36 m
+(Arithmetic)s 36 m
+(Predicates)s 37 m
+(.........................................................................)s 250 m
+(59)s -55 m
+1160 5948 moveto
+(5.6)s 36 m
+(I/O)s 36 m
+(Predicates)s 54 m
+(...............................................................................................)s 250 m
+(62)s -55 m
+1380 5792 moveto
+(5.6.1)s 36 m
+(Stream)s 36 m
+(Management)s 36 m
+(Predicates)s 42 m
+(.........................................................)s 250 m
+(62)s -55 m
+1380 5636 moveto
+(5.6.2)s 36 m
+(Input)s 36 m
+(Predicates)s 57 m
+(.................................................................................)s 250 m
+(65)s -55 m
+1380 5480 moveto
+(5.6.3)s 36 m
+(Output)s 36 m
+(Predicates)s 39 m
+(...............................................................................)s 250 m
+(70)s -55 m
+1160 5324 moveto
+(5.7)s 36 m
+(Database)s 36 m
+(Predicates)s 52 m
+(......................................................................................)s 250 m
+(77)s -55 m
+1380 5168 moveto
+(5.7.1)s 36 m
+(Loading)s 36 m
+(and)s 36 m
+(Saving)s 36 m
+(Programs)s 60 m
+(..........................................................)s 250 m
+(77)s -55 m
+1380 5012 moveto
+(5.7.2)s 36 m
+(Property)s 36 m
+(List)s 36 m
+(Predicates)s 39 m
+(.....................................................................)s 250 m
+(78)s -55 m
+1380 4856 moveto
+(5.7.3)s 36 m
+(Accessing)s 36 m
+(and)s 36 m
+(Updating)s 36 m
+(Dynamic)s 36 m
+(Predicates)s 50 m
+(...................................)s 250 m
+(80)s -55 m
+1160 4700 moveto
+(5.8)s 36 m
+(Predicates)s 36 m
+(for)s 36 m
+(External)s 36 m
+(Databases)s 55 m
+(................................................................)s 250 m
+(83)s -55 m
+1380 4544 moveto
+(5.8.1)s 36 m
+(Creating)s 36 m
+(and)s 36 m
+(Using)s 36 m
+(External)s 36 m
+(Databases)s 54 m
+(............................................)s 250 m
+(83)s -55 m
+1380 4388 moveto
+(5.8.2)s 36 m
+(Dynamic)s 36 m
+(Superimposed)s 36 m
+(Codeword)s 36 m
+(Databases)s 52 m
+(..................................)s 250 m
+(84)s -55 m
+1380 4232 moveto
+(5.8.3)s 36 m
+(Static)s 36 m
+(Superimposed)s 36 m
+(Codeword)s 36 m
+(Databases)s 63 m
+(.......................................)s 250 m
+(85)s -55 m
+1380 4076 moveto
+(5.8.4)s 36 m
+(UNIFY)s 36 m
+(Databases)s 45 m
+(..............................................................................)s 250 m
+(86)s -55 m
+1380 3920 moveto
+(5.8.5)s 36 m
+(Compiled)s 36 m
+(Rule)s 36 m
+(databases)s 61 m
+(..................................................................)s 250 m
+(88)s -55 m
+1160 3764 moveto
+(5.9)s 36 m
+(Miscellaneous)s 36 m
+(Predicates)s 42 m
+(..............................................................................)s 250 m
+(89)s -55 m
+1160 3608 moveto
+(5.10)s 36 m
+(Predicates)s 36 m
+(for)s 36 m
+(Accessing)s 36 m
+(the)s 36 m
+(UNIX)s 36 m
+(Operating)s 36 m
+(System)s 38 m
+(..............................)s 250 m
+(93)s -55 m
+1160 3452 moveto
+(5.11)s 36 m
+(Foreign)s 36 m
+(Function)s 36 m
+(Interface)s 55 m
+(.........................................................................)s 250 m
+(99)s -55 m
+720 3296 moveto
+(Chapter)s 36 m
+(6)s 36 m
+(LIBRARY)s 36 m
+(PREDICATES)s 60 m
+(................................................................................)s 195 m
+(103)s -55 m
+1160 3140 moveto
+(6.1)s 36 m
+(Compatibility)s 44 m
+(................................................................................................)s 195 m
+(104)s -55 m
+1160 2984 moveto
+(6.2)s 36 m
+(Ordered)s 36 m
+(Sets)s 53 m
+(.................................................................................................)s 195 m
+(107)s -55 m
+1160 2828 moveto
+(6.3)s 36 m
+(Debugging)s 58 m
+(....................................................................................................)s 195 m
+(109)s -55 m
+1380 2672 moveto
+(6.3.1)s 36 m
+(Initializing)s 36 m
+(the)s 36 m
+(debugging)s 36 m
+(environment)s 39 m
+(.............................................)s 195 m
+(109)s -55 m
+1380 2516 moveto
+(6.3.2)s 36 m
+(Accessing)s 36 m
+(the)s 36 m
+(debugging)s 36 m
+(environment)s 44 m
+(..............................................)s 195 m
+(109)s -55 m
+1380 2360 moveto
+(6.3.3)s 36 m
+(Manipulting)s 36 m
+(the)s 36 m
+(debugging)s 36 m
+(environment)s 61 m
+(..........................................)s 195 m
+(111)s -55 m
+1380 2204 moveto
+(6.3.4)s 36 m
+(Miscellaneous)s 57 m
+(....................................................................................)s 195 m
+(113)s -55 m
+1160 2048 moveto
+(6.4)s 36 m
+(Curses)s 51 m
+(...........................................................................................................)s 195 m
+(114)s -55 m
+1380 1892 moveto
+(6.4.1)s 36 m
+(Access)s 36 m
+(to)s 36 m
+(Global)s 36 m
+(Variables)s 58 m
+(...............................................................)s 195 m
+(114)s -55 m
+1380 1736 moveto
+(6.4.2)s 36 m
+(Output)s 36 m
+(Predictes)s 59 m
+(................................................................................)s 195 m
+(115)s -55 m
+1380 1580 moveto
+(6.4.3)s 36 m
+(Input)s 36 m
+(Predicates)s 57 m
+(.................................................................................)s 195 m
+(119)s -55 m
+1380 1424 moveto
+(6.4.4)s 36 m
+(Miscellaneous)s 36 m
+(Predicates)s 47 m
+(...................................................................)s 195 m
+(120)s -55 m
+1380 1268 moveto
+(6.4.5)s 36 m
+(Details)s 44 m
+(................................................................................................)s 195 m
+(123)s -55 m
+1160 1112 moveto
+(APPENDIX)s 36 m
+(1)s 36 m
+(\261)s 36 m
+(Example)s 36 m
+(NU-Prolog)s 36 m
+(Programs)s 44 m
+(................................................)s 195 m
+(124)s -55 m
+1160 956 moveto
+(APPENDIX)s 36 m
+(2)s 36 m
+(\261)s 36 m
+(Definite)s 36 m
+(Clause)s 36 m
+(Grammars)s 55 m
+(......................................................)s 195 m
+(130)s -55 m
+1160 800 moveto
+(APPENDIX)s 36 m
+(3)s 36 m
+(\261)s 36 m
+(Using)s 36 m
+(the)s 36 m
+(NU-Prolog)s 36 m
+(Compiler)s 62 m
+(..............................................)s 195 m
+(133)s -55 m
+2852 420 moveto
+(v)s -55 m
+Page restore
+showpage
+%%Page: 6 3
+/Page save def
+.1 .1 scale
+R 11 fp
+1160 7508 moveto
+(APPENDIX)s 36 m
+(4)s 36 m
+(\261)s 36 m
+(Porting)s 36 m
+(MU-Prolog)s 36 m
+(Programs)s 36 m
+(to)s 36 m
+(NU-Prolog)s 60 m
+(..........................)s 195 m
+(134)s -55 m
+1160 7352 moveto
+(APPENDIX)s 36 m
+(5)s 36 m
+(\261)s 36 m
+(Using)s 30 m
+R 9 fp
+(DSIMC)s 36 m
+R 11 fp
+(Databases)s 50 m
+(...........................................................)s 195 m
+(135)s -55 m
+1160 7196 moveto
+(APPENDIX)s 36 m
+(6)s 36 m
+(\261)s 36 m
+(Reserved)s 36 m
+(Predicate)s 36 m
+(Names)s 57 m
+(......................................................)s 195 m
+(137)s -55 m
+1160 7040 moveto
+(APPENDIX)s 36 m
+(7)s 36 m
+(\261)s 36 m
+(Permitted)s 36 m
+(Characters)s 36 m
+(................................................................)s 195 m
+(138)s -55 m
+1160 6884 moveto
+(APPENDIX)s 36 m
+(8)s 36 m
+(\261)s 36 m
+(Standard)s 36 m
+(Operator)s 36 m
+(Declarations)s 40 m
+(...............................................)s 195 m
+(143)s -55 m
+1160 6728 moveto
+(APPENDIX)s 36 m
+(9)s 36 m
+(\261)s 36 m
+(Signals)s 54 m
+(.....................................................................................)s 195 m
+(144)s -55 m
+1160 6572 moveto
+(APPENDIX)s 36 m
+(10)s 36 m
+(\261)s 36 m
+(Bugs)s 36 m
+(and)s 36 m
+(Limitations)s 36 m
+(of)s 36 m
+(NU-Prolog)s 51 m
+(.....................................)s 195 m
+(145)s -55 m
+756 6416 moveto
+(REFERENCES)s 39 m
+(..................................................................................................................)s 195 m
+(146)s -55 m
+2837 420 moveto
+(vi)s -31 m
+Page restore
+showpage
+%%Trailer

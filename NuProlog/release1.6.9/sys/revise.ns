@@ -1,0 +1,187 @@
+
+	.pred	'revise',0
+	labelx	0
+	.clause
+0:	all	5
+	gvary	3,0
+	pc	0,$'$sourceFiles'
+	pc	1,$'$file'
+	pvary	4,2
+	call	5,3,&'getprop'/3
+	puval	4,1
+	pvarx	2,2
+	name	1,2
+	pc	1,#(CHR,&8)
+	pvary	0,0
+	call	4,3,&'append'/3
+	cuty	3
+	labely	2
+13: 	te	0,0,0,&14
+	pc	0,$64
+	pvaly	0,1
+	pvary	1,2
+	call	3,3,&'delete'/3
+	cuty	2
+	puval	1,0
+	j	&15
+14: 	tre	0,0
+	puval	0,0
+15: 	dallexe	1,&'$reviseFile'/1
+	last
+8: 	.string	".no"
+
+	.pred	'revise',1
+	labelx	1
+4: 	sot	0,&3,&2,&0,&1
+3: 	t	2,0,&0
+	tr	2,0,&1
+	.clause
+0:	gl	0
+	uvarx	2
+	uc	$'nl'
+	cutx	1
+	pvarx	0,0
+	name	2,0
+	exec	1,&'$reviseFile'/1
+	.clause
+1:	gs	0,$'/'/2
+	all	2
+	uvary	1
+	uvary	0
+	cutx	1
+	pvaly	1,0
+	pvaly	0,1
+	call	2,2,&'revise$currentPredicate'/2
+	pvaly	1,0
+	pvaly	0,1
+	dallexe	2,&'revise$revisePred'/2
+	.clause
+2:	all	3
+	gvary	1,0
+	gvary	2,1
+	ctypy	1,2
+	pvaly	1,0
+	pvary	0,1
+	call	3,2,&'revise$currentPredicate'/2
+	cuty	2
+	pvaly	1,0
+	puval	0,1
+	dallexe	2,&'revise$revisePred'/2
+	last
+
+	.pred	'revise$revisePred',2
+	labelx	2
+	.clause
+0:	all	7
+	gvary	3,0
+	gvary	2,2
+	pvaly	3,3
+	defined	3,1,3,4
+	pvarx	2,2
+	name	3,2
+	pc	1,#(CHR,&7)
+	pvary	4,0
+	call	7,3,&'append'/3
+	labely	6
+17: 	te	0,0,0,&18
+	pc	0,$64
+	pvaly	4,1
+	pvary	5,2
+	call	7,3,&'delete'/3
+	cuty	6
+	puval	5,255
+	glvary	0,255
+	j	&19
+18: 	tre	0,0
+	puval	4,255
+	glvary	0,255
+19: 	pvaly	3,3
+	pvarx	1,1
+	name	3,1
+	pc	0,#(CHR,&14)
+	pvary	1,2
+	call	3,3,&'append'/3
+	cuty	2
+	puval	1,0
+	puval	0,1
+	dallexe	2,&'$runRevise'/2
+	last
+14: 	.string	"-p "
+7: 	.string	".no"
+
+	.pred	'revise$currentPredicate',2
+	.clause
+0:	all	3
+	gvary	2,0
+	gvary	1,1
+	pvaly	2,0
+	pvaly	1,1
+	call	3,2,&'currentPredicate'/2
+	labely	0
+7: 	te	0,0,0,&8
+	pvaly	2,0
+	pvaly	1,1
+	call	1,2,&'systemPredicate'/2
+	cuty	0
+	fail	
+8: 	tre	0,0
+	dallpro	
+9: 	last
+
+	.pred	'$reviseFile',1
+	.clause
+0:	gvarx	1,0
+	pc	0,#(CHR,&4)
+	exec	2,&'$runRevise'/2
+	last
+4: 	.string	"-f"
+
+	.pred	'$runRevise',2
+	.clause
+0:	all	7
+	gvary	6,0
+	gvary	1,1
+	pvary	4,0
+	call	7,1,&'revise$comdir'/1
+	pl	1
+	uc	$32
+	ulvy	1
+	pvaly	6,0
+	pvary	5,2
+	call	6,3,&'append'/3
+	pc	0,#(CHR,&10)
+	puval	5,1
+	pvary	3,2
+	call	5,3,&'append'/3
+	puval	4,0
+	puval	3,1
+	pvary	2,2
+	call	3,3,&'append'/3
+	puval	2,0
+	call	2,1,&'system'/1
+	pc	1,#(CHR,&18)
+	pvaly	1,0
+	pvary	0,2
+	call	1,3,&'append'/3
+	pvarx	2,2
+	puval	0,3
+	name	2,3
+	puval	0,0
+	dallexe	1,&'load'/1
+	last
+18: 	.string	"@.no"
+10: 	.string	"revise "
+
+	.pred	'revise$comdir',1
+	.clause
+0:	all	2
+	gvary	0,0
+	pc	0,$'commanddirectory'
+	pvary	1,1
+	call	2,2,&'$getFlag'/2
+	puval	1,1
+	pvaly	0,2
+	name	1,2
+	dallpro	
+	last
+

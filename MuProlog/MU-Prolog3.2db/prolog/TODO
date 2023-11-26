@@ -1,0 +1,6 @@
+Figure out how to make new db system without dynamic loading.
+
+Fix documentation for close, clindex, muprolog, database....
+		once
+
+Fix bug in retract!

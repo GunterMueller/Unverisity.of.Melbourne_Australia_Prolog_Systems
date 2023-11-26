@@ -1,0 +1,53 @@
+Script started on Wed Nov  9 13:34:24 1994
+ 1% np
+NU-Prolog 1.6.4
+1?- [eq, eval, fapply, dd].
+Loading /mount/muse/staff/lee/src/eq/dd/eq.no.
+Warning: main/1 redefined
+done
+Loading /mount/muse/staff/lee/src/eq/dd/eval.no.
+done
+Loading /mount/muse/staff/lee/src/eq/dd/fapply.no.
+done
+Consulting /mount/muse/staff/lee/src/eq/dd/dd.nl.
+done
+true.
+2?- [ex].
+Loading /mount/muse/staff/lee/src/eq/dd/ex.no.
+done
+true.
+3?- wrong(plus(s(s(0)), s(0))).
+answer = s(0) valid? n
+plus(s(s(0)), s(0)) = s(0) valid? n
+plus(s(0), s(0)) = s(0) valid? n
+plus(0, s(0)) = s(0) valid? 
+
+Incorrect equation instance:
+plus(s(0), s(0)) = plus(0, s(0)).
+true.
+4?- wrong(take(3, primes)).
+answer = [2, 4, 8] valid? n
+some [A] primes = [2, 4, 8, 16|A] valid? n
+some [A] ints(2) = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16|A] valid? y
+some [A] sift([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16|B]) = [2, 4, 8, 16|A] valid? n
+some [A] filter(2, [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16|B]) = [4, 6, 8, 10, 12, 14, 16|A] valid? n
+not_div(3, 2) = false valid? n
+
+Incorrect equation instance:
+not_div(3, 2) = false.
+true.
+5?- wrong(sum([1, 2, 3])).
+answer = 7 valid? n
+sum([1, 2, 3]) = 7 valid? n
+foldl(+, 1, [1, 2, 3]) = 7 valid? y
+
+Incorrect equation instance:
+sum([1, 2, 3]) = foldl(+, 1, [1, 2, 3]).
+true.
+6?- ^D
+End of Session
+%	Time was    1.220s
+ 2  ^D
+script done on Wed Nov  9 13:36:00 1994
+
+script done on Wed Nov  9 13:36:00 1994

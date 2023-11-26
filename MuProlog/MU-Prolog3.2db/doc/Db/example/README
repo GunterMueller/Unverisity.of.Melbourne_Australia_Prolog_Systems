@@ -1,0 +1,33 @@
+This directory contains some examples to give a few tips towards using
+the MU-Prolog 3.2 database facitlities.
+
+It contains the following files:
+
+brlhp
+	Benchmark for RLHP indexing. Run via "prolog < brlhp" once
+	you have created the database.
+
+bsimc
+	Benchmark for SIMC indexing. Run via "prolog < bsimc" once
+	you have created the database.
+
+creatdb
+	Shows how to define new database relations. In particular,
+	gives a few clues on parameter design. Used by "mkdb".
+
+demo
+	Once database is created, run prolog and consult demo.
+	This shows how to use MU-Prolog databases, and has a few
+	canned queries for you to try.
+
+gendata.c
+	Generates some "random" data using numbers, letters of the
+	alphabet, and words from "/usr/dict/words". Must be compiled
+	before "mkdb" is run. If you don't have a "/usr/dict/words",
+	then you will need to modify gendata.c to indicate a file of
+	words, one per line.
+
+mkdb
+	Shell script to build database and insert some data into it.
+	Check your PATH to make sure this will invoke the correct
+	version of Prolog.

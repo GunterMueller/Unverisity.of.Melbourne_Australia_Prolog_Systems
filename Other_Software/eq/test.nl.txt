@@ -1,0 +1,181 @@
+:- initializing, add_function(eval, 1).
+:- initializing, add_function(evalLazy, 1).
+:- initializing, add_function(+, 2).
+:- initializing, add_function(-, 2).
+:- initializing, add_function(*, 2).
+:- initializing, add_function(//, 2).
+:- initializing, add_function(univ_f, 1).
+:- initializing, add_function(univ_l, 1).
+:- initializing, add_function(concat, 2).
+:- initializing, add_function(append3, 3).
+:- initializing, add_function(sum_tree, 1).
+:- initializing, add_function(flatten_tree, 1).
+:- initializing, add_function(sum, 1).
+:- initializing, add_function(nmax, 2).
+:- initializing, add_function(max_l, 1).
+:- initializing, add_function(max_l1, 2).
+:- initializing, add_function(add_lists, 2).
+:- initializing, add_function(isort, 1).
+:- initializing, add_function(insert, 2).
+:- initializing, add_function(isort1, 1).
+:- initializing, add_function(isort1a, 2).
+:- initializing, add_function(fact, 1).
+:- initializing, add_function(fact1, 1).
+:- initializing, add_function(f91, 1).
+:- initializing, add_function(qs, 1).
+:- initializing, add_function(zip2, 2).
+:- initializing, add_function(insertlast, 2).
++(A9, B9, A) :-
+	A is A9 + B9.
+-(A9, B9, A) :-
+	A is A9 - B9.
+*(A9, B9, A) :-
+	A is A9 * B9.
+//(A9, B9, A) :-
+	A is A9 // B9.
+univ_f(A9, A) :-
+	A9 =.. A.
+univ_l(A9, A) :-
+	A =.. A9.
+
+:- fact1(7, A), writeln(A).
+:- concat([], A, B) when ever.
+concat([], A9, A9).
+:- concat([A|B], C, D) when ever.
+concat([A9|B9], C9, [A9|A]) :-
+	concat(B9, C9, A).
+:- append3(A, B, C, D) when ever.
+append3(A9, B9, C9, A) :-
+	concat(B9, C9, B),
+	concat(A9, B, A).
+:- sum_tree(nil, A) when ever.
+sum_tree(nil, 0).
+:- sum_tree(t(A, B, C), D) when ever.
+sum_tree(t(A9, B9, C9), A) :-
+	sum_tree(A9, B),
+	C is B + B9,
+	sum_tree(C9, D),
+	A is C + D.
+:- flatten_tree(nil, A) when ever.
+flatten_tree(nil, []).
+:- flatten_tree(t(nil, A, B), C) when ever.
+flatten_tree(t(nil, A9, B9), [A9|A]) :-
+	flatten_tree(B9, A).
+:- flatten_tree(t(t(A, B, C), D, E), F) when ever.
+flatten_tree(t(t(A9, B9, C9), D9, E9), A) :-
+	flatten_tree(t(A9, B9, t(C9, D9, E9)), A).
+:- sum([], A) when ever.
+sum([], 0).
+:- sum([A|B], C) when ever.
+sum([A9|B9], A) :-
+	sum(B9, B),
+	A is A9 + B.
+:- nmax(A, B, C) when ever.
+nmax(A9, B9, A) :-
+	(if A9 >= B9 then
+		A = A9
+	else
+		A = B9
+	).
+:- max_l([A|B], C) when ever.
+max_l([A9|B9], A) :-
+	max_l1(A9, B9, A).
+:- max_l1(A, [], B) when ever.
+max_l1(A9, [], A9).
+:- max_l1(A, [B|C], D) when ever.
+max_l1(A9, [B9|C9], A) :-
+	nmax(A9, B9, B),
+	max_l1(B, C9, A).
+:- add_lists([], A, B) when ever.
+add_lists([], A9, []).
+:- add_lists([A|B], [], C) when ever.
+add_lists([A9|B9], [], []).
+:- add_lists([A|B], [C|D], E) when ever.
+add_lists([A9|B9], [C9|D9], [A|B]) :-
+	A is A9 + C9,
+	add_lists(B9, D9, B).
+:- isort([], A) when ever.
+isort([], []).
+:- isort([A|B], C) when ever.
+isort([A9|B9], A) :-
+	isort(B9, B),
+	insert(A9, B, A).
+:- insert(A, [], B) when ever.
+insert(A9, [], [A9]).
+:- insert(A, [B|C], D) when ever.
+insert(A9, [B9|C9], A) :-
+	(if A9 =< B9 then
+		A = [A9, B9|C9]
+	else
+		insert(A9, C9, B),
+		A = [B9|B]
+	).
+:- isort1(A, B) when ever.
+isort1(A9, A) :-
+	isort1a(A9, [], A).
+:- isort1a([], A, B) when ever.
+isort1a([], A9, A9).
+:- isort1a([A|B], C, D) when ever.
+isort1a([A9|B9], C9, A) :-
+	insert(A9, C9, B),
+	isort1a(B9, B, A).
+:- fact(0, A) when ever.
+fact(0, 1).
+% Error: equations for fact/1 not mutually exclusive
+fact(A9, A) :-
+	A9 > 0,
+	B is A9 - 1,
+	fact(B, C),
+	A is A9 * C.
+:- fact1(A, B) when ever.
+fact1(A9, A) :-
+	(if A9 > 0 then
+		B is A9 - 1,
+		fact1(B, C),
+		D is A9 * C,
+		A = D
+	else
+		A = 1
+	).
+:- f91(A, B) when ever.
+f91(A9, A) :-
+	(if A9 > 100 then
+		B is A9 - 10,
+		A = B
+	else
+		C is A9 + 11,
+		f91(C, D),
+		f91(D, E),
+		A = E
+	).
+:- qs([], A) when ever.
+qs([], []).
+:- qs([A|B], C) when ever.
+qs([A9|B9], A) :-
+	part(A9, B9, B, C),
+	qs(B, D),
+	qs(C, E),
+	concat(D, [A9|E], A).
+part(A, [], [], []).
+part(A, [B|C], [B|D], E) :-
+	B =< A,
+	part(A, C, D, E).
+part(A, [B|C], D, [B|E]) :-
+	B > A,
+	part(A, C, D, E).
+gt_l(A, B) :-
+	max_l(A, C),
+	max_l(B, D),
+	C > D.
+:- zip2([], A, B) when ever.
+zip2([], A9, []).
+:- zip2([A|B], [], C) when ever.
+zip2([A9|B9], [], []).
+:- zip2([A|B], [C|D], E) when ever.
+zip2([A9|B9], [C9|D9], [(A9, C9)|A]) :-
+	zip2(B9, D9, A).
+:- insertlast(A, [], B) when ever.
+insertlast(A9, [], [A9]).
+:- insertlast(A, [B|C], D) when ever.
+insertlast(A9, [B9|C9], [B9|A]) :-
+	insertlast(A9, C9, A).

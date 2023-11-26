@@ -1,0 +1,3335 @@
+man("(number)","?- N
+Repeat the goal numbered N.  If -N is chosen, the goal given by  subtracting  N
+from the current prompt number is chosen.
+Only available at the top level of the interpreter.
+", "repeat goal N").
+man("(e)","?- e
+?- e N
+Load the most recent (or  Nth)  goal  in  the  history  list  into  the  editor
+specified  by  the  environment variable VISUAL (or EDITOR or vi in line mode).
+If N is negative, the goal given by adding N to the current  prompt  number  is
+chosen.   When  the editor exits, the new goal is added to the history list and
+executed.
+Only available at the top level of the interpreter.
+", "edit and execute goal N").
+man("(h)","?- h
+Print history list.
+Only available at the top level of the interpreter.
+", "print history list").
+man("r","?- r Hist
+Hist is the UNIX filename of a saved history list to be loaded into np.  If the
+current  prompt  number  is n and there are m commands in Hist, the commands in
+Hist are stored in the history list against the numbers n to n+m-1.
+Only available in at the top-level of the interpreter.
+", "restore history list").
+man("s","?- s Hist
+Hist is the UNIX filename into which the saved history list is to be saved.
+Only available in at the top-level of the interpreter.
+", "save history list").
+man("(:)","?- Goal
+The formula Goal is interpreted as an ordinary NU-Prolog  goal,  When  Goal  is
+solved,  any  bindings  made  to  free variables in Goal are displayed.  To get
+alternative solutions to Goal, type `' (semi-colon); otherwise type `return' to
+display  the  prompt.   If  there  were  no free variables in Goal and the goal
+succeeds true will be  printed.   If  Goal  fails,  or  there  are  no  further
+solutions fail will be printed.
+?- : Goal
+?- Vars : Goal
+?- Vars sorted : Goal
+?- Vars sorted Keys ... : Goal
+Goal is pure (see pure/1) and therefore may only contain logical predicates and
+connectives.  All solutions for the variables in the term Vars are printed out.
+If Vars is absent, either Yes (there is  an  answer)  or  No  (no  answers)  is
+printed.
+If the keyword sorted is included, the solutions are sorted using  sort/2.   If
+any optional Keys are specified, the solutions are sorted with multiKeySort/4.
+Only available at the top level of the interpreter.
+", "Goal is a goal to be interpreted").
+man("(delete)","?- delete Predicates where Goal
+Goal is pure (see pure/1) and therefore may only contain logical predicates and
+connectives.  For each solution to the conjunction of Goal with the elements of
+Predicates, every clause  matching  an  element  of  Predicates  is  retracted.
+Predicates   is   one   of   a  single  term,  (Predicate),  a  list  of  terms
+([Predicate1,...]), or a comma separated list  of  terms  (Predicate1, . . . ).
+The  conjunction  of  Goal  with  the  elements  of Predicates must ground each
+element of Predicates.
+Only available at the top level of the interpreter.  Some examples are given in
+Appendix 1.
+", "delete Predicates from database").
+man("(insert)","?- insert Predicates where Goal
+Goal is pure (see pure/1) and therefore may only contain logical predicates and
+connectives.  For each solution to the conjunction of Goal with the elements of
+Predicates, each element of Predicates is asserted.  Predicates  is  one  of  a
+single  term,  (Predicate),  a  list  of  terms  ([Predicate1,...]), or a comma
+separated list of terms (Predicate1, . . . ).  The conjunction of Goal with the
+elements of Predicates must ground each element of Predicates.
+Only available at the top level of the interpreter.  Some examples are given in
+Appendix 1.
+", "insert into database").
+man("(update)","?- update Var<1> to Term<1>, ... in Predicates where Goal
+Goal is pure (see pure/1) and therefore may only contain logical predicates and
+connectives.  For each solution to the conjunction of Goal with the elements of
+Predicates, every clause  matching  an  element  of  Predicates  is  retracted,
+Var1,...  is  replaced  by Term1,... and the resulting predicates are asserted.
+Predicates  is  one  of  a  single  term,  (Predicate),   a   list   of   terms
+([Predicate1,...]),  or  a  comma separated list of terms (Predicate1, . . . ).
+The conjunction of Goal with the elements of Predicates must  ground  Var1,...,
+Term1,... and each element of Predicates.
+Only available at the top level of the interpreter.  Some examples are given in
+Appendix 1.
+", "update database").
+man("revise","revise
+revise(File)
+revise(Tag)
+(Non-logical).
+Revise program by recompilation.  Invokes the user's preferred text editor  (vi
+by  default)  to  allow  modification of any of the sources for the files which
+have been loaded.  If File (or Tag) is specified, the editor will begin in that
+file  (or  at  that  tag);  files  are distinguished from tags by having a `nl'
+suffix.  If revise/0 is used, the user is given the Whatnow? prompt.
+When revise is exited, any modified predicates will be recompiled and reloaded.
+See 2.5.
+", "(Non-logical) revise program by recompilation").
+man("(pure)","?- pure Functor/Arity
+The predicate definition with Functor and  Arity  is  purely  declarative.   No
+particular  operational  semantics  is intended, and limitations imposed by the
+operational semantics may not apply.  Predicates definitions which are declared
+pure/1 may use any mixture of logical constructs and predicates, but should not
+contain predicates or constructs which are defined  to  be  non-logical.   Some
+transformations  and  optimisations  are  applied to pure predicates to execute
+them more efficiently.
+Not meaningful at the command level of the interpreter.
+", "define a predicate as purely declarative").
+man("(:-)","Head :- Body
+Declaratively: clause definition; Head is true if Body is true.  Head and  Body
+are  terms.  The implementation of negation assumes that if a call is true then
+there exists  a  clause  for  which  the  call  matches  Head  and,  after  the
+substitution is applied, Body is true.
+Operationally: if Head is unified with the current subgoal, NU-Prolog  attempts
+to prove Body, which may bind variables in Head.
+", "predicate definition").
+man("(?-)","?- Formula
+Declaratively: Formula is a goal to be proved.  True if Formula is true.
+Operationally: attempt to solve Formula.   If  some  subgoals  of  Formula  are
+delayed when all other subgoals have been solved, Formula has floundered.
+Goals in source programs are executed twice,  at  compile  time  and  when  the
+object files are loaded together.
+", "Formula is a goal to be solved").
+man("(-->)","Nonterminal --> Expression
+Statement in a definite clause grammar, as explained in Appendix 2.  Equivalent
+to a clause about f/(n+2), where Nonterminal is f/n.
+", "statement in a definite clause grammar").
+man("call","Formula
+call(Formula)
+Declaratively: true if the subgoal given by the binding  of  Formula  is  true.
+This  subgoal  may  only  include  constructs  and  predicates available at the
+command level of the interpreter.  There is no implicit  quantification  inside
+Formula.
+Operationally: delays until Formula is instantiated.  If Formula  contains  `!'
+(cut), the scope of `!' is local to Formula.
+", "call the subgoal Formula").
+man("call(Term, Arg1)","
+call(Term, Arg1, Arg2)
+call(Term, Arg1, Arg2, Arg3)
+call(Term, Arg1, Arg2, Arg3, Arg4)
+call(Term, Arg1, Arg2, Arg3, Arg4, Arg5)
+call(Term, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6)
+These are exactly equivalent to definitions of the form
+call(Term,Arg1):-Term=..Burst1,append(Burst1,[Arg1],Burst2),Goal=..Burst2,call(Goal).
+but are much more efficient.
+", "call Term concatenated with Args").
+man("(,)","Formula<1> Formula<2>
+Declaratively: Formula1 and Formula2.  True if both Formula1 and  Formula2  are
+true.
+Operationally: Formula1 is called, and if  Formula1  succeeds  or  delays  then
+Formula2  is  called.   If Formula1 fails then `' fails; if Formula2 fails then
+NU-Prolog backtracks and an alternative solution for Formula1 is sought  before
+Formula2 is tried again.
+", "conjunction; Formula<1> and Formula<2> are true").
+man("(;)","Formula<1>  Formula<2>
+Declaratively: Formula1 or Formula2.  True if either Formula1  or  Formula2  is
+true.
+Operationally: Formula1 is called, and if Formula1 succeeds then  `'  succeeds.
+On  backtracking, further solutions for Formula1 are sought; only when Formula1
+fails is Formula2 called.
+", "disjunction; Formula<1> or Formula<2> is true").
+man("(all)","all Vars Formula
+Declaratively: universal quantification.  All variables in the  term  Vars  are
+universally  quantified  in  Formula  and  the  scope  of  these  variables  is
+restricted to Formula.  True if, for all values of Vars, Formula is true.
+Operationally:  the  operational  semantics  of  all  in  conjuntion  with  the
+connectives  not,  ~=, =>, <= and <=> are described in the sections relating to
+these constructs.  All other uses of all/2 will result in floundering.
+", "universal quantification; for all Vars, Formula is true").
+man("(some)","some Vars Formula
+Declaratively: existential quantification.  All variables in the term Vars  are
+existentially  quantified  in  Formula,  and  the  scope  of these variables is
+restricted to Formula.  True if, for some value of Vars, Formula is true.
+Operationally: if all non-local variables  in  Formula  are  ground,  only  one
+solution  to  Formula  is  sought;  if any non-local variable in Formula is not
+ground, someVarsFormula is equivalent to Formula.  Special cases of some/2  are
+described in not/1, if-then and solutions/3.
+", "existential quantification; for some Vars, Formula is true").
+man("(not)","not Formula
+all Vars not Formula
+not (some Vars Formula)
+Declaratively: the negation of Formula.  True if  someLocalsFormula  is  false,
+where  Locals is Vars plus any variables quantified - implicitly or otherwise -
+inside Formula.
+Operationally: the call to not/1 delays until all variables other  than  Locals
+are ground.  Formula is then called and if it succeeds, not/1 fails; otherwise,
+not/1 succeeds.
+", "negation").
+man("(~=)","Term<1> ~= Term<2>
+all Vars Term<1> ~= Term<2>
+Declaratively: same as notTerm1=Term2 and notsomeVarsTerm1=Term2  respectively.
+True if, for all bindings of quantified variables, Term1 is distinct from Term2
+Operationally: if Term1 and Term2 won't unify then ~= succeeds.  If  Term1  and
+Term2  unify  without binding any non-local variables, ~= fails; otherwise, the
+call delays until Term1 or Term2 is further instantiated.
+", "not equals").
+man("(=>)","Formula<1> => Formula<2>
+all Vars Formula<1> => Formula<2>
+Declaratively: Formula1 implies Formula2.  True if, for all bindings  of  local
+variables, Formula1 is false or Formula2 is true.
+Operationally:      the       same       as       notFormula1Formula2       and
+notsomeVars(Formula1notFormula2) respectively.
+", "Formula<1> implies Formula<2>").
+man("(<=)","Formula<2> <= Formula<1>
+all Vars Formula<2> <= Formula<1>
+Declaratively  and  operationally:   the   same   as   Formula1=>Formula2   and
+allVarsFormula1=>Formula2 respectively.
+", "Formula<2> is implied by Formula<1>").
+man("(<=>)","Formula<1> <=> Formula<2>
+all Vars Formula<1> <=> Formula<2>
+Declaratively: Formula1 and Formula2 are equivalent.  True if, for all bindings
+of  local  variables,  both Formula1 and Formula2 are true, or if both Formula1
+and Formula2 are false.
+Operationally: the same as
+        (Formula1=>Formula2)(Formula1<=Formula2)
+and
+        allVarsFormula1=>Formula2allVarsFormula1<=Formula2
+respectively, except the duplication of Formula1 and Formula2 does  not  affect
+implicit quantification.
+", "Formula<1> and Formula<2> are equivalent").
+man("(if)","if Cond then Formula
+if some Vars Cond then Formula
+Declaratively:      the      same       as       (CondFormula)notCond       and
+someVars(CondFormula)notsomeVarsCond  respectively,  except  the duplication of
+Cond does not affect implicit quantification.  True if,  for  some  binding  of
+local variables, Cond is false or Formula is true.
+Operationally: the call delays  until  the  non-local  variables  in  Cond  are
+sufficiently  instantiated.   Unless  Cond is =, the call delays until the non-
+local variables in Cond are ground; otherwise,  the  call  delays  until  these
+variables are sufficiently instantiated.  Cond is then called, and if it fails,
+if-then succeeds.  If Cond succeeds, Formula is called.   If  no  variables  in
+Vars  are  in  Formula  and  Formula fails, if-then also fails; otherwise (some
+variables in Vars are in Formula), if Formula fails,  alternate  solutions  for
+Cond are tried.  Only when Cond fails does if-then fail.
+", "selection").
+man("(if)","if Cond then Formula<1> else Formula<2>
+if some Vars Cond then Formula<1> else Formula<2>
+Declaratively: the same as
+        (CondFormula1)(notCondFormula2)
+and
+        someVars(CondFormula1)(not(someVarsCondFormula2))
+respectively,  except  the  duplication  of  Cond  does  not  affect   implicit
+quantification.   True  if,  for  some  binding  of  local  variables, Cond and
+Formula1 are true, or Cond is false and Formula2 is true.
+Operationally: the call delays  until  the  non-local  variables  in  Cond  are
+sufficiently  instantiated.   Unless  Cond  is  an =, the call delays until the
+non-local variables in Cond are ground; otherwise, the call delays until  these
+variables  are  sufficiently instantiated.  Cond is called, and if it succeeds,
+Formula1 is called.  If Cond succeeded and no variables in Vars are in Formula1
+and  Formula1 fails, if-then-else also fails; otherwise (some variables in Vars
+are in Formula1) if Formula1 fails, alternate solutions for Cond are tried.  If
+Cond  has  no  solutions,  Formula2  is  tried, and only if Formula2 fails does
+if-then-else fail.
+", "selection").
+man("solutions","solutions(Term, Formula, Set)
+solutions(Term, some Vars Formula, Set)
+Declaratively: Set is the list of instances of Term for which Formula is  true.
+The scope of the variables in Term is the call to solutions/3, so that they are
+considered local.  Same as
+all X (some Term (Formula X = Term) <=> member(X, Set))
+                                        sorted(Set)
+and
+all X (some TermVars (Formula X = Term) <=> member(X, Set))
+                                        sorted(Set)
+respectively, where member/2 is the  standard  list  membership  predicate  and
+sorted(Set) is true if Set is a sorted list without duplicates.
+Operationally: all answers to Formula are found using backtracking.   For  each
+answer,  the  bindings of Term and all non-local variables are saved.  For each
+distinct binding of non-local variables, an answer is returned.  The  list  Set
+is  the  sorted (by termCompare/3, with duplicates removed) set of instances of
+Term corresponding to these bindings.  It is an error for the binding  to  Term
+to contain any local variables.  Some answers may have delayed calls to ~=.  If
+the binding  to Term contains global variables there can also be delayed  calls
+to termCompare/3 and sort/2.
+", "Set is a sorted list of Terms where Formula is true").
+man("count","count(Term, Formula, Result)
+Declaratively: same as
+solutions(Term,Formula,Set),length(Set,Result).
+The scope of variables in Term is the call to count/3.  Result is the number of
+distinct instantiations of Term by Formula.
+Operationally: count/3 delays until non-local variables in Term and Formula are
+ground.   Each  instantiation  of  Term  must  be ground (to restrict Result to
+finite values), or count/3 will fail with an error message.
+", "Result is the number of distinct instantiations of Term by Formula").
+man("max","max(Term, Formula, Result)
+Declaratively: same as
+solutions(Term,Formula,Set),maximum(Set,Result),  where  maximum/2  finds   the
+maximum element of Set.
+The scope of variables in Term is the call to max/3.   Result  is  the  maximum
+(via the non-logical standard ordering) instantiation of Term by Formula.
+Operationally: max/3 delays until global variables in Formula are ground.  Each
+instantiation of Term may contain local variables (this is non-logical).
+", "Result is maximum instantiation of Term by Formula").
+man("min","min(Term, Formula, Result)
+Declaratively: same as
+solutions(Term,Formula,Set),minimum(Set,Result),  where  minimum/2  finds   the
+minimum element of Set.
+The scope of variables in Term is the call to min/3.   Result  is  the  minimum
+(via the non-logical standard ordering) instantiation of Term by Formula.
+Operationally: min/3 delays until global variables in Formula are ground.  Each
+instantiation of Term may contain local variables (this is non-logical).
+", "Result is minimum instantiation of Term by Formula").
+man("sum","sum(Summand, Term, Formula, Result)
+Declaratively: same as
+solutions(Summand-Term,Formula,Set),sumOfKeys(Set,Result).   where  sumOfKeys/2
+sums the first arguments of of each -/2 pair in Set.
+The scope of variables in Term and Summand is the call to sum/4.  Result is the
+sum of the instantiation of Summand for each distinct instantiation of Term and
+Summand by Formula.  If Formula fails then Result is 0.
+Operationally: sum/4 delays until  global  variables  in  Formula  are  ground.
+Summand  may  be  any  arithmetically  evaluable  term.   Each instantiation of
+Summand and Term must be ground or sum/4 will fail with an error message.
+", "Result is the sum of the instantiations of Summand").
+man("(when)","?- Head when Body
+Operationally: calls to a predicate with when declarations delay until  one  of
+the  declarations  is  satisfied.   A  when  declaration can only appear when a
+predicate is being compiled.  A when declaration is satisfied when the call  to
+the predicate is an instance of some Head and, when the call and Head have been
+unified, Body is satisfied.  The set of when declarations for  a  predicate  is
+also satisfied if the call does not unify with any Head.  Body may contain:
+(1) The single atom ever, which is always satisfied.
+(2) Variables, which are satisfied when instantiated.
+(3) Terms of the form ground(Var), which are satisfied when Var is ground.
+(4) A and B, which is satisfied when A is satisfied and B is satisfied; where A
+and B are of form (2) to (6).
+(5) AorB, which is satisfied when A is satisfied or B is satisfied; where A and
+B are of form (2) to (6).  This binds less strongly than and.
+(6) (A) where A is of form (2) to (6).
+Some sets of when declarations with complex Heads cannot be compiled, in  which
+case an error message is printed.  The following conditions must be observed:
+(1) The heads of all when declarations should be mutually non-unifiable.
+(2) There cannot be any repeated variables in the head of a when declaration.
+", "when declaration for a predicate").
+man("freeze","Variable Formula
+freeze(Variable, Formula)
+Declaratively: true if the subgoal given by the binding  of  Formula  is  true.
+This  subgoal  may  only  include  constructs  and  predicates available at the
+command level of the interpreter.  There is no implicit  quantification  inside
+Formula.
+Operationally: delays until Var  and  Formula  are  instantiated.   If  Formula
+contains `!' (cut), the scope of `!' is local to Formula.
+", "wait until Variable is instantiated then call the subgoal Formula").
+man("(gAll)","gAll Vars Goal
+(Non-logical).
+Operationally: same as allVarsGoal, except that the scope of variables in  Vars
+is not restricted to Goal.
+", "(Non-logical) universal quantification; for all Vars, Formula is true").
+man("(gSome)","gSome Vars Goal
+(Non-logical).
+Operationally: same as someVarsGoal, except that the scope of the variables  in
+Vars is not restricted to Goal.
+", "(Non-logical) existential quantification; for some Vars, Formula is true").
+man("(!)","!
+(Non-logical).
+Operationally: the cut operation.  It succeeds, but on backtracking  it  fails,
+and  everything fails up to and including the most recent ancestor which is not
+,  or ->; that is, no subgoals to the left of !  are  retried.   If  the  !  is
+within  an  ,  no  further  branches within  are tried and  fails.  If the ! is
+within call/1 then call/1 fails.  Otherwise, no more clauses of  the  predicate
+containing  !  are  tried,  and  the  predicate  fails.   Other  uses  of ! are
+undefined, the behaviour of ! is not defined if it occurs in the  condition  of
+->, and ! should not be used in conjunction with quantifiers (4.2.2), negation,
+implication and related constructs (4.2.3), aggregates (4.2.4),  or  predicates
+which may delay.
+Cut can be used to implement many of the unsafe features of Prolog such as  \+,
+\=, == and var/1.  It should be used as sparingly as possible.
+", "(Non-logical) cut").
+man("(\+)","\+ Goal
+(Non-logical).
+Operationally: similar to not/1, but there are  no  quantifiers  and  the  call
+never  delays.   If  Goal fails then \+Goal succeeds, and if Goal succeeds then
+\+Goal fails.  The result  is  meaningless  if  Goal  succeeds  and  binds  any
+variables, or succeeds with some calls delayed.
+", "(Non-logical) negation").
+man("(->)","Cond -> Goal
+(Non-logical).
+Operationally: similar to ifCondthenGoal but  (unlike  if-then)  there  are  no
+quantifiers,  the  call  never  delays,  and  Cond  is  never retried.  If Cond
+succeeds then Goal1 is called; otherwise, -> succeeds.
+", " (Non-logical) if Cond then Goal").
+man("(->)","Cond -> Goal<1> ; Goal<2>
+(Non-logical).
+Operationally: similar to ifCondthenGoal1elseGoal2  but  (unlike  if-then-else)
+there  are no quantifiers, the call never delays and Cond is never retried.  If
+Cond succeeds then Goal1 is called; otherwise Goal2 is called.
+", "(Non-logical) if Cond then Goal<1> else Goal<2>").
+man("once","once Goal
+(Non-logical).
+Operationally:  finds  the  first  solution  (if  any)  to  Goal.   Similar  to
+call((Goal,!)).
+", "(Non-logical) find only first solution").
+man("setof","setof(Term, Goal, Set)
+(Non-logical).
+Operationally: similar to solutions/3 but unsafe.  The  notation  Vars^Goal  is
+used  instead  of  someVarsGoal.   If  there  are no solutions to Goal, setof/3
+fails.   Local  variables  are  allowed  in  answers,  which  are  sorted  with
+compare/3.    In   the   cases  in  which  solutions/3  succeeds  with  delayed
+inequalities, setof/3 fails.
+", "(Non-logical) Set is a list of Term where Goal is true").
+man("bagof","bagof(Term, Goal, Bag)
+(Non-logical).
+Operationally: same as setof/3 except that Bag is not sorted and duplicates are
+not removed.
+", "(Non-logical) Bag is a list of Terms where Goal is true").
+man("findall","findall(Term, Goal, Set)
+(Non-logical).
+Similar to solutions/3 but unsafe,  Set  is  not  sorted,  duplicates  are  not
+removed,  and  Set=[]  if  there are no solutions to Goal.  There are never any
+delayed calls.  Also similar to bagof/3, but there are no local variables.
+", "[findall] (Non-logical) Set is a list of Terms where Goal is true").
+man("countall","countall(Goal, Count)
+(Non-logical).
+Countall/2 is an efficient equivalent to findall(1,Goal,L),length(L,Count)  and
+is  thus similar to sum(1,Goal,Goal,Count) but unsafe.  The answers to Goal are
+not sorted and duplicates are not removed.  There are never any delayed calls.
+", "[countall] (Non-logical) Count is the number of times Goal returns").
+man("()","Vars  Goal
+Operationally: the same as call(Goal).  Used in setof/3 and bagof/3 to indicate
+existential quantification.
+", "Existential quantification for setof/3 and bagof/3").
+man("fail","fail
+Always fails.
+", "always fail").
+man("repeat","repeat
+Always succeeds, even on backtracking.
+", "(Non-logical) always succeeds, even on backtracking").
+man("true","true
+Succeeds.  On backtracking, it fails.
+", "succeed").
+man("initializing","initializing
+True only at load time.  During compilation, when initializing/0 is false,  any
+`?-'  goals  encountered  in the source will be executed.  These goals are also
+collected together into an initialization block which is executed at load time,
+at which point initializing/0 is true.
+", "true only at load time").
+man("muprolog","muprolog
+Fails.  Useful for conditional  compilation  of  clauses  which  are  MU-Prolog
+dependent.
+", "fail").
+man("nuprolog","nuprolog
+Succeeds (does nothing).  Useful for conditional compilation of  clauses  which
+are NU-Prolog dependent.
+", "true for NU-Prolog").
+man("option","option(Value)
+option(Value) is false, except during compilation for Values set by the -F flag
+to nc.
+", "true during compilation if Value has been set by the -F flag to nc").
+man("(pure)","pure(Functor, Arity)
+True, during compile time, if the predicate with Functor  and  Arity  is  pure.
+See predicateProperty/3.
+", "predicate with Functor and Arity is pure").
+man("(useIf)","?- useIf Goal
+?- useElse
+?- useEnd
+UseIf/1, useElse/0 and  useEnd/0  allow  conditional  compilation  of  clauses.
+Goal,  in which each subgoal must be a system predicate, is called; if it fails
+the clauses between the next  matching  useElse/0  and  useEnd/0  are  compiled
+instead  of  the clauses between the useIf/1 and the useElse/0.  If there is no
+matching useElse/0, clauses between the useIf/1 and useEnd/0 are only  compiled
+if Goal succeeds.  Note that useIf/1 controls the compilation of whole clauses.
+These goals may be nested.
+", "conditional compilation").
+man("(listing)","listing
+listing Predicate
+listing [Predicate<1>,...,Predicate<n>]
+(Non-logical).
+Print all dynamic predicate definitions, or print all  dynamic  definitions  of
+Predicate  (or  Predicate1, . . . ,Predicaten), where Predicate is specified by
+functor or functor/arity.
+", "(Non-logical) list dynamic predicate definitions").
+man("man","man Functor
+man [Functor<1>,...,Functor<n>]
+(Non-logical).
+Print information about all system and library predicates with  Functor.   This
+information  is identical to that in the NU-Prolog Reference Manual; therefore,
+some information about individual predicates - such as that given at the  start
+of a section - will not be displayed by this command.
+",  "(Non-logical)  print  information  on   system/library   predicates   with
+Functor").
+man("abort","abort
+(Non-logical).
+Aborts execution of the current goal and  returns  to  the  top  level  of  the
+program.   In  np  this  is  the  top  level of the interpreter.  In a compiled
+program it is main/1, or the predicate specified by the -e option.
+", "(Non-logical) return to top level").
+man("ancestors","ancestors(Anc)
+(Non-logical).
+Anc is unified with a list of interpreted ancestor goals of the current  clause
+starting  with  the parent goal and ending with the oldest accessible ancestor.
+Ancestors of compiled goals are not accessible.
+", "(Non-logical) get a list of ancestor goals for the current clause").
+man("break","break
+(Non-logical)
+Causes a new invocation of the top-level  of  the  interpreter.   The  previous
+computation  is  resumed  when  this has finished.  Break levels are named with
+ascending integers.  The top-level is level 0.
+", "(Non-logical) get a new invocation of np").
+man("breakLevel","breakLevel(N)
+N is the current break level number.  See break/0.
+", "N is the current break level number").
+man("catch","catch(Goal, Result)
+(Non-logical).
+Catch/2 calls Goal after arranging to receive any abnormal returns from throw/1
+via Result.  In the absence of such a return, it is equivalent to call(Goal).
+", "(Non-logical) set up a call frame for an abnormal return").
+man("commandNumber","commandNumber(N)
+N is the current history list command number.  See h/0.
+", "N is the current history list command number").
+man("depth","depth(N)
+(Non-logical).
+N is the number of ancestors of the current  call,  counting  only  interpreted
+predicate  calls up to and not including the first ancestor, if any, which is a
+compiled predicate.
+", "(Non-logical) N is the number of ancestors of the current call").
+man("maxDepth","maxDepth(N)
+(Non-logical).
+Set the maximum number of nested interpreted calls to  N.   Calls  beyond  this
+cause a trap to the debugger.
+Currently only available in trace mode.
+", "(Non-logical) N is maximum number of nested calls").
+man("prompt","prompt
+Called by the interpreter to print the interpreter prompt.  Can be  defined  by
+the user.  Currently defined by:
+prompt :-
+        breakLevel(B)
+        commandNumber(C)
+        ( B = 0
+                printf(user ``%d?- '' [C])
+        ; B > 0
+                printf(user ``[%d] %d?- '' [B C])
+        )
+", "print system prompt").
+man("restart","restart
+(Non-logical).
+Aborts execution of the current goal and  returns  to  the  top  level  of  the
+program.   In  np  this  is  the  top  level of the interpreter.  In a compiled
+program it is main/1, or the predicate specified by the  -e  option.   Same  as
+abort/0.
+", "(Non-logical) return to top level").
+man("subGoalOf","subGoalOf(S)
+(Non-logical).
+Equivalent to ancestors(A),member(S,A).
+As with ancestors, this only works for interpreted goals.
+", "(Non-logical) S is an ancestor of the current goal").
+man("throw","throw(Result)
+(Non-logical).
+Throw/1 cause an abnormal return from within a catch/2.  It works backwards  up
+the  stack  of  ancestor goals until a catch/2 is found, the second argument of
+which unifies  with  Result.   This  unification  is  performed  and  execution
+continues from the catch/2.  If there is no matching catch/2 then an abort/0 is
+performed.
+Throw/1 does not remove choice-points.
+It is not a good idea to throw variables because these cannot be  distinguished
+from a normal return.
+The main use of catch/2 and throw/1 is in reporting errors.
+", "(Non-logical) unwind the stack until a matching catch/2 is found").
+man("debug","debug
+(Non-logical).
+Enter debug mode by  setting  the  debugging  flag  to  debug.   This  is  done
+automatically by spy/1 if debugging is off.  See trace/0 and prologFlag/3.
+", "(Non-logical) enter debug mode").
+man("debugging","debugging
+(Non-logical).
+Lists all current spypoints and information about debugging options.
+", "(Non-logical) list current spypoints").
+man("leash","leash(Mode)
+(Non-logical).
+Leash/1 controls the behaviour of the debugger  when  it  traces  a  goal.   By
+default,  the  debugger  stops  at  all  ports  it  traces and asks the user to
+instruct it on how to continue, but a call to leash/1 with a list of port names
+can be used to tell it to stop only at the listed ports.  Other ports are still
+printed, and execution still stops at any predicates with  spypoints  on  them.
+Leash(all) restores leashing to the default.
+", "(Non-logical) set leashing mode").
+man("leashCondition","leashCondition(Goal, Port, Condition)
+LeashCondition/3 is a hook for the user to alter the leashing behaviour of  the
+debugger.   Clauses  asserted  to it can be used to over-ride the leashing mode
+currently in force.   If  leashCondition(Goal,Port,Condition)  succeeds  for  a
+particular  Goal  and Port being traced, then the truth or falsity of Condition
+determines whether the debugger stops after printing Goal.
+LeashCondition/3 has no effect on spypoints.
+", "hook for user-control of leashing in the debugger").
+man("nodebug","nodebug
+(Non-logical).
+Set the debugging flag to off.  This doesn't remove any spy points  -  it  only
+causes them to be ignored.  See prologFlag/3.
+", "(Non-logical) turn off debugging").
+man("(nospy)","nospy Predicate
+nospy [Predicate<1>,...,Predicate<n>]
+(Non-logical).
+Removes  any  spypoints  on  Predicate  (or  Predicate1,...,Predicaten),  where
+Predicate  is  specified by functor or functor/arity.  If no arity is specified
+all predicates with the given functor have their spypoints removed.  See spy/1.
+", "(Non-logical) removes any spypoints on predicates with Functor").
+man("nospyall","nospyall
+(Non-logical).
+Remove all spypoints.
+", "(Non-logical) remove all spypoints").
+man("notrace","notrace
+(Non-logical).
+Set debugging flag to off.
+", "(Non-logical) turn off debugging").
+man("(spy)","spy Predicate
+spy [Predicate<1>,...,Predicate<n>]
+(Non-logical).
+Places a spypoint on Predicate (or Predicate1,...,Predicaten), where  Predicate
+is  specified  by  functor  or  functor/arity.   If  no  arity is specified all
+predicates with the given functor are spied on.  It is not  possible  to  place
+spypoints on system predicates.  See nospy/1.
+Spy/1 turns on debugging if it is currently off.
+", "(Non-logical) place a spypoint on Predicate").
+man("spyCondition","spyCondition(Goal, Port, Condition)
+SpyCondition/3 is a hook for the user to alter the behaviour of the debugger at
+spypoints.    Its  use  is  similar  to  leashCondition/3,  but  spyCondition/3
+determines  whether  the  spypoint  port  reached  is  displayed  at  all.   If
+spyCondition(Goal,Port,Condition) succeeds for a particular Goal and Port being
+debugged, then the  truth  or  falsity  of  Condition  determines  whether  the
+debugger displays the port.
+SpyCondition/3 has no effect on tracing.
+", "hook for user-control of spypoints").
+man("spyHook","spyHook(Info, Goal)
+SpyHook/2 is a hook to enable the user to pass  a  goal  being  debugged  to  a
+user-defined    predicate.     The    |    option   to   the   debugger   calls
+spyHook(info(Number,Depth,Port),Goal), where Number is the unique call  number,
+Depth  the number of ancestor calls, Port is the port at which the debugger has
+stopped, and Goal is the goal being debugged.  Control returns to the  debugger
+after spyHook/2 completes.
+", "hook for user-access to debugging goals").
+man("trace","trace
+(Non-logical)
+Set debugging flag to trace mode.
+", "(Non-logical) turn on trace mode").
+man("append","append(List<1>, List<2>, JoinList) when List<1> or JoinList
+JoinList is List2 appended to List1.  Fails if the  first  argument  is  not  a
+list.
+", "JoinList is List<2> appended to List<1>").
+man("delete","delete(Element, List, Rest) when List or Rest
+Rest is List with the first element matching Element deleted.  On backtracking,
+the  next appropriate element is chosen instead.  Fails if List or Rest are not
+lists.
+", "Rest is List with a element matching Element deleted").
+man("isList","isList(Term) when Term
+Term is a list.  Delays until Term is instantiated and the length  of  Term  is
+known, that is, its tail has been instantiated to [].
+", "Term is a list").
+man("keySort","keySort(List, Result)
+keySort(Order, List, Result)
+Result is List sorted by Key, where elements of List are in the form Key-Value.
+Order  is  either  +  (ascending)  or  -  (descending).   compare/3 is used for
+comparison of terms.  These predicates do not remove duplicates.
+", "Result is sorted List").
+man("length","length(List, N) when List or N
+List has length N.  Either List or  N  may  be  variables;  if  they  are  both
+variables, the call delays.  Fails if List is not a list.
+", "List has length N").
+man("member","member(Element, List) when List
+Element is a member of List.  On backtracking,  gets  another  member  of  List
+matching Element.
+", "Element is a member of List").
+man("member","member(Element, List, SubList) when List
+Element is a member of List and SubList is the  tail  of  List  beginning  with
+Element.   On  backtracking,  gets another member of List, and another SubList,
+matching Element.  Same as
+SubList=Element_,append(_,SubList,List).
+", "Element is a member  of  List  and  SubList  is  the  tail  of  List  after
+Element").
+man("merge","merge(List<1>, List<2>, NewList) when List<1> and List<2>
+Sorted List1 and sorted List2 are merged, removing duplicates, to give NewList.
+Undefined  if  either  List1 or List2 is not sorted, and will delay until these
+lists are sufficiently instantiated.
+", "Sorted List<1> and sorted List<2> are merged to give NewList").
+man("multiKeySort","multiKeySort(Keys, Term, List, SortedList)
+Each element of  List  is  of  the  form  Term.   Keys  is  a  list  of  terms;
+multiKeySort/4  applies  a  stable sort to List using the last element of Keys,
+then the second-last element, and so on.  Term  is  successively  unified  with
+each  element  of List, binding variables in the current Key.  List of Elements
+is then transformed into a list of the form Key-Element, which  can  be  sorted
+with  keySort/3,  where order is determined by the top-level (unary) functor of
+each Key.  Default is ascending, +(X) is an explicit way of saying ascending on
+X and -(X) is descending on X.  MultiKeySort/4 does not remove duplicates.
+", "sort List of elements of form Term using Keys").
+man("notMember","notMember(NotElement, List) when List
+NotElement  is  not  a  member  of  List.   This  is  done  by  requiring  that
+NotElement~=Element  for  each  Element  of  List.   This  is  only the same as
+notmember(NotElement,List) if NotElement and List are ground.
+", "NotElement is not a member of List").
+man("perm","perm(List<1>, List<2>) when List<1> or List<2>
+List List2 is a permutation of list List1.   On  backtracking,  perm/2  returns
+another  permutation.   If the elements of the input list were not unique, some
+of the permutations will be identical.  Fails if either argument is not a list.
+", "List<2> is a permutation of List<1>").
+man("reverse","reverse(ForwList, BackList) when ForwList or BackList
+List BackList is the reverse of list ForwList.  The  time  is  proportional  to
+O(n),  where n is the length of either list.  Fails if either argument is not a
+list.
+", "BackList is the reverse of ForwList").
+man("sort","sort(List, SortedList) when List
+(Non-logical).
+Sort List into SortedList,  removing  duplicates,  where  List  is  a  list  of
+arbitrary  terms.   The system predicate compare/3 is used for term comparison.
+Delays until List is sufficiently instantiated.
+", "(Non-logical) sort List into SortedList").
+man("sorted","sorted(List)
+?-sorted([]) when ever
+?-sorted(_HeadTail) when Tail
+List is sorted under the non-logical  ordering  of  terms.   List  may  contain
+duplicates.
+", "List is sorted").
+man("suffix","suffix(List, Suffix)
+Suffix is successively unified  to  all  of  the  possible  suffixes  of  List,
+starting   with   List   and   shrinking   to   the   empty   list.    Same  as
+append(_,Suffix,List).  Fails if either argument is not a list.
+", "Suffix is a suffix List").
+man("isAlnum","isAlnum(Char) when Char
+ASCII code Char is alphanumeric.  Delays until Char is instantiated.
+", "Char is alphanumeric").
+man("isAlpha","isAlpha(Char) when Char
+ASCII code Char is alphabetic.  Delays until Char is instantiated.
+", "Char is alphabetic").
+man("isAscii","isAscii(Char) when Char
+Integer Char is between 1 and 127.  Delays until Char is instantiated.
+", "Char is an ASCII character").
+man("isAsciiL","isAsciiL(String) when ground(String)
+String is a list of Ascii characters (see isAscii/1).  Delays until  String  is
+ground.
+", "String is a list of Ascii characters").
+man("isCntrl","isCntrl(Char) when Char
+Char is an ASCII code for a control character, that is integer Char is  between
+1 and 32.  Delays until Char is instantiated.
+", "Char is a control character").
+man("isDigit","isDigit(Char) when Char
+ASCII code Char is a digit.  Delays until Char is instantiated.
+", "Char is a digit").
+man("isLower","isLower(Char) when Char
+ASCII code Char is lowercase alphabetic.  Delays until Char is instantiated.
+", "Char is lowercase").
+man("isPrint","isPrint(Char) when Char
+ASCII code Char is a printable character (ASCII codes 9,  10,  12,  13,  32  to
+126).  Delays until Char is instantiated.
+", "Char is printable").
+man("isPrintL","isPrintL(String) when ground(String)
+String is a list of printable characters (see isPrint/1).  Delays until  String
+is ground.
+", "String is printable").
+man("isUpper","isUpper(Char) when Char
+ASCII code Char is uppercase alphabetic.  Delays until Char is instantiated.
+", "Char is uppercase").
+man("arg","arg(N, Term, SubTerm) when N and Term
+The Nth argument of term Term is SubTerm; it  will  delay  if  N  or  Term  are
+variables.   If  N  is  less  than  1, or greater than the arity of Term, arg/3
+fails.
+", "N[th] argument of Term is SubTerm").
+man("atom","atom(Term)
+(Non-logical).
+Term is an atom; if Term is currently a variable it fails.  See isAtom/1.
+", "(Non-logical)").
+man("atomic","atomic(Term)
+(Non-logical).
+Term is an atom or a number; if Term is currently a  variable  it  fails.   See
+isAtomic/1.
+", "(Non-logical) Term is currently an atom or a number").
+man("atomToString","atomToString(Atom, String) when Atom or ground(String)
+String is the list of ASCII codes in the name of Atom, an atom.  If Atom  is  a
+variable,  and String is not ground, it delays.  Fails if the arguments are not
+of an appropriate type.  See also name/2.
+", "String is the list of characters in Atom").
+man("compound","compound(Term)
+(Non-logical).
+Term  is  a  compound  term,  that  is,  not  a  constant  or  variable.    See
+isCompound/1.
+", "(Non-logical) Term is currently a compound term").
+man("cons","cons(Term)
+(Non-logical).
+The top-level functor in Term is `' (cons).   Fails  if  Term  is  currently  a
+variable.  See isCons/1.
+", "(Non-logical) the top-level functor in Term is `'").
+man("const","const(Term)
+(Non-logical).
+Term is a constant; if Term is currently a variable it fails.  See isConst/1.
+", "(Non-logical) Term is currently a constant").
+man("duplicate","duplicate(Term<1>, Term<2>)
+(Meta-logical).
+Term2 is a copy of  Term1  with  different  variables  but  the  same  internal
+bindings.
+", "(Meta-logical) Term<2> is a copy of Term<1>").
+man("float","float(Term)
+(Non-logical).
+Term is a float.  If Term is currently a variable it fails.  See isFloat/1.
+", "(Non-logical) Term is currently an float").
+man("functor","functor(Term, Functor, Arity) when Term or Functor and Arity
+Term has Functor and Arity.  Delays until Term or both Functor  and  Arity  are
+not  variables.   If Term is a constant, Functor will unify with Term and Arity
+will be 0.
+", "Term has Functor and Arity").
+man("ground","ground(Term)
+(Meta-logical).
+Term is currently ground, that is, contains no variables.
+", "(Non-logical) Term is currently ground").
+man("integer","integer(Term)
+(Non-logical).
+Term is an integer.  If Term is currently a variable it fails.  See isInt/1.
+", "(Non-logical) Term is currently an integer").
+man("intToAtom","intToAtom(Integer, Atom) when Integer or Atom
+Integer is converted to Atom, or Atom to Integer.  The  name  of  Atom  is  the
+decimal   representation   of   integer.   If  both  arguments  are  variables,
+intToAtom/2 delays.  Fails if an argument is instantiated  to  a  term  of  the
+wrong type.
+", "Integer is converted to/from Atom").
+man("intToString","intToString(Int, String) when Int or ground(String)
+String is the list of ASCII codes of the digits in the  decimal  representation
+of  Int.   If Int is a variable, and String is not ground, it delays.  Fails if
+the arguments are not of an appropriate type (cf. name/2).
+", "String is the list of digit characters in Int").
+man("isAtom","isAtom(Term) when Term
+Term is an atom.  Delays until Term is instantiated.
+", "Term is an atom").
+man("isAtomic","isAtomic(Term) when Term
+Term is an atom or a number.  Delays until Term is instantiated.
+", "Term is an atom or a number").
+man("isCompound","isCompound(Term) when Term
+Term is a compound term, that  is,  not  a  constant.   Delays  until  Term  is
+instantiated.
+", "Term is a compound term").
+man("isCons","isCons(Term) when Term
+The top-level functor in Term is `' (cons).  Delays until Term is instantiated.
+", "top-level functor in Term is `' (cons)").
+man("isConst","isConst(Term) when Term
+Term is a constant.  Delays until Term is instantiated.
+", "Term is a constant (an atom or integer)").
+man("isExpression","isExpression(Term) when ground(Term)
+Term is a valid arithmetic expression.  Delays until Term is ground.
+", "Term is a valid arithmetic expression").
+man("isFloat","isFloat(Term) when Term
+Term is a float.  Delays until Term is instantiated.
+", "Term is an float").
+man("isInt","isInt(Term) when Term
+Term is an integer.  Delays until Term is instantiated.
+", "Term is an integer").
+man("isNumber","isNumber(Term) when Term
+Term is a number.  Delays until Term is instantiated.
+", "Term is an number").
+man("isTerm","isTerm(Term) when Term
+Term is a compound term, that  is,  not  a  constant.   Delays  until  Term  is
+instantiated.
+    For compatibility reasons, IsCompound/1 is should be used in preference  to
+IsTerm/1.
+", "Term is a compound term").
+man("listOfVars","listOfVars(Term, Vars)
+(Meta-logical).
+Vars is a list of the variables occurring in Term.
+", "(Non-logical) Vars is a list of the variables occurring in Term").
+man("name","name(Atom, List) when Atom or ground(List)
+List is the list of ASCII codes in the print name of Atom, an atom.  If Atom is
+a  variable,  or List is not ground, it delays.  Fails if the arguments are not
+of an appropriate type.  See also atomToString/2.
+", "List is the list of characters in Atom").
+man("nonvar","nonvar(Term)
+(Meta-logical).
+Term is not currently a variable.  See var/1.
+", "(Non-logical) Term is not currently a variable").
+man("number","number(Term)
+(Non-logical).
+Term is an number.  If Term is currently a variable it fails.  See isNumber/1.
+", "(Non-logical) Term is currently an number").
+man("occurs","occurs(SubTerm, Term)
+(Non-logical).
+Tests for identity (with ==) between SubTerm, a variable or constant, and  some
+subterm of Term.  Does not bind SubTerm if it is a variable.
+", "(Non-logical) Term contains SubTerm").
+man("term","term(Term)
+(Non-logical).
+Term is a compound term, that is, not a constant or variable.  See isTerm/1.
+    For compatibility reasons, Compound/1 is should be used  in  preference  to
+Term/1.
+", "(Non-logical) Term is currently a compound term").
+man("termToString","termToString(Term, String)
+termToString(Flags, Term, String)
+(Non-logical).
+Converts Term to String in prefix format (or as specified by Flags) with  atoms
+quoted as necessary.  Does not convert String to Term.  Possible Flags settings
+are as for writev/2.  See sread/2.
+", "(Non-logical) converts Term to String").
+man("(=)","Term = List
+List is the functor of Term followed by the arguments of Term.  The call delays
+if Term is a variable or the head of List is not instantiated and the length of
+List is not known.  Fails if Term is an integer.
+", "List is the functor of Term followed by the arguments of Term").
+man("var","var(Term)
+(Meta-logical).
+Term is currently a variable.  See nonvar/1.
+", "(Non-logical) Term is currently a variable").
+man("waitedOn","waitedOn(Term, Vars)
+(Non-logical).
+Vars is a list of variables in Term on which some goals may be delayed.
+", "(Non-logical) Vars is a list of variables on which goals may be delayed").
+man("(=)","Term<1> = Term<2>
+Term1 equals Term2; that is, Term1 and Term2 are unified.
+", "Term<1> is unified with Term<2>").
+man("(\=)","Term<1> \= Term<2>
+(Non-logical).
+Term1 and Term2 do not unify; the same as \+Term1=Term2.  Similar  to  ~=  but,
+unlike ~=, there are no quantifiers and the call never delays.  See ~=.
+", "(Non-logical) Term<1> and Term<2> do not unify").
+man("(==)","Term<1> == Term<2>
+(Non-logical).
+Term1 and Term2 are identical; that is, they can be unified without binding any
+variables.
+", "(Non-logical) Term<1> and Term<2> are identical").
+man("(\==)","Term<1> \== Term<2>
+(Non-logical).
+Term1 and Term2 are not identical.  For example, A\==B would succeed if A and B
+were distinct variables.
+", "(Non-logical) Term<1> and Term<2> are not identical").
+man("(<)","Term<1> < Term<2>
+(Non-logical).
+Term1 is before Term2 in the non-logical ordering of terms.  See termCompare/3.
+", "(Non-logical) Term<1>  Term<2> in non-logical ordering").
+man("(>)","Term<1> > Term<2>
+(Non-logical).
+Term1 is after Term2 in the non-logical ordering of terms.  See termCompare/3.
+", "(Non-logical) Term<1>  Term<2> in non-logical ordering").
+man("(=<)","Term<1> =< Term<2>
+(Non-logical).
+Term1 is before or equal to Term2 in the non-logical ordering of terms.
+", "(Non-logical) Term<1> <= Term<2> in non-logical ordering").
+man("(>=)","Term<1> >= Term<2>
+(Non-logical).
+Term1 is equal to or after Term2 in the non-logical ordering of terms.
+", "(Non-logical) Term<1> >= Term<2> in non-logical ordering").
+man("termCompare","termCompare(Comp, Term<1>, Term<2>)
+Logical term comparison.  Comp is <, = or > if term Term1 is before, equivalent
+to,  or  after  term  Term2  respectively,  in the standard ordering for terms.
+Delays until Term1 and Term2 are instantiated enough for comparison to be  made
+under the standard ordering, that is, until any further instantiation would not
+change the ordering already determined.  Fails if Comp will not unify with <, =
+or >.
+", "logical term comparison").
+man("compare","compare(Comp, Term<1>, Term<2>)
+(Non-logical).
+Comp is  <,  =  or  >  if  Term1  is  before,  equivalent  to  or  after  Term2
+respectively,  in  the  non-logical  ordering of terms.  Fails if Comp will not
+unify with <, = or >.  See termCompare/3.
+", "(Non-logical) compare Term<1> and Term<2> in non-logical ordering").
+man("maxint","maxint
+The maximum integer representable by Prolog.  Evaluated only when it occurs  as
+an argument to an arithmetic predicate.
+", "maxint").
+man("minint","minint
+The minimum integer representable by Prolog.  Evaluated only when it occurs  as
+an argument to an arithmetic predicate.
+", "minint").
+man("pi","pi
+The number pi.  Evaluated only when it occurs as an argument to  an  arithmetic
+predicate.
+", "pi").
+man("(+)","N + M
+N plus M.  Evaluated only when it  occurs  as  an  argument  to  an  arithmetic
+predicate.
+", "N plus M").
+man("(-)","N - M
+N minus M.  Evaluated only when it occurs  as  an  argument  to  an  arithmetic
+predicate.
+", "N minus M").
+man("(*)","N * M
+N times M.  Evaluated only when it occurs  as  an  argument  to  an  arithmetic
+predicate.
+", "N times M").
+man("(/)","N / M
+N divided by M performed in floating-point.  Evaluated only when it  occurs  as
+an argument to an arithmetic predicate.  The result is always a float.
+", "N divided by M").
+man("(//)","N // M
+N divided by M performed in integer arithmetic.  Evaluated only when it  occurs
+as  an  argument  to  an arithmetic predicate.  Evaluation fails with a warning
+message if either argument evaluates to a float.
+", "N divided by M").
+man("(mod)","N mod M
+N modulo M.  Evaluated only when it occurs as  an  argument  to  an  arithmetic
+predicate.   Evaluation  fails  with  a  warning  message  if  either  argument
+evaluates to a float.
+", "N modulo M").
+man("(**)","N ** M
+N to the power of M, where M>=0 or N<0 and M is equal to a  (negative)  integer.
+Evaluated  only  when it occurs as an argument to an arithmetic predicate.  The
+result is always a float.
+", "N to the power of M").
+man("sin","sin(X)
+The sine of X.  Evaluated only when it occurs as an argument to  an  arithmetic
+predicate.  The result is always a float.
+", "sin(X)").
+man("cos","cos(X)
+The cosine of X.  Evaluated only when it occurs as an argument to an arithmetic
+predicate.  The result is always a float.
+", "cos(X)").
+man("tan","tan(X)
+The tangent of X.   Evaluated  only  when  it  occurs  as  an  argument  to  an
+arithmetic predicate.  The result is always a float.
+", "tan(X)").
+man("asin","asin(X)
+The arcsine of X.   Evaluated  only  when  it  occurs  as  an  argument  to  an
+arithmetic predicate.  The result is always a float.
+", "asin(X)").
+man("acos","acos(X)
+The arccosine of X.  Evaluated only  when  it  occurs  as  an  argument  to  an
+arithmetic predicate.  The result is always a float.
+", "acos(X)").
+man("atan","atan(X)
+The arctangent of X.  Evaluated only when  it  occurs  as  an  argument  to  an
+arithmetic predicate.  The result is always a float.
+", "atan(X)").
+man("atan2","atan2(X, Y)
+atan2(X, Y).  Evaluated only when it occurs as an  argument  to  an  arithmetic
+predicate.  The result is always a float.
+", "atan2(X, Y)").
+man("exp","exp(X)
+E to the power X.   Evaluated  only  when  it  occurs  as  an  argument  to  an
+arithmetic predicate.  The result is always a float.
+", "exp(X)").
+man("log","log(X)
+The natural logarithm of X.  Evaluated only when it occurs as an argument to an
+arithmetic predicate.  The result is always a float.
+", "log(X)").
+man("log10","log10(X)
+The base 10 logarithm of X.  Evaluated only when it occurs as an argument to an
+arithmetic predicate.  The result is always a float.
+", "log10(X)").
+man("sqrt","sqrt(X)
+The square root of X.  Evaluated only when it  occurs  as  an  argument  to  an
+arithmetic predicate.  The result is always a float.
+", "sqrt(X)").
+man("integer","integer(X)
+The nearest integer to X between X and zero.  Evaluated only when it occurs  as
+an argument to an arithmetic predicate.
+", "integer(X)").
+man("float","float(X)
+The floating-point equivalent of X.   Evaluated  only  when  it  occurs  as  an
+argument to an arithmetic predicate.  The result is always a float.
+", "float(X)").
+man("round","round(X)
+The floating-point representation of the integer nearest to X.  Evaluated  only
+when it occurs as an argument to an arithmetic predicate.  The result is always
+a float.
+", "round(X)").
+man("(/\)","N /\ M
+N bitwise and'ed with M.  Evaluated only when it occurs as an  argument  to  an
+arithmetic  predicate.   Evaluation  fails  with  a  warning  message if either
+argument evaluates to a float.
+", "N bitwise and'ed with M").
+man("(\/)","N \/ M
+N bitwise or'ed with M.  Evaluated only when it occurs as  an  argument  to  an
+arithmetic  predicate.   Evaluation  fails  with  a  warning  message if either
+argument evaluates to a float.
+", "N bitwise or'ed with M").
+man("()","N  M
+N bitwise exclusive or'ed with M.  Evaluated only when it occurs as an argument
+to  an arithmetic predicate.  Evaluation fails with a warning message if either
+argument evaluates to a float.
+", "N bitwise exclusive or'ed with M").
+man("(<<)","N << M
+N shifted left M positions.  Evaluated only when it occurs as an argument to an
+arithmetic  predicate.   Evaluation  fails  with  a  warning  message if either
+argument evaluates to a float.
+", "N shifted left M positions").
+man("(>>)","N >> M
+N arithmetically shifted right M positions.  Evaluated only when it  occurs  as
+an  argument  to  an  arithmetic  predicate.   Evaluation  fails with a warning
+message if either argument evaluates to a float.
+", "N shifted right M positions").
+man("(+)","+ N
+N.  Evaluated only when it occurs as an argument to an arithmetic predicate.
+", "Plus N").
+man("(-)","- N
+Minus N.  Evaluated only when  it  occurs  as  an  argument  to  an  arithmetic
+predicate.
+", "Minus N").
+man("(\)","\ N
+Bitwise complement of N.  Evaluated only when it occurs as an  argument  to  an
+arithmetic  predicate.  Evaluation fails with a warning message if the argument
+evaluates to a float.
+", "bitwise complement of N").
+man("(not)","not N
+Logical complement of N.  Equivalent to comparing N with zero.  Evaluated  only
+when it occurs as an argument to an arithmetic predicate.
+", "logical complement of N").
+man("(<)","N < M
+Evaluates to 1 if N is less than M, and to 0 otherwise.  Evaluated only when it
+occurs as an argument to an arithmetic predicate.
+", "N < M").
+man("(=<)","N =< M
+Evaluates to 1 if N is less than or equal to M, and to 0 otherwise.   Evaluated
+only when it occurs as an argument to an arithmetic predicate.
+", "N =< M").
+man("(>)","N > M
+Evaluates to 1 if N is greater than M, and to 0 otherwise.  Evaluated only when
+it occurs as an argument to an arithmetic predicate.
+", "N > M").
+man("(>=)","N >= M
+Evaluates to 1 if N is greater  than  or  equal  to  M,  and  to  0  otherwise.
+Evaluated only when it occurs as an argument to an arithmetic predicate.
+", "N >= M").
+man("(=:=)","N =:= M
+Evaluates to 1 if the values of arithmetic expressions N and M are  equal,  and
+to  0 otherwise.  Evaluated only when it occurs as an argument to an arithmetic
+predicate.
+", "N = M").
+man("(=\=)","N =\= M
+Evaluates to 1 if the values of arithmetic expressions N and M are  not  equal,
+and  to  0  otherwise.   Evaluated  only  when  it  occurs as an argument to an
+arithmetic predicate.
+", "N ~= M").
+man("(and)","N and M
+Evaluates to 1 if N and M are both non-zero, and  to  0  otherwise.   Evaluated
+only when it occurs as an argument to an arithmetic predicate.
+", "N and M").
+man("(or)","N or M
+Evaluates to 1 if either N or M is non-zero, and  to  0  otherwise.   Evaluated
+only when it occurs as an argument to an arithmetic predicate.
+", "N or M").
+man("(<)","N < M when ground(N) and ground(M)
+Succeeds if the value of arithmetic expression N is  less  than  the  value  of
+arithmetic expression M.  Prints a message and fails if an argument is bound to
+a ground term that is not a number or arithmetic expression.
+", "arithmetic expression N < arithmetic expression M").
+man("(=<)","N =< M when ground(N) and ground(M)
+Succeeds if the value of arithmetic expression N is less than or equal  to  the
+value of arithmetic expression M.  Prints a message and fails if an argument is
+bound to a ground term that is not a number or arithmetic expression.
+", "arithmetic expression N <= arithmetic expression M").
+man("(>)","N > M when ground(N) and ground(M)
+Succeeds if the value of arithmetic expression N is greater than the  value  of
+arithmetic expression M.  Prints a message and fails if an argument is bound to
+a ground term that is not a number or arithmetic expression.
+", "arithmetic expression N > arithmetic expression M").
+man("(>=)","N >= M when ground(N) and ground(M)
+Succeeds if the value of arithmetic expression N is greater than  or  equal  to
+the  value  of  arithmetic  expression  M.   Prints  a  message and fails if an
+argument is bound to  a  ground  term  that  is  not  a  number  or  arithmetic
+expression.
+", "arithmetic expression N  arithmetic expression M").
+man("(=:=)","N =:= M when ground(N) and ground(M)
+Succeeds if the values of arithmetic expressions N and M are equal.   Prints  a
+message and fails if an argument is bound to a ground term that is not a number
+or arithmetic expression.
+", "arithmetic expressions N and M are equal").
+man("(=\=)","N =\= M when ground(N) and ground(M)
+Succeeds if the value of arithmetic expressions N and M are not equal.   Prints
+a  message  and  fails  if  an argument is bound to a ground term that is not a
+number or arithmetic expression.
+", "arithmetic expressions N and M are not equal").
+man("(and)","N and M when ground(N) and ground(M)
+Arithmetic expressions N and M are both non-zero.  Prints a message  and  fails
+if  an  argument  is  bound to a ground term that is not a number or arithmetic
+expression.
+", "arithmetic expressions N and M are both non-zero").
+man("between","between(N, M, I) when ground(N) and ground(M) or ground(I)
+Similar to N=<I,I=<M, but if I is a variable it is successively unified to  all
+of the integers between N and M inclusively.  N and M must be numbers, they may
+not be expressions.
+", "I is an integer between N and M inclusively").
+man("divides","divides(N, M, Div, Mod) when N and (M or Div and Mod) or  M  and
+Div and Mod
+N/M=Div,NmodM=Mod.  If N, M, Div, and Mod are not sufficiently instantiated the
+call  will delay.  The arguments must be integers or variables, they can not be
+expressions or floats.
+", "Div = N / M and Mod = N mod M").
+man("(or)","N or M when ground(N) and ground(M)
+Either or both of the arithmetic expressions N and M are  non-zero.   Prints  a
+message and fails if an argument is bound to a ground term that is not a number
+or arithmetic expression.
+", "either or both of the arithmetic expressions N and M are non-zero").
+man("(is)","I is N when ground(N)
+Arithmetic expression N evaluates to I, a variable or integer.  It delays if  N
+contains an unbound variable, so is/2 can only be used in one direction, unlike
+plus/3.  Similar to conventional arithmetic assignment in C.  Prints a  message
+and fails if the second argument is bound to a ground term that is not a number
+or arithmetic expression, or if the first argument is not a number.
+", "Arithmetic expression N evaluates to I").
+man("iota","iota(N, M, I) when ground(N) and ground(M) or ground(I)
+Similar to N=<I,I=<M, but if I is a variable it is successively unified to  all
+of the integers between N and M inclusively.  N and M must be numbers, they may
+not be expressions.  For compatibility, iota/3 has been renamed between/3.
+", "I is an integer between N and M inclusively").
+man("maxint","maxint(N)
+N is the largest integer possible in the  system  (maxint).   The  smallest  is
+-N-1.  Fails if N won't unify with maxint.
+", "N is the largest integer possible in the system").
+man("plus","plus(N, M, Sum) when N and M or N and Sum or M and Sum
+N+M=Sum.  If more than one argument is a variable, it will delay.  If  two  are
+integers,  then  the  third  will  be  calculated.  The arguments should not be
+expressions.
+", "integers N + M = Sum").
+man("random","random(Num)
+Num is a random integer in the range 0 to maxint (see maxint/1).
+", "Num is a random integer in the range 0 to maxint").
+man("times","times(N, M, Prod) when N and M or N and Prod or M and Prod
+N*M=Prod.  If more than one argument is a variable, it will delay.  If two  are
+integers,  then  the  third  will  be  calculated.  The arguments should not be
+expressions or floats.
+", "integers N * M = Prod").
+man("absoluteFileName","absoluteFileName(RelFile, AbsFile)
+Given a valid file name RelFile, AbsFile is bound to  the  absolute  file  name
+corresponding  to  it.  If RelFile.nl exists then it is chosen in preference to
+RelFile.
+", "AbsFile is the absolute file name corresponding to RelFile").
+man("characterCount","characterCount(Stream, Chars)
+(Non-logical).
+Unifies Chars with the number of characters that have been read or  written  on
+Stream.  A stream has characterCount 0 before any characters are transfered.
+Re-positioning Stream with fseek/3 invalidates the counter.
+", "(Non-logical) count characters on Stream").
+man("clearIOError","clearIOError(Stream)
+(Non-logical).
+Used to reset any error flags  on  Stream,  including  end-of-file.   Prints  a
+warning and fails if Stream is not a currently open stream.
+", "(Non-logical) reset error flags on I/O Stream").
+man("close","close(Stream)
+(Non-logical).
+Closes Stream.  Stream must be  obtained from a previous call to open/3 or  any
+similar  predicate.   For  compatibility,  this  predicate also accepts an atom
+representing a filename as its argument, in which case it  closes  a  (possibly
+arbitrary) stream associated with that file.
+If Stream cannot be closed a fatal error will be generated, unless file  errors
+have been turned off with prologFlag/3, in which case the call fails.  Prints a
+warning and fails if Stream is not a currently open stream.
+If user_input or user_output are closed, they are immediately re-opened on  the
+terminal.   If the user attempts to close user_error, a warning will be printed
+and the call will fail.
+", "(Non-logical) close i/o Stream").
+man("currentInput","currentInput(Stream)
+(Non-logical).
+Stream is unified with the current input stream.   Fails  if  Stream  will  not
+unify with the current input stream.
+", "(Non-logical) Stream is the current input stream").
+man("currentOutput","currentOutput(Stream)
+(Non-logical).
+Stream is unified with the current output stream.  Fails  if  Stream  will  not
+unify with the current output stream.
+", "(Non-logical) Stream is the current output stream").
+man("currentStream","currentStream(File, Mode, Stream)
+(Non-logical).
+Stream is a currently open stream on File, where Mode is either read, write  or
+append.  On backtracking, currentStream/3 finds all suitable streams.  Fails if
+Stream will not unify with a currently open stream of the appropriate type.
+The three standard input streams are ignored by this predicate.
+", "(Non-logical) Stream is a currently open stream on File with Mode").
+man("fileErrors","fileErrors
+(Non-logical).
+Resets fileErrors flag to on.  See prologFlag/3.
+", "(Non-logical) turn on file error messages").
+man("fseek","fseek(Stream, Offset, Whence)
+(Non-logical).
+Moves the file-pointer associated with Stream to a new  position  specified  by
+Offset  relative  to  Whence.   Whence  is  one  of beginning, current, or end,
+referring to the beginning of the file Stream is open on, the current  position
+in  the file of Stream, or the end of the file.  The exact meaning of Offset is
+operating system dependent, but is usually the signed number of bytes  to  move
+from Whence.  The only completely reliable way to determine an offset is to get
+it from ftell/2.
+Stream must be  obtained  from  a  previous  call  to  open/3  or  any  similar
+predicate.    Only   streams   open   to   files  can  be  re-positioned.   For
+compatibility, this predicate also accepts an atom representing a  filename  as
+its  argument,  in  which  case  it  re-positions a (possibly arbitrary) stream
+associated with that file.
+If Stream cannot be re-positioned a fatal error will be generated, unless  file
+errors  have  been  turned off with prologFlag/3, in which case the call fails.
+Prints a warning and fails if Stream is not a currently open stream.
+", "(Non-logical) re-position i/o Stream").
+man("ftell","ftell(Stream, Offset)
+(Non-logical).
+Offset is the current position with respect to beginning  of  the  file-pointer
+associated  with  Stream.   The  exact  meaning  of  Offset is operating system
+dependent, but is usually the number of bytes from the beginning of the file.
+Stream must be  obtained  from  a  previous  call  to  open/3  or  any  similar
+predicate.   Offset  is  only  meaningful  for  streams  open  on  files.   For
+compatibility, this predicate also accepts an atom representing a  filename  as
+its  argument,  in  which  case it gives the position of a (possibly arbitrary)
+stream associated with that file.
+Prints a warning and fails if Stream is not a currently open stream.
+", "(Non-logical) determine the current position of i/o Stream").
+man("lineCount","lineCount(Stream, Lines)
+(Non-logical).
+Unifies Lines with the number of lines  that  have  been  read  or  written  on
+Stream.  The first line on a stream is numbered 1.
+Re-positioning Stream with fseek/3 invalidates the counter.
+", "(Non-logical) count lines on Stream").
+man("linePosition","linePosition(Stream, LinePosition)
+(Non-logical).
+Unifies LinePosition with the number of characters read or  written  since  the
+last new-line on Stream.  The first character on a line is numbered 0.
+Re-positioning Stream with fseek/3 invalidates the counter.
+", "(Non-logical) count characters on current line on Stream").
+man("noFileErrors","noFileErrors
+(Non-logical).
+Sets fileErrors flag to off.  See prologFlag/3.
+", "(Non-logical) turn off file error messages").
+man("open","open(File, Mode, Stream)
+(Non-logical).
+File is an atom specifying a filename.  Mode is one  of  the  atoms  read  (for
+input),  write (for writing on new files) and append (for adding to an existing
+file).  If open/3 succeeds, Stream is unified with the resulting input  stream.
+If  File  cannot  be  opened  in the specified Mode, a fatal error is generated
+unless the fileErrors flag is set to off (see prologFlag/3), in which case  the
+call  fails.   Fails  if  Stream  cannot be unified with the stream returned by
+open/3.
+", "(Non-logical) open File in Mode with resulting Stream").
+man("openNullStream","openNullStream(Stream)
+(Non-logical).
+Stream is unified with  a  null  output  stream.   Output  to  this  stream  is
+discarded.  Fails if Stream will not unify with a currently open null stream.
+", "(Non-logical) Stream is unified with a null output stream").
+man("setInput","setInput(Stream)
+(Non-logical).
+Set current input to Stream.  Prints warning and  fails  if  Stream  is  not  a
+currently open input stream.
+", "(Non-logical) set current input to Stream").
+man("setOutput","setOutput(Stream)
+(Non-logical).
+Set current output to Stream.  Prints warning and fails  if  Stream  is  not  a
+currently open output stream.
+", "(Non-logical) set current output to Stream").
+man("sourceFile","sourceFile(File)
+sourceFile(Pred, Arity, File)
+True if File is a user-loaded source file, or if Pred/Arity is a  predicate  in
+the file File.  On backtracking, finds another appropriate predicate or file.
+", "File is a loaded source file (containing Pred/Arity)").
+man("streamEof","streamEof(Stream)
+(Non-logical).
+Succeeds if the end of file has been seen on Stream.
+", "(Non-logical) Stream is at end of file").
+man("streamPosition","streamPosition(Stream, OldPosition, NewPosition)
+(Non-logical).
+Unifies OldPosition with an object describing the current  position  of  Stream
+and  re-positions  it  to  NewPosition.   Positions  are internal objects whose
+representation is implementation dependent.  The only valid way to  create  one
+is with streamPosition/3.  StreamPosition/3 fails if NewPosition is not a valid
+position,   though   the    check    is    so    placed    that    the    idiom
+streamPosition(Stream,Position,Position)  finds the current position and leaves
+it unchanged.
+    To move to a random position in a file, try fseek/3.
+", "(Non-logical) move Stream to a new position, returning the old position").
+man("isEof","isEof(Term)
+Equivalent to nonvar(Term),Term=end_of_file,  but  portable.   Does  not  catch
+end-of-file marker from character input.  If Term is a variable, isEof/1 fails.
+", "Term = end_of_file").
+man("eof","eof(Term)
+Equivalent to Term=end_of_file,  but  portable.   Does  not  catch  end-of-file
+marker from character input.  If Term is a variable, eof/1 succeeds.
+", "Term = end_of_file").
+man("get","get(Char)
+get(Stream, Char)
+(Non-logical).
+Reads ASCII characters from the current input stream (or  Stream)  and  returns
+Char,  the ASCII code for the first character read which has ASCII code greater
+than 32.  If there are no such characters, Char is unified with  -1.   If  end-
+of-file  was reached by a previous call to an input predicate on this stream, a
+fatal error is generated.  Fails if Char will  not  unify  with  the  character
+read.
+", "(Non-logical) Char is ASCII code of first printable character from input").
+man("get0","get0(Char)
+get0(Stream, Char)
+(Non-logical).
+Char is the ASCII code for the next character to be read from the current input
+stream  (or  Stream).   At end-of-file Char is unified with -1.  If end-of-file
+was reached by a previous call to an input predicate on that  stream,  a  fatal
+error is generated.  Fails if Char will not unify with the character read.
+", "(Non-logical) Char is ASCII code of next character from input").
+man("getl","getl(Line)
+getl(Stream, Line)
+(Non-logical).
+Line is a list of the ASCII codes of the next characters to be  read  from  the
+current  input  stream  (or  Stream)  up  to  and  including  the next new-line
+character.  If end-of-file is reached before a new-line Line will  not  have  a
+new-line  as its last character.  If end-of-file was reached by a previous call
+to an input predicate on that stream, a fatal error  is  generated.   Fails  if
+Line will not unify with the line read.
+", "(Non-logical) Line is list of ASCII codes of next line from input").
+man("getToken","getToken(Token, Type)
+getToken(Stream, Token, Type)
+(Non-logical).
+Read the next NU-Prolog Token  of  Type  from  the  current  input  stream  (or
+Stream).  Type is an atom.
+     Token                         Type
+     []                            end_of_file
+     VarName                       var
+     Atom                          atom
+     QAtom                         quoted
+     Number                        number
+     String                        string
+     End                           end
+     ASCII                         junk
+where VarName is a string representing the name of  a  variable,  Atom  is  any
+atom, QAtom is an atom that was quoted, Number is a number, String is a string,
+End is ' ' - the token returned when the end of  a  term  is  encountered,  and
+ASCII is a character code not amongst the unescaped permitted characters listed
+in Appendix 5.
+Left parentheses are tokenized as the atom '(' with type atom if they  are  not
+immediately  preceded  by  a  token  that  could serve as an operator.  Periods
+followed by whitespace (the term terminator) tokenize as , also with type atom.
+Both  can  be  distinguished  from  the quoted atom appearing in input by their
+type.
+", "(Non-logical) read the next NU-Prolog Token of Type from the input").
+man("getTokenList","getTokenList(Tokens)
+getTokenList(Stream, Tokens)
+(Non-logical).
+Reads NU-Prolog token and type pairs from the current input stream (or  Stream)
+using  getToken/2  until  a term terminator or end of file is encountered.  Any
+term terminator read is  discarded,  the  tokens  and  types  read  are  consed
+together as pairs and a list made of them.
+", "(Non-logical) read the next NU-Prolog  term's  worth  of  tokens  from  the
+input").
+man("read","read(Term)
+read(Stream, Term)
+(Non-logical).
+Read a NU-Prolog Term, terminated by a period and white space, from the current
+input  stream  (or  Stream).   All terms before the first syntactically correct
+term are ignored.  If Term contains variables these are distinct from variables
+not   in  the  term.   At  end-of-file,  read/1  and  read/2  return  the  atom
+end_of_file.  Fails if Term will not unify with the term that is read.
+", "(Non-logical) read a Term from input").
+man("readTerm","readTerm(Term, NameList, VarList)
+readTerm(Stream, Term, NameList, VarList)
+(Non-logical).
+Read Term from the standard input stream (or Stream) as for read/1  or  read/2.
+VarList  is  bound  to a list of the variables in Term.  NameList is bound to a
+list of the names of the variables represented as strings; variables called `_'
+(underscore)  are not included in NameList or VarList.  Fails if Term, NameList
+or VarList won't unify with the terms returned by readTerm/3 or readTerm/4.
+", "(Non-logical) read a Term from input with NameList and VarList").
+man("read1","read1(Term)
+read1(Stream, Term)
+(Non-logical).
+Read a NU-Prolog Term, terminated by a period and white space, from the current
+input  stream  (or Stream).  If Term contains variables these are distinct from
+variables not in the term.  At end-of-file, read1/1 and read1/2 return the atom
+end_of_file.  Unlike read/1 and read/2, read1/1 and read1/2 print a warning and
+fail if a syntax error is encountered.  Fails if Term will not unify  with  the
+term that is read.
+", "(Non-logical) read a Term from input").
+man("read1Term","read1Term(Term, NameList, VarList)
+read1Term(Stream, Term, NameList, VarList)
+(Non-logical).
+Read a term Term from the standard input stream (or Stream) as for  read1/1  or
+read1/2.   VarList  is  bound  to a list of the variables in Term.  NameList is
+bound to a list of the names of the variables represented as strings; variables
+called  `_'  (underscore)  are  not  included in NameList or VarList.  Fails if
+Term, NameList or VarList won't unify with the terms returned by read1Term/3 or
+read1Term/4.
+", "(Non-logical) read a Term from input with NameList and VarList").
+man("see","see(File)
+(Non-logical).
+Switches current input to either the file or stream specified by File.  If File
+is a stream, but not a currently open input stream, an error is given.  If File
+is an atom then it is treated as a file; if there are  no  open  input  streams
+associated  with  that file then one is opened.  If there are more than one, an
+arbitrary one is chosen as current input.  If File is neither a stream  nor  an
+atom see/1 fails.
+", "(Non-logical) switch current input to File").
+man("seeing","seeing(Stream)
+(Non-logical).
+Stream is unified with the current input stream.  Same as currentInput(Stream).
+", "(Non-logical) Stream is the current input stream").
+man("seen","seen
+(Non-logical).
+Closes the current input stream, which reverts to user_input.
+",  "(Non-logical)  close  the  current  input   stream,   which   reverts   to
+user_input").
+man("skip","skip(Bound)
+skip(Stream, Bound)
+(Non-logical).
+Reads characters from the current input  stream  (or  Stream)  until  character
+Bound  appears  or end-of-file is reached.  If Bound is a list, then characters
+are read until a member of Bound is found; Bound should therefore be a list  of
+ASCII  codes.   If  Bound  is  neither of these things, it will read characters
+until end-of-file is reached.
+", "(Non-logical) reads characters from input until character Bound appears").
+man("sread","sread(String, Term)
+(Non-logical).
+Parse String to give Term.  Fails if String is not a valid term.  Unlike  input
+to read/1, the term in String should not be terminated with a period.
+", "(Non-logical) parse String to give Term").
+man("sreadTerm","sreadTerm(String, Term, NameList, VarList)
+(Non-logical).
+Parse String yielding Term as for sread/2, where NameList  and  VarList  are  a
+list  of  the  names  of  the  variables, and a list of the variables, in Term,
+respectively.  Variables named `_' are not included  in  NameList  or  VarList.
+Fails  if  String  is  not  a  valid term.  Unlike input to read/1, the term in
+String should not be terminated with a period.
+", "(Non-logical) parse String yielding Term, NameList and VarList").
+man("tokensize","tokenize(StringIn, Token, Type, StringOut)
+tokenize(String, Tokens)
+(Non-logical).
+Tokenize/4 reads the first Token with Type, from StringIn, leaving  any  unread
+characters  in  StringOut.   Tokenize/2  converts  all of String into a list of
+Token.Type pairs.  Tokens and types are as described for getToken/3.  Fails  if
+any argument is of an inappropriate type.
+", "(Non-logical) read one or more Tokens and Types from a String").
+man("tread","tread(TokenList, Term)
+(Non-logical).
+Parse TokenList, a list of token and  type  pairs  such  as  that  produced  by
+getTokenList/1,  to give Term.  Fails if TokenList is not a valid term.  Unlike
+input to read/1, the term in TokenList should not be  terminated  with  a  term
+terminator.
+", "(Non-logical) parse TokenList to give Term").
+man("treadTerm","treadTerm(TokenList, Term, NameList, VarList)
+(Non-logical).
+Parse TokenList yielding Term as for tread/2, where NameList and VarList are  a
+list  of  the  names  of  the  variables, and a list of the variables, in Term,
+respectively.  Variables named `_' are not included  in  NameList  or  VarList.
+Fails  if  TokenList  is not a valid term.  Unlike input to read/1, the term in
+TokenList should not be terminated with a term terminator.
+", "(Non-logical) parse TokenList yielding Term, NameList and VarList").
+man("ttyget","ttyget(Char)
+(Non-logical).
+Read   the   next   printable   character    from    user_input.     Same    as
+get(user_input,Char).
+", "(Non-logical) get(user_input, Char)").
+man("ttyget0","ttyget0(Char)
+(Non-logical).
+Read a character from user_input.  Same as get0(user_input,Char).
+", "(Non-logical) same as get0(user_input, Char)").
+man("ttyskip","ttyskip(Bound)
+(Non-logical).
+Reads characters from user_input until character Bound appears, or  end-of-file
+is  reached.   If  Bound  is a list, then characters are read until a member of
+Bound is found.  Same as skip(user_input,Bound).
+", "(Non-logical) skip(user_input, Bound)").
+man("display","display(Term)
+display(Stream, Term)
+(Non-logical).
+Write Term on the current output stream (or Stream) in prefix format.   Similar
+to writev/2 (or writev/3).
+", "(Non-logical) write Term on output stream in prefix format").
+man("flushOutput","flushOutput(Stream)
+(Non-logical).
+Flush the specified output  Stream,  causing  any  buffered  output  to  appear
+immediately.
+", "(Non-logical) flush output Stream").
+man("format","format(Format, Arguments)
+format(Stream, Format, Arguments)
+(Non-logical).
+Format/2,3 is a general formatted output routine.  It takes a list of Arguments
+and  a Format, a string or atom, describing how they are to be printed.  Output
+is either to the current output or to Stream.
+Format is composed of characters to be printed and of format control directives
+that  cause  the printing of one or more of the Arguments.  The format controls
+are character sequences of the form ~nc where c is one of  the  format  control
+characters  listed  below  and  n  is  an  optional  small  integer controlling
+precision, repetition, radix, or fill character.  N can be specified as  either
+a decimal number, the character * which causes the number to be supplied by the
+next unprocessed argument, or 'x meaning the ASCII code of the single character
+x.  The formats that take a numeric argument have defaults if it is absent.
+Format reports an error if the type of the argument given does not  match  that
+expected by the format.  Formats expecting numeric arguments evaluate them.
+The format control characters are
+~a  Print the argument, and atom, without quotes.
+~nc Print the character specified by the ASCII code given  by  the  argument  n
+    times.  N defaults to one.
+~ne Print the argument, a floating point number, in exponential  notation  with
+    one  digit  before  the decimal point and n digits after it.  N defaults to
+    six.
+~nE This is similar to ~e, but the letter E rather than e is used  to  indicate
+    the exponent.
+~nf Print the argument, a floating point number, in fixed-point  notation  with
+    and  n  digits  after the decimal point.  N defaults to six.  If n is zero,
+    the decimal point is omitted.
+~ng Print the argument, a floating  point  number,  in  either  exponential  or
+    fixed-point notation, depending on which is smaller.  At most n significant
+    digits are printed.  N defaults to six.
+~nG This is similar to ~g, but the letter E rather than e is used  to  indicate
+    the exponent.
+~nd Print the argument, an integer, as a decimal number.  If n is not  zero,  a
+    decimal point is inserted n digits from the right-hand side.  N defaults to
+    zero.
+~nD This is similar to ~d, but commas are inserted to group the integer part of
+    the number printed.
+~nr Print the argument, an integer, as a number in radix n using the digits 0-9
+    and  the  letters a-z.  This gives valid radixes in the range two to 36.  N
+    defaults to eight.
+~nR This is similar to ~r, but it uses A-Z rather than a-z.
+~ns Print the first n characters of the argument, a  string.   Strings  shorter
+    than n are padded with spaces on the left.  N defaults to the length of the
+    string.
+~i  Ignore the argument.
+~k  Pass the argument to writeCanonical/1.
+~p  Pass the argument to print/1.
+~q  Pass the argument to writeq/1.
+~w  Pass the argument to write/1.
+~~  Print one ~.
+~nn Print n newlines.  N defaults to one.
+~N  Print a newline if not at the beginning of a line, and nothing otherwise.
+~n| Set a tab at the nth character on the current  line.   N  defaults  to  the
+    current line position.
+~n+ Set a tab at n characters on from the last one.  N defaults to eight.
+~nt Establish a fill position with fill character n in the current  line  being
+    printed.   When  the  space  between  two  tabs is not filled by explicitly
+    written characters, fill characters are inserted at the fill  positions  to
+    make up the difference.  N defaults to 32 (ASCII space).
+    ", "(Non-logical) formatted output").
+man("nl","nl
+nl(Stream)
+(Non-logical.) A newline is printed on the current output stream  (or  Stream).
+Same as put(0'\n).
+", "write a newline").
+man("portraycl","portraycl(Clause)
+(Non-logical).
+Write Clause with atoms quoted where necessary, and parentheses inserted  where
+necessary  to represent precedence.  A term written with portraycl/1 can always
+be read as a syntactically correct term by the NU-Prolog parser if a  ``''  and
+some white space is appended to it.
+", "(Non-logical) write Clause in a suitable format").
+man("portraygoals","portraygoals(Goal)
+(Non-logical).
+Write Goal with atoms quoted where necessary, and  parentheses  inserted  where
+necessary  to  represent  precedence.   A  term written with portraygoals/1 can
+always be read as a syntactically correct term by the  NU-Prolog  parser  if  a
+``'' and some white space is appended to it.
+", "(Non-logical) write Goal in a suitable format").
+man("print","print(Term)
+print(Stream, Term)
+print(Stream, Term, Depth)
+print(Stream, Term, Depth, Prec)
+(Non-logical).
+Print Term on the current output (or on Stream).  If Depth is given  then  sub-
+terms of Term nested deeper than Depth are printed as the atom **depth*bound**.
+The elements of a list are treated as of the same depth.  If Prec is given then
+parentheses are placed around Term if needed to make it parse as an argument of
+an operator of precedence Prec.  If the user has  defined  portray/1,  this  is
+called.   If  portray(Term)  fails  or  does  not exist, write(Term) is called.
+Print is used by the debugger to display goals and by the interpreter top-level
+to show answers.
+", "(Non-logical) print Term on the current output").
+man("printf","printf(Format, List)
+printf(Stream, Format, List)
+(Non-logical).
+List is printed with Format on the current output stream (or Stream).  List  is
+a  list  of  strings,  constants  and  integers.   Format is a NU-Prolog string
+specifying the appearance of the output, where the conventions used are similar
+to  printf  in  the  C programming language.  The types of the elements of List
+should match the format string; if the types do not match, the  behaviour  will
+be determined by the local implementation of C.
+For strings and atoms, the format %s is used.  %ns  may  be  used  to  print  a
+string  or atom in a right-justified (left-justified if n is negative) field of
+width n.  If the string or atom is longer than n characters, the overflow  will
+be  printed  to the right of the field.  %nms may be used to print m characters
+of a string in a right-justified (left-justified if n  is  negative)  field  of
+width n.
+The format %c is used for characters (small positive  integers  in  NU-Prolog).
+%nc  may  be  used to print a right-justified (left-justified if n is negative)
+character in a field of width n.
+The format %d is for decimal output of integers.  The formats %nd and %nmd also
+apply,  where  n and m are as for the format for strings and atoms.  Similarly,
+the formats %o and %x are for octal and hexadecimal output of integers.
+Printf is not portable.  Use the more flexible format/2,3 instead.
+", "(Non-logical) formatted print").
+man("put","put(Char)
+put(Stream, Char)
+(Non-logical).
+The character given by the ASCII code Char is written  on  the  current  output
+stream (or Stream).
+", "(Non-logical) write Char on output").
+man("putl","putl(String)
+putl(Stream, String)
+(Non-logical).
+The characters given by the list of ASCII codes in String  is  written  on  the
+current output stream (or Stream).
+", "(Non-logical) write String on output").
+man("sformat","sformat(Format, Arguments, String)
+Sformat/3 is similar to format/2 but collects the formatted data in String.
+For the purposes of ~N and ~|, sformat/3 assumes that the formatting  is  being
+done at the beginning of a line.
+The ~p option is not yet implemented.
+Sformat/3 reports an error if the type of the argument  given  does  not  match
+that expected by the format.
+", "(Non-logical) formatted output to a string").
+man("tab","tab(N)
+tab(Stream, N)
+(Non-logical).
+Writes N spaces on the current output stream (or Stream).  Fails if N is not  a
+non-negative integer.
+", "(Non-logical) write N spaces").
+man("tell","tell(File)
+(Non-logical).
+Switches current output to the file (or stream) specified by File.  If File  is
+a  stream,  but not a currently open output stream, an error is given.  If File
+is an atom then it is treated as a  filename;  if  there  are  no  open  output
+streams  associated  with  that file, one is opened; if there are more than one
+appropriate streams, an arbitrary one is chosen.  If File is neither  a  stream
+nor an atom, tell/1 fails.
+", "(Non-logical) switches current output to File").
+man("telling","telling(Stream)
+(Non-logical).
+Stream   is   unified   with   the   current   output    stream.     Same    as
+current_output(Stream).
+", "(Non-logical) Stream is current output stream").
+man("told","told
+(Non-logical).
+Closes the current output stream, which reverts to user_output.
+",  "(Non-logical)  closes  the  current  output  stream   which   reverts   to
+user_output").
+man("ttyflush","ttyflush
+(Non-logical).
+Same as flush(user_output).
+", "(Non-logical) flush(user_output)").
+man("ttynl","ttynl
+(Non-logical).
+A newline is printed on user_output.  Same as nl(user_output).
+", "(Non-logical) nl(user_output)").
+man("ttyput","ttyput(Char)
+(Non-logical).
+Write a character on user_output.  Same as put(user_output,Char).
+", "(Non-logical) put(user_output, Char)").
+man("ttytab","ttytab(N)
+(Non-logical).
+Writes N spaces on user_output.  Same as tab(user_output,N).
+", "(Non-logical) tab(user_output, N)").
+man("write","write(Term)
+write(Stream, Term)
+(Non-logical).
+Writes term Term  on  the  current  output  stream  (or  Stream),  taking  into
+consideration current operator declarations.  Same as
+writev([list,string,noquote,ops],Term)
+and
+writev(Stream,[list,string,noquote,ops],Term)
+This implies that lists of integers for which isPrint/1 is true will be printed
+as  strings.   If  numberVars/3 is used to ground Term before writing, terms of
+the form $VAR(N) will be printed as if they were  variables,  unless  the  flag
+vars is set to off; see prologFlag/3.
+Prints message, but succeeds, if Stream is not a valid stream.
+", "(Non-logical) write a Term on output").
+man("writeln","writeln(Term)
+writeln(Stream, Term)
+(Non-logical).
+Writes term Term on the  current  output  stream  (or  Stream)  followed  by  a
+newline.  Same as
+write(Term),nl
+and
+write(Stream,Term),nl(Stream)
+If numberVars/3 is used to ground  Term  before  writing,  terms  of  the  form
+$VAR(N)  will be printed as if they were variables, unless the flag vars is set
+to off; see prologFlag/3.
+Prints message, but succeeds, if Stream is not a valid stream.
+", "(Non-logical) write a Term followed by a newline on output").
+man("writeCanonical","writeCanonical(Term)
+writeCanonical(Stream, Term)
+(Non-logical).
+Writes term Term on the current output stream (or Stream) in a form in which it
+can  be  read  back by read/1.  Terms are written in prefix notation, lists are
+written using the functor  and atom [],  and  atoms,  and  thus  functors,  are
+quoted  if  necessary.   WriteCanonical  does  not  print sub-terms of the form
+$VAR(N) as variables.
+Same as
+writev([cons,nostring,quote,prefix],Term)
+and
+writev(Stream,[cons,nostring,quote,prefix],Term),
+but with the vars flag turned off.
+Provided that the value of the characterEscapes flag is unchanged  and  that  a
+period  and a space are appended, terms written with writeCanonical can be read
+back with read.
+Prints message, but succeeds, if Stream is not a valid stream.
+", "(Non-logical) write a Term on output so that it can be read back in").
+man("writeq","writeq(Term)
+writeq(Stream, Term)
+(Non-logical).
+Writes term Term  on  the  current  output  stream  (or  Stream),  taking  into
+consideration  current  operator declarations, and quoting atoms (and therefore
+functors) where necessary.  Same as
+writev(Term,[list,string,quote,ops])
+and
+writev(Stream,Term,[list,string,quote,ops]).
+This implies that lists of integers for which isPrint/1 is true will be printed
+as  strings.   If  numberVars/3 is used to ground Term before writing, terms of
+the form $VAR(N) will be printed as if they were  variables,  unless  the  flag
+vars is set to off; see prologFlag/3.
+Prints message, but succeeds, if Stream is not a valid stream.
+", "(Non-logical) write a Term on output using operator declarations").
+man("writev","writev(Flags, Term)
+writev(Stream, Flags, Term)
+(Non-logical).
+Writes Term on the current output stream (or Stream), taking into consideration
+the list of Flags, which should be ground, or a warning will be printed and the
+predicate will fail.  Possible values of Flags (first value is default) are
+list (cons)             Write lists using [] (or ) notation.
+string (nostring)       Write strings using double quotes (or as list of integers).  The
+                        default writes lists of integers for which isPrint/1 is true as strings.
+noquote (quote)         Write atoms and functors without quotes (or use quotes when
+                        necessary).
+quoteall (noquoteall)   Write all atoms and functors with quotes (or use the setting of
+                        quote flag).
+ops (prefix)            Take account of operator declarations (or use prefix notation).
+base = r                Write integers in base 2 <= r <= 36.  Floats are always written in
+                        decimal.
+prec = p                Place parentheses around Term if it is written in operator form with
+                        precedence greater than p.
+Values in Flags other than those defined above are ignored; where both  options
+are  absent,  the  default  is  taken.   If numberVars/3 is used to ground Term
+before writing, terms of the form $VAR(N) will  be  printed  as  if  they  were
+variables, unless the flag vars is set to off; see prologFlag/3.
+Prints message, but succeeds, if Stream is not a valid stream.
+", "(Non-logical) write a Term on output using Flags").
+man("consult","consult(File)
+(Non-logical).
+File is consulted.  The extension nl or pl is appended to File if required.  If
+File  is  library(Lib),  Lib  is  looked  for in the NU-Prolog and user-defined
+libraries.  If File is a list of files, then each is consulted  in  turn.   All
+clauses and definite clause grammar rules in the file are added to the internal
+database  and  goals  are  executed.   Predicates  defined  in  File  supersede
+predicates which are already defined.  Goals are written in the form ?-goal.
+", "(Non-logical) add clauses in File to internal database and execute goals").
+man("ensureLoaded","ensureLoaded(File)
+(Non-logical).
+Ensure that File has been loaded.  If File is a list, ensureLoaded/1 is applied
+to each member.
+", "(Non-logical) ensure File have been loaded").
+man("(lib)","lib File
+(Non-logical).
+Load File from the NU-Prolog library or from one of the user-libraries  defined
+by  libraryDirectory/1.   The  extension  no  is  appended to File if required.
+Predicate definitions in File supersede predicates which are  already  defined.
+The NU-Prolog library directory may be changed with prologFlag/3.
+", "(Non-logical) load File from a library").
+man("libdirectory","libdirectory(File)
+File is either the atom whose name is the UNIX directory  where  the  NU-Prolog
+library  resides, or the result of libraryDirectory(File).  The system searches
+for libraries in the order given by  libraryDirectory/1  followed  by  the  NU-
+Prolog library.
+The location of the NU-Prolog library may be changed with prologFlag/3.
+", "File is pathname of NU-Prolog library").
+man("libraryDirectory","libraryDirectory(Dir)
+User-defined predicate listing any library  directories  to  be  searched  when
+files  are  loaded  by lib/1 or with the library(File) convention by consult/1,
+load/1, or /2.  Dir is an atom whose name is a  UNIX  directory  where  a  user
+library resides.
+", "Dir is pathname of a user library").
+man("load","load(File)
+(Non-logical).
+Load File.  File is searched for with the extensions no, nl, nothing, or pl and
+the  first  found  is  loaded or consulted as appropriate.  The extension no is
+appended to File if required.  If File is library(Lib), Lib is  looked  for  in
+the  NU-Prolog  and  user-defined  libraries.   Predicate  definitions  in File
+supersede predicates which are already defined.  Same as [File].
+", "(Non-logical) load object File").
+man("(.)","[File<1>,...,File<n>]
+(Non-logical).
+Load the list  File1, . . . ,Filen  of  object  files.   The  extension  no  is
+appended  if  required.   If  Filei is library(Libi), Libi is looked for in the
+NU-Prolog and user-defined  libraries.   Same  as  load(File1),...,load(Filen).
+New predicate definitions supersede predicates which are already defined.
+", "(Non-logical) load the list of object files").
+man("addprop","addprop(Atom, Key, Prop)
+(Non-logical).
+Adds the pair <Key,Prop> to the end of the property list of Atom.  Atom and Key
+must  be  ground,  or  a  warning  is  printed  and  addprop/3  fails.  Same as
+addpropz(Atom,Key,Prop).
+", "(Non-logical) adds <Key, Prop> to the end of property list of Atom").
+man("addprop","addprop(Atom, Key, Prop, Reference)
+(Non-logical).
+Same as addprop/3, but gives a Reference to the property added.  Equivalent  as
+addpropz(Atom,Key,Prop,Reference).
+", "(Non-logical) adds <Key, Prop> to the end of property list of Atom").
+man("addpropa","addpropa(Atom, Key, Prop)
+(Non-logical).
+Adds the pair <Key,Prop> to the beginning of the property list of  Atom.   Atom
+and Key must be ground, or a warning is printed and addpropa/3 fails.
+", "(Non-logical) puts <Key, Prop> at the start of property list of Atom").
+man("addpropa","addpropa(Atom, Key, Prop, Reference)
+(Non-logical).
+Same as addpropa/3, but gives a Reference to the property added.
+", "(Non-logical) puts <Key, Prop> at the start of property list of Atom").
+man("addpropz","addpropz(Atom, Key, Prop)
+(Non-logical).
+Adds the pair <Key,Prop> to the end of the property list of Atom.  Atom and Key
+must be ground, or a warning is printed and addpropz/3 fails.
+", "(Non-logical) adds <Key, Prop> to the end of property list of Atom").
+man("addpropz","addpropz(Atom, Key, Prop, Reference)
+(Non-logical).
+Same as addpropz/3, but gives a Reference to the property added.
+", "(Non-logical) adds <Key, Prop> to the end of property list of Atom").
+man("getprop","getprop(Atom, Key, Prop)
+(Non-logical).
+Unifies <Key,Prop> with each of the properties of Atom.  Atom must  be  ground,
+or a warning is printed and getprop/3 fails.
+", "(Non-logical) unifies <Key, Prop> with each of the properties of Atom").
+man("getprop","getprop(Atom, Key, Prop, Reference)
+(Non-logical).
+Same as getprop/3, but gives a Reference to the property returned.
+", "(Non-logical) unifies <Key, Prop> with each of the properties of Atom").
+man("properties","properties(Atom, Key, PropList)
+(Non-logical).
+PropList is a list of all properties with Key in the  property  list  of  Atom.
+Atom must be ground, or a warning is printed and properties/3 fails.
+", "(Non-logical) PropList is list of properties of Atom with given Key").
+man("putprop","putprop(Atom, Key, Prop)
+(Non-logical).
+If Key does not already appear in the property list of  Atom,  add  <Key,Prop>;
+otherwise,  replace  the  first  existing property associated with Key by Prop.
+Atom and Key must be ground, or a warning is printed and putprop/3 fails.
+", "(Non-logical) replace <Key, Prop> for Atom").
+man("putprop","putprop(Atom, Key, Prop, Reference)
+(Non-logical).
+Same as putprop/3, but gives a Reference to the property changed.
+", "(Non-logical) replace <Key, Prop> for Atom").
+man("remprop","remprop(Atom, Key)
+(Non-logical).
+Remove all the properties of Atom with Key.  Atom must be ground or  a  warning
+is printed and remprop/2 fails.  Same as remprop(Atom,Key,_).
+", "(Non-logical) remove all properties of Atom with Key").
+man("remprop","remprop(Atom, Key, Prop)
+(Non-logical).
+Remove all the properties of Atom with Key which unify with Prop.  Atom must be
+ground or a warning is printed and remprop/3 fails.
+", "(Non-logical) remove all properties of  Atom  with  Key  which  unify  with
+Prop").
+man("abolish","abolish(Pred, Arity)
+(Non-logical).
+All information about Pred/Arity is removed from the database.  It is an  error
+for Pred not to be an atom, Arity not to be an integer, or for Pred/Arity to be
+a system predicate.
+", "(Non-logical) Remove all information about Pred/Arity.").
+man("assert","assert(Clause)
+(Non-logical).
+If Clause - a rule or fact - is  about  an  external  database  predicate,  add
+Clause  to the appropriate external database.  Otherwise, add Clause to the end
+of the appropriate predicate definition  in  the  internal  database.   If  the
+predicate definition is not dynamic, it is removed and made dynamic by the call
+to assert/1.  Same as assertz/1, for internal databases.
+", "(Non-logical) add Clause to database").
+man("assert","assert(Clause, Reference)
+(Non-logical).
+Same as assert/1, but gives a Reference to Clause.  Does not apply to  external
+databases.
+", "(Non-logical) add Clause to internal database, giving Reference").
+man("asserta","asserta(Clause)
+(Non-logical).
+Add Clause at the start of the appropriate predicate definition in the internal
+database.   If  the predicate definition is not dynamic, it is removed and made
+dynamic by the call to asserta/1.
+", "(Non-logical) add Clause to start of internal database").
+man("asserta","asserta(Clause, Reference)
+(Non-logical).
+Same as asserta/1, but gives a Reference to Clause.  Does not apply to external
+databases.
+", "(Non-logical) add Clause to start of internal database, giving Reference").
+man("assertz","assertz(Clause)
+(Non-logical).
+Add Clause to the end of the appropriate predicate definition in  the  internal
+database.   If  the predicate definition is not dynamic, it is removed and made
+dynamic by the call to assert/1.
+", "(Non-logical) add Clause to end of internal database").
+man("assertz","assertz(Clause, Reference)
+(Non-logical).
+Same as assertz/1, but gives a Reference to Clause.  Does not apply to external
+databases.
+", "(Non-logical) add Clause to end of internal database, giving Reference").
+man("clause","clause(Head, Body)
+(Non-logical).
+There is a clause in the internal database with Head and Body; the  body  of  a
+unit clause is the atom true.  On backtracking, finds another matching Head and
+Body.
+", "(Non-logical) there is a clause in internal database with Head and Body").
+man("clause","clause(Head, Body, Reference)
+(Non-logical).
+Same as clause/2, but gives a Reference to  clause  with  Head  and  Body.   If
+Reference is given, then Head and Body are unified with the clause specified by
+Reference.
+", "(Non-logical) Reference to  clause  in  internal  database  with  Head  and
+Body").
+man("clauses","clauses(Functor, Arity, ClauseList)
+(Non-logical).
+ClauseList is a list of all clauses in the internal  database  whose  head  has
+Functor and Arity.
+", "(Non-logical) ClauseList from internal database with Functor/Arity").
+man("(dynamic)","dynamic Functor/Arity
+dynamic [F<1>/A<1>,...,F<n>/A<n>]
+(Non-logical).
+Remove any previous definition of predicate Functor/Arity (or F1/A1,...,Fn/An),
+and declare Functor/Arity (or F1/A1,...,Fn/An) to be dynamic.
+", "(Non-logical) declare a dynamic predicate").
+man("erase","erase(Reference)
+(Non-logical).
+The dynamic clause with Reference is removed from the internal database.  If no
+such clause exists then erase/1 fails.
+", "(Non-logical) dynamic clause Reference is removed from internal database").
+man("instance","instance(Reference, Term)
+(Non-logical).
+Term is most general instance of the property given by Reference.
+",  "(Non-logical)  Term  is  most  general  instance  of  property  given   by
+Reference").
+man("instance","instance(Reference, Key, Term)
+(Non-logical).
+Term is most  general  instance  of  the  property  given  by  Reference.   Key
+specifies which key the property has been stored under (see putprop/3).
+",  "(Non-logical)  Term  is  most  general  instance  of  property  given   by
+Reference").
+man("record","record(Key, Term, Ref)
+(Non-logical).
+Term is recorded in the internal database as the last  item  attached  to  Key,
+which  must be instantiated.  Ref is a database reference to the recorded Term.
+If Key is a term, only the principle  functor  is  significant,  so  that  p(a)
+represents  the  same  key  as  p(1), but a different key from p(c,d).  Same as
+recordz/3.
+", "(Non-logical) Ref refers to Term asserted as last attached to Key").
+man("recorda","recorda(Key, Term, Ref)
+(Non-logical).
+Term is recorded in the internal database as the first item  attached  to  Key,
+which  must be instantiated.  Ref is a database reference to the recorded Term.
+If Key is a term, only the principle  functor  is  significant,  so  that  p(a)
+represents the same key as p(1), but a different key from p(c,d).
+", "(Non-logical) Ref refers to Term asserted as first attached to Key").
+man("recorded","recorded(Key, Term)
+(Non-logical).
+Term has been recorded in the internal database  against  Key,  which  must  be
+instantiated.   On  backtracking,  recorded/2 will find further matching terms.
+If Key is a term, only the principle  functor  is  significant,  so  that  p(a)
+represents the same key as p(1), but a different key from p(c,d).
+", "(Non-logical) Term is in the database as last attached to Key").
+man("recorded","recorded(Key, Term, Ref)
+(Non-logical).
+Term with database reference Ref has been recorded  in  the  internal  database
+against  Key, which must be instantiated.  If Key is a term, only the principle
+functor is significant, so that p(a) represents the same key  as  p(1),  but  a
+different key from p(c,d).
+", "(Non-logical) Ref refers to Term in the database as last attached to Key").
+man("recordz","recordz(Key, Term, Ref)
+(Non-logical).
+Term is recorded in the internal database as the last  item  attached  to  Key,
+which  must be instantiated.  Ref is a database reference to the recorded Term.
+If Key is a term, only the principle  functor  is  significant,  so  that  p(a)
+represents  the  same  key  as  p(1), but a different key from p(c,d).  Same as
+record/3.
+", "(Non-logical) Ref refers to Term asserted as last attached to Key").
+man("retract","retract(Clause)
+(Non-logical).
+The first clause that matches Clause  is  removed  from  the  internal  (or  an
+external) database.  On backtracking, the next matching clause is removed.
+", "(Non-logical) remove Clause from database").
+man("retractall","retractall(Head)
+(Non-logical).
+Retracts all clauses whose heads match Head.
+", "(Non-logical) remove all clauses whose heads match Head").
+man("retractall","retractall(Functor, Arity)
+(Non-logical).
+Retracts all clauses where the head has Functor and Arity.
+", "(Non-logical) remove all clauses where head has Functor/Arity").
+man("dbBackup","dbBackup(Db, File)
+(Non-logical).
+File is a backup copy of database Db (using  the  UNIX  utility  tar(1)).   Use
+dbRestore/2 to restore a database which has been backed up.
+", "(Non-logical) File is a backup copy of database Db").
+man("dbCons","dbCons(Db)
+(Non-logical).
+Deductive database Db is consulted.  All  predicates  in  the  database  become
+accessible  and  the  rules  file  is  consulted.  These predicates replace any
+existing relations with the  same  functor  and  arity.   Any  changes  to  the
+database  relations,  such  as  with  assert/1,  update  the  disc file and are
+therefore permanent.  Changes to predicates defined in  the  rules  file,  like
+changes to normal predicates, are lost at the end of the prolog session.
+", "(Non-logical) consult deductive database Db").
+man("dbCreate","dbCreate(Db)
+(Non-logical).
+An empty database named Db is created.  Db must be an atom.  A  UNIX  directory
+of  that  name  is  created  and  files  within  it  will  be used to store all
+information held in the database.  Fails if unable to create database.
+", "(Non-logical) create empty database Db").
+man("dbDefine","dbDefine(Db, Functor, Arity)
+dbDefine(Db, Functor, Arity, [Parameter<1> = Value<1>,...])
+(Non-logical).
+Creates a predicate in the external database Db with Functor and  Arity,  which
+can  be used to reference the predicate from within Prolog programs.  The first
+form is for use from the top-level of the interpreter, and  interactively  asks
+the  user  about various parameters.  In the second form, the values of zero or
+more parameters can be specified; if a parameter is  not  specified  a  default
+value is assumed.
+", "(Non-logical) create predicate in external database  Db  with  Functor  and
+Arity").
+man("dbParam","dbParam(Db, Functor, Arity, Parameter = Value)
+(Non-logical).
+The current value of Parameter for predicate Functor/Arity in Db is Value.
+", "(Non-logical) current Value of Parameter for Functor in Db").
+man("dbRestore","dbRestore(Db, File)
+(Non-logical).
+Db is restored from File.  File must have been created using dbBackup/2.
+", "(Non-logical) Db is restored from File").
+man("dbRules","dbRules(Db, File)
+(Non-logical).
+Adds File of rules to database Db.  The previous rules file is overwritten.
+", "(Non-logical) adds File of rules to Db").
+man("dbUndefine","dbUndefine(Db, Functor, Arity)
+(Non-logical).
+Removes the predicate with Functor/Arity from database Db.
+", "(Non-logical) remove predicate with Functor from Db").
+man("dsimcQuery","dsimcQuery(Query)
+Query is a NU-Prolog query to be optimized using the  superjoin  algorithm  and
+reordering.
+", "(Non-logical) retrieve bindings for Query from DSIMC database").
+man("sqlQuery","sqlQuery(Database, PredList)
+Database is the name of the UNIFY database to be accessed.  PredList is a  list
+of  Prolog  predicates.   These  may be either database predicates, of the form
+given in the previous  section,  or  arithmetic  comparisons  such  as  A<B  or
+12*Qty>=Supply.   This list is compiled into a single SQL query which is passed
+to UNIFY.
+", "(Non-logical) retrieve bindings for PredList from UNIFY Database").
+man("sqlModify","sqlModify(Database, Query)
+Database is the database to which the query is being given.  Query is a  string
+representing a database update expressed in SQL.
+", "(Non-logical) modify UNIFY Database with Query").
+man("sql","sqlAccess(Database, Vars, Query)
+Database is the database to which the query is being given.  Vars is a list  of
+variables for which Query will get bindings.  Query is a string representing an
+arbitrary UNIFY SQL query  (without  the  `/'  terminator).   On  backtracking,
+sqlAccess(Database,Vars,Query)  will get new bindings for Vars.  If the list of
+variables does not match the number of attributes  returned  from  UNIFY,  this
+predicate will fail expensively, retrieving each set of bindings from UNIFY and
+failing because they can't be unified with Vars.   If  some  of  the  Vars  are
+already  bound, any tuple returned from UNIFY with a value which does not match
+the binding will be thrown away.  If any or all of Vars  is  ground,  Query  is
+optimized.   NU-Prolog  always  attempts  to  transform the binding of a ground
+variable into the appropriate type before passing it to UNIFY.
+", "(Non-logical) give optimised Query to UNIFY database to bind Vars").
+man("currentAtom","currentAtom(Atom)
+currentAtom(Module, Atom)
+(Non-logical).
+Atom is an atom in the module user (or Module).
+", "(Non-logical) Atom is currently a atom").
+man("currentModule","currentModule(Module)
+(Non-logical).
+Module is the current module.  Currently, only the  module  user  exists.   All
+atoms and predicates defined in this manual are in this module.
+", "(Non-logical) Module is the current module").
+man("currentOp","currentOp(Precedence, Type, Op)
+(Non-logical).
+Op is an operator of specified Type  and  Precedence.   Fails  if  any  of  the
+arguments is of an inappropriate type.  See 3.8.
+", "(Non-logical) Op is an operator of Type and Precedence").
+man("currentPredicate","currentPredicate(Name, Arity)
+currentPredicate(Module, Name, Arity)
+(Non-logical).
+Name/Arity is the name of a predicate in the module user (or Module).
+", "(Non-logical) Name is currently a predicate in Module with Arity").
+man("expandTerm","expandTerm(Term<1>, Term<2>)
+If  the  user  has  defined  a  predicate  termExpansion/2,  this  is   called.
+Otherwise,  expandTerm/2 translates Term1, a definite clause grammar rule, into
+Term2, an ordinary NU-Prolog clause.  Definite clause grammars are explained in
+Appendix 2.
+", "translate Term<1> to Term<2> using expandTerm/2").
+man("termExpansion","termExpansion(Term<1>, Term<2>)
+User defined translation of Term<1> to Term<2> used by expandTerm/2
+", "translation of Term<1> to Term<2> used by expandTerm/2").
+man("libraryPredicate","libraryPredicate(Library, Predicate)
+libraryPredicate(Library, Functor, Arity)
+True  if  Predicate  (or  Functor/Arity)  is  a  predicate  in   Library.    On
+backtracking, finds another appropriate predicate.  See predicateProperty/3.
+", "Predicate (or Functor/Arity) is a predicate in Library").
+man("nonlogicalPredicate","nonlogicalPredicate(Predicate)
+nonlogicalPredicate(Functor, Arity)
+True if Predicate (or Functor/Arity) is a nonlogical system  predicate.   These
+do  not include library predicates.  On backtracking, finds another appropriate
+predicate.  See predicateProperty/3.
+", "Predicate (or Functor/Arity) is a nonlogical system predicate").
+man("numberVars","numberVars(Term, N, M) when N
+(Non-logical).
+Instantiate all variables in Term to a term of the form $VAR(Num).  N  must  be
+an  integer.   After  the call, all Num values will in the range from N to M-1.
+Fails if N is not an integer or if M-N is not equal to the number of  variables
+in Term.  See varNumbers/2 and prologFlag/3.
+", "(Non-logical) give variables in Term numbers in the range from N to M-1").
+man("op","op(Precedence, Type, Op)
+(Non-logical).
+Declares Op, an atom or list of atoms, to be an operator  with  specified  Type
+and  Precedence.   It  is  possible  to declare Op as only one unary and/or one
+binary operator.  If Op is declared as both a unary and binary  operator,  both
+must have the same precedence.  See 3.8.
+", "(Non-logical) declares Op to be an operator with Type and Precedence").
+man("phrase","phrase(Phrase, TokenList)
+Phrase/2 is the usual way of calling definite clause grammar rules.   TokenList
+is  parsed  as  a phrase of the type Phrase, which may be either a non-terminal
+for which grammar rules are already defined or,  in  general,  the  body  of  a
+grammar rule.  In any case, Phrase must be non-variable.
+", "Phrase is the parsing of TokenList according to the current dcgs").
+man("predicateProperty","predicateProperty(Name, Arity, Property)
+The predicate with  Name  and  Arity  has  Property.   Current  properties  are
+built_in, compiled, dynamic, database, library, pure and system.
+    Of these built_in and  system  are  equivalent  -  both  are  included  for
+compatibility with other systems.
+", "Name/Arity is a system or library predicate").
+man("prologFlag","prologFlag(Flag, Value)
+(Non-logical).
+Enquires about the Value of Flag
+", "(Non-logical) enquires about the Value of Flag").
+man("prologFlag","prologFlag(Flag, Value<1>, Value<2>)
+(Non-logical).
+Change Value1  of  Flag  to  Value2.   If  Value1  and  Value2  are  identical,
+prologFlag/3 fails without changing the value of Flag.
+     Flag                     Default Value  Other Values
+     characterEscapes         on             off
+     debugging                debug          off
+     fileErrors               off            on
+     libdirectory             system dependentfilename
+     optimizeQuery            off            on
+     redefinitionWarning      on             off
+     vars                     on             off
+CharacterEscapes  controls  expansion  of   character   escapes   (defined   in
+Appendix 5)  on input.  Debugging controls whether or not spy-points (described
+in 5.3) are in effect.  When fileErrors is on, failure to open or close a  file
+results  in an error message and a call to abort/0.  Libdirectory specifies the
+name of  the  NU-Prolog  library  directory.   OptimizeQuery  controls  whether
+queries  to  the  top level database query facility will be affected by various
+query  transformations  (re-ordering,  superjoin,  etc.).   RedefinitionWarning
+controls  the  printing of warnings when system predicates are redefined.  When
+vars is on, terms of the form $VAR(N) are printed as variable names.
+", "(Non-logical) change Value<1> of Flag to Value<2>").
+man("statistics","statistics
+(Non-logical).
+", "(Non-logical) print NU-Prolog's use of resources").
+man("statistics","statistics(Statistics)
+(Non-logical).
+Provides statistics about NU-Prolog's use of resources.  Statistics is  a  list
+of elements of the form Name=Value where Name is an atom and Value is a list of
+numbers.  Values of Name include
+        memory          [total memory, 0]
+        program         [total program space allocated, 0]
+        global          [global stack in use, global stack free]
+        local           [local stack in use, local stack free]
+        trail           [trail stack in use, trail stack free]
+        utime           [cpu time used, cpu time used since last
+                        call to statistics]
+        stime           [system cpu time used, system cpu time used
+                        since last call to statistics]
+        time            sum of utime and stime
+Times are given in milliseconds, and sizes in bytes.  The exact definitions  of
+some of these quantities may vary from machine to machine.
+", "(Non-logical) Statistics is information about resources used").
+man("systemPredicate","systemPredicate(Predicate)
+systemPredicate(Functor, Arity)
+True if Predicate (or Functor/Arity) is  a  system  predicate.   These  do  not
+include   library  predicates.   On  backtracking,  finds  another  appropriate
+predicate.
+", "Predicate (or Functor/Arity) is a system predicate").
+man("varNumbers","varNumbers(TermIn, TermOut)
+(Non-logical).
+TermOut is TermIn with all terms  of  the  form  $VAR(Num),  where  Num  is  an
+integer,  replaced by variables.  Two $VAR(Num) terms with the same Num will be
+bound to the same variable.  See numberVars/3.
+",  "(Non-logical)  TermOut  is  TermIn  with  terms  $VAR(Num)   replaced   by
+variables").
+man("access","access(Path, Mode)
+(Non-logical). UNIX only.
+Checks the given Path (an atom or string) for accessibility according to  Mode,
+an  inclusive  binary or of the numbers 2'100 (test for read permission), 2'010
+(test for write permission), 2'001 (test for  execute  permission).   Fails  if
+access is denied.
+", "(Non-logical) test for access permissions on Path").
+man("cd","cd(Dir)
+chdir(Dir)
+(Non-logical).  UNIX only.
+Make Dir (an atom or string) the current working directory.  Fails if the  user
+does not have execute permission on Dir.
+", "(Non-logical) make Dir the current working directory").
+man("chmod","chmod(Path, Mode)
+(Non-logical).  UNIX only.
+Change access permissions on Path (an atom or string)  to  be  Mode.   Mode  is
+constructed by or'ing together some combination of the following:
+        8'4000          set user ID on execution
+        8'2000          set group ID on execution
+        8'1000          save text image after execution
+        8'0400          read by owner
+        8'0200          write by owner
+        8'0100          execute (search on directory) by owner
+        8'0070          read, write, execute (search) by group
+        8'0007          read, write, execute (search) by others
+Fails if the user is not the owner of Path (and is not root).
+", "(Non-logical) change permissions on Path").
+man("csh","csh
+(Non-logical).  UNIX only.
+Invokes the UNIX shell csh.  The NU-Prolog process is suspended until the shell
+process terminates.  See sh/0.
+", "(Non-logical) invoke UNIX shell csh").
+man("directory","directory(Dir, Files)
+(Non-logical).  UNIX only.
+Files is a list of the filenames in directory Dir (an atom or  string).   Fails
+if the user can not read Dir.
+", "Files in UNIX directory Dir").
+man("environ","environ(Environment)
+UNIX only.
+Get the user's UNIX Environment, a list of pairs of the form  Name=Value  where
+Name is an atom and Value is a string.
+", "get UNIX environment").
+man("exec","exec(Program, Arguments)
+(Non-logical).  UNIX only.  Transfer control from NU-Prolog to another program.
+Program  is  the  name  of  a  file  to  be executed and Arguments is a list of
+arguments, including argument number zero, to be  handed  to  Program.   Exec/2
+fails  if it is unable to run Program.  If Program is not an absolute pathname,
+the enviroment variable PATH is searched for a directory containing Program.
+", "execute Program with Arguments").
+man("exit","exit(Code)
+(Non-logical).
+The NU-Prolog process terminates with Code, an integer.  Code is made available
+to the parent process.
+", "(Non-logical) NU-Prolog process terminates with Code").
+man("fork","fork
+fork(Pid)
+(Non-logical).  UNIX only.
+Creates another  NU-Prolog  process,  with  the  same  core  image.   The  only
+difference  is  that  the call to fork/0 in the parent process succeeds but the
+call in the child process fails.  Pid is unified  to  the  process  id  of  the
+child;  if Pid will not unify with this id, fork/1 will fail in the parent, but
+the child will still be  created.   Care  must  be  taken  to  ensure  the  two
+processes do not compete for user_input or other open files.
+", "(Non-logical) fork another NU-Prolog process with the same core image").
+man("fork","fork(Pid, Read, Write)
+(Non-logical).  UNIX only.
+Like fork/1, but in the parent Read and Write  are  streams  connected  to  the
+standard output and standard input of the child respectively.
+", "(Non-logical) fork another NU-Prolog process with the same core image").
+man("getenv","getenv(Name, Value)
+UNIX only.
+Get the Value (a string) of environment variable Name (an atom).  Fails if Name
+is   not   an  environment  variable.   If  Name  is  a  variable,  alternative
+<Name, Value> pairs are retrieved on backtracking.
+", "get Value of environment variable Name").
+man("getegid","getegid(Id)
+UNIX only.
+Id is the effective group ID of the current process.
+", "Id is the effective group ID of the current process").
+man("getgid","getgid(Id)
+UNIX only.
+Id is the real group ID of the current process.
+", "Id is the real group ID of the current process").
+man("getgroups","getgroups(Groups)
+UNIX only.
+Groups is a list of integers representing the current group access list of  the
+user process.
+", "Groups is the group access list of the user process").
+man("getlogin","getlogin(Login)
+UNIX only.
+Login is the users login ID.
+", "Login is the users login ID").
+man("getpid","getpid(Pid)
+UNIX only.
+Pid is the process ID of the current process.
+", "Pid is the process ID of the current process").
+man("getppid","getppid(Pid)
+UNIX only.
+Pid is the process ID of the parent of the current process.
+", "Pid is the process ID of the parent of the current process").
+man("getpw","getpw(Name, PwEnt)
+UNIX only.
+Name is a user name (an atom or string) or a user ID  (an  integer)  for  which
+PwEnt  is  the  password  entry.   PwEnt  is  a  list  of  elements of the form
+Name=Value, where Name is an atom and  Value  is  a  string.   Values  of  Name
+include  name,  passwd, uid, gid, gecos, dir and shell.  Fails if Name is not a
+valid user name or user ID.
+", "PwEnt is password entry of Name").
+man("getuid","getuid(Uid)
+UNIX only.
+Uid is the users real user ID.
+", "Uid is the users real user ID").
+man("geteuid","geteuid(Uid)
+UNIX only.
+Uid is the users effective user ID.
+", "Uid is the users effective user ID").
+man("getwd","getwd(Dir)
+(Non-logical).  UNIX only.
+Dir is the current working directory pathname.
+", "(Non-logical) Dir is the current working directory pathname").
+man("hostname","hostname(Host)
+Host is the name of the machine on which NU-Prolog is running.
+", "Host is the name of the host machine").
+man("kill","kill(Pid, Signal)
+(Non-logical).  UNIX only.
+Send Signal to the process with Pid.  Signal may be either a  signal  name  (an
+atom)  or  a  signal number (an integer).  Fails if Signal is not valid, or was
+not sent successfully.  Valid signals are described in Appendix 7.
+", "(Non-logical) set Signal to process with Pid").
+man("link","link(Name<1>, Name<2>)
+(Non-logical).  UNIX only.
+A hard link to Name1 is created with Name2.  Fails if either argument is not an
+atom or string, or if the user does not have appropriate permissions.
+", "(Non-logical) a hard link to Name<1> is created with Name<2>").
+man("mkdir","mkdir(Dir)
+(Non-logical).  UNIX only.
+Make a new directory Dir (an atom or string).  Fails if the user does not  have
+the appropriate permissions.
+", "(Non-logical) make a new directory Dir").
+man("rename","rename(Old, New)
+(Non-logical).  UNIX only.
+The link named Old takes the name New.  Both must be atoms or  strings.   Under
+UNIX  system  V,  both  must  be  files;  under Berkeley UNIX, they may also be
+directories.  Fails if the user does not have appropriate permissions.
+", "(Non-logical) the link named Old takes the name New").
+man("rmdir","rmdir(Dir)
+(Non-logical).  UNIX only.
+Remove the directory Dir (an atom or string).  Fails if the user does not  have
+appropriate permissions, or if the directory is not empty.
+", "(Non-logical) remove the directory Dir").
+man("sh","sh
+(Non-logical).  UNIX only.
+Invokes the UNIX shell sh.  The NU-Prolog process is suspended until the  shell
+process terminates.  See csh/0.
+", "(Non-logical) invoke UNIX shell sh").
+man("signal","signal(Signal, Action)
+(Non-logical) UNIX only.
+Set Action for Signal.  Signal may be either a  signal  name  (an  atom)  or  a
+signal  number  (an  integer);  these  are listed in Appendix 7.  Action is the
+functor of a predicate with arity of 3 which will be  called  on  Signal.   The
+default  is  $break,  which  calls  break/0.   Two further possible Actions are
+provided: $exit, to exit on Signal; and $ignore, to ignore Signal.
+If the user defines a predicate of arity 3 with functor Action,  the  arguments
+given  to  that predicate on Signal will be the break level, the signal number,
+and the number of signals pending, respectively.  If Signal  is  not  supported
+under the users version of UNIX, the effect of using signal/2 is undefined.
+", "(Non-logical) set Action for Signal").
+man("sleep","sleep(Seconds)
+UNIX only.
+Sleep for Seconds (an integer).  Fails if Seconds is not ground.
+", "sleep for Seconds").
+man("stat","stat(Path, Status)
+(Non-logical).  UNIX only.
+Status is information about a file or  directory  Path  (an  atom  or  string).
+Read,  write  and  execute  permission  on  Path  are  not  required,  but  all
+directories in the pathname must be reachable or the call will fail.  Status is
+a list of elements of the form Name=Value where Name is an atom and Value is an
+integer.  Values of Name include
+        ino             this inode's number
+        mode            protection
+        nlink           number of hard links
+        uid             uid of owner
+        dev             device type
+        gid             group id of owner
+        size            total size of file
+        atime           last access time of file
+        mtime           last modify time of file
+        ctime           last status change of file
+        blocks          number of blocks allocated (BSD UNIX only)
+", "(Non-logical) Status is information about Path").
+man("system","system(Command)
+(Non-logical).  UNIX only.
+Calls the UNIX shell sh with Command, a string or  atom,  as  a  command  line.
+Fails if Command is of an inappropriate type.
+", "(Non-logical) call the UNIX shell sh with Command").
+man("system","system(Command, Status)
+(Non-logical) UNIX only.
+Command, a string or atom, is passed to UNIX for execution, and Status is bound
+to  the  exit status returned.  Fails if Command is of an inappropriate type or
+if Status is already bound to something that  does  not  unify  with  the  exit
+status returned.
+", "(Non-logical) Command is executed under UNIX and exit Status returned").
+man("system","system(Program, Arguments, Status)
+(Non-logical).  UNIX only.  Program is the name of an file to be  executed  and
+Arguments  is a list of arguments, including argument number zero, to be handed
+to Program.  If Program is not an absolute pathname,  the  enviroment  variable
+PATH is searched for a directory containing Program.  The Program and Arguments
+are passed to UNIX for execution (cf. exec/2) and Status is bound to  the  exit
+status  returned.  Fails if either Program or Arguments are of an inappropriate
+type or if Status is already bound to something that does not  unify  with  the
+exit status returned.
+", "execute Program with Arguments and return exit Status").
+man("time","time(Time)
+(Non-logical).  UNIX only.
+Time is the current time.  It is a list of elements  of  the  form  Name=Value,
+where  Name is an atom and Value is an integer.  Values of Name are year, month
+(Value is 1..12), date (Value is 1..31), day (values are the strings Mon, ... ,
+Sun), hour, minute and second.
+", "(Non-logical) Time is the current time").
+man("truncate","truncate(File, Length)
+(Non-logical).  UNIX only.
+File is truncated to be Length characters, or left alone  if  already  shorter.
+Fails if the user does not have appropriate permissions.
+", "(Non-logical) File is truncated to be at most Length characters").
+man("umask","umask(Umask)
+(Non-logical).  UNIX only.
+Set default file creation mask to Umask.  The low-order nine bits of the  umask
+are  used  whenever a file is created to clear corresponding bits in the file's
+access mode.  The default umask is 8'022.  See chmod/2.
+", "(Non-logical) set default file creation mask to Umask").
+man("unlink","unlink(Path)
+(Non-logical).  UNIX only.
+Remove the entry for Path (an atom or string) from its directory.  Fails if the
+user does not have the appropriate permissions.
+", "(Non-logical) Remove the entry for Path from its directory").
+man("wait","wait(Pid, Status)
+(Non-logical).  UNIX only.
+User process waits until one of its child processes terminates or a  signal  is
+received.  Pid is bound to the process id of the terminating process, Status to
+its exit status.
+", "(Non-logical) wait until process Pid terminates with Status").
+man("foreign","foreign(Function, Language, Specification)
+foreign(Function, Specification)
+Foreign/3, and the shorthand foreign/2 which is equivalent  to  foreign/3  with
+Language  c,  are  used  to  declare the way in which NU-Prolog calls functions
+loaded with the foreign function interface.   Note  that  foreign/[2,3]  merely
+define a table.  The predicate is never called.
+Function is the name of the function as it is given in  Language,  Language  is
+the  language  in  which  the  function is written, and Specification is a term
+F(Arg1,Arg2,...,ArgN) where the NU-Prolog predicate F/N is to be  connected  to
+Function  according  to the Argi.  The Argi of the form +(X) or -(X) are passed
+to the foreign function in the  order  in  which  they  appear.   The  optional
+argument of the form [-(X)] is unified with the function's return value.
+Currently, the only language supported is c.
+", "Declare the way in which a foreign function is to be called").
+man("foreignFile","foreignFile(FileName, Functions)
+ForeignFile/2 is used to declare the functions that will be loaded from a  file
+of foreign functions by loadForeignFiles/2.  FileName is the name of a file and
+Functions is a list of names of functions defined in that file that are  to  be
+connected  to  NU-Prolog  predicates.   Functions  that  are  not  to be called
+directly  from  NU-Prolog  should   not   be   listed.    Like   foreign/[2,3],
+foreignFile/2 merely defines a table.  It is never called.
+", "Declare the foreign functions to be loaded from a file").
+man("loadForeignFiles","loadForeignFiles(Files, Libraries)
+Load a list of  Files  containing  functions  written  in  another  programming
+language,  resolving undefined symbols in the list of Libraries.  The functions
+to be loaded are determined by looking in foreignFile/2 and their language  and
+interface in foreign/[2,3].
+Any libraries appropriate to the language of the foreign functions  are  loaded
+automatically.    Others   should   be   given   their   full   names  such  as
+``/usr/lib/libm.a''.
+Loading foreign functions is much more complicated than loading a .no file  and
+may take some considerable time.
+", "Load functions and libraries written in another programming language").
+man("current_atom","current_atom(Atom)
+current_atom(Module, Atom)
+(Non-logical).
+Atom is an atom in the module user (or Module).  Same as currentAtom/2.
+", "[compat] (Non-logical) Atom is currently a atom").
+man("current_input","current_input(Stream)
+(Non-logical).
+Stream is unified with current input stream.  Fails if  Stream  has  previously
+been  bound  to  something  that is not a currently open input stream.  Same as
+currentInput/1.
+", "[compat] (Non-logical) Stream is the current input stream").
+man("current_op","current_op(Precedence, Type, Op)
+(Non-logical).
+Op is an operator of specified Type  and  Precedence.   Fails  if  any  of  the
+arguments is of an inappropriate type.  Same as currentOp/3.
+", "[compat] (Non-logical) Op is an operator of Type and Precedence").
+man("current_output","current_output(Stream)
+(Non-logical).
+Stream is unified  with  the  current  output  stream.   Fails  if  Stream  has
+previously  been bound to something that is not a currently open output stream.
+Same as currentOutput/1.
+", "[compat] (Non-logical) Stream is the current output stream").
+man("current_predicate","current_predicate(Functor, Term)
+(Non-logical).
+Functor is the name of a user-defined predicate and Term is  the  most  general
+term corresponding to that predicate.
+", "[compat] (Non-logical) Functor is currently a predicate with  most  general
+Term").
+man("current_stream","current_stream(File, Mode, Stream)
+(Non-logical).
+Stream is a currently open stream on File, where Mode is either read, write  or
+append.   On  backtracking, current_stream/3 finds all suitable streams.  Fails
+if Stream has previously been bound to something that is not a  currently  open
+stream of the appropriate type.  Same as currentStream/3.
+", "[compat] (Non-logical) Stream is a  currently  open  stream  on  File  with
+Mode").
+man("false","false
+Same as fail/0.
+", "[compat] fail").
+man("fileerrors","fileerrors
+(Non-logical).
+Resets fileErrors flag to on.  See prologFlag/3.  Same as fileErrors/0.
+", "[compat] (Non-logical) turn on file error messages").
+man("flush_output","flush_output(Stream)
+(Non-logical).
+Flush the specified output Stream.  Same as flushOutput/1.
+", "[compat] (Non-logical) flush output Stream").
+man("gc","gc
+Enable garbage collection (actually do nothing).
+", "[compat] Enable garbage collection").
+man("gcguide","gcguide(Parameter, Old, New)
+Change garbage collection or memory management parameter for Parameter from Old
+value to New value (actually do nothing).
+", "[compat] Change garbage collection or memory management Parameter").
+man("gnot","gnot(Vars, Goal) when ground(Vars)
+(Non-logical).
+Generalized negation of Goal.  Delays until all of the variables in  term  Vars
+are  ground,  then negates Goal.  Superseded by notsomeVGoal, where V is a term
+containing the variables in Goal that are not in Vars.
+", "[compat] (Non-logical) generalized negation of Goal").
+man("halt","halt
+(Non-logical).
+Exit from NU-Prolog.
+", "[compat] (Non-logical) exit from NU-Prolog").
+man("incore","incore(Goal).
+Same as call(Goal).
+", "[compat] call Goal").
+man("nofileerrors","nofileerrors
+(Non-logical).
+Sets fileErrors flag to off.  See prologFlag/3.  Same as noFileErrors.
+", "[compat] (Non-logical) turn off file error messages").
+man("nogc","nogc
+Disable garbage collection (actually does nothing).
+", "[compat] disable garbage collection").
+man("otherwise","otherwise
+Same as true/0.  Useful for layout of programs which use ->.
+", "[compat] succeed").
+man("predicate_property","predicate_property(Skeleton, Property)
+The predicate the functor and arity of which are those of the term Skeleton has
+Property.            Same          as          functor(Skeleton,Functor,Arity),
+predicateProperty(Functor,Arity,Property).
+", "[compat] Functor/Arity is a system or library predicate").
+man("prolog_flag","prolog_flag(Flag, Value<1>, Value<2>)
+(Non-logical).
+Same as PrologFlag/3.
+", "[compat] (Non-logical) change Value<1> of Flag to Value<2>").
+man("putatom","putatom(Term)
+putatom(Stream, Term)
+(Non-logical).
+Term is printed on the current output stream (or Stream).
+", "[compat] (Non-logical) Term is printed on output").
+man("set_input","set_input(Stream)
+(Non-logical).
+Set current input to Stream.  Prints warning and  fails  if  Stream  is  not  a
+currently open input stream.  Same as SetInput/1.
+", "[compat] (Non-logical) set current input to Stream").
+man("set_output","set_output(Stream)
+(Non-logical).
+Set current output to Stream.  Prints warning and fails  if  Stream  is  not  a
+currently open output stream.  Same as setOutput/1.
+", "[compat] (Non-logical) set current output to Stream").
+man("subgoal_of","subgoal_of(Goal)
+(Non-logical)
+Current goal is a subgoal of Goal.  Same as ancestors(L)member(GoalL).
+NOT YET IMPLEMENTED.
+", "[compat] NYI. (Non-logical) current goal is a subgoal of Goal").
+man("trimcore","trimcore
+Release free space from data areas.  Automatically called from command level of
+interpreter.
+", "[compat] release free space from data areas").
+man("addElement","addElement(Elem, Set<1>, Set<2>) when Elem and Set<1>
+True  when  Set1  and  Set2  are  sets  represented  as   ordered   lists   and
+Set2=Set1U{Elem}.  Delays until Elem and Set1 are instantiated.
+", "[osets] Set<2> = Set<1> U {Elem}").
+man("delElement","delElement(Elem, Set<1>, Set<2>) when Elem and Set<1>
+True  when  Set1  and  Set2  are  sets  represented  as   ordered   lists   and
+Set2=Set1\{Elem}.  Delays until Elem and Set1 are instantiated.
+", "[osets] Set<2> = Set<2> \ {Elem}").
+man("disjoint","disjoint(Set<1>, Set<2>) when Set<1> and Set<2>
+True when the two ordered sets have no element in common.   Delays  until  they
+are instantiated.
+", "[osets] ordered sets have no element in common").
+man("intersect","intersect(Set<1>, Set<2>) when Set<1> and Set<2>
+True when the two ordered sets have at least one  element  in  common.   Delays
+until they are instantiated.
+", "[osets] Set<1>  Set<2> is not empty").
+man("intersect","intersect(Set<1>, Set<2>, Intersection) when Set<1> and Set<2>
+True when Intersection is the ordered representation of Set1Set2, provided that
+both sets are ordered.  Delays until Set1 and Set2 are instantiated.
+", "[osets] Intersection = Set<1>  Set<2>").
+man("listToSet","listToSet(List, Set) when List
+True when Set is a list consisting of the ordered, sorted elements of List with
+duplicates removed.  Delays until List is instantiated.
+", "[osets] Set is list of ordered sorted  elements  of  List  with  duplicates
+removed").
+man("setMember","setMember(Element, Set) when Element and Set
+True when Element is a member of Set.  Takes advantage  of  Set  being  sorted,
+examining only the part of Set that is smaller than Element.  Delays until both
+are instantiated.
+", "[osets] Element is a member of Set").
+man("setEq","setEq(Set<1>, Set<2>)
+True when the two arguments represent the same set.
+", "[osets] Set<1> is same as Set<2>").
+man("subset","subset(Set<1>, Set<2>) when Set<1> and Set<2>
+True when every element of ordered Set1 appears in ordered Set2.
+", "[osets] Set<1> is a subset of Set<2>").
+man("subtract","subtract(Set<1>, Set<2>, Difference) when Set<1> and Set<2>
+True when Difference contains all and only the elements of ordered  Set1  which
+are not in ordered Set2.  Delays until Set1 and Set2 are instantiated.
+", "[osets] Difference is Set<1> less elements of Set<2>").
+man("symdiff","symdiff(Set<1>, Set<2>, Diff) when Set<1> and Set<2>
+True when Diff is the symmetric difference of Set1 and Set2, delays until  they
+are instantiated.
+", "[osets] Diff is the symmetric difference of Set<2> and Set<1>").
+man("union","union(Set<1>, Set<2>, Union) when Set<1> and Set<2>
+True when Union is the union of ordered sets Set1  and  Set2.   When  something
+occurs  in  both  sets,  only one copy is kept.  Delays until Set1 and Set2 are
+instantiated.
+", "[osets] Union = Set<1> union Set<2>").
+man("dConsult","dConsult(File)
+dConsult([File1, File2, ...])
+(Non-logical).
+Like consult/1 but clauses are saved in the debugging area and  do  not  effect
+other code.
+",  "[debugging]  load  NU-Prolog  source  file   File   into   the   debbuging
+environment").
+man("dLoad","dLoad(File)
+dLoad([File1, File2, ...])
+(Non-logical).
+Same as dConsult/1, but if an up to date File.no exists, it is also loaded.
+", "[debugging] same as dConsult/1 but if File.no exists it is loaded also").
+man("processGoal","processGoal(File, Goal, NameList, VarList)
+(Non-logical).
+This user defined predicate will be used for goal processing if defined when  a
+file  is  being  dConsulted.   The  '?-'  is stripped off before processGoal is
+called.  If this call fails, the goal will be  stored  as  usual.   n.b.  when,
+dynamic, pure and operator declarations are separately handled.
+", "[debugging] user defined goal processing").
+man("dPred","dPred(F, A)
+(Non-logical).
+A procedure with functor F and arity A exists in the debugging area.
+", "[debugging] F/A exists in the debugging area").
+man("dPreds","dPreds(FNList)
+(Non-logical).
+FNList  is  the  list  of  procedures  in  the  debugging  area,  in  the  form
+[F1/A1,F2/A2,...].
+", "[debugging] FNList is the list of predicates in the debugging area  in  the
+form [F1/A1. F2/A2, ...]").
+man("dClause","dClause(F, A, Clause)
+(Non-logical).
+Clause is a clause of procedure F/A in th  debugging  area.   All  clauses  are
+represented  by  terms  of  the  form  cl((Head:-Body),NameList,VarList)  where
+NameList and VarList are as in readTerm/3.  F and/or A may be variables.
+", "[debugging] Clause is a clause of F/A in cl/3 format").
+man("dClauses","dClauses(F, A, ClauseList)
+(Non-logical).
+ClauseList is the list of clauses (in cl/3 format) of  the  predicate  F/A.   F
+and/or A may be variables.
+", "[debugging] ClauseList is the list of  clauses  (in  cl/3  format)  of  the
+predicate F/A.").
+man("dFile","dFile(F, A, File)
+(Non-logical).
+Predicate F/A has been loaded from File (where File is not '').
+", "[debugging] F/A was loaded from File").
+man("dGoal","dGoal(File, Goal)
+(Non-logical).
+Goal is a goal in the debugging area, read from File.
+", "[debugging] Goal is a goal in the debugging area").
+man("dGoals","dGoals(GoalList)
+dGoals(File, GoalList)
+(Non-logical).
+GoalList is the list of goals in the debugging area from File, or all goals.
+", "[debugging] GoalList is the list of goals in the debugging area from  File,
+or all goals").
+man("dDec","dDec(F, A, DType, Dec)
+(Non-logical).
+Dec is a declaration of type DType for procedure F/A.
+", "[debugging] Dec is a declaration of type DType for procedure F/A").
+man("dDecs","dDecs(F, A, DType, DecList)
+(Non-logical).
+DecList is the list of declarations of type DType for procedure F/A.
+", "[debugging] DecList is the list of declarations of type DType for procedure
+F/A").
+man("dProp","dProp(F, A, PType, Prop)
+(Non-logical).
+Prop is a property of type PType for procedure F/A.
+", "[debugging] Prop is a property of type PType for procedure F/A").
+man("dProps","dProps(F, A, PType, PropList)
+(Non-logical).
+PropList is the list of properties of type PType for procedure F/A.
+", "[debugging] PropList is the list of properties of type PType for  procedure
+F/A").
+man("dDCall","dDCall(F, A, CF, CA)
+(Non-logical).
+Predicate F/A has a call to CF/CA in the body of one of its clauses.
+", "[debugging] Predicate F/A has a call to CF/CA in the body  of  one  of  its
+clauses").
+man("dDCalls","dDCalls(F, A, FNList)
+(Non-logical).
+FNList is the list of procedures directly called by procedure F/A.
+", "[debugging] FNList is the list of procedures directly called  by  procedure
+F/A").
+man("dDAncs","dDAncs(F, A, Preds)
+(Non-logical).
+Preds are the predicates which call F/A directly.
+", "[debugging] Preds are the predicates which call F/A directly").
+man("dICall","dICall(F, A, CF, CA)
+(Non-logical).
+Predicate F/A calls CF/CA, possibly indirectly via other procedures.  F  and  A
+must be instantiated.
+", "[debugging] Predicate  F/A  calls  CF/CA,  possibly  indirectly  via  other
+procedures").
+man("dICalls","dICalls(F, A, FNList)
+(Non-logical).
+FNList is the list of procedures called (possibly indirectly) by procedure F/A.
+", "[debugging] FNList is the list of procedures called  (possibly  indirectly)
+by procedure F/A").
+man("dGoalDCall","dGoalDCall(G, F, A)
+(Non-logical)
+F/A is called directly by goal.
+", "[debugging] F/A is directly called by goal").
+man("dGoalDCall","dGoalICall(G, F, A)
+(Non-logical)
+F/A is called (possibly indirectly) by goal.
+", "[debugging] F/A is called by goal (possibly indirectly)").
+man("dAddPred","dAddPred(F, A)
+dAddPred(F, A, File)
+(Non-logical).
+Assert the existence of F/A in the debugging environment.   dAddPred/3  asserts
+the  existence  of F/A and associates it with File.  Fails if F/A is associated
+with another file.
+", "[debugging] assert the existence of F/A in the debugging environment").
+man("dAddPreds","dAddPreds(Predicates)
+dAddPreds(Predicates, File)
+(Non-logical).
+Assert the existence of all the predicates [F1/A1,F2/A2,...] in  Predicates  in
+the debugging environment.  dAddPreds/3 asserts the existence of the predicates
+and associates them with File, or fails if any is  already  associated  with  a
+different file.
+",  "[debugging]  assert  the  existence  of  Predicates   in   the   debugging
+environment").
+man("dAbolishPred","dAbolishPred(F, A)
+(Non-logical).
+Remove F/A and all associated information from the debugging environment.
+", "[debugging] remove F/A and all associated information  from  the  debugging
+environment").
+man("dAbolishPreds","dAbolishPreds(Preds)
+(Non-logical).
+Remove the predicates [F1/A1,F2/A2,...] in Preds and all associated information
+from the debugging environment.
+", "[debugging] remove Preds and all associated information from the  debugging
+environment").
+man("dAddClause","dAddClause(Clause)
+(Non-logical).
+Adds Clause (in cl/3 format) to the end of a procedure.
+", "[debugging] adds Clause in cl/3 format to the end of a procedure").
+man("dAddClauses","dAddClauses(List)
+(Non-logical).
+Add a list of clauses (in cl/3 format) to the end of a procedure.
+", "[debugging] add a list of  clauses  (in  cl/3  format)  to  the  end  of  a
+procedure").
+man("dRmClause","dRmClause(F, A, Clause)
+(Non-logical).
+Removes a clause from the procedure F/A.
+", "[debugging] removes Clause from the debugging environment").
+man("dRmClauses","dRmClauses(F, A)
+(Non-logical).
+Removes all clauses from the procedure F/A.
+", "[debugging] removes all clauses from the procedure F/A").
+man("dAddGoal","dAddGoal(File, Goal)
+(Non-logical).
+Adds Goal to the debugging area. Goal is considered to  have  come  from  File.
+For example dAddGoal(user,goal(assert(count(0)),[],[])).
+", "[debugging] Adds Goal to the debugging area").
+man("dAddGoals","dAddGoals(File, GoalList)
+(Non-logical).
+Adds a list of goals to the debugging area, considered to have come from File.
+", "[debugging] Adds a list of goals to the debugging area").
+man("dRmGoal","dRmGoal(File, Goal)
+(Non-logical).
+Removes Goal read from File from the debugging area.
+", "[debugging] Removes Goal from the debugging area").
+man("dRmGoals","dRmGoals
+dRmGoals(File)
+(Non-logical).
+Removes all goals from File from the debugging area, or all goals.
+", "[debugging] Removes goals from the debugging area").
+man("dAddDec","dAddDec(F, A, DType, Dec)
+(Non-logical).
+Adds  a  declaration  Dec  of  type  DType  to  procedure  F/A.   For   example
+dAddDec(len,2,type,len(list,int)).
+", "[debugging] adds a declaration of type DType to procedure F/A").
+man("dAddDecs","dAddDecs(F, A, DType, DecList)
+(Non-logical).
+Adds a list of declarations DecList of type DType to procedure F/A.
+", "[debugging] add a list of declarations of type DType to procedure F/A").
+man("dRmDec","dRmDec(F, A, DTyp, Dec)
+(Non-logical).
+Removes declaration Dec of type DType from procedure F/A.
+", "[debugging] remove declaration Dec from procedure F/A").
+man("dRmDecs","dRmDecs(F, A)
+dRmDecs(F, A, DType)
+(Non-logical).
+Removes all declarations of type DType from procedure F/A, or all declarations.
+", "[debugging] remove all declarations from procedure F/A").
+man("dAddProp","dAddProp(F, A, PType, Prop)
+(Non-logical).
+Adds  a  property  Prop  of  type  PType  to  procedure   F/A.    For   example
+dAddProp(perm,2,direct_calls,[append/3,delete/3]).
+", "[debugging] Adds a property Prop of type PType to procedure F/A").
+man("dAddProps","dAddProps(F, A, PType, PropList)
+(Non-logical).
+Adds a list of properties PropList of type PType to procedure F/A.
+", "[debugging] Adds a list of properties PropList of type PType  to  procedure
+F/A").
+man("dPutProp","dPutProp(F, A, PType, Prop)
+(Non-logical).
+Puts  a  property  Prop  of  type  PType  with  procedure  F/A.   For   example
+dPutProp(perm,2,direct_calls,[append/3,delete/3]).
+", "[debugging] Puts a property Prop of type PType with procedure F/A").
+man("dRmProp","dRmProp(F, A, PType, Prop)
+(Non-logical).
+Removes Prop of type PType from procedure F/A.
+", "[debugging] Removes Prop of type PType from procedure F/A").
+man("dRmProps","dRmProps(F, A)
+dRmProps(F, A, PType)
+(Non-logical).
+Removes all properties of type PType from procedure F/A, or all properties.
+", "[debugging] Removes properties from procedure F/A").
+man("dEdit","dEdit(Pred, Arity)
+(Non-logical).
+Revise the file containing the definition of Pred/Arity, positioning the cursor
+appropriately.
+", "[debugging] ").
+man("dListing","dListing
+(Non-logical).
+List the predicates currently in the debugger.  This is analogous to listing/0.
+", "[debugging] List the predicates currently in the debugger").
+man("dPortraycl","dPortraycl(Clause)
+(Non-logical).
+Clause is a clause in cl/3 format and is  output  with  its  original  variable
+names via portraycl.
+", "[debugging]  Clause  is  a  clause  in  cl/3  format  and  is  output  with
+portraycl").
+man("curscr","curscr(Win)
+(Non-logical).
+Win is a window descriptor for curscr.
+", "[curses] (Non-logical) Win is a window descriptor for curscr").
+man("stdscr","stdscr(Win)
+(Non-logical).
+Win is a window descriptor for stdscr.
+", "[curses] (Non-logical) Win is a window descriptor for stdscr").
+man("def_term","def_term(Type)
+(Non-logical).
+Type is an atom bound to the default terminal type.
+", "[curses] (Non-logical) Type is default terminal type").
+man("my_term","my_term(Flag)
+(Non-logical).
+Returns Flag, an integer true(1) or false(0), if Flag is  a  variable  or  sets
+Flag  if Flag is ground.  If true, use the terminal type in def_type regardless
+of terminal type.
+", "[curses] (Non-logical) flag whether to use default terminal type").
+man("lines","lines(LINES)
+(Non-logical)
+Binds LINES to the number of lines on the terminal  if  LINES  is  a  variable.
+Sets  the number of lines to be LINES if LINES is bound.  Fails if LINES is not
+an integer.
+", "[curses] (Non-logical) accesses curses variable LINES").
+man("cols","cols(COLS)
+(Non-logical)
+Binds COLS to the number of lines on the terminal if COLS is a variable.   Sets
+the  number  of  lines  to  be  COLS if COLS is bound.  Fails if COLS is not an
+integer.
+", "[curses] (Non-logical) accesses curses variable COLS").
+man("err","err(ERR)
+ERR is an integer returned by curses when  things  fail.   In  NU-Prolog,  such
+calls fail.
+", "[curses] value of curses constant ERR").
+man("ok","ok(OK)
+OK is the curses constant OK which is returned  by  some  functions  which  may
+fail.
+", "[curses] value of curses constant OK").
+man("addch","addch(Ch)
+(Non-logical).
+Add Ch to stdscr at current (y,x) co-ordinates
+", "[curses] add Ch to stdscr at current (y, x) co-ordinates").
+man("waddch","waddch(Win, Ch)
+(Non-logical).
+Ch is the ASCII code of a  character  to  be  printed  at  the  current  cursor
+position.   Win  is  a window descriptor, returned by newwin, subwin, stdscr et
+al.  The current (y,x) co-ordinates are updated.  Fails if it would  cause  the
+screen to scroll illegally.
+", "[curses] (Non-logical) add Ch to the window Win at current (y, x)").
+man("addstr","addstr(Str)
+(Non-logical)
+Same as stdscr(Win),waddstr(Win,Str).
+", "[curses] writes Str on stdscr at the current (y, x) co-ordinates").
+man("waddstr","waddstr(Win, Str)
+(Non-logical).
+Writes a string on the window at the current cursor positions.  Fails  if  this
+would cause illegal scrolling. (Will print as much as it can.)
+", "[curses] (Non-logical) add Str to the window Win at the current (y, x)").
+man("box","box(Win, Vert, Hor)
+(Non-logical).
+Draws a box around the window using the characters corresponding to  the  ASCII
+codes   of  Vert  and  Hor  for  drawing  the  vertical  and  horizontal  lines
+respectively.
+", "[curses] (Non-logical) draw box around window").
+man("clear","clear
+(Non-logical)
+Clears stdscr to blanks. Will cause the  screen  to  be  cleared  on  the  next
+refresh. Moves the current (y,x) co-ordinates to (0, 0).
+", "[curses] (Non-logical) clear stdscr to blanks").
+man("wclear","wclear(Win)
+(Non-logical).
+Clears the entire window to blanks. Will cause screen to be cleared on the next
+refresh. Moves the current (y,x) co-ordinates to (0, 0).
+", "[curses] (Non-logical) clear window Win to blanks").
+man("clearok","clearok(Scr, Boolf)
+(Non-logical).
+Boolf is true (1) or false (0).  Sets  the  clear  flag  for  the  screen  Scr.
+Causes  a  clear-screen  on  the next refresh if true or prevents one if false.
+Unlike clear does not alter the contents of the screen.
+", "[curses] (Non-logical) Set clear flag for the screen Scr").
+man("clrtobot","clrtobot
+(Non-logical).
+Clears stdscr to the bottom.  Has no ``mv'' variant.
+", "[curses] (Non-logical) clear stdscr from current (y, x) to the bottom").
+man("wclrtobot","wclrtobot(Win)
+(Non-logical).
+Clears to the bottom of the window.  Has no ``mv'' variant.
+", "[curses] (Non-logical) clear the window win from the current (y, x) to  the
+bottom").
+man("clrtoeol","clrtoeol
+(Non-logical).
+Clears to the end of the current line on stdscr.  Has no ``mv'' variant.
+", "[curses] (Non-logical) clear stdscr to end of current line").
+man("wclrtoeol","wclrtoeol(Win)
+(Non-logical).
+Clears to the end of the line on Win.  Has no ``mv'' variant.
+", "[curses] (Non-logical) clear the current line of  the  window  Win  to  the
+end").
+man("delch","delch
+(Non-logical).
+Delete the character at the current (y,x) co-ordinates on  stdscr,  moving  all
+remaining characters to the left. The rightmost character becomes a blank.
+", "[curses] (Non-logical) delete the character at current (y, x) on stdscr").
+man("wdelch","wdelch(Win)
+(Non-logical).
+Delete the character at the current (y,x) co-ordinates,  moving  all  remaining
+characters to the left. The rightmost character becomes a blank.
+", "[curses] (Non-logical) delete the character at the current (y,  x)  on  the
+window Win").
+man("deleteln","deleteln
+(Non-logical).
+Delete the current line on stdscr.  Remaining lines move up and the bottom line
+becomes blank.
+", "[curses] (Non-logical) delete current line on stdscr").
+man("wdeleteln","wdeleteln(Win)
+(Non-logical).
+Delete the current line.  Remaining lines move up and the bottom  line  becomes
+blank.
+", "[curses] (Non-logical) delete the current line of the window Win").
+man("erase","erase
+(Non-logical).
+Erase stdscr without setting clear flag.  Has no ``mv'' variant.
+", "[curses] (Non-logical) erase stdscr to blanks").
+man("werase","werase(Win)
+(Non-logical).
+Erase the window without setting clear flag.  Has no ``mv'' variant.
+", "[curses] (Non-logical) erase the window Win").
+man("flushok","flushok(Win, Boolf)
+(Non-logical).
+Boolf is true(1) or false(0).  Normally, refresh  flushes  stdout  when  it  is
+finished.  flushok controls this.
+", "[curses] (Non-logical) Set flushok flag to true(1) or false(0)").
+man("formatw","formatw(Format, Args)
+formatw(Win, Format, Args)
+(Non-logical).
+Replaces printw.  Same as format/2  and  format/3,  with  the  window  Win  (or
+stdscr) replacing a stream.
+", "[curses] (Non-logical) window version of format").
+man("insch","insch(C)
+(Non-logical).
+C is the ASCII code of a character to be inserted  at  the  current  (y,x)  co-
+ordinates on stdscr. Characters after it shift to the right, the last character
+disappears. Fails if it would cause the screen to scroll illegally.
+", "[curses] (Non-logical) insert character C at current (y, x) co-ordinates of
+stdscr").
+man("winsch","winsch(Win, C)
+(Non-logical).
+C is the ASCII code of a character to be inserted  at  the  current  (y,x)  co-
+ordinates.  Characters  after  it  shift  to  the  right,  the  last  character
+disappears. Fails if it would cause the screen to scroll illegally.
+", "[curses] (Non-logical) insert the character C at the  current  (y,  x)  co-
+ordinates of Win").
+man("insertln","insertln
+(Non-logical).
+Insert a line above the current one on stdscr.  Every  line  below  is  shifted
+down  and  the  bottom line disappears.  The current line becomes blank and the
+current (y,x) co-ordinates are not altered. Has no ``mv'' variant.
+", "[curses] (Non-logical) insert a line above the current one on stdscr").
+man("winsertln","winsertln(Win)
+(Non-logical).
+Insert a line above the current one.  Every line below is shifted down and  the
+bottom  line  disappears.  The current line becomes blank and the current (y,x)
+co-ordinates are not altered. Has no ``mv'' variant.
+", "[curses] (Non-logical) insert a line above the current one  on  the  window
+Win").
+man("move","move(Y, X)
+(Non-logical).
+Change the current (y,x) co-ordinates of stdscr to (Y,X).  Fails  if  it  would
+cause the screen to scroll illegally.
+", "[curses] (Non-logical) move the cursor on stdscr to (y, x)").
+man("wmove","wmove(Win, Y, X)
+(Non-logical).
+Change the current (y,x) co-ordinates to (Y,X).  Fails if it  would  cause  the
+screen to scroll illegally.
+", "[curses] (Non-logical) change the current (y, x) co-ordinates of window Win
+to (Y, X)").
+man("nlw","nlw
+nlw(Win)
+(Non-logical).
+Outputs a newline on the window.
+", "[curses] (Non-logical) window version of nl").
+man("overlay","overlay(Win1, Win2)
+(Non-logical).
+Overlay window 1 on window 2.  This is non-destructive: blanks on window 1  are
+untouched on window two.
+", "[curses] (Non-logical) overlay window 1 on window 2").
+man("overwrite","overwrite(Win1, Win2)
+(Non-logical).
+Overwrite window 1 on wondow 2.  Blanks on window 1  become  blanks  on  window
+two.
+", "[curses] (Non-logical) overwrite window 1 on window 2").
+man("refresh","refresh
+(Non-logical).
+Synchronize the terminal screen with the desired window.  Fails if  this  would
+cause  the  screen to scroll illegally.  In this case, a partial update will be
+done.
+", "[curses] (Non-logical) synchronize the terminal screen with stdscr").
+man("wrefresh","wrefresh(Win)
+(Non-logical).
+Synchronize the terminal screen with the desired window.  Fails if  this  would
+cause  the  screen to scroll illegally.  In this case, a partial update will be
+done.
+    As a special case, if wrefresh()  is  called  with  curscr  the  screen  is
+cleared and redrawn as it is currently. Useful for redrawing corrupted screens.
+", "[curses] (Non-logical) synchronize the  terminal  screen  with  the  window
+Win").
+man("standout","standout
+(Non-logical).
+Put stdscr in standout mode.
+", "[curses] (Non-logical) put stdscr in standout mode").
+man("standend","standend
+(Non-logical).
+End standout mode on stdscr.
+", "[curses] (Non-logical) end standout mode").
+man("wstandout","wstandout(Win)
+(Non-logical).
+Put Win in standout mode.
+", "[curses] (Non-logical) enter standout mode for Win").
+man("wstandend","wstandend(Win)
+(Non-logical).
+End standout mode for Win.
+", "[curses] (Non-logical) end standout mode for Win").
+man("writew","writew(Term)
+writew(Win, Term)
+(Non-logical).
+Same as write/2, write/3, but with Win a window not a stream.
+", "[curses] (Non-logical) window vesions of write/2, write/3").
+man("writelnw","writelnw(Term)
+writelnw(Win, Term)
+(Non-logical).
+Same as writeln/2, writeln/3, but with Win a window not a stream.
+", "[curses] (Non-logical) window vesions of writeln/2, writeln/3").
+man("writevw","writevw(Flags, Term)
+writevw(Win, Flags, Term)
+(Non-logical).
+Same as writev/2, writev/3, but with Win a window not a stream.
+", "[curses] (Non-logical) window vesions of writev/2, writev/3").
+man("cbreak","cbreak
+(Non-logical).
+Put the terminal in cbreak mode.
+", "[curses] (Non-logical) set terminal to cbreak mode").
+man("nocbreak","nocbreak
+(Non-logical).
+End cbreak mode.
+", "[curses] (Non-logical) reset the terminal from cbreak mode").
+man("crmode","crmode
+(Non-logical).
+(Obsolete) Equivalent to cbreak.
+", "[curses] (Non-logical) (obsolete) same as cbreak").
+man("nocrmode","nocrmode
+(Non-logical).
+(Obsolete) Equivalent to nocbreak.
+", "[curses] (Non-logical) (obsolete) same as nocbreak").
+man("echo","echo
+(Non-logical).
+Turn terminal echoing on.
+", "[curses] (Non-logical) set terminal to echo mode").
+man("noecho","noecho
+(Non-logical).
+Sets the termianal not to echo characters.
+", "[curses] (Non-logical) stop the terminal echoing characters").
+man("getch","getch(Ch)
+(Non-logical).
+Gets a character from the terminal and  (if  necessary)  echos  it  on  stdscr.
+Fails if it would cause the screen to scroll illegally.
+", "[curses] (Non-logical) gets a character from the terminal").
+man("wgetch","wgetch(Win, Ch)
+(Non-logical).
+Gets a character from the terminal and (if necessary) echos it on  the  window.
+Fails if it would cause the screen to scroll illegally.
+", "[curses] (Non-logical) get a character from the window Win").
+man("getstr","getstr(Win, Str)
+(Non-logical).
+Gets a string from the terminal and returns it as the atom Str.   Fails  if  it
+would cause the screen to scroll illegally.
+", "[curses] (Non-logical) gets a string form the terminal").
+man("wgetstr","wgetstr(Win, Str)
+(Non-logical).
+Gets a string from the terminal and returns it as the atom Str.  Repeated calls
+are  made  to  getstr hence echoing etc. are the same.  Fails if it would cause
+the screen to scroll illegally.
+", "[curses] (Non-logical) get a string from the window Win").
+man("raw","raw
+(Non-logical).
+Set the terminal to raw mode.
+", "[curses] (Non-logical) set the terminal to raw mode").
+man("noraw","noraw
+(Non-logical).
+Unset the terminal from raw mode.
+", "[curses] (Non-logical) unset the terminal from raw mode").
+man("baudrate","baudrate(Baudrate)
+Returns the output baud rate of the terminal.
+", "[curses] Baudrate is the baudrate of the terminal").
+man("delwin","delwin(Win)
+(Non-logical).
+Relieves the window of the burden of existence.  Does not attend to subwindows,
+although these become invalid.  Do your own housekeeping!
+", "[curses] (Non-logical) delete the window Win").
+man("endwin","endwin
+(Non-logical).
+Finish up window routines before exit.  Restores  the  terminal  to  the  state
+previous  to  that  when initscr (or gettmode and setterm) were called.  Should
+always be called before exiting.
+", "[curses] (Non-logical) finish window routines").
+man("erasechar","erasechar(Ch)
+Ch is the ASCII code of the terminal erase character.
+", "[curses] Ch is the ASCII code of the terminal erase character").
+man("getyx","getyx(Win, Y, X)
+(Non-logical).
+Returns the current (Y,X) co-ordinates for Win.
+", "[curses] (Non-logical) get the current (y, x) co-ordinates for Win").
+man("inch","inch(Ch)
+(Non-logical).
+Ch is the ASCII code of the character at  the  current  (y,x)  co-ordinates  of
+stdscr.
+", "[curses] (Non-logical) get character at the current (y, x) co-ordinates  of
+stdscr").
+man("winch","winch(Win, Ch)
+(Non-logical).
+Ch is the ASCII code of the character at the current (y,x) co-ordinates.
+", "[curses] (Non-logical) get the character at the current (y, x) co-ordinates
+of Win").
+man("initscr","initscr
+(Non-logical).
+Initialize the  screen  routines.   This  must  be  called  before  any  screen
+routines.  Fails if enough memory cannot be allocated.
+", "[curses] (Non-logical) initialize screen routines").
+man("killchar","killchar(Ch)
+Ch is the ASCII code of the line kill character for the terminal.
+", "[curses] Ch  is  the  ASCII  code  of  the  line  kill  character  for  the
+terminal").
+man("leavok","leaveok(Win, Boolf)
+(Non-logical).
+Sets the boolean flag for leaving the cursor after the last  change.   If  true
+(Boolf  = 1) the cursor will be left after the last update on the terminal, and
+the current (y, x) co-ordinates changed accordingly.  If false (Boolf = 0), the
+cursor will be moved to the current (y, x) co-ordinates.  Initially false.
+",  "[curses]  (Non-logical)  set  the  boolean  flag  leaveok  to  true(1)  or
+false(0)").
+man("longname","longname(Name)
+Name is an atom bound to the long name of the terminal described by the termcap
+entry.
+", "[curses] Name is the long name of the terminal in the termcap entry").
+man("fullname","fullname(Name)
+Name is an atom bound to the longest name of  the  terminal  described  by  the
+termcap entry.
+", "[curses] Name is the longest name of the terminal in the termcap entry").
+man("mvwin","mvwin(Win, Y, X)
+(Non-logical).
+Move the home position of Win to (Y,X).  Fails if this would move some  or  all
+of  the  window off the screen.  For subwindows, fails if an attempt is made to
+move off its main window.  If a main window is moved, all  its  subwindows  are
+also moved.
+", "[curses] (Non-logical) move the home positon of Win to (Y, X)").
+man("newwin","newwin(Lines, Cols, BeginY, BeginX)
+(Non-logical)
+Create a new window with Lines and Cols, starting at position  (BeginY,BeginX).
+If  either Lines of Cols is zero, that dimension wil be set to (LINES - BeginY)
+or (COLS - BeginX) respectively.  Thus to get a new window of demensions  LINES
+x COLS, use newwin(0,0,0,0).
+", "[curses] (Non-logical) create a new window").
+man("nlon","nlon
+(Non-logical).
+Turn newline/carriage return mapping on.  Equivalent to curses nl.
+", "[curses] (Non-logical) set/unset <RETURN> to <LINE-FEED> mapping").
+man("nonl","nonl
+(Non-logical).
+Unset the terminal from newline/carriage return mapping.
+", "[curses] (Non-logical) stop <RETURN> to <LINE-FEED> mapping").
+man("scrollok","scrollok(Win, Boolf)
+(Non-logical).
+Set the scroll flag for the given window.  True = 1, False = 0.  Initial  value
+is scrolling not allowed (False).
+", "[curses] (Non-logical) set scrolok flag for window Win").
+man("touchline","touchline(Win, Y, StartX, EndX)
+(Non-logical).
+Similar to touchwin on a single line.  Marks the  first change  for  the  given
+line  to  be StartX, if it is before the first change mark, and the last change
+mark to be EndX if it is after the last change mark.
+", "[curses] (Non-logical) mark line as changed").
+man("touchoverlap","touchoverlap(Win1, Win2)
+(Non-logical).
+Touch the window Win2 in the area which overlaps Win1.  If there is no overlap,
+no changes are made.
+", "[curses] (Non-logical) mark overlap of window Win2 as changed").
+man("touchwin","touchwin(Win)
+(Non-logical).
+Make it appear that evey location on the  window  has  changed.   Usually  only
+needed with overlapping windows.
+", "[curses] (Non-logical) mark the window Win as completely changed").
+man("subwin","subwin(Win, Lines, Cols, BeginX, BeginY, NewWin)
+(Non-logical).
+Similar to newwin.  Any change made to either window in the area covered by the
+subwindow  will be made on both windows.  BeginY and BeginX are relative to the
+overall screen, not Win.
+", "[curses] (Non-logical) create a new subwindow").
+man("unctrl","unctrl(Ch, Str)
+Str is an atom bound to a string representation of the ASCII code Ch.   Control
+characters  become  their  upper  case  equivalents  preceeded by ``^''.  Other
+letters stay as they are.
+", "[curses] (Non-logical) get string representation of Ch").
+man("gettmode","gettmode
+(Non-logical).
+Get the ttystats. Normally done by initscr.
+", "[curses] (Non-logical) get the ttystats").
+man("mvcur","mvcur(LastY, LastX, NewY, NewX)
+(Non-logical).
+Moves the terminal's cursor from (LastY,LastX) to (NewY,NewX) in  approximately
+optimal  fashion.  When using the screen routines, this should not be called by
+the user, move and refresh should be used instead, so the routines know  what's
+going on.
+", "[curses] (Non-logical) move the terminal's  cursor  from  (Y,  X)  to  (NY,
+NX)").
+man("scroll","scroll(Win)
+(Non-logical).
+Scroll the window up one line. Not normally used by the user.
+", "[curses] (Non-logical) scroll the window Win up one line").
+man("savetty","savetty
+(Non-logical).
+Save the current tty characteristic flags.  Performed automatically by initscr.
+", "[curses] (Non-logical) save the current state  of  the  tty  characteristic
+flags").
+man("resetty","resetty
+(Non-logical).
+Resetty  restores  the  tty  characteristic  flags  to  what  savetty   stored.
+Performed automatically by endwin.
+", "[curses] (Non-logical) recover the state of the tty characteristic flags").
+man("setterm","setterm(Name)
+(Non-logical).
+Set the terminal characteristics to those of the terminal named Name.  Normally
+called by initscr.
+", "[curses] (Non-logical) set the terminal characteristics to those of Name").
+man("tstp","tstp
+(Non-logical).
+Save the current tty state and put the terminal to  sleep.   When  the  process
+gets  restarted, it restores the tty state and calls wrefresh(curscr).  Initscr
+sets the signal SIGSTP to trap to this routine.
+", "[curses] (Non-logical) save the current ttystate and  put  the  process  to
+sleep").

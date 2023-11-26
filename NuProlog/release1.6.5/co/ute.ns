@@ -1,0 +1,244 @@
+
+	.pred	'wait',1
+	.clause
+0:	pro	
+	last
+
+	.pred	'co$max',3
+2: 	t	3,0,&0
+	tr	3,0,&1
+	.clause
+0:	gvalx	0,2
+	apushx	0
+	pushx	1
+	apred	5
+	pro	
+	.clause
+1:	gvalx	1,2
+	apushx	0
+	pushx	1
+	apred	2
+	pro	
+	last
+
+	.pred	'co$max',2
+5: 	sot	1,&6,&7,&8,&11
+6: 	mkdel	2,&5
+	mark	1
+	delay	
+7: 	fail	
+8: 	glvx2	1,1,2
+9: 	sot	2,&10,&2,&3,&4
+10: 	mkdel	3,&9
+	mark	2
+	delay	
+4: 	fail	
+11: 	fail	
+	.clause
+2:	gvalx	0,1
+	gnil	2
+	pro	
+	.clause
+3:	all	3
+	gvary	0,0
+	gvary	2,1
+	gvara	1,2
+	glvx2	1,255,255
+	pvary	1,0
+	call	3,2,&'co$max'/2
+	pvaly	2,0
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'co$max'/3
+	last
+
+	.pred	'iotaL',3
+2: 	t	3,0,&0
+	tr	3,0,&1
+	.clause
+0:	gnil	2
+	apushx	0
+	pushx	1
+	apred	4
+	pro	
+	.clause
+1:	gl	2
+	ulvx	0
+	uvara	2
+	apushx	0
+	pushx	1
+	apred	3
+	apushx	0
+	afunc	46
+	popx	0
+	exec	3,&'iotaL'/3
+	last
+
+	.pred	'putIdentifier',1
+	.clause
+0:	gvarx	1,0
+	pnil	2
+	idtest	1,2
+	jfail	&5
+	currstr	1,1
+	pc	2,#(CHR,&4)
+	sputl	1,2
+	pro	
+5: 	ctypx	1,2
+	pc	0,$778
+	exec	2,&'writev'/2
+6: 	last
+4: 	.string	"[]"
+
+	.pred	'makeKeyedLookupTree',2
+	.clause
+0:	all	4
+	gvary	3,0
+	gvary	0,1
+	pvaly	3,0
+	pvary	2,1
+	call	4,2,&'length'/2
+	pvaly	3,0
+	pvary	1,1
+	call	3,2,&'keySort'/2
+	puval	2,0
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'makeBalancedTree'/3
+	last
+
+	.pred	'lookupKeyedTree',3
+3: 	sot	1,&4,&2,&2,&5
+4: 	mkdel	3,&3
+	mark	1
+	delay	
+2: 	fail	
+5: 	sos	1,&($'leaf'/2:&0,$'tree'/3:&1),&2
+	.clause
+0:	gs	1,$'leaf'/2
+	ulvx	0
+	ulvx	2
+	pro	
+	.clause
+1:	gs	1,$'tree'/3
+	uvara	1
+	uvarx	3
+	uvarx	5
+	labelx	4
+15: 	te	6,0,6,&16
+	compare	5,0,3
+	gc	5,$'<'
+	cutx	4
+	exec	3,&'lookupKeyedTree'/3
+16: 	tre	6,0
+	gvara	1,5
+	exec	3,&'lookupKeyedTree'/3
+17: 	last
+
+	.pred	'makeBalancedTree',3
+6: 	sot	0,&7,&12,&2,&2
+7: 	sot	1,&8,&11,&5,&2
+8: 	sot	2,&9,&0,&3,&10
+9: 	mkdel	3,&6
+	mark	2
+	mark	1
+	mark	0
+	delay	
+3: 	fail	
+10: 	sos	2,&($'leaf'/2:&1,$'tree'/3:&2),&3
+11: 	jc	1,$[],&4
+	j	&2
+4: 	t	3,0,&0
+	tr	3,0,&2
+5: 	t	3,0,&1
+	tr	3,0,&2
+12: 	soce	0,&($0:&0,$1:&1),&2
+	.clause
+0:	gc	0,$0
+	gnil	1
+	gc	2,$'void'
+	pro	
+	.clause
+1:	gc	0,$1
+	gl	1
+	uvarx	5
+	uc	$[]
+	gsx2	5,4,3,$'-'/2
+	gs	2,$'leaf'/2
+	uvalx	4
+	uvalx	3
+	pro	
+	.clause
+2:	gs	2,$'tree'/3
+	all	7
+	uvary	3
+	uvary	6
+	uvary	0
+	apushx	0
+	pushi	$$1
+	apred	4
+	apushx	0
+	pushi	$$2
+	afunc	4
+	popy	5
+	apushx	0
+	pushy	5
+	afunc	1
+	popy	2
+	pvaly	5,0
+	pvary	4,2
+	pvary	1,3
+	call	7,4,&'splitList'/4
+	pvaly	1,255
+	glvx2	255,3,255
+	gs	3,$'-'/2
+	uvaly	6
+	uvoid	1
+	pvaly	5,0
+	puval	4,1
+	pvaly	3,2
+	call	3,3,&'makeBalancedTree'/3
+	pvaly	2,0
+	puval	1,1
+	pvaly	0,2
+	dall	
+	execsot	3,0,&7,&12,&2,&2
+	last
+
+	.pred	'splitList',4
+5: 	fvar	0,255
+	jvx	255,&2
+	sot	0,&6,&7,&1,&1
+6: 	fail	
+7: 	jc	0,$0,&0
+	j	&1
+	j	&0
+2: 	sot	1,&8,&0,&4,&0
+8: 	sot	2,&9,&0,&1,&3
+9: 	mkdel	4,&5
+	mark	2
+	mark	1
+	mark	255
+	delay	
+3: 	fail	
+4: 	t	4,0,&0
+	tr	4,0,&1
+	.clause
+0:	gc	0,$0
+	gvalx	1,3
+	gnil	2
+	pro	
+	.clause
+1:	glvx2	1,4,1
+	gl	2
+	uvalx	4
+	uvara	2
+	apushx	0
+	pushi	$$0
+	apred	4
+	apushx	0
+	afunc	47
+	popx	0
+	exec	4,&'splitList'/4
+	last
+

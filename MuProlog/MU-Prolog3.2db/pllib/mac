@@ -1,0 +1,48 @@
+	% missionaries and cannibbles problem
+	% (declarative approach)
+
+mac(M, C, B) :- M >= C,
+		append(posn(left, M, C, 0, 0).A, [posn(right, M, C, 0, 0)], S),
+		macsoln(S, B), printsoln(S).
+
+macsoln(S, B) :- noloops(S), legalmoves(S, B).
+
+?- wait noloops(0).
+noloops([]).
+noloops(A.B) :- notmemb(A, B), noloops(B).
+
+?- wait notmemb(1, 0).
+notmemb(_, []).
+notmemb(A, B.C) :- A ~= B, notmemb(A, C).
+
+legalmoves([_], _).
+legalmoves(A.B.C, BS) :- move(A, B, BS), legalmoves(B.C, BS).
+
+move(posn(B1, M0, C0, M1, C1), posn(B2, M2, C2, M3, C3), BS) :-
+		(B1 = left, B2 = right ; B1 = right, B2 = left),
+		le(MB, M0), le(CB, C0),
+		MB > 0, MB >= CB, plus(MB, CB, TB), TB =< BS,
+		plus(M1, MB, M2), plus(C1, CB, C2), (M2 >= C2, M2 =\= 0;M2 = 0),
+		plus(M3, MB, M0), plus(C3, CB, C0), (M3 >= C3, M3 =\= 0;M3 = 0).
+
+le(M, M).
+le(A, M) :- M > 0, plus(N, 1, M), le(A, N).
+
+printsoln([]).
+printsoln(A.B) :- printpos(A), printsoln(B).
+
+printpos(posn(left, M, C, M1, C1)) :- prints(' ', M1), prints(' ', C1),
+		prints(c, C), prints(m, M),
+		write(' ;__/ . . . . . '), prints(m, M1), prints(c, C1), nl.
+
+printpos(posn(right, M1, C1, M, C)) :- prints(' ', M1), prints(' ', C1),
+		prints(c, C), prints(m, M),
+		write(' . . . . . \__; '), prints(m, M1), prints(c, C1), nl.
+
+prints(_, 0).
+prints(A, N) :- N > 0, write(A), plus(N1, 1, N), prints(A, N1).
+
+?- wait append(1,1,0).
+?- wait append(0,0,1).
+append([], A, A).
+append(A.B, C, A.D) :- append(B, C, D).

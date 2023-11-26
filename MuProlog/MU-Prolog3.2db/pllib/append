@@ -1,0 +1,5 @@
+/*	_3 is _2 appended to _1 */
+?- wait append(0,0,1).
+?- wait append(1,1,0).
+append([], A, A).
+append(A.B, C, A.D) :- append(B, C, D).

@@ -1,0 +1,10 @@
+-c F/A replaced by -u F/A ... used
++s replaced by -s - stratification check is now efficient
+-x: cross-reference check that all predicates are called,
+all subgoals are defined
+-v: checks on variables - occur positively, well-named,
+well-scoped, used appropriately
+
+usage is
+
+nit [-apsvx] [-d p/a] [-e p/q] [-F flag] [-l lib] [-u p/a] file ...

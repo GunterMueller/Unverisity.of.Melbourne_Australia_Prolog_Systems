@@ -1,0 +1,36 @@
+% procedure safe(A) is a test
+% procedure nodiag(A, _0A, _1A) is a test
+% clause altered: queen(X) :-  . . .
+% clause altered: perm(X.Y, U.V) :-  . . .
+% clause altered: safe(N.L) :-  . . .
+
+
+queen(X) :-
+	safe(X),
+	perm(1.2.3.4.5.6.7.8.[], X).
+
+?- wait perm(1, 0).
+?- wait perm(0, 1).
+perm([], []).
+perm(X.Y, U.V) :-
+	delete(U, X.Y, Z),
+	perm(Z, V).
+
+?- wait delete(1, 1, 0).
+?- wait delete(1, 0, 1).
+delete(A, A.L, L).
+delete(X, A.B.L, A.R) :-
+	delete(X, B.L, R).
+
+?- wait safe(0).
+safe([]).
+safe(N.L) :-
+	nodiag(N, 1, L),
+	safe(L).
+
+?- wait nodiag(1, 1, 0).
+nodiag(_, _, []).
+nodiag(B, D, N.L) :-
+	(D =\= N - B) and (D =\= B - N),
+	D1 is D + 1,
+	nodiag(B, D1, L).

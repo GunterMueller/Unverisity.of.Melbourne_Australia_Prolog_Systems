@@ -1,0 +1,4182 @@
+
+	.pred	'codegen',5
+	.clause
+0:	all	9
+	gvary	2,1
+	gvary	8,2
+	gvary	5,3
+	gvary	0,4
+	pvary	7,1
+	call	9,2,&'codegen2'/2
+	pvaly	8,0
+	puval	7,1
+	pvary	4,2
+	pvary	6,3
+	call	7,4,&'codegenDallExec'/4
+	pvaly	4,0
+	call	7,1,&'unsafe'/1
+	puval	6,5
+	pc	6,$'true'
+	idtest	5,6
+	jfail	&21
+	puval	4,0
+	pvaly	5,1
+	pvary	3,2
+	call	4,3,&'allocate'/3
+	j	&22
+21: 	puval	4,255
+	glvary	3,255
+22: 	puval	3,0
+	pvaly	2,1
+	pvary	1,2
+	call	2,3,&'codegenDisj'/3
+	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'codegenCleanUp'/2
+	last
+
+	.pred	'codegen2',2
+	.clause
+0:	gsx1	0,0,$'conj'/1
+	gsx1	1,1,$'conj'/1
+	pnil	2
+	exec	3,&'codegen2L'/3
+	last
+
+	.pred	'codegen2',3
+	labelx	3
+3: 	sot	0,&2,&1,&1,&4
+2: 	t	4,0,&0
+	tr	4,0,&1
+4: 	js	0,$'disj'/3,&0
+	j	&1
+	j	&0
+	.clause
+0:	gs	0,$'disj'/3
+	uvarx	4
+	uvarx	5
+	uvara	0
+	cutx	3
+	gl	1
+	uvarx	6
+	ulvx	2
+	gs	6,$'disj'/3
+	uvalx	4
+	uvalx	5
+	uvara	1
+	exec	2,&'codegen2D'/2
+	.clause
+1:	exec	3,&'codegenStmt'/3
+	last
+
+	.pred	'codegen2L',3
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	3,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	1,2
+	pro	
+	.clause
+1:	gl	0
+	uvara	0
+	all	3
+	uvary	2
+	gvary	0,2
+	pvary	1,2
+	call	3,3,&'codegen2'/3
+	pvaly	2,0
+	puval	1,1
+	pvaly	0,2
+	dall	
+	execsot	3,0,&4,&0,&1,&2
+	last
+
+	.pred	'codegen2D',2
+6: 	sot	0,&7,&0,&8,&12
+7: 	mkdel	2,&6
+	mark	0
+	delay	
+	j	&0
+8: 	glvx2	0,0,2
+9: 	sot	0,&10,&5,&5,&11
+10: 	mkdel	3,&9
+	mark	0
+	delay	
+5: 	fail	
+11: 	sos	0,&($'->'/2:&4,$'conj'/1:&3),&5
+12: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	pro	
+	.clause
+3:	gsx1	0,0,$'conj'/1
+	gl	1
+	uvarx	3
+	all	2
+	uvary	0
+	gsx1	3,1,$'conj'/1
+	gvary	1,2
+	pnil	2
+	call	2,3,&'codegen2L'/3
+	pvaly	1,0
+	pvaly	0,1
+	dall	
+	execsot	2,0,&7,&0,&8,&12
+	.clause
+4:	gs	0,$'->'/2
+	uvarx	3
+	us	255,$'conj'/1
+	all	4
+	uvary	3
+	gsx1	3,0,$'conj'/1
+	gl	1
+	uvarx	3
+	uvary	0
+	gs	3,$'->'/2
+	uvarx	3
+	us	255,$'conj'/1
+	uvary	2
+	gsx1	3,1,$'conj'/1
+	gvary	1,2
+	pnil	2
+	call	4,3,&'codegen2L'/3
+	pvaly	3,0
+	pvaly	2,1
+	pnil	2
+	call	2,3,&'codegen2L'/3
+	pvaly	1,0
+	pvaly	0,1
+	dall	
+	execsot	2,0,&7,&0,&8,&12
+	last
+
+	.pred	'codegenStmt',3
+9: 	sot	0,&7,&3,&8,&10
+7: 	t	3,0,&0
+	r	3,0,&1
+	r	3,0,&2
+	r	3,0,&3
+	r	3,0,&4
+	r	3,0,&5
+	tr	3,0,&6
+8: 	fail	
+10: 	sos	0,&($'='/2:&0,$'builtin'/3:&2,$'goal'/5:&1,$'head'/1:&4,$'init'/1:&6,$'neck'/1:&5),&8
+	.clause
+0:	gsx2	0,0,4,$'='/2
+	gvarx	5,1
+	gvarx	3,2
+	gvara	1,4
+	gvara	2,5
+	exec	4,&'codegenEquals'/4
+	.clause
+1:	gs	0,$'goal'/5
+	uvarx	6
+	uvarx	5
+	uvarx	4
+	uvoid	1
+	uvarx	3
+	gl	1
+	uvarx	7
+	ulvx	2
+	gs	7,$'call'/4
+	uvalx	6
+	uvalx	5
+	uvalx	4
+	uvalx	3
+	pro	
+	.clause
+2:	gs	0,$'builtin'/3
+	uvara	0
+	uvarx	5
+	uvarx	6
+	gvarx	3,1
+	gvarx	4,2
+	gvara	1,5
+	gvara	2,6
+	exec	5,&'codegenBuiltin'/5
+	.clause
+3:	gc	0,$'fence'
+	gvalx	1,2
+	pro	
+	.clause
+4:	gsx1	0,255,$'head'/1
+	gvalx	1,2
+	pro	
+	.clause
+5:	gsx1	0,3,$'neck'/1
+	gl	1
+	uvarx	4
+	ulvx	2
+	gs	4,$'neck'/1
+	uvalx	3
+	pro	
+	.clause
+6:	gsx1	0,0,$'init'/1
+	exec	3,&'codegenInits'/3
+	last
+
+	.pred	'codegenEquals',4
+	labelx	4
+5: 	sot	0,&3,&2,&2,&6
+3: 	t	5,0,&0
+	r	5,0,&1
+	tr	5,0,&2
+6: 	js	0,$'vr'/4,&3
+4: 	t	5,0,&0
+	tr	5,0,&2
+	j	&3
+	.clause
+0:	gvarx	5,0
+	all	1
+	gvary	0,4
+	gs	5,$'vr'/4
+	uvoid	4
+	gs	1,$'vr'/4
+	uvoid	4
+20: 	te	6,0,6,&21
+	gvara	0,5
+	call	1,4,&'codegenDataM'/4
+	j	&22
+21: 	tre	6,0
+	gvara	0,1
+	gvara	1,5
+	call	1,4,&'codegenDataM'/4
+22: 	cuty	0
+	dallpro	
+	.clause
+1:	gs	0,$'vr'/4
+	uvoid	1
+	uvara	0
+	uvarx	6
+	uvarx	7
+	gvarx	8,1
+	gvarx	9,2
+	gvarx	5,3
+	all	1
+	gvary	0,4
+	gvara	1,6
+	gvara	2,7
+	gvara	3,8
+	gvara	4,9
+	call	1,6,&'codegenStructM'/6
+	cuty	0
+	dallpro	
+	.clause
+2:	gvarx	6,0
+	gs	1,$'vr'/4
+	uvoid	1
+	uvara	0
+	uvara	1
+	uvarx	7
+	gvarx	8,2
+	gvarx	5,3
+	gvara	2,7
+	gvara	3,6
+	gvara	4,8
+	exec	6,&'codegenStructM'/6
+	last
+
+	.pred	'codegenDataM',4
+34: 	sot	0,&35,&36,&30,&37
+35: 	mkdel	4,&34
+	mark	0
+	delay	
+36: 	fail	
+30: 	fail	
+37: 	gs	0,$'vr'/4
+	uvarx	0
+	uvarx	4
+	uvarx	5
+	uvarx	6
+38: 	sot	6,&39,&40,&30,&33
+39: 	mkdel	7,&38
+	mark	6
+	delay	
+40: 	soc	6,&($'uniq':&31,$'var':&32),&30
+31: 	t	7,0,&15
+	r	7,0,&16
+	tr	7,0,&17
+32: 	t	7,0,&18
+	r	7,0,&19
+	r	7,0,&20
+	r	7,0,&26
+	r	7,0,&27
+	tr	7,0,&28
+33: 	t	7,0,&21
+	r	7,0,&22
+	r	7,0,&23
+	r	7,0,&24
+	r	7,0,&25
+	tr	7,0,&29
+	.clause
+15:	gs	1,$'vr'/4
+	uvoid	3
+	uc	$'uniq'
+	gvalx	2,3
+	gc	6,$'uniq'
+	pro	
+	.clause
+16:	gs	1,$'vr'/4
+	uvoid	1
+	uvara	1
+	uvara	0
+	uc	$'var'
+	glvx2	2,7,8
+	gsx1	7,2,$'init'/1
+	gvalx	8,3
+	gc	6,$'uniq'
+	exec	3,&'codegenVariable'/3
+	.clause
+17:	gs	1,$'vr'/4
+	uvoid	3
+	us	255,$'val'/1
+	uvoid	1
+	gvalx	2,3
+	gc	6,$'uniq'
+	pro	
+	.clause
+18:	gs	1,$'vr'/4
+	uvoid	1
+	uvara	1
+	uvara	0
+	uc	$'var'
+	glvx2	2,7,8
+	gs	7,$'pvar'/2
+	uvara	2
+	us	255,$'temp'/1
+	uvarx	7
+	gvalx	8,3
+	gvalx	7,4
+	gc	5,$'temp'
+	gc	6,$'var'
+	exec	3,&'codegenVariable'/3
+	.clause
+19:	gs	1,$'vr'/4
+	uvoid	1
+	uvarx	7
+	uc	$'temp'
+	us	255,$'val'/1
+	uvoid	1
+	gl	2
+	uvarx	8
+	ulvx	3
+	gs	8,$'gvar'/2
+	uvarx	9
+	us	255,$'temp'/1
+	uvalx	7
+	gs	9,$'temp'/1
+	ulvx	4
+	gc	5,$'temp'
+	gc	6,$'var'
+	pro	
+	.clause
+20:	gs	1,$'vr'/4
+	uvoid	1
+	uvarx	8
+	uc	$'perm'
+	us	255,$'val'/1
+	uvarx	7
+	gl	2
+	uvarx	9
+	ulvx	3
+	gs	9,$'pval'/3
+	uvarx	10
+	uvalx	7
+	us	255,$'temp'/1
+	ulvx	4
+	gs	10,$'perm'/1
+	uvalx	8
+	gc	5,$'temp'
+	gc	6,$'var'
+	pro	
+	.clause
+21:	gs	1,$'vr'/4
+	uvoid	1
+	uvarx	7
+	uc	$'temp'
+	us	255,$'val'/1
+	uvoid	1
+	gl	2
+	uvarx	8
+	ulvx	3
+	gs	8,$'gval'/2
+	uvarx	9
+	us	255,$'temp'/1
+	ulvx	4
+	gs	9,$'temp'/1
+	uvalx	7
+	gc	5,$'temp'
+	gsx1	6,255,$'val'/1
+	pro	
+	.clause
+22:	gs	1,$'vr'/4
+	uvoid	1
+	uvarx	7
+	uc	$'perm'
+	uc	$'var'
+	gl	2
+	uvarx	8
+	ul	255
+	uvarx	9
+	uvarx	10
+	gs	8,$'pvar'/2
+	uvarx	8
+	us	255,$'temp'/1
+	uc	$255
+	gs	8,$'perm'/1
+	uvalx	7
+	gs	9,$'gval'/2
+	uvarx	7
+	us	255,$'temp'/1
+	uc	$255
+	gsx1	7,7,$'temp'/1
+	gvalx	10,3
+	gvalx	7,4
+	gc	5,$'temp'
+	gs	6,$'val'/1
+	uc	$'local'
+	ctypx	0,17
+	pro	
+	.clause
+23:	gs	1,$'vr'/4
+	uvoid	1
+	uvarx	7
+	uc	$'perm'
+	uc	$'var'
+	glvx2	2,8,9
+	gs	8,$'gvar'/2
+	uvarx	8
+	us	255,$'temp'/1
+	uvarx	10
+	gs	8,$'perm'/1
+	uvalx	7
+	gvalx	9,3
+	gvalx	10,4
+	gc	5,$'temp'
+	gs	6,$'val'/1
+	uc	$'global'
+	ctypx	0,17
+	pro	
+	.clause
+24:	gsx1	0,255,$'t'/1
+	gs	1,$'vr'/4
+	uvoid	1
+	uvarx	7
+	uc	$'perm'
+	uc	$'var'
+	gl	2
+	uvarx	8
+	ulvx	3
+	gs	8,$'gvar'/2
+	uvarx	9
+	us	255,$'temp'/1
+	ulvx	4
+	gs	9,$'perm'/1
+	uvalx	7
+	gc	5,$'temp'
+	gsx1	6,255,$'val'/1
+	pro	
+	.clause
+25:	gs	1,$'vr'/4
+	uvoid	1
+	uvarx	8
+	uc	$'perm'
+	us	255,$'val'/1
+	uvarx	7
+	gl	2
+	uvarx	9
+	ul	255
+	uvarx	10
+	ulvx	3
+	gs	9,$'pval'/3
+	uvarx	11
+	uvalx	7
+	us	255,$'temp'/1
+	uc	$255
+	gs	11,$'perm'/1
+	uvalx	8
+	gs	10,$'gval'/2
+	uvarx	11
+	us	255,$'temp'/1
+	uc	$255
+	gs	11,$'temp'/1
+	ulvx	4
+	gc	5,$'temp'
+	gsx1	6,255,$'val'/1
+	pro	
+	.clause
+26:	gs	1,$'vr'/4
+	uvoid	1
+	ulvx	4
+	uc	$'perm'
+	uc	$'var'
+	gl	2
+	uvarx	7
+	ulvx	3
+	gs	7,$'pvar'/2
+	uvarx	8
+	us	255,$'temp'/1
+	uc	$255
+	gs	8,$'perm'/1
+	ulvx	4
+	gc	5,$'perm'
+	gc	6,$'var'
+	pro	
+	.clause
+27:	gs	1,$'vr'/4
+	uvoid	1
+	uvara	0
+	uc	$'perm'
+	uc	$'var'
+	gl	2
+	uvarx	7
+	ul	255
+	uvarx	8
+	uvarx	9
+	gs	7,$'pvar'/2
+	uvarx	7
+	us	255,$'temp'/1
+	uc	$255
+	gsx1	7,1,$'perm'/1
+	gs	8,$'gvar'/2
+	uvarx	7
+	us	255,$'temp'/1
+	uc	$255
+	gsx1	7,2,$'perm'/1
+	gvalx	9,3
+	gc	5,$'perm'
+	gc	6,$'var'
+	apushx	4
+	pushx	0
+	jpred	2,&82
+	gvalx	4,1
+	gvalx	0,2
+	pro	
+82: 	gvalx	0,1
+	gvalx	4,2
+	pro	
+83: 	.clause
+28:	gs	1,$'vr'/4
+	uvoid	1
+	uvarx	8
+	uc	$'perm'
+	us	255,$'val'/1
+	uvarx	7
+	gl	2
+	uvarx	9
+	ul	255
+	uvarx	10
+	ulvx	3
+	gs	9,$'pval'/3
+	uvarx	11
+	uvalx	7
+	us	255,$'temp'/1
+	uc	$255
+	gs	11,$'perm'/1
+	uvalx	8
+	gs	10,$'glvar'/2
+	uvarx	11
+	us	255,$'temp'/1
+	uc	$255
+	gs	11,$'perm'/1
+	ulvx	4
+	gc	5,$'perm'
+	gc	6,$'var'
+	pro	
+	.clause
+29:	gs	1,$'vr'/4
+	uvoid	1
+	uvarx	8
+	uc	$'perm'
+	us	255,$'val'/1
+	uvarx	7
+	gl	2
+	uvarx	9
+	ul	255
+	uvarx	10
+	ulvx	3
+	gs	9,$'pval'/3
+	uvarx	11
+	uvalx	7
+	us	255,$'temp'/1
+	uc	$255
+	gs	11,$'perm'/1
+	uvalx	8
+	gs	10,$'gval'/2
+	uvarx	11
+	us	255,$'temp'/1
+	uc	$255
+	gs	11,$'perm'/1
+	ulvx	4
+	gc	5,$'perm'
+	gsx1	6,255,$'val'/1
+	pro	
+	last
+
+	.pred	'codegenStructM',6
+17: 	sot	2,&18,&19,&15,&16
+18: 	mkdel	6,&17
+	mark	2
+	delay	
+19: 	soc	2,&($'uniq':&13,$'var':&14),&15
+13: 	t	6,0,&0
+	r	6,0,&1
+	r	6,0,&2
+	r	6,0,&3
+	tr	6,0,&4
+14: 	t	6,0,&5
+	r	6,0,&6
+	r	6,0,&7
+	tr	6,0,&8
+15: 	fail	
+16: 	t	6,0,&9
+	r	6,0,&10
+	r	6,0,&11
+	tr	6,0,&12
+	.clause
+0:	gc	2,$'uniq'
+	gsx1	3,6,$'const'/1
+	glvx2	4,7,8
+	gs	7,$'{}'/1
+	uc	$'Unification with unique variable'
+	gvalx	8,5
+	ctypx	6,51
+	pro	
+	.clause
+1:	gc	2,$'uniq'
+	gs	3,$'struct'/1
+	ul	255
+	uvoid	1
+	uvara	0
+	glvx2	4,6,1
+	gs	6,$'{}'/1
+	uc	$'Unification with unique variable'
+	gvara	2,5
+	exec	3,&'codegenInits'/3
+	.clause
+2:	gc	2,$'uniq'
+	gsx1	3,0,$'list'/1
+	glvx2	4,6,1
+	gs	6,$'{}'/1
+	uc	$'Unification with unique variable'
+	gvara	2,5
+	exec	3,&'codegenInits'/3
+	.clause
+3:	gc	2,$'uniq'
+	gsx1	3,255,$'string'/1
+	gl	4
+	uvarx	6
+	ulvx	5
+	gs	6,$'{}'/1
+	uc	$'Unification with unique variable'
+	pro	
+	.clause
+4:	gc	2,$'uniq'
+	gs	3,$'ground'/3
+	uvoid	3
+	gl	4
+	uvarx	6
+	ulvx	5
+	gs	6,$'{}'/1
+	uc	$'Unification with unique variable'
+	pro	
+	.clause
+5:	gvarx	6,0
+	gvara	0,1
+	gc	2,$'var'
+	gsx1	3,7,$'const'/1
+	glvx2	4,8,9
+	gsx2	8,8,2,$'pc'/2
+	gs	8,$'const'/1
+	uvalx	7
+	gvalx	9,5
+	ctypx	7,51
+	gvara	1,6
+	exec	3,&'codegenVariable'/3
+	.clause
+6:	gvarx	6,0
+	gvara	0,1
+	gc	2,$'var'
+	gs	3,$'struct'/1
+	ul	255
+	uvarx	7
+	all	4
+	uvary	2
+	gl	4
+	uvarx	8
+	uvary	1
+	gsx2	8,8,2,$'ps'/2
+	gs	8,$'/'/2
+	uvalx	7
+	uvary	3
+	gvary	0,5
+	gvara	1,6
+	call	4,3,&'codegenVariable'/3
+	pvaly	2,0
+	pvaly	3,1
+	call	3,2,&'length'/2
+	pvaly	2,0
+	pvaly	1,1
+	pvaly	0,2
+	dallexe	3,&'codegenArgs'/3
+	.clause
+7:	gvarx	6,0
+	gvara	0,1
+	gc	2,$'var'
+	gs	3,$'list'/1
+	all	3
+	uvary	2
+	gl	4
+	uvarx	7
+	uvary	1
+	gsx1	7,2,$'pl'/1
+	gvary	0,5
+	gvara	1,6
+	call	3,3,&'codegenVariable'/3
+	pvaly	2,0
+	pvaly	1,1
+	pvaly	0,2
+	dallexe	3,&'codegenArgs'/3
+	.clause
+8:	gvarx	6,0
+	gvara	0,1
+	gc	2,$'var'
+	gs	3,$'ground'/3
+	uvarx	7
+	uvarx	8
+	uvarx	9
+	glvx2	4,10,11
+	gsx2	10,10,2,$'pc'/2
+	gs	10,$'#'/3
+	uvalx	7
+	uvalx	8
+	uvalx	9
+	gvalx	11,5
+	gvara	1,6
+	exec	3,&'codegenVariable'/3
+	.clause
+9:	gvarx	6,0
+	gvara	0,1
+	gsx1	2,255,$'val'/1
+	gsx1	3,7,$'const'/1
+	glvx2	4,8,9
+	gs	8,$'gc'/2
+	uvara	2
+	us	255,$'const'/1
+	uvalx	7
+	gvalx	9,5
+	typx	7,12
+	gvara	1,6
+	exec	3,&'codegenVariable'/3
+	.clause
+10:	gvarx	6,0
+	gvara	0,1
+	gsx1	2,255,$'val'/1
+	gs	3,$'ground'/3
+	uvarx	7
+	uvarx	8
+	uvarx	9
+	gl	4
+	uvarx	10
+	ul	255
+	uvarx	11
+	uvarx	12
+	gs	10,$'pc'/2
+	uvarx	10
+	us	255,$'temp'/1
+	uc	$255
+	gs	10,$'#'/3
+	uvalx	7
+	uvalx	8
+	uvalx	9
+	gs	11,$'gval'/2
+	uvara	2
+	us	255,$'temp'/1
+	uc	$255
+	gvalx	12,5
+	gvara	1,6
+	exec	3,&'codegenVariable'/3
+	.clause
+11:	gvarx	6,0
+	gvara	0,1
+	gsx1	2,255,$'val'/1
+	gs	3,$'struct'/1
+	ul	255
+	uvarx	7
+	all	4
+	uvary	2
+	gl	4
+	uvarx	8
+	uvary	1
+	gs	8,$'gs'/2
+	uvara	2
+	us	255,$'/'/2
+	uvalx	7
+	uvary	3
+	gvary	0,5
+	gvara	1,6
+	call	4,3,&'codegenVariable'/3
+	pvaly	2,0
+	pvaly	3,1
+	call	3,2,&'length'/2
+	pvaly	2,0
+	pvaly	1,1
+	pvaly	0,2
+	dallexe	3,&'codegenArgs'/3
+	.clause
+12:	gvarx	6,0
+	gvara	0,1
+	gsx1	2,255,$'val'/1
+	gs	3,$'list'/1
+	all	3
+	uvary	2
+	gl	4
+	uvarx	7
+	uvary	1
+	gsx1	7,2,$'gl'/1
+	gvary	0,5
+	gvara	1,6
+	call	3,3,&'codegenVariable'/3
+	pvaly	2,0
+	pvaly	1,1
+	pvaly	0,2
+	dallexe	3,&'codegenArgs'/3
+	last
+
+	.pred	'tagOfTerm',2
+5: 	sot	0,&3,&4,&4,&6
+3: 	t	2,0,&0
+	r	2,0,&1
+	tr	2,0,&2
+4: 	fail	
+6: 	sos	0,&($'list'/1:&1,$'string'/1:&0,$'struct'/1:&2),&4
+	.clause
+0:	gsx1	0,255,$'string'/1
+	gc	1,$'CHR'
+	pro	
+	.clause
+1:	gsx1	0,255,$'list'/1
+	gc	1,$'LST'
+	pro	
+	.clause
+2:	gsx1	0,255,$'struct'/1
+	gc	1,$'STR'
+	pro	
+	last
+
+	.pred	'codegenArgs',3
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	3,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	1,2
+	pro	
+	.clause
+1:	gl	0
+	uvara	0
+	all	3
+	uvary	2
+	gvary	0,2
+	pvary	1,2
+	call	3,3,&'codegenArg'/3
+	pvaly	2,0
+	puval	1,1
+	pvaly	0,2
+	dall	
+	execsot	3,0,&4,&0,&1,&2
+	last
+
+	.pred	'codegenArg',3
+15: 	sot	0,&16,&17,&14,&18
+16: 	mkdel	3,&15
+	mark	0
+	delay	
+17: 	fail	
+14: 	fail	
+18: 	sos	0,&($'const'/1:&19,$'ground'/3:&20,$'list'/1:&21,$'struct'/1:&22,$'vr'/4:&23),&14
+19: 	gsx1	0,0,$'const'/1
+	j	&7
+20: 	gs	0,$'ground'/3
+	uvarx	0
+	uvarx	3
+	uvarx	4
+	j	&8
+21: 	gsx1	0,0,$'list'/1
+	j	&9
+22: 	gsx1	0,0,$'struct'/1
+	j	&10
+23: 	gs	0,$'vr'/4
+	uvarx	0
+	uvarx	3
+	uvarx	4
+	uvarx	5
+24: 	sot	5,&25,&26,&14,&13
+25: 	mkdel	6,&24
+	mark	5
+	delay	
+26: 	soc	5,&($'uniq':&11,$'var':&12),&14
+	.clause
+7:	glvx2	1,6,7
+	gs	6,$'uc'/1
+	us	255,$'const'/1
+	ulvx	0
+	gvalx	7,2
+	ctypx	0,51
+	pro	
+	.clause
+8:	gl	1
+	uvarx	6
+	ulvx	2
+	gs	6,$'uc'/1
+	us	255,$'#'/3
+	ulvx	0
+	ulvx	3
+	ulvx	4
+	pro	
+	.clause
+9:	gl	1
+	uc	$'ul'
+	uvara	1
+	exec	3,&'codegenArgs'/3
+	.clause
+10:	gl	0
+	uvarx	6
+	all	3
+	uvary	2
+	gl	1
+	uvarx	7
+	uvary	1
+	gs	7,$'us'/1
+	us	255,$'/'/2
+	uvalx	6
+	uvara	1
+	gvary	0,2
+	pvaly	2,0
+	call	3,2,&'length'/2
+	pvaly	2,0
+	pvaly	1,1
+	pvaly	0,2
+	dallexe	3,&'codegenArgs'/3
+	.clause
+11:	gl	1
+	uvarx	6
+	ulvx	2
+	gs	6,$'uvoid'/1
+	uc	$1
+	gc	5,$'uniq'
+	pro	
+	.clause
+12:	glvx2	1,6,7
+	gsx1	6,6,$'uvar'/1
+	gvalx	7,2
+	gvara	1,3
+	gvara	0,4
+	gc	5,$'var'
+	gvara	2,6
+	exec	3,&'codegenVariable'/3
+	.clause
+13:	glvx2	1,6,7
+	gsx2	6,6,8,$'uval'/2
+	gvalx	7,2
+	gvara	1,3
+	gvara	0,4
+	gs	5,$'val'/1
+	uvalx	8
+	gvara	2,6
+	exec	3,&'codegenVariable'/3
+	last
+
+	.pred	'codegenInits',3
+7: 	labelx	3
+	sot	0,&8,&0,&9,&6
+8: 	mkdel	4,&7
+	mark	0
+	delay	
+9: 	glvx2	0,0,4
+5: 	t	5,0,&3
+	tr	5,0,&4
+6: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	1,2
+	pro	
+	.clause
+3:	gs	0,$'vr'/4
+	uvoid	1
+	uvarx	5
+	uvara	0
+	uc	$'var'
+	all	3
+	gvary	0,2
+	gvary	2,4
+	cutx	3
+	gl	1
+	uvarx	6
+	uvary	1
+	gsx1	6,2,$'init'/1
+	gvara	1,5
+	call	3,3,&'codegenVariable'/3
+	pvaly	2,0
+	pvaly	1,1
+	pvaly	0,2
+	dallexe	3,&'codegenInits'/3
+	.clause
+4:	gvara	0,4
+	exec	3,&'codegenInits'/3
+	last
+
+	.pred	'codegenCleanUp',2
+48: 	labelx	2
+	sot	0,&49,&50,&51,&56
+49: 	mkdel	3,&48
+	mark	0
+	delay	
+50: 	labelx	2
+	j	&0
+51: 	glvx2	0,0,3
+52: 	labelx	2
+	sot	0,&53,&54,&38,&55
+53: 	mkdel	4,&52
+	mark	0
+	delay	
+54: 	soce	0,&($'arith':&39,$'dall':&40,$'fail':&32,$'pro':&31),&38
+39: 	t	4,0,&28
+	tr	4,0,&38
+40: 	t	4,0,&30
+	r	4,0,&34
+	tr	4,0,&38
+55: 	sose	0,&($'apply'/1:&37,$'exec'/2:&35,$'funcall'/1:&36,$'gl'/1:&41,$'gs'/2:&42,$'gvar'/2:&43,$'gvara'/2:&44,$'init'/1:&45,$'j'/1:&33,$'pval'/3:&46,$'uvoid'/1:&47),&38
+41: 	t	4,0,&24
+	tr	4,0,&38
+42: 	t	4,0,&22
+	r	4,0,&23
+	tr	4,0,&38
+43: 	t	4,0,&20
+	tr	4,0,&38
+44: 	t	4,0,&21
+	tr	4,0,&38
+45: 	t	4,0,&26
+	r	4,0,&27
+	tr	4,0,&38
+46: 	t	4,0,&25
+	tr	4,0,&38
+47: 	t	4,0,&29
+	tr	4,0,&38
+56: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	pro	
+	.clause
+20:	gs	0,$'gvar'/2
+	uvarx	4
+	uvalx	4
+	gvara	0,3
+	cutx	2
+	exec	2,&'codegenCleanUp'/2
+	.clause
+21:	gs	0,$'gvara'/2
+	uvarx	4
+	uvalx	4
+	gvara	0,3
+	cutx	2
+	exec	2,&'codegenCleanUp'/2
+	.clause
+22:	gs	0,$'gs'/2
+	all	9
+	uvary	3
+	us	255,$'/'/2
+	uvary	2
+	uc	$2
+	gvary	0,1
+	gvary	6,2
+	gl	3
+	uvara	0
+	ul	255
+	uvary	8
+	uvary	7
+	pvary	5,1
+	call	9,2,&'codegenCleanUpUVAR'/2
+	pvaly	8,0
+	pvary	4,1
+	pvaly	7,2
+	pvary	1,3
+	call	7,4,&'codegenCleanUpUVAR2'/4
+	cuty	6
+	ps	4,$'temp'/1
+	ulvy	5
+	ps	5,$'temp'/1
+	ulvy	4
+	ps	6,$'gs2'/4
+	uvaly	3
+	uvalx	4
+	uvalx	5
+	us	255,$'/'/2
+	uvaly	2
+	uc	$2
+	pl	0
+	uvalx	6
+	ulvy	1
+	pvaly	0,1
+	dallexe	2,&'codegenCleanUp'/2
+	.clause
+23:	gs	0,$'gs'/2
+	all	6
+	uvary	3
+	us	255,$'/'/2
+	uvary	2
+	uc	$1
+	gvary	0,1
+	gvary	5,2
+	gl	3
+	uvara	0
+	uvary	1
+	pvary	4,1
+	call	6,2,&'codegenCleanUpUVAR'/2
+	cuty	5
+	ps	4,$'temp'/1
+	ulvy	4
+	ps	5,$'gs1'/3
+	uvaly	3
+	uvalx	4
+	us	255,$'/'/2
+	uvaly	2
+	uc	$1
+	pl	0
+	uvalx	5
+	uvaly	1
+	pvaly	0,1
+	dallexe	2,&'codegenCleanUp'/2
+	.clause
+24:	gs	0,$'gl'/1
+	all	8
+	uvary	3
+	gvary	0,1
+	gvary	5,2
+	gl	3
+	uvara	0
+	ul	255
+	uvary	7
+	uvary	6
+	pvary	4,1
+	call	8,2,&'codegenCleanUpUVAR'/2
+	pvaly	7,0
+	pvary	2,1
+	pvaly	6,2
+	pvary	1,3
+	call	6,4,&'codegenCleanUpUVAR2'/4
+	cuty	5
+	ps	4,$'temp'/1
+	ulvy	4
+	ps	5,$'glv2'/3
+	uvaly	3
+	uvalx	4
+	us	255,$'temp'/1
+	ulvy	2
+	pl	0
+	uvalx	5
+	ulvy	1
+	pvaly	0,1
+	dallexe	2,&'codegenCleanUp'/2
+	.clause
+25:	gs	0,$'pval'/3
+	uvarx	4
+	uc	$'safe'
+	us	255,$'temp'/1
+	uc	$255
+	gsx1	4,4,$'perm'/1
+	glvx2	3,5,6
+	gs	5,$'gval'/2
+	uvarx	5
+	us	255,$'temp'/1
+	uc	$255
+	gsx1	5,5,$'temp'/1
+	cutx	2
+	ps	7,$'perm'/1
+	uvalx	4
+	ps	4,$'gval'/2
+	uvalx	7
+	us	255,$'temp'/1
+	uvalx	5
+	pl	0
+	uvalx	4
+	uvalx	6
+	exec	2,&'codegenCleanUp'/2
+	.clause
+26:	gs	0,$'init'/1
+	us	255,$'temp'/1
+	uvarx	4
+	glvx2	3,5,6
+	gs	5,$'setarg'/3
+	uvarx	5
+	uvarx	7
+	us	255,$'temp'/1
+	uvalx	4
+	gsx1	5,5,$'temp'/1
+	gsx1	7,7,$'temp'/1
+	cutx	2
+	ps	8,$'temp'/1
+	uvalx	5
+	ps	5,$'temp'/1
+	uvalx	7
+	ps	7,$'setarg_var'/3
+	uvalx	8
+	uvalx	5
+	us	255,$'temp'/1
+	uvalx	4
+	pl	0
+	uvalx	7
+	uvalx	6
+	exec	2,&'codegenCleanUp'/2
+	.clause
+27:	gs	0,$'init'/1
+	us	255,$'temp'/1
+	uvarx	4
+	glvx2	3,5,6
+	gs	5,$'replacn'/3
+	uvarx	5
+	uvarx	7
+	us	255,$'temp'/1
+	uvalx	4
+	gsx1	5,5,$'temp'/1
+	gsx1	7,7,$'temp'/1
+	cutx	2
+	ps	8,$'temp'/1
+	uvalx	5
+	ps	5,$'temp'/1
+	uvalx	7
+	ps	7,$'replacn_var'/3
+	uvalx	8
+	uvalx	5
+	us	255,$'temp'/1
+	uvalx	4
+	pl	0
+	uvalx	7
+	uvalx	6
+	exec	2,&'codegenCleanUp'/2
+	.clause
+28:	gc	0,$'arith'
+	glvx2	3,4,5
+	gsx1	4,4,$'push'/1
+	cutx	2
+	ps	6,$'apush'/1
+	uvalx	4
+	pl	0
+	uvalx	6
+	uvalx	5
+	exec	2,&'codegenCleanUp'/2
+	.clause
+29:	gsx1	0,4,$'uvoid'/1
+	glvx2	3,5,6
+	gsx1	5,5,$'uvoid'/1
+	apushx	4
+	pushx	5
+	afunc	0
+	popx	4
+	apushx	4
+	pushi	$$256
+	apred	2
+	cutx	2
+	ps	5,$'uvoid'/1
+	uvalx	4
+	pl	0
+	uvalx	5
+	uvalx	6
+	exec	2,&'codegenCleanUp'/2
+	.clause
+30:	gc	0,$'dall'
+	gl	3
+	uc	$'pro'
+	uvara	0
+	cutx	2
+	gl	1
+	uc	$'dallPro'
+	uvara	1
+	exec	2,&'codegenUnreachable'/2
+	.clause
+31:	gc	0,$'pro'
+	gvara	0,3
+	cutx	2
+	gl	1
+	uc	$'pro'
+	uvara	1
+	exec	2,&'codegenUnreachable'/2
+	.clause
+32:	gc	0,$'fail'
+	gvara	0,3
+	cutx	2
+	gl	1
+	uc	$'fail'
+	uvara	1
+	exec	2,&'codegenUnreachable'/2
+	.clause
+33:	gsx1	0,4,$'j'/1
+	gvara	0,3
+	cutx	2
+	glvx2	1,5,1
+	gs	5,$'j'/1
+	uvalx	4
+	exec	2,&'codegenUnreachable'/2
+	.clause
+34:	gc	0,$'dall'
+	glvx2	3,4,0
+	gsx2	4,4,5,$'exec'/2
+	cutx	2
+	glvx2	1,6,1
+	gs	6,$'dallExec'/2
+	uvalx	4
+	uvalx	5
+	exec	2,&'codegenUnreachable'/2
+	.clause
+35:	gsx2	0,4,5,$'exec'/2
+	gvara	0,3
+	cutx	2
+	glvx2	1,6,1
+	gs	6,$'exec'/2
+	uvalx	4
+	uvalx	5
+	exec	2,&'codegenUnreachable'/2
+	.clause
+36:	gsx1	0,4,$'funcall'/1
+	gvara	0,3
+	cutx	2
+	glvx2	1,5,1
+	gs	5,$'funcall'/1
+	uvalx	4
+	exec	2,&'codegenUnreachable'/2
+	.clause
+37:	gsx1	0,4,$'apply'/1
+	gvara	0,3
+	cutx	2
+	glvx2	1,5,1
+	gs	5,$'apply'/1
+	uvalx	4
+	exec	2,&'codegenUnreachable'/2
+	.clause
+38:	gl	1
+	ulvx	0
+	uvara	1
+	gvara	0,3
+	exec	2,&'codegenCleanUp'/2
+	last
+
+	.pred	'codegenCleanUpUVAR',2
+5: 	sot	0,&3,&4,&4,&6
+3: 	t	2,0,&0
+	r	2,0,&1
+	tr	2,0,&2
+4: 	fail	
+6: 	sos	0,&($'uvar'/1:&0,$'uvara'/1:&1,$'uvoid'/1:&2),&4
+	.clause
+0:	gs	0,$'uvar'/1
+	us	255,$'temp'/1
+	ulvx	1
+	pro	
+	.clause
+1:	gs	0,$'uvara'/1
+	us	255,$'temp'/1
+	ulvx	1
+	pro	
+	.clause
+2:	gs	0,$'uvoid'/1
+	uc	$1
+	gc	1,$255
+	pro	
+	last
+
+	.pred	'codegenCleanUpUVAR2',4
+7: 	sot	0,&5,&3,&6,&8
+5: 	t	4,0,&0
+	r	4,0,&1
+	r	4,0,&2
+	r	4,0,&3
+	tr	4,0,&4
+6: 	fail	
+8: 	sos	0,&($'us'/1:&4,$'uvar'/1:&0,$'uvara'/1:&1,$'uvoid'/1:&2),&6
+	.clause
+0:	gs	0,$'uvar'/1
+	us	255,$'temp'/1
+	ulvx	1
+	gvalx	2,3
+	pro	
+	.clause
+1:	gs	0,$'uvara'/1
+	us	255,$'temp'/1
+	ulvx	1
+	gvalx	2,3
+	pro	
+	.clause
+2:	gs	0,$'uvoid'/1
+	uc	$1
+	gc	1,$255
+	gvalx	2,3
+	pro	
+	.clause
+3:	gc	0,$'ul'
+	gc	1,$254
+	gl	2
+	uvarx	4
+	ulvx	3
+	gs	4,$'gl'/1
+	uc	$254
+	pro	
+	.clause
+4:	gsx1	0,4,$'us'/1
+	gc	1,$254
+	gl	2
+	uvarx	5
+	ulvx	3
+	gs	5,$'gs'/2
+	uc	$254
+	uvalx	4
+	pro	
+	last
+
+	.pred	'codegenUnreachable',2
+7: 	labelx	2
+	sot	0,&8,&0,&9,&6
+8: 	mkdel	3,&7
+	mark	0
+	delay	
+9: 	glvx2	0,0,3
+5: 	t	4,0,&3
+	tr	4,0,&4
+6: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	pro	
+	.clause
+3:	gsx1	0,255,$'$'/1
+	cutx	2
+	gl	1
+	ulvx	0
+	uvara	1
+	gvara	0,3
+	exec	2,&'codegenCleanUp'/2
+	.clause
+4:	gvara	0,3
+	exec	2,&'codegenUnreachable'/2
+	last
+
+	.pred	'codegenDallExec',4
+	.clause
+0:	all	8
+	gvary	6,0
+	gsx1	1,0,$'conj'/1
+	gs	2,$'conj'/1
+	uvary	0
+	gvary	2,3
+	pvary	7,1
+	call	8,2,&'reverse'/2
+	puval	7,0
+	pvary	1,1
+	pvary	3,2
+	call	7,3,&'co$exec'/3
+	labely	4
+15: 	te	0,0,0,&16
+	pvaly	6,255
+	gc	255,$'true'
+	pvaly	3,255
+	gc	255,$'dall'
+	pvary	5,0
+	pvaly	1,1
+	call	6,2,&'instructionOf'/2
+	puval	5,0
+	call	5,1,&'usesY'/1
+	cuty	4
+	pvaly	2,255
+	gc	255,$'true'
+	j	&17
+16: 	tre	0,0
+	pvaly	3,255
+	gc	255,$'nop'
+	pvaly	2,255
+	gc	255,$'false'
+17: 	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'reverse'/2
+	last
+
+	.pred	'co$exec',3
+8: 	labelx	3
+	sot	0,&9,&3,&10,&3
+9: 	mkdel	4,&8
+	mark	0
+	delay	
+10: 	glvx2	0,4,5
+11: 	labelx	3
+	sot	4,&12,&3,&3,&13
+12: 	mkdel	6,&11
+	mark	4
+	delay	
+13: 	sose	4,&($'call'/4:&7,$'disj'/3:&6,$'{}'/1:&4),&3
+7: 	t	6,0,&5
+	tr	6,0,&3
+	.clause
+3:	gl	1
+	uc	$'pro'
+	ul	255
+	ulvx	2
+	ulvx	0
+	pro	
+	.clause
+4:	gsx1	4,6,$'{}'/1
+	gvara	0,5
+	cutx	3
+	glvx2	1,7,1
+	gs	7,$'{}'/1
+	uvalx	6
+	exec	3,&'co$exec'/3
+	.clause
+5:	gs	4,$'call'/4
+	uvarx	6
+	uvarx	7
+	uvoid	1
+	uc	$'seq'
+	cutx	3
+	gl	1
+	uvarx	8
+	ul	255
+	ulvx	2
+	ulvx	5
+	gs	8,$'exec'/2
+	uvalx	6
+	uvalx	7
+	pro	
+	.clause
+6:	gs	4,$'disj'/3
+	uvarx	6
+	uvarx	7
+	uvara	0
+	cutx	3
+	gl	1
+	uvarx	8
+	ulvx	5
+	gs	8,$'disj'/3
+	uvalx	6
+	uvalx	7
+	uvara	1
+	exec	3,&'co$execD'/3
+	last
+
+	.pred	'co$execD',3
+6: 	sot	0,&7,&0,&8,&12
+7: 	mkdel	3,&6
+	mark	0
+	delay	
+	j	&0
+8: 	glvx2	0,0,3
+9: 	sot	0,&10,&5,&5,&11
+10: 	mkdel	4,&9
+	mark	0
+	delay	
+5: 	fail	
+11: 	sos	0,&($'->'/2:&4,$'conj'/1:&3),&5
+12: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	pro	
+	.clause
+3:	gsx1	0,0,$'conj'/1
+	gl	1
+	uvarx	4
+	all	6
+	uvary	1
+	gs	4,$'conj'/1
+	uvary	3
+	gvary	0,2
+	gvary	2,3
+	pvary	5,1
+	call	6,2,&'reverse'/2
+	puval	5,0
+	pvary	4,1
+	pvaly	0,2
+	call	5,3,&'co$exec'/3
+	puval	4,0
+	pvaly	3,1
+	call	3,2,&'reverse'/2
+	pvaly	2,0
+	pvaly	1,1
+	pvaly	0,2
+	dall	
+	execsot	3,0,&7,&0,&8,&12
+	.clause
+4:	gs	0,$'->'/2
+	uvarx	4
+	us	255,$'conj'/1
+	uvara	0
+	gsx1	4,4,$'conj'/1
+	gl	1
+	uvarx	5
+	all	6
+	uvary	1
+	gs	5,$'->'/2
+	uvarx	5
+	us	255,$'conj'/1
+	uvary	3
+	gs	5,$'conj'/1
+	uvalx	4
+	gvary	0,2
+	gvary	2,3
+	pvary	5,1
+	call	6,2,&'reverse'/2
+	puval	5,0
+	pvary	4,1
+	pvaly	0,2
+	call	5,3,&'co$exec'/3
+	puval	4,0
+	pvaly	3,1
+	call	3,2,&'reverse'/2
+	pvaly	2,0
+	pvaly	1,1
+	pvaly	0,2
+	dall	
+	execsot	3,0,&7,&0,&8,&12
+	last
+
+	.pred	'instructionOf',2
+6: 	labelx	2
+	sot	1,&7,&4,&5,&8
+7: 	mkdel	3,&6
+	mark	1
+	delay	
+5: 	t	3,0,&0
+	tr	3,0,&4
+8: 	sose	1,&($'->'/2:&2,$'conj'/1:&1,$'disj'/3:&3),&4
+	.clause
+0:	glvx2	1,1,3
+	cutx	2
+16: 	te	4,0,4,&17
+	exec	2,&'instructionOf'/2
+17: 	tre	4,0
+	gvara	1,3
+	exec	2,&'instructionOf'/2
+18: 	.clause
+1:	gsx1	1,1,$'conj'/1
+	cutx	2
+	exec	2,&'instructionOf'/2
+	.clause
+2:	gsx2	1,1,3,$'->'/2
+	cutx	2
+31: 	te	4,0,4,&32
+	exec	2,&'instructionOf'/2
+32: 	tre	4,0
+	gvara	1,3
+	exec	2,&'instructionOf'/2
+33: 	.clause
+3:	gs	1,$'disj'/3
+	uvoid	2
+	uvara	1
+	cutx	2
+	exec	2,&'instructionOf'/2
+	.clause
+4:	gvalx	0,1
+	pro	
+	last
+
+	.pred	'unsafe',1
+	.clause
+0:	gs	0,$'conj'/1
+	all	3
+	uvary	2
+	pvaly	2,0
+	pvary	0,1
+	call	3,2,&'unsafeVars'/2
+	pvaly	2,0
+	pvary	1,1
+	call	2,2,&'reverse'/2
+	puval	1,0
+	puval	0,1
+	dallexe	2,&'unsafe'/2
+	last
+
+	.pred	'unsafe',2
+	.clause
+0:	pc	2,$0
+	pvarx	3,3
+	exec	4,&'unsafe'/4
+	last
+
+	.pred	'unsafe',4
+12: 	labelx	4
+	sot	0,&13,&14,&15,&19
+13: 	mkdel	5,&12
+	mark	0
+	delay	
+14: 	labelx	4
+	j	&0
+15: 	glvx2	0,0,5
+16: 	labelx	4
+	sot	0,&17,&10,&10,&18
+17: 	mkdel	6,&16
+	mark	0
+	delay	
+18: 	sose	0,&($'call'/4:&6,$'disj'/3:&9,$'pval'/3:&11),&10
+11: 	t	6,0,&7
+	r	6,0,&8
+	tr	6,0,&10
+19: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	2,3
+	pro	
+	.clause
+6:	gs	0,$'call'/4
+	uvoid	2
+	uvarx	6
+	uvoid	1
+	gvara	0,5
+	cutx	4
+	gvara	2,6
+	exec	4,&'unsafe'/4
+	.clause
+7:	gs	0,$'pval'/3
+	uvarx	6
+	uc	$'unsafe'
+	uvoid	1
+	gsx1	6,0,$'perm'/1
+	all	5
+	gvary	2,1
+	gvary	1,2
+	gvary	0,3
+	gvary	4,4
+	gvary	3,5
+	apushx	0
+	pushy	1
+	apred	5
+	pvaly	2,1
+	call	5,2,&'member'/2
+	cuty	4
+	pvaly	3,0
+	pvaly	2,1
+	pvaly	1,2
+	pvaly	0,3
+	dallexe	4,&'unsafe'/4
+	.clause
+8:	gs	0,$'pval'/3
+	uvoid	1
+	uc	$'safe'
+	uvoid	1
+	gvara	0,5
+	cutx	4
+	exec	4,&'unsafe'/4
+	.clause
+9:	gs	0,$'disj'/3
+	uvoid	2
+	uvara	0
+	all	4
+	gvary	2,1
+	gvary	0,3
+	gvary	3,5
+	cutx	4
+	pvaly	2,1
+	pvary	1,3
+	call	4,4,&'unsafeD'/4
+	pvaly	3,0
+	pvaly	2,1
+	puval	1,2
+	pvaly	0,3
+	dallexe	4,&'unsafe'/4
+	.clause
+10:	gvara	0,5
+	exec	4,&'unsafe'/4
+	last
+
+	.pred	'unsafeD',4
+6: 	sot	0,&7,&0,&8,&12
+7: 	mkdel	4,&6
+	mark	0
+	delay	
+	j	&0
+8: 	glvx2	0,0,4
+9: 	sot	0,&10,&5,&5,&11
+10: 	mkdel	5,&9
+	mark	0
+	delay	
+5: 	fail	
+11: 	sos	0,&($'->'/2:&4,$'conj'/1:&3),&5
+12: 	fail	
+	.clause
+0:	gnil	0
+	gc	3,$99999
+	pro	
+	.clause
+3:	gsx1	0,0,$'conj'/1
+	exec	5,&'unsafeD2'/5
+	.clause
+4:	gs	0,$'->'/2
+	uvarx	5
+	us	255,$'conj'/1
+	uvarx	6
+	gsx1	5,0,$'conj'/1
+	all	5
+	gvary	3,1
+	gvary	2,2
+	gvary	1,3
+	gvary	0,4
+	gvara	1,6
+	pvary	4,2
+	call	5,3,&'append'/3
+	puval	4,0
+	pvaly	3,1
+	pvaly	2,2
+	pvaly	1,3
+	pvaly	0,4
+	dallexe	5,&'unsafeD2'/5
+	last
+
+	.pred	'unsafeD2',5
+	.clause
+0:	all	7
+	gvary	4,1
+	gvary	3,2
+	gvary	1,3
+	gvary	5,4
+	pvary	6,1
+	call	7,2,&'reverse'/2
+	puval	6,0
+	pvaly	4,1
+	pvaly	3,2
+	pvary	2,3
+	call	6,4,&'unsafe'/4
+	pvaly	5,0
+	pvaly	4,1
+	pvaly	3,2
+	pvary	0,3
+	call	3,4,&'unsafeD'/4
+	apushy	2
+	pushy	0
+	jpred	2,&16
+	puval	2,255
+	gvaly	1,255
+	dallpro	
+16: 	puval	0,255
+	gvaly	1,255
+	dallpro	
+17: 	last
+
+	.pred	'unsafeVars',2
+	.clause
+0:	pnil	2
+	exec	3,&'unsafeVars'/3
+	last
+
+	.pred	'unsafeVars',3
+14: 	labelx	3
+	sot	0,&15,&16,&17,&21
+15: 	mkdel	4,&14
+	mark	0
+	delay	
+16: 	labelx	3
+	j	&0
+17: 	glvx2	0,0,4
+18: 	labelx	3
+	sot	0,&19,&10,&10,&20
+19: 	mkdel	5,&18
+	mark	0
+	delay	
+20: 	sose	0,&($'disj'/3:&9,$'glvar'/2:&11,$'init'/1:&12,$'pvar'/2:&13),&10
+11: 	t	5,0,&7
+	tr	5,0,&10
+12: 	t	5,0,&8
+	tr	5,0,&10
+13: 	t	5,0,&6
+	tr	5,0,&10
+21: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	1,2
+	pro	
+	.clause
+6:	gsx2	0,5,255,$'pvar'/2
+	gsx1	5,5,$'perm'/1
+	gl	1
+	uvalx	5
+	uvara	1
+	gvara	0,4
+	cutx	3
+	exec	3,&'unsafeVars'/3
+	.clause
+7:	gsx2	0,5,255,$'glvar'/2
+	gsx1	5,5,$'perm'/1
+	gl	1
+	uvalx	5
+	uvara	1
+	gvara	0,4
+	cutx	3
+	exec	3,&'unsafeVars'/3
+	.clause
+8:	gs	0,$'init'/1
+	us	255,$'perm'/1
+	uvarx	5
+	gl	1
+	uvalx	5
+	uvara	1
+	gvara	0,4
+	cutx	3
+	exec	3,&'unsafeVars'/3
+	.clause
+9:	gs	0,$'disj'/3
+	uvoid	2
+	uvara	0
+	all	3
+	gvary	0,2
+	gvary	2,4
+	cutx	3
+	pvary	1,2
+	call	3,3,&'unsafeVarsD'/3
+	pvaly	2,0
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'unsafeVars'/3
+	.clause
+10:	gvara	0,4
+	exec	3,&'unsafeVars'/3
+	last
+
+	.pred	'unsafeVarsD',3
+6: 	sot	0,&7,&0,&8,&12
+7: 	mkdel	3,&6
+	mark	0
+	delay	
+	j	&0
+8: 	glvx2	0,0,3
+9: 	sot	0,&10,&5,&5,&11
+10: 	mkdel	4,&9
+	mark	0
+	delay	
+5: 	fail	
+11: 	sos	0,&($'->'/2:&4,$'conj'/1:&3),&5
+12: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	1,2
+	pro	
+	.clause
+3:	gsx1	0,0,$'conj'/1
+	all	3
+	gvary	0,2
+	gvary	2,3
+	pvary	1,2
+	call	3,3,&'unsafeVars'/3
+	pvaly	2,0
+	puval	1,1
+	pvaly	0,2
+	dall	
+	execsot	3,0,&7,&0,&8,&12
+	.clause
+4:	gs	0,$'->'/2
+	uvarx	4
+	us	255,$'conj'/1
+	all	5
+	uvary	4
+	gsx1	4,0,$'conj'/1
+	gvary	0,2
+	gvary	2,3
+	pvary	3,2
+	call	5,3,&'unsafeVars'/3
+	pvaly	4,0
+	puval	3,1
+	pvary	1,2
+	call	3,3,&'unsafeVars'/3
+	pvaly	2,0
+	puval	1,1
+	pvaly	0,2
+	dall	
+	execsot	3,0,&7,&0,&8,&12
+	last
+
+	.pred	'allocate',3
+	.clause
+0:	gsx1	0,0,$'conj'/1
+	gsx1	2,2,$'conj'/1
+	exec	3,&'allocate2'/3
+	last
+
+	.pred	'allocate2',3
+7: 	labelx	3
+	sot	0,&8,&0,&9,&6
+8: 	mkdel	4,&7
+	mark	0
+	delay	
+9: 	glvx2	0,0,4
+5: 	t	5,0,&3
+	tr	5,0,&4
+6: 	fail	
+	.clause
+0:	gnil	0
+	gnil	2
+	pro	
+	.clause
+3:	gvarx	5,0
+	gl	2
+	uvarx	6
+	ul	255
+	ulvx	5
+	uvarx	7
+	gs	6,$'all'/1
+	ulvx	1
+	all	2
+	gvary	0,3
+	gvalx	7,4
+	pvary	1,0
+	gvara	1,5
+	call	2,2,&'instructionOf'/2
+	puval	1,0
+	call	1,1,&'usesY'/1
+	cuty	0
+	dallpro	
+	.clause
+4:	gl	2
+	ulvx	0
+	uvara	2
+	gvara	0,4
+	exec	3,&'allocate2'/3
+	last
+
+	.pred	'codegenDisj',3
+	.clause
+0:	gsx1	0,0,$'conj'/1
+	pnil	3
+	exec	4,&'codegenDisj'/4
+	last
+
+	.pred	'codegenDisj',4
+11: 	labelx	4
+	sot	0,&12,&13,&14,&18
+12: 	mkdel	5,&11
+	mark	0
+	delay	
+13: 	labelx	4
+	j	&0
+14: 	glvx2	0,0,5
+15: 	labelx	4
+	sot	0,&16,&8,&8,&17
+16: 	mkdel	6,&15
+	mark	0
+	delay	
+17: 	sose	0,&($'disj'/3:&5,$'gvar'/2:&9,$'uvar'/1:&10),&8
+9: 	t	6,0,&6
+	tr	6,0,&8
+10: 	t	6,0,&7
+	tr	6,0,&8
+18: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	2,3
+	pro	
+	.clause
+5:	gs	0,$'disj'/3
+	uvarx	6
+	uvarx	7
+	uvara	0
+	gvarx	8,1
+	gvarx	9,2
+	all	4
+	gvary	0,3
+	gvary	3,5
+	cutx	4
+	gvara	1,6
+	gvara	2,7
+	gvara	3,8
+	pvary	2,4
+	gvara	5,9
+	pvary	1,6
+	call	4,7,&'codegenDisjD'/7
+	pvaly	3,0
+	puval	2,1
+	puval	1,2
+	pvaly	0,3
+	dallexe	4,&'codegenDisj'/4
+	.clause
+6:	gsx2	0,6,7,$'gvar'/2
+	glvx2	2,8,2
+	gs	8,$'gvara'/2
+	uvalx	6
+	uvalx	7
+	gvara	0,5
+	gsx1	6,6,$'temp'/1
+	apushx	6
+	pushx	1
+	apred	2
+	cutx	4
+	exec	4,&'codegenDisj'/4
+	.clause
+7:	gsx1	0,6,$'uvar'/1
+	glvx2	2,7,2
+	gs	7,$'uvara'/1
+	uvalx	6
+	gvara	0,5
+	gsx1	6,6,$'temp'/1
+	apushx	6
+	pushx	1
+	apred	2
+	cutx	4
+	exec	4,&'codegenDisj'/4
+	.clause
+8:	gl	2
+	ulvx	0
+	uvara	2
+	gvara	0,5
+	exec	4,&'codegenDisj'/4
+	last
+
+	.pred	'codegenDisjD',7
+	.clause
+0:	all	5
+	gvary	3,1
+	gvary	2,2
+	gvary	1,3
+	gvary	0,4
+	gvarx	8,5
+	ps	9,$'$'/1
+	uvara	2
+	pl	7
+	uvalx	9
+	ulvx	6
+	pc	1,$0
+	pc	3,$'nop'
+	pvaly	2,4
+	pvaly	1,5
+	gvara	6,8
+	pvary	4,8
+	call	5,9,&'codegenDisjD1'/9
+	puval	4,0
+	pvaly	3,1
+	pvaly	2,2
+	pvaly	1,3
+	pvaly	0,4
+	dallexe	5,&'codegenDisjTable'/5
+	last
+
+	.pred	'codegenDisjTable',5
+4: 	sot	0,&2,&0,&1,&3
+2: 	t	5,0,&0
+	tr	5,0,&1
+3: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	3,4
+	pro	
+	.clause
+1:	glvx2	0,5,0
+	gsx2	5,5,255,$'choice'/2
+	gs	5,$'te'/3
+	uvarx	5
+	uvarx	6
+	uvarx	7
+	gvalx	5,1
+	gvalx	6,2
+	gvalx	6,4
+	glvx2	0,5,255
+	gs	5,$'choice'/2
+	uvoid	1
+	uvalx	7
+	gvara	1,6
+	exec	2,&'codegenDisjTable'/2
+	last
+
+	.pred	'codegenDisjTable',2
+5: 	sot	0,&6,&7,&8,&11
+6: 	mkdel	2,&5
+	mark	0
+	delay	
+7: 	fail	
+8: 	glvx2	0,0,2
+9: 	sot	2,&10,&2,&3,&4
+10: 	mkdel	3,&9
+	mark	2
+	delay	
+4: 	fail	
+11: 	fail	
+	.clause
+2:	gsx2	0,3,255,$'choice'/2
+	gs	3,$'tre'/1
+	ulvx	1
+	gnil	2
+	pro	
+	.clause
+3:	gsx2	0,3,255,$'choice'/2
+	gsx2	3,3,4,$'re'/2
+	gvalx	3,1
+	gvara	0,2
+	glvx2	0,5,255
+	gs	5,$'choice'/2
+	uvoid	1
+	uvalx	4
+	gvara	1,3
+	execsot	2,0,&6,&7,&8,&11
+	last
+
+	.pred	'codegenDisjD1',9
+10: 	sot	0,&11,&0,&12,&17
+11: 	mkdel	9,&10
+	mark	0
+	delay	
+	j	&0
+12: 	glvx2	0,0,9
+13: 	jnvx	0,&14
+7: 	mkdel	10,&13
+	mark	0
+	delay	
+14: 	sot	9,&15,&4,&16,&9
+15: 	mkdel	10,&14
+	mark	9
+	delay	
+16: 	glvx2	9,9,10
+8: 	t	11,0,&5
+	tr	11,0,&6
+9: 	fail	
+17: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	6,7
+	gnil	8
+	pro	
+	.clause
+4:	gs	0,$'conj'/1
+	all	4
+	uvary	3
+	gvara	0,1
+	gvary	2,5
+	gvara	1,6
+	gvary	0,7
+	gnil	9
+	pl	2
+	ulvx	3
+	uvary	1
+	gvara	3,8
+	pnil	4
+	call	4,5,&'codegenDisjCP'/5
+	pvaly	3,0
+	pvaly	2,1
+	pvaly	1,2
+	pvaly	0,3
+	dallexe	4,&'codegenDisj'/4
+	.clause
+5:	gs	0,$'->'/2
+	uvarx	11
+	us	255,$'conj'/1
+	all	15
+	uvary	10
+	gs	11,$'conj'/1
+	uvary	14
+	gvary	6,1
+	gvary	5,2
+	gvary	4,4
+	gvary	3,5
+	gvara	1,6
+	gvary	1,7
+	gvary	8,9
+	gvary	7,10
+	pl	2
+	ulvx	3
+	uvary	13
+	pvaly	6,0
+	gvara	3,8
+	pvary	0,4
+	call	15,5,&'codegenDisjCP'/5
+	pvaly	14,0
+	pvary	11,1
+	pvaly	13,2
+	pvary	9,3
+	call	13,4,&'codegenSimpleCondL'/4
+	apushy	6
+	pushi	$$0
+	jpred	4,&84
+	ps	11,$'j'/1
+	ulvy	5
+	pl	3
+	uvalx	11
+	uvary	2
+	pvaly	10,0
+	pvaly	4,1
+	pvary	12,2
+	call	13,4,&'codegenDisj'/4
+	pl	0
+	ulvy	8
+	ulvy	7
+	ps	3,$'$'/1
+	ulvy	11
+	pc	1,$-1
+	pvaly	5,2
+	pvaly	4,4
+	pvaly	4,5
+	pvaly	2,6
+	pvaly	1,7
+	pvaly	0,8
+	call	13,9,&'codegenDisjD1'/9
+	jtypy	0,48,&83
+	pvaly	9,255
+	gl	255
+	uvarx	11
+	ulvy	12
+	gs	11,$'tre'/1
+	uc	$0
+	dallpro	
+83: 	puval	12,255
+	gvaly	9,255
+	dallpro	
+	j	&85
+84: 	ps	11,$'j'/1
+	ulvy	5
+	ps	12,$'$'/1
+	ulvy	11
+	pl	3
+	uvalx	11
+	ul	255
+	uvalx	12
+	uvary	2
+	pvaly	10,0
+	pvaly	3,1
+	puval	9,2
+	call	9,4,&'codegenDisj'/4
+	pl	0
+	ulvy	8
+	ulvy	7
+	pvaly	6,1
+	pvaly	5,2
+	pc	3,$'nop'
+	pvaly	4,4
+	pvaly	3,5
+	pvaly	2,6
+	pvaly	1,7
+	puval	0,8
+	dallexe	9,&'codegenDisjD1'/9
+85: 	.clause
+6:	gs	0,$'conj'/1
+	all	9
+	uvary	8
+	gvary	4,2
+	gvary	3,4
+	gvary	1,7
+	gvary	6,9
+	gvary	5,10
+	apushx	1
+	afunc	46
+	popx	0
+	pl	2
+	ulvx	3
+	uvary	7
+	gvara	1,6
+	gvara	3,8
+	pvary	0,4
+	call	9,5,&'codegenDisjCP'/5
+	ps	11,$'j'/1
+	ulvy	4
+	pl	3
+	uvalx	11
+	uvary	2
+	pvaly	8,0
+	pvaly	3,1
+	pvaly	7,2
+	call	7,4,&'codegenDisj'/4
+	pl	0
+	ulvy	6
+	ulvy	5
+	pc	1,$1
+	pvaly	4,2
+	pc	3,$'nop'
+	pvaly	3,4
+	pvaly	3,5
+	pvaly	2,6
+	pvaly	1,7
+	puval	0,8
+	dall	
+	execsot	9,0,&11,&0,&12,&17
+	last
+
+	.pred	'codegenDisjCP',5
+	.clause
+0:	apushx	0
+	pushi	$$0
+	jpred	4,&6
+	gl	1
+	uvarx	5
+	ul	255
+	uvarx	6
+	ulvx	2
+	gsx1	5,5,$'$'/1
+	gl	3
+	uvarx	7
+	ulvx	4
+	gs	7,$'choice'/2
+	uvalx	6
+	uvalx	5
+	pro	
+6: 	gvalx	2,1
+	gvalx	4,3
+	pro	
+7: 	last
+
+	.pred	'codegenSimpleCond',4
+	labelx	4
+9: 	sot	0,&8,&10,&7,&11
+8: 	t	5,0,&0
+	r	5,0,&1
+	r	5,0,&2
+	r	5,0,&3
+	r	5,0,&4
+	r	5,0,&5
+	r	5,0,&6
+	tr	5,0,&7
+10: 	jc	0,$'fail',&5
+	j	&7
+	j	&5
+11: 	sose	0,&($'arithP'/1:&4,$'ctype'/2:&3,$'disj'/3:&6,$'id'/2:&0,$'notid'/2:&1,$'type'/2:&2),&7
+	.clause
+0:	gsx2	0,5,6,$'id'/2
+	cutx	4
+	gl	2
+	uvarx	7
+	ul	255
+	uvarx	8
+	ulvx	3
+	gs	7,$'identTest'/2
+	uvalx	5
+	uvalx	6
+	gs	8,$'jFail'/1
+	ulvx	1
+	pro	
+	.clause
+1:	gsx2	0,5,6,$'notid'/2
+	cutx	4
+	gl	2
+	uvarx	7
+	ul	255
+	uvarx	8
+	ulvx	3
+	gs	7,$'identTest'/2
+	uvalx	5
+	uvalx	6
+	gs	8,$'jTrue'/1
+	ulvx	1
+	pro	
+	.clause
+2:	gsx2	0,5,6,$'type'/2
+	cutx	4
+	gl	2
+	uvarx	7
+	ulvx	3
+	gs	7,$'jtype'/3
+	uvalx	5
+	uvalx	6
+	ulvx	1
+	pro	
+	.clause
+3:	gsx2	0,5,6,$'ctype'/2
+	cutx	4
+	gl	2
+	uvarx	7
+	ulvx	3
+	gs	7,$'jctype'/3
+	uvalx	5
+	uvalx	6
+	ulvx	1
+	pro	
+	.clause
+4:	gsx1	0,5,$'arithP'/1
+	cutx	4
+	gl	2
+	uvarx	6
+	ulvx	3
+	gs	6,$'jArithP'/2
+	uvalx	5
+	ulvx	1
+	pro	
+	.clause
+5:	gc	0,$'fail'
+	cutx	4
+	gl	2
+	uvarx	5
+	ulvx	3
+	gs	5,$'j'/1
+	ulvx	1
+	pro	
+	.clause
+6:	gs	0,$'disj'/3
+	uvoid	2
+	uvara	0
+	gvarx	5,1
+	gvarx	6,2
+	cutx	4
+	ps	7,$'$'/1
+	uvara	1
+	pl	4
+	uvalx	7
+	ulvx	3
+	gvara	2,5
+	gvara	3,6
+	exec	5,&'codegenSimpleCondD'/5
+	.clause
+7:	gl	2
+	ulvx	0
+	ulvx	3
+	pro	
+	last
+
+	.pred	'codegenSimpleCondL',4
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	4,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	2,3
+	pro	
+	.clause
+1:	gl	0
+	uvara	0
+	all	4
+	uvary	3
+	gvary	2,1
+	gvary	0,3
+	pvaly	2,1
+	pvary	1,3
+	call	4,4,&'codegenSimpleCond'/4
+	pvaly	3,0
+	pvaly	2,1
+	puval	1,2
+	pvaly	0,3
+	dall	
+	execsot	4,0,&4,&0,&1,&2
+	last
+
+	.pred	'codegenSimpleCondD',5
+6: 	sot	0,&7,&0,&8,&12
+7: 	mkdel	5,&6
+	mark	0
+	delay	
+	j	&0
+8: 	glvx2	0,0,5
+9: 	sot	0,&10,&4,&4,&11
+10: 	mkdel	6,&9
+	mark	0
+	delay	
+11: 	js	0,$'conj'/1,&5
+	j	&4
+5: 	t	6,0,&3
+	tr	6,0,&4
+12: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	3,4
+	pro	
+	.clause
+3:	gsx1	0,0,$'conj'/1
+	gvara	1,2
+	gvara	2,3
+	gvara	3,4
+	gnil	5
+	exec	4,&'codegenSimpleCondL'/4
+	.clause
+4:	all	6
+	gvary	3,1
+	gvary	2,2
+	gvary	0,4
+	gl	5
+	uvary	5
+	uvary	4
+	ps	6,$'j'/1
+	ulvy	3
+	ps	7,$'$'/1
+	uvara	1
+	pl	4
+	uvalx	6
+	ul	255
+	uvalx	7
+	uvary	1
+	pvaly	2,2
+	call	6,5,&'codegenSimpleCond1'/5
+	pl	0
+	uvaly	5
+	uvaly	4
+	pvaly	3,1
+	pvaly	2,2
+	pvaly	1,3
+	pvaly	0,4
+	dall	
+	execsot	5,0,&7,&0,&8,&12
+	last
+
+	.pred	'codegenSimpleCond1',5
+4: 	sot	0,&2,&3,&3,&5
+2: 	t	5,0,&0
+	tr	5,0,&1
+3: 	fail	
+5: 	sos	0,&($'->'/2:&0,$'conj'/1:&1),&3
+	.clause
+0:	gs	0,$'->'/2
+	uvarx	5
+	us	255,$'conj'/1
+	all	4
+	uvary	3
+	gsx1	5,0,$'conj'/1
+	gvary	2,2
+	gvara	2,3
+	gvary	0,4
+	pvary	1,3
+	call	4,4,&'codegenSimpleCondL'/4
+	pvaly	3,0
+	pvaly	2,1
+	puval	1,2
+	pvaly	0,3
+	dallexe	4,&'codegenSimpleCondL'/4
+	.clause
+1:	gsx1	0,0,$'conj'/1
+	gvara	2,3
+	gvara	3,4
+	exec	4,&'codegenSimpleCondL'/4
+	last
+
+	.pred	'usesVar',2
+136: 	sot	0,&134,&135,&135,&137
+134: 	t	2,0,&0
+	r	2,0,&1
+	r	2,0,&2
+	r	2,0,&3
+	r	2,0,&4
+	r	2,0,&5
+	r	2,0,&6
+	r	2,0,&7
+	r	2,0,&8
+	r	2,0,&9
+	r	2,0,&10
+	r	2,0,&11
+	r	2,0,&12
+	r	2,0,&13
+	r	2,0,&14
+	r	2,0,&15
+	r	2,0,&16
+	r	2,0,&17
+	r	2,0,&18
+	r	2,0,&19
+	r	2,0,&20
+	r	2,0,&21
+	r	2,0,&22
+	r	2,0,&23
+	r	2,0,&24
+	r	2,0,&25
+	r	2,0,&26
+	r	2,0,&27
+	r	2,0,&28
+	r	2,0,&29
+	r	2,0,&30
+	r	2,0,&31
+	r	2,0,&32
+	r	2,0,&33
+	r	2,0,&34
+	r	2,0,&35
+	r	2,0,&36
+	r	2,0,&37
+	r	2,0,&38
+	r	2,0,&39
+	r	2,0,&40
+	r	2,0,&41
+	r	2,0,&42
+	r	2,0,&43
+	r	2,0,&44
+	r	2,0,&45
+	r	2,0,&46
+	r	2,0,&47
+	r	2,0,&48
+	r	2,0,&49
+	r	2,0,&50
+	r	2,0,&51
+	r	2,0,&52
+	r	2,0,&53
+	r	2,0,&54
+	r	2,0,&55
+	r	2,0,&56
+	r	2,0,&57
+	r	2,0,&58
+	r	2,0,&59
+	r	2,0,&60
+	r	2,0,&61
+	r	2,0,&62
+	r	2,0,&63
+	r	2,0,&64
+	r	2,0,&65
+	r	2,0,&66
+	r	2,0,&67
+	r	2,0,&68
+	r	2,0,&69
+	r	2,0,&70
+	r	2,0,&71
+	r	2,0,&72
+	r	2,0,&73
+	r	2,0,&74
+	r	2,0,&75
+	r	2,0,&76
+	r	2,0,&77
+	r	2,0,&78
+	r	2,0,&79
+	r	2,0,&80
+	r	2,0,&81
+	r	2,0,&82
+	r	2,0,&83
+	r	2,0,&84
+	r	2,0,&85
+	r	2,0,&86
+	r	2,0,&87
+	r	2,0,&88
+	r	2,0,&89
+	r	2,0,&90
+	r	2,0,&91
+	r	2,0,&92
+	r	2,0,&93
+	r	2,0,&94
+	r	2,0,&95
+	r	2,0,&96
+	r	2,0,&97
+	r	2,0,&98
+	r	2,0,&99
+	r	2,0,&100
+	r	2,0,&101
+	r	2,0,&102
+	r	2,0,&103
+	r	2,0,&104
+	r	2,0,&105
+	r	2,0,&106
+	r	2,0,&107
+	r	2,0,&108
+	r	2,0,&109
+	r	2,0,&110
+	r	2,0,&111
+	r	2,0,&112
+	r	2,0,&113
+	r	2,0,&114
+	r	2,0,&115
+	r	2,0,&116
+	r	2,0,&117
+	r	2,0,&118
+	r	2,0,&119
+	r	2,0,&120
+	r	2,0,&121
+	r	2,0,&122
+	r	2,0,&123
+	r	2,0,&124
+	r	2,0,&125
+	r	2,0,&126
+	r	2,0,&127
+	r	2,0,&128
+	r	2,0,&129
+	r	2,0,&130
+	r	2,0,&131
+	r	2,0,&132
+	tr	2,0,&133
+135: 	fail	
+137: 	sos	0,&($'abolishCode'/2:&82,$'apush'/1:&21,$'aref'/4:&91,$'arg'/3:&29,$'aset'/5:&92,$'builtin'/3:&131,$'clearIOError'/1:&71,$'close'/2:&68,$'compare'/3:&53,$'copy'/4:&79,$'copyVariablesToTopOfHeap'/1:&95,$'ctype'/2:&44,$'currentInput'/1:&74,$'currentOutput'/1:&75,$'cutd'/1:&96,$'defined'/4:&99,$'display'/1:&47,$'dsimc_cv'/3:&121,$'dsimc_free'/1:&120,$'dsimc_open'/4:&119,$'dsimc_query'/4:&123,$'dsimc_sfbquery'/5:&122,$'eRef'/2:&51,$'erase'/1:&81,$'execs'/2:&76,$'execsot'/6:&37,$'exit'/1:&110,$'flags'/1:&98,$'fload'/4:&106,$'flushOutput'/1:&70,$'fork'/3:&102,$'fork'/4:&103,$'functor'/3:&31,$'fvar'/2:&100,$'gc'/2:&4,$'get'/1:&56,$'get'/2:&59,$'get0'/1:&55,$'get0'/2:&58,$'getStream'/2:&69,$'getToken'/3:&61,$'gl'/1:&8,$'glv2'/3:&9,$'glvar'/2:&2,$'gs'/2:&5,$'gs1'/3:&6,$'gs2'/4:&7,$'gval'/2:&3,$'gvar'/2:&0,$'gvara'/2:&1,$'id'/2:&48,$'identTest'/2:&50,$'iload'/3:&105,$'init'/1:&10,$'instance'/3:&85,$'iseq'/3:&94,$'jc'/3:&34,$'jctype'/3:&46,$'jnv'/1:&33,$'js'/3:&35,$'jtype'/3:&45,$'jv'/1:&32,$'label'/1:&42,$'linkBMT'/3:&84,$'list'/1:&132,$'load'/1:&104,$'ltos'/2:&26,$'makeBMT'/4:&83,$'mark'/1:&101,$'mkObj'/4:&52,$'name'/2:&25,$'nospy'/2:&108,$'notid'/2:&49,$'occurs'/2:&27,$'oncut'/2:&93,$'open'/3:&67,$'pc'/2:&14,$'perm'/1:&130,$'pl'/1:&16,$'plus'/3:&30,$'pop'/1:&23,$'popv'/1:&24,$'printNumber'/4:&66,$'printf'/3:&65,$'proplist'/3:&86,$'ps'/2:&15,$'pstot'/2:&111,$'push'/1:&20,$'pushv'/1:&22,$'put'/1:&57,$'put'/2:&63,$'putl'/2:&64,$'pval'/3:&13,$'pvar'/2:&12,$'replacn'/3:&87,$'replacn_var'/3:&88,$'setInput'/1:&72,$'setOutput'/1:&73,$'setarg'/3:&89,$'setarg_var'/3:&90,$'simc_abort'/1:&118,$'simc_assert'/2:&116,$'simc_delete'/1:&117,$'simc_end'/1:&115,$'simc_hash'/4:&112,$'simc_next'/2:&114,$'simc_query'/4:&113,$'soc'/3:&40,$'soce'/3:&41,$'softCut'/1:&97,$'sort'/3:&54,$'sos'/3:&38,$'sose'/3:&39,$'sot'/5:&36,$'sprt'/3:&60,$'spy'/2:&107,$'sql_abort'/1:&128,$'sql_end'/1:&126,$'sql_modify'/2:&127,$'sql_next'/2:&125,$'sql_query'/3:&124,$'struct'/1:&133,$'symbol'/2:&78,$'syscall'/5:&109,$'temp'/1:&129,$'throw'/1:&77,$'tokenize'/4:&62,$'type'/2:&43,$'uncopy'/3:&80,$'univ'/2:&28,$'use'/1:&11,$'uval'/2:&19,$'uvar'/1:&17,$'uvara'/1:&18),&135
+	.clause
+0:	gsx2	0,0,2,$'gvar'/2
+140: 	te	3,0,3,&141
+	gvalx	0,1
+	pro	
+141: 	tre	3,0
+	gvalx	2,1
+	pro	
+142: 	.clause
+1:	gsx2	0,0,2,$'gvara'/2
+145: 	te	3,0,3,&146
+	gvalx	0,1
+	pro	
+146: 	tre	3,0
+	gvalx	2,1
+	pro	
+147: 	.clause
+2:	gsx2	0,0,2,$'glvar'/2
+150: 	te	3,0,3,&151
+	gvalx	0,1
+	pro	
+151: 	tre	3,0
+	gvalx	2,1
+	pro	
+152: 	.clause
+3:	gsx2	0,0,2,$'gval'/2
+155: 	te	3,0,3,&156
+	gvalx	0,1
+	pro	
+156: 	tre	3,0
+	gvalx	2,1
+	pro	
+157: 	.clause
+4:	gs	0,$'gc'/2
+	ulvx	1
+	uvoid	1
+	pro	
+	.clause
+5:	gs	0,$'gs'/2
+	ulvx	1
+	uvoid	1
+	pro	
+	.clause
+6:	gs	0,$'gs1'/3
+	uvara	0
+	uvarx	2
+	uvoid	1
+160: 	te	3,0,3,&161
+	gvalx	0,1
+	pro	
+161: 	tre	3,0
+	gvalx	2,1
+	pro	
+162: 	.clause
+7:	gs	0,$'gs2'/4
+	uvara	0
+	uvarx	2
+	uvarx	3
+	uvoid	1
+165: 	te	4,0,4,&166
+	gvalx	0,1
+	pro	
+166: 	re	4,0,&167
+	gvalx	2,1
+	pro	
+167: 	tre	4,0
+	gvalx	3,1
+	pro	
+168: 	.clause
+8:	gs	0,$'gl'/1
+	ulvx	1
+	pro	
+	.clause
+9:	gs	0,$'glv2'/3
+	uvara	0
+	uvarx	2
+	uvarx	3
+171: 	te	4,0,4,&172
+	gvalx	0,1
+	pro	
+172: 	re	4,0,&173
+	gvalx	2,1
+	pro	
+173: 	tre	4,0
+	gvalx	3,1
+	pro	
+174: 	.clause
+10:	gs	0,$'init'/1
+	ulvx	1
+	pro	
+	.clause
+11:	gs	0,$'use'/1
+	ulvx	1
+	pro	
+	.clause
+12:	gsx2	0,0,2,$'pvar'/2
+177: 	te	3,0,3,&178
+	gvalx	0,1
+	pro	
+178: 	tre	3,0
+	gvalx	2,1
+	pro	
+179: 	.clause
+13:	gs	0,$'pval'/3
+	uvara	0
+	uvoid	1
+	uvarx	2
+182: 	te	3,0,3,&183
+	gvalx	0,1
+	pro	
+183: 	tre	3,0
+	gvalx	2,1
+	pro	
+184: 	.clause
+14:	gs	0,$'pc'/2
+	uvoid	1
+	ulvx	1
+	pro	
+	.clause
+15:	gs	0,$'ps'/2
+	uvoid	1
+	ulvx	1
+	pro	
+	.clause
+16:	gs	0,$'pl'/1
+	ulvx	1
+	pro	
+	.clause
+17:	gs	0,$'uvar'/1
+	ulvx	1
+	pro	
+	.clause
+18:	gs	0,$'uvara'/1
+	ulvx	1
+	pro	
+	.clause
+19:	gs	0,$'uval'/2
+	ulvx	1
+	uvoid	1
+	pro	
+	.clause
+20:	gsx1	0,0,$'push'/1
+	gvalx	0,1
+	exec	1,&'isDeterminedVar'/1
+	.clause
+21:	gsx1	0,0,$'apush'/1
+	gvalx	0,1
+	exec	1,&'isDeterminedVar'/1
+	.clause
+22:	gsx1	0,0,$'pushv'/1
+	gvalx	0,1
+	exec	1,&'isDeterminedVar'/1
+	.clause
+23:	gs	0,$'pop'/1
+	ulvx	1
+	pro	
+	.clause
+24:	gsx1	0,0,$'popv'/1
+	gvalx	0,1
+	exec	1,&'isDeterminedVar'/1
+	.clause
+25:	gsx2	0,0,2,$'name'/2
+199: 	te	3,0,3,&200
+	gvalx	0,1
+	pro	
+200: 	tre	3,0
+	gvalx	2,1
+	pro	
+201: 	.clause
+26:	gsx2	0,0,2,$'ltos'/2
+204: 	te	3,0,3,&205
+	gvalx	0,1
+	pro	
+205: 	tre	3,0
+	gvalx	2,1
+	pro	
+206: 	.clause
+27:	gsx2	0,0,2,$'occurs'/2
+209: 	te	3,0,3,&210
+	gvalx	0,1
+	pro	
+210: 	tre	3,0
+	gvalx	2,1
+	pro	
+211: 	.clause
+28:	gsx2	0,0,2,$'univ'/2
+214: 	te	3,0,3,&215
+	gvalx	0,1
+	pro	
+215: 	tre	3,0
+	gvalx	2,1
+	pro	
+216: 	.clause
+29:	gs	0,$'arg'/3
+	uvara	0
+	uvarx	2
+	uvarx	3
+219: 	te	4,0,4,&220
+	gvalx	0,1
+	pro	
+220: 	re	4,0,&221
+	gvalx	2,1
+	pro	
+221: 	tre	4,0
+	gvalx	3,1
+	pro	
+222: 	.clause
+30:	gs	0,$'plus'/3
+	uvara	0
+	uvarx	2
+	uvarx	3
+225: 	te	4,0,4,&226
+	gvalx	0,1
+	pro	
+226: 	re	4,0,&227
+	gvalx	2,1
+	pro	
+227: 	tre	4,0
+	gvalx	3,1
+	pro	
+228: 	.clause
+31:	gs	0,$'functor'/3
+	uvara	0
+	uvarx	2
+	uvarx	3
+231: 	te	4,0,4,&232
+	gvalx	0,1
+	pro	
+232: 	re	4,0,&233
+	gvalx	2,1
+	pro	
+233: 	tre	4,0
+	gvalx	3,1
+	pro	
+234: 	.clause
+32:	gs	0,$'jv'/1
+	ulvx	1
+	pro	
+	.clause
+33:	gs	0,$'jnv'/1
+	ulvx	1
+	pro	
+	.clause
+34:	gs	0,$'jc'/3
+	ulvx	1
+	uvoid	2
+	pro	
+	.clause
+35:	gs	0,$'js'/3
+	ulvx	1
+	uvoid	2
+	pro	
+	.clause
+36:	gs	0,$'sot'/5
+	ulvx	1
+	uvoid	4
+	pro	
+	.clause
+37:	gs	0,$'execsot'/6
+	uvoid	1
+	ulvx	1
+	uvoid	4
+	pro	
+	.clause
+38:	gs	0,$'sos'/3
+	ulvx	1
+	uvoid	2
+	pro	
+	.clause
+39:	gs	0,$'sose'/3
+	ulvx	1
+	uvoid	2
+	pro	
+	.clause
+40:	gs	0,$'soc'/3
+	ulvx	1
+	uvoid	2
+	pro	
+	.clause
+41:	gs	0,$'soce'/3
+	ulvx	1
+	uvoid	2
+	pro	
+	.clause
+42:	gs	0,$'label'/1
+	ulvx	1
+	pro	
+	.clause
+43:	gs	0,$'type'/2
+	ulvx	1
+	uvoid	1
+	pro	
+	.clause
+44:	gs	0,$'ctype'/2
+	ulvx	1
+	uvoid	1
+	pro	
+	.clause
+45:	gs	0,$'jtype'/3
+	ulvx	1
+	uvoid	2
+	pro	
+	.clause
+46:	gs	0,$'jctype'/3
+	ulvx	1
+	uvoid	2
+	pro	
+	.clause
+47:	gs	0,$'display'/1
+	ulvx	1
+	pro	
+	.clause
+48:	gsx2	0,0,2,$'id'/2
+237: 	te	3,0,3,&238
+	gvalx	0,1
+	pro	
+238: 	tre	3,0
+	gvalx	2,1
+	pro	
+239: 	.clause
+49:	gsx2	0,0,2,$'notid'/2
+242: 	te	3,0,3,&243
+	gvalx	0,1
+	pro	
+243: 	tre	3,0
+	gvalx	2,1
+	pro	
+244: 	.clause
+50:	gsx2	0,0,2,$'identTest'/2
+247: 	te	3,0,3,&248
+	gvalx	0,1
+	pro	
+248: 	tre	3,0
+	gvalx	2,1
+	pro	
+249: 	.clause
+51:	gsx2	0,0,2,$'eRef'/2
+252: 	te	3,0,3,&253
+	gvalx	0,1
+	pro	
+253: 	tre	3,0
+	gvalx	2,1
+	pro	
+254: 	.clause
+52:	gs	0,$'mkObj'/4
+	uvara	0
+	uvarx	2
+	uvarx	3
+	uvarx	4
+257: 	te	5,0,5,&258
+	gvalx	0,1
+	pro	
+258: 	re	5,0,&259
+	gvalx	2,1
+	pro	
+259: 	re	5,0,&260
+	gvalx	3,1
+	pro	
+260: 	tre	5,0
+	gvalx	4,1
+	pro	
+261: 	.clause
+53:	gs	0,$'compare'/3
+	uvara	0
+	uvarx	2
+	uvarx	3
+264: 	te	4,0,4,&265
+	gvalx	0,1
+	pro	
+265: 	re	4,0,&266
+	gvalx	2,1
+	pro	
+266: 	tre	4,0
+	gvalx	3,1
+	pro	
+267: 	.clause
+54:	gs	0,$'sort'/3
+	uvara	0
+	uvarx	2
+	uvarx	3
+270: 	te	4,0,4,&271
+	gvalx	0,1
+	pro	
+271: 	re	4,0,&272
+	gvalx	2,1
+	pro	
+272: 	tre	4,0
+	gvalx	3,1
+	pro	
+273: 	.clause
+55:	gs	0,$'get0'/1
+	ulvx	1
+	pro	
+	.clause
+56:	gs	0,$'get'/1
+	ulvx	1
+	pro	
+	.clause
+57:	gs	0,$'put'/1
+	ulvx	1
+	pro	
+	.clause
+58:	gsx2	0,0,2,$'get0'/2
+276: 	te	3,0,3,&277
+	gvalx	0,1
+	pro	
+277: 	tre	3,0
+	gvalx	2,1
+	pro	
+278: 	.clause
+59:	gsx2	0,0,2,$'get'/2
+281: 	te	3,0,3,&282
+	gvalx	0,1
+	pro	
+282: 	tre	3,0
+	gvalx	2,1
+	pro	
+283: 	.clause
+60:	gs	0,$'sprt'/3
+	uvara	0
+	uvarx	2
+	uvarx	3
+286: 	te	4,0,4,&287
+	gvalx	0,1
+	pro	
+287: 	re	4,0,&288
+	gvalx	2,1
+	pro	
+288: 	tre	4,0
+	gvalx	3,1
+	pro	
+289: 	.clause
+61:	gs	0,$'getToken'/3
+	uvara	0
+	uvarx	2
+	uvarx	3
+292: 	te	4,0,4,&293
+	gvalx	0,1
+	pro	
+293: 	re	4,0,&294
+	gvalx	2,1
+	pro	
+294: 	tre	4,0
+	gvalx	3,1
+	pro	
+295: 	.clause
+62:	gs	0,$'tokenize'/4
+	uvara	0
+	uvarx	2
+	uvarx	3
+	uvarx	4
+298: 	te	5,0,5,&299
+	gvalx	0,1
+	pro	
+299: 	re	5,0,&300
+	gvalx	2,1
+	pro	
+300: 	re	5,0,&301
+	gvalx	3,1
+	pro	
+301: 	tre	5,0
+	gvalx	4,1
+	pro	
+302: 	.clause
+63:	gsx2	0,0,2,$'put'/2
+305: 	te	3,0,3,&306
+	gvalx	0,1
+	pro	
+306: 	tre	3,0
+	gvalx	2,1
+	pro	
+307: 	.clause
+64:	gsx2	0,0,2,$'putl'/2
+310: 	te	3,0,3,&311
+	gvalx	0,1
+	pro	
+311: 	tre	3,0
+	gvalx	2,1
+	pro	
+312: 	.clause
+65:	gs	0,$'printf'/3
+	uvara	0
+	uvarx	2
+	uvarx	3
+315: 	te	4,0,4,&316
+	gvalx	0,1
+	pro	
+316: 	re	4,0,&317
+	gvalx	2,1
+	pro	
+317: 	tre	4,0
+	gvalx	3,1
+	pro	
+318: 	.clause
+66:	gs	0,$'printNumber'/4
+	uvara	0
+	uvarx	2
+	uvarx	3
+	uvarx	4
+321: 	te	5,0,5,&322
+	gvalx	0,1
+	pro	
+322: 	re	5,0,&323
+	gvalx	2,1
+	pro	
+323: 	re	5,0,&324
+	gvalx	3,1
+	pro	
+324: 	tre	5,0
+	gvalx	4,1
+	pro	
+325: 	.clause
+67:	gs	0,$'open'/3
+	uvara	0
+	uvarx	2
+	uvarx	3
+328: 	te	4,0,4,&329
+	gvalx	0,1
+	pro	
+329: 	re	4,0,&330
+	gvalx	2,1
+	pro	
+330: 	tre	4,0
+	gvalx	3,1
+	pro	
+331: 	.clause
+68:	gsx2	0,0,2,$'close'/2
+334: 	te	3,0,3,&335
+	gvalx	0,1
+	pro	
+335: 	tre	3,0
+	gvalx	2,1
+	pro	
+336: 	.clause
+69:	gsx2	0,0,2,$'getStream'/2
+339: 	te	3,0,3,&340
+	gvalx	0,1
+	pro	
+340: 	tre	3,0
+	gvalx	2,1
+	pro	
+341: 	.clause
+70:	gs	0,$'flushOutput'/1
+	ulvx	1
+	pro	
+	.clause
+71:	gs	0,$'clearIOError'/1
+	ulvx	1
+	pro	
+	.clause
+72:	gs	0,$'setInput'/1
+	ulvx	1
+	pro	
+	.clause
+73:	gs	0,$'setOutput'/1
+	ulvx	1
+	pro	
+	.clause
+74:	gs	0,$'currentInput'/1
+	ulvx	1
+	pro	
+	.clause
+75:	gs	0,$'currentOutput'/1
+	ulvx	1
+	pro	
+	.clause
+76:	gsx2	0,0,2,$'execs'/2
+344: 	te	3,0,3,&345
+	gvalx	0,1
+	pro	
+345: 	tre	3,0
+	gvalx	2,1
+	pro	
+346: 	.clause
+77:	gs	0,$'throw'/1
+	ulvx	1
+	pro	
+	.clause
+78:	gsx2	0,0,2,$'symbol'/2
+349: 	te	3,0,3,&350
+	gvalx	0,1
+	pro	
+350: 	tre	3,0
+	gvalx	2,1
+	pro	
+351: 	.clause
+79:	gs	0,$'copy'/4
+	uvara	0
+	uvarx	2
+	uvarx	3
+	uvarx	4
+354: 	te	5,0,5,&355
+	gvalx	0,1
+	pro	
+355: 	re	5,0,&356
+	gvalx	2,1
+	pro	
+356: 	re	5,0,&357
+	gvalx	3,1
+	pro	
+357: 	tre	5,0
+	gvalx	4,1
+	pro	
+358: 	.clause
+80:	gs	0,$'uncopy'/3
+	uvara	0
+	uvarx	2
+	uvarx	3
+361: 	te	4,0,4,&362
+	gvalx	0,1
+	pro	
+362: 	re	4,0,&363
+	gvalx	2,1
+	pro	
+363: 	tre	4,0
+	gvalx	3,1
+	pro	
+364: 	.clause
+81:	gs	0,$'erase'/1
+	ulvx	1
+	pro	
+	.clause
+82:	gsx2	0,0,2,$'abolishCode'/2
+367: 	te	3,0,3,&368
+	gvalx	0,1
+	pro	
+368: 	tre	3,0
+	gvalx	2,1
+	pro	
+369: 	.clause
+83:	gs	0,$'makeBMT'/4
+	uvara	0
+	uvarx	2
+	uvarx	3
+	uvarx	4
+372: 	te	5,0,5,&373
+	gvalx	0,1
+	pro	
+373: 	re	5,0,&374
+	gvalx	2,1
+	pro	
+374: 	re	5,0,&375
+	gvalx	3,1
+	pro	
+375: 	tre	5,0
+	gvalx	4,1
+	pro	
+376: 	.clause
+84:	gs	0,$'linkBMT'/3
+	uvoid	1
+	uvara	0
+	uvarx	2
+379: 	te	3,0,3,&380
+	gvalx	0,1
+	pro	
+380: 	tre	3,0
+	gvalx	2,1
+	pro	
+381: 	.clause
+85:	gs	0,$'instance'/3
+	uvara	0
+	uvarx	2
+	uvarx	3
+384: 	te	4,0,4,&385
+	gvalx	0,1
+	pro	
+385: 	re	4,0,&386
+	gvalx	2,1
+	pro	
+386: 	tre	4,0
+	gvalx	3,1
+	pro	
+387: 	.clause
+86:	gs	0,$'proplist'/3
+	uvara	0
+	uvarx	2
+	uvarx	3
+390: 	te	4,0,4,&391
+	gvalx	0,1
+	pro	
+391: 	re	4,0,&392
+	gvalx	2,1
+	pro	
+392: 	tre	4,0
+	gvalx	3,1
+	pro	
+393: 	.clause
+87:	gs	0,$'replacn'/3
+	uvara	0
+	uvarx	2
+	uvarx	3
+396: 	te	4,0,4,&397
+	gvalx	0,1
+	pro	
+397: 	re	4,0,&398
+	gvalx	2,1
+	pro	
+398: 	tre	4,0
+	gvalx	3,1
+	pro	
+399: 	.clause
+88:	gs	0,$'replacn_var'/3
+	uvara	0
+	uvarx	2
+	uvarx	3
+402: 	te	4,0,4,&403
+	gvalx	0,1
+	pro	
+403: 	re	4,0,&404
+	gvalx	2,1
+	pro	
+404: 	tre	4,0
+	gvalx	3,1
+	pro	
+405: 	.clause
+89:	gs	0,$'setarg'/3
+	uvara	0
+	uvarx	2
+	uvarx	3
+408: 	te	4,0,4,&409
+	gvalx	0,1
+	pro	
+409: 	re	4,0,&410
+	gvalx	2,1
+	pro	
+410: 	tre	4,0
+	gvalx	3,1
+	pro	
+411: 	.clause
+90:	gs	0,$'setarg_var'/3
+	uvara	0
+	uvarx	2
+	uvarx	3
+414: 	te	4,0,4,&415
+	gvalx	0,1
+	pro	
+415: 	re	4,0,&416
+	gvalx	2,1
+	pro	
+416: 	tre	4,0
+	gvalx	3,1
+	pro	
+417: 	.clause
+91:	gs	0,$'aref'/4
+	uvara	0
+	uvarx	2
+	uvarx	3
+	uvoid	1
+420: 	te	4,0,4,&421
+	gvalx	0,1
+	pro	
+421: 	re	4,0,&422
+	gvalx	2,1
+	pro	
+422: 	tre	4,0
+	gvalx	3,1
+	pro	
+423: 	.clause
+92:	gs	0,$'aset'/5
+	uvara	0
+	uvarx	2
+	uvarx	3
+	uvarx	4
+	uvoid	1
+426: 	te	5,0,5,&427
+	gvalx	0,1
+	pro	
+427: 	re	5,0,&428
+	gvalx	2,1
+	pro	
+428: 	re	5,0,&429
+	gvalx	3,1
+	pro	
+429: 	tre	5,0
+	gvalx	4,1
+	pro	
+430: 	.clause
+93:	gsx2	0,0,2,$'oncut'/2
+433: 	te	3,0,3,&434
+	gvalx	0,1
+	pro	
+434: 	tre	3,0
+	gvalx	2,1
+	pro	
+435: 	.clause
+94:	gs	0,$'iseq'/3
+	uvara	0
+	uvarx	2
+	uvarx	3
+438: 	te	4,0,4,&439
+	gvalx	0,1
+	pro	
+439: 	re	4,0,&440
+	gvalx	2,1
+	pro	
+440: 	tre	4,0
+	gvalx	3,1
+	pro	
+441: 	.clause
+95:	gs	0,$'copyVariablesToTopOfHeap'/1
+	ulvx	1
+	pro	
+	.clause
+96:	gs	0,$'cutd'/1
+	ulvx	1
+	pro	
+	.clause
+97:	gs	0,$'softCut'/1
+	ulvx	1
+	pro	
+	.clause
+98:	gs	0,$'flags'/1
+	ulvx	1
+	pro	
+	.clause
+99:	gs	0,$'defined'/4
+	uvara	0
+	uvarx	2
+	uvarx	3
+	uvarx	4
+444: 	te	5,0,5,&445
+	gvalx	0,1
+	pro	
+445: 	re	5,0,&446
+	gvalx	2,1
+	pro	
+446: 	re	5,0,&447
+	gvalx	3,1
+	pro	
+447: 	tre	5,0
+	gvalx	4,1
+	pro	
+448: 	.clause
+100:	gsx2	0,0,2,$'fvar'/2
+451: 	te	3,0,3,&452
+	gvalx	0,1
+	pro	
+452: 	tre	3,0
+	gvalx	2,1
+	pro	
+453: 	.clause
+101:	gs	0,$'mark'/1
+	ulvx	1
+	pro	
+	.clause
+102:	gs	0,$'fork'/3
+	uvara	0
+	uvarx	2
+	uvarx	3
+456: 	te	4,0,4,&457
+	gvalx	0,1
+	pro	
+457: 	re	4,0,&458
+	gvalx	2,1
+	pro	
+458: 	tre	4,0
+	gvalx	3,1
+	pro	
+459: 	.clause
+103:	gs	0,$'fork'/4
+	uvara	0
+	uvarx	2
+	uvarx	3
+	uvarx	4
+462: 	te	5,0,5,&463
+	gvalx	0,1
+	pro	
+463: 	re	5,0,&464
+	gvalx	2,1
+	pro	
+464: 	re	5,0,&465
+	gvalx	3,1
+	pro	
+465: 	tre	5,0
+	gvalx	4,1
+	pro	
+466: 	.clause
+104:	gs	0,$'load'/1
+	ulvx	1
+	pro	
+	.clause
+105:	gs	0,$'iload'/3
+	uvara	0
+	uvarx	2
+	uvarx	3
+469: 	te	4,0,4,&470
+	gvalx	0,1
+	pro	
+470: 	re	4,0,&471
+	gvalx	2,1
+	pro	
+471: 	tre	4,0
+	gvalx	3,1
+	pro	
+472: 	.clause
+106:	gs	0,$'fload'/4
+	uvara	0
+	uvarx	2
+	uvarx	3
+	uvarx	4
+475: 	te	5,0,5,&476
+	gvalx	0,1
+	pro	
+476: 	re	5,0,&477
+	gvalx	2,1
+	pro	
+477: 	re	5,0,&478
+	gvalx	3,1
+	pro	
+478: 	tre	5,0
+	gvalx	4,1
+	pro	
+479: 	.clause
+107:	gsx2	0,0,2,$'spy'/2
+482: 	te	3,0,3,&483
+	gvalx	0,1
+	pro	
+483: 	tre	3,0
+	gvalx	2,1
+	pro	
+484: 	.clause
+108:	gsx2	0,0,2,$'nospy'/2
+487: 	te	3,0,3,&488
+	gvalx	0,1
+	pro	
+488: 	tre	3,0
+	gvalx	2,1
+	pro	
+489: 	.clause
+109:	gs	0,$'syscall'/5
+	uvoid	1
+	uvara	0
+	uvarx	2
+	uvarx	3
+	uvarx	4
+492: 	te	5,0,5,&493
+	gvalx	0,1
+	pro	
+493: 	re	5,0,&494
+	gvalx	2,1
+	pro	
+494: 	re	5,0,&495
+	gvalx	3,1
+	pro	
+495: 	tre	5,0
+	gvalx	4,1
+	pro	
+496: 	.clause
+110:	gs	0,$'exit'/1
+	ulvx	1
+	pro	
+	.clause
+111:	gsx2	0,0,2,$'pstot'/2
+499: 	te	3,0,3,&500
+	gvalx	0,1
+	pro	
+500: 	tre	3,0
+	gvalx	2,1
+	pro	
+501: 	.clause
+112:	gs	0,$'simc_hash'/4
+	uvara	0
+	uvarx	2
+	uvarx	3
+	uvarx	4
+504: 	te	5,0,5,&505
+	gvalx	0,1
+	pro	
+505: 	re	5,0,&506
+	gvalx	2,1
+	pro	
+506: 	re	5,0,&507
+	gvalx	3,1
+	pro	
+507: 	tre	5,0
+	gvalx	4,1
+	pro	
+508: 	.clause
+113:	gs	0,$'simc_query'/4
+	uvara	0
+	uvarx	2
+	uvarx	3
+	uvarx	4
+511: 	te	5,0,5,&512
+	gvalx	0,1
+	pro	
+512: 	re	5,0,&513
+	gvalx	2,1
+	pro	
+513: 	re	5,0,&514
+	gvalx	3,1
+	pro	
+514: 	tre	5,0
+	gvalx	4,1
+	pro	
+515: 	.clause
+114:	gsx2	0,0,2,$'simc_next'/2
+518: 	te	3,0,3,&519
+	gvalx	0,1
+	pro	
+519: 	tre	3,0
+	gvalx	2,1
+	pro	
+520: 	.clause
+115:	gs	0,$'simc_end'/1
+	ulvx	1
+	pro	
+	.clause
+116:	gsx2	0,0,2,$'simc_assert'/2
+523: 	te	3,0,3,&524
+	gvalx	0,1
+	pro	
+524: 	tre	3,0
+	gvalx	2,1
+	pro	
+525: 	.clause
+117:	gs	0,$'simc_delete'/1
+	ulvx	1
+	pro	
+	.clause
+118:	gs	0,$'simc_abort'/1
+	ulvx	1
+	pro	
+	.clause
+119:	gs	0,$'dsimc_open'/4
+	uvara	0
+	uvarx	2
+	uvarx	3
+	uvarx	4
+528: 	te	5,0,5,&529
+	gvalx	0,1
+	pro	
+529: 	re	5,0,&530
+	gvalx	2,1
+	pro	
+530: 	re	5,0,&531
+	gvalx	3,1
+	pro	
+531: 	tre	5,0
+	gvalx	4,1
+	pro	
+532: 	.clause
+120:	gs	0,$'dsimc_free'/1
+	ulvx	1
+	pro	
+	.clause
+121:	gs	0,$'dsimc_cv'/3
+	uvara	0
+	uvarx	2
+	uvarx	3
+535: 	te	4,0,4,&536
+	gvalx	0,1
+	pro	
+536: 	re	4,0,&537
+	gvalx	2,1
+	pro	
+537: 	tre	4,0
+	gvalx	3,1
+	pro	
+538: 	.clause
+122:	gs	0,$'dsimc_sfbquery'/5
+	uvara	0
+	uvarx	2
+	uvarx	3
+	uvarx	4
+	uvarx	5
+541: 	te	6,0,6,&542
+	gvalx	0,1
+	pro	
+542: 	re	6,0,&543
+	gvalx	2,1
+	pro	
+543: 	re	6,0,&544
+	gvalx	3,1
+	pro	
+544: 	re	6,0,&545
+	gvalx	4,1
+	pro	
+545: 	tre	6,0
+	gvalx	5,1
+	pro	
+546: 	.clause
+123:	gs	0,$'dsimc_query'/4
+	uvara	0
+	uvarx	2
+	uvarx	3
+	uvarx	4
+549: 	te	5,0,5,&550
+	gvalx	0,1
+	pro	
+550: 	re	5,0,&551
+	gvalx	2,1
+	pro	
+551: 	re	5,0,&552
+	gvalx	3,1
+	pro	
+552: 	tre	5,0
+	gvalx	4,1
+	pro	
+553: 	.clause
+124:	gs	0,$'sql_query'/3
+	uvara	0
+	uvarx	2
+	uvarx	3
+556: 	te	4,0,4,&557
+	gvalx	0,1
+	pro	
+557: 	re	4,0,&558
+	gvalx	2,1
+	pro	
+558: 	tre	4,0
+	gvalx	3,1
+	pro	
+559: 	.clause
+125:	gsx2	0,0,2,$'sql_next'/2
+562: 	te	3,0,3,&563
+	gvalx	0,1
+	pro	
+563: 	tre	3,0
+	gvalx	2,1
+	pro	
+564: 	.clause
+126:	gs	0,$'sql_end'/1
+	ulvx	1
+	pro	
+	.clause
+127:	gsx2	0,0,2,$'sql_modify'/2
+567: 	te	3,0,3,&568
+	gvalx	0,1
+	pro	
+568: 	tre	3,0
+	gvalx	2,1
+	pro	
+569: 	.clause
+128:	gs	0,$'sql_abort'/1
+	ulvx	1
+	pro	
+	.clause
+129:	gsx1	0,2,$'temp'/1
+	gs	1,$'temp'/1
+	uvalx	2
+	pro	
+	.clause
+130:	gsx1	0,2,$'perm'/1
+	gs	1,$'perm'/1
+	uvalx	2
+	pro	
+	.clause
+131:	gs	0,$'builtin'/3
+	uvoid	2
+	uvara	0
+	exec	2,&'usesVarL'/2
+	.clause
+132:	gsx1	0,0,$'list'/1
+	exec	2,&'usesVarL'/2
+	.clause
+133:	gs	0,$'struct'/1
+	ul	255
+	uvoid	1
+	uvara	0
+	exec	2,&'usesVarL'/2
+	last
+
+	.pred	'usesVarL',2
+6: 	sot	0,&7,&4,&8,&4
+7: 	mkdel	2,&6
+	mark	0
+	delay	
+4: 	fail	
+8: 	glvx2	0,0,2
+5: 	t	3,0,&2
+	tr	3,0,&3
+	.clause
+2:	exec	2,&'usesVar'/2
+	.clause
+3:	gvara	0,2
+	execsot	2,0,&7,&4,&8,&4
+	last
+
+	.pred	'usesY',1
+	labelx	1
+3: 	sot	0,&2,&0,&0,&4
+2: 	t	2,0,&0
+	tr	2,0,&1
+4: 	js	0,$'call'/4,&2
+	j	&0
+	j	&2
+	.clause
+0:	all	1
+	gvary	0,1
+	ps	1,$'perm'/1
+	uvoid	1
+	call	1,2,&'usesVar'/2
+	cuty	0
+	dallpro	
+	.clause
+1:	gs	0,$'call'/4
+	uvoid	4
+	pro	
+	last
+
+	.pred	'isDeterminedVar',1
+4: 	sot	0,&2,&3,&3,&5
+2: 	t	1,0,&0
+	tr	1,0,&1
+3: 	fail	
+5: 	sos	0,&($'perm'/1:&1,$'temp'/1:&0),&3
+	.clause
+0:	gsx1	0,255,$'temp'/1
+	pro	
+	.clause
+1:	gsx1	0,255,$'perm'/1
+	pro	
+	last
+
+	.pred	'isSmallBranchInstruction',1
+4: 	sot	0,&2,&3,&3,&5
+2: 	t	1,0,&0
+	tr	1,0,&1
+3: 	fail	
+5: 	sos	0,&($'j'/1:&0,$'sot'/5:&1),&3
+	.clause
+0:	gsx1	0,255,$'j'/1
+	pro	
+	.clause
+1:	gs	0,$'sot'/5
+	uvoid	5
+	pro	
+	last
+
+	.pred	'polishCode',2
+	.clause
+0:	all	2
+	gvary	0,1
+	pvary	1,1
+	call	2,2,&'deleteNops'/2
+	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'assignLabels'/2
+	last
+
+	.pred	'polishCode',5
+	.clause
+0:	all	13
+	gvary	9,1
+	gvary	8,2
+	gvary	12,3
+	gvary	1,4
+	pvary	0,1
+	call	13,2,&'polishCode'/2
+	labely	11
+17: 	te	0,0,0,&21
+	pvaly	12,255
+	gs	255,$'sot'/5
+	uvary	7
+	uvary	6
+	uvary	5
+	uvary	4
+	uvary	3
+	pl	1
+	uvary	10
+	uc	$[]
+	pvary	2,0
+	pvaly	0,2
+	call	12,3,&'append'/3
+	cuty	11
+	labelx	0
+18: 	te	1,0,1,&19
+	pvaly	10,255
+	gs	255,$'exec'/2
+	ulvy	9
+	ulvy	8
+	cutx	0
+	ps	5,$'execsot'/6
+	ulvy	8
+	uvaly	7
+	uvaly	6
+	uvaly	5
+	uvaly	4
+	uvaly	3
+	pl	1
+	uvalx	5
+	uc	$[]
+	puval	2,0
+	pvaly	1,2
+	dallexe	3,&'append'/3
+19: 	re	1,0,&20
+	pvaly	10,255
+	gs	255,$'dallExec'/2
+	ulvy	9
+	ulvy	8
+	cutx	0
+	ps	5,$'execsot'/6
+	ulvy	8
+	uvaly	7
+	uvaly	6
+	uvaly	5
+	uvaly	4
+	uvaly	3
+	pl	1
+	uc	$'dall'
+	ul	255
+	uvalx	5
+	uc	$[]
+	puval	2,0
+	pvaly	1,2
+	dallexe	3,&'append'/3
+20: 	tre	1,0
+	puval	0,255
+	gvaly	1,255
+	dallpro	
+	j	&22
+21: 	tre	0,0
+	puval	0,255
+	gvaly	1,255
+	dallpro	
+22: 	last
+
+	.pred	'deleteNops',2
+7: 	labelx	2
+	sot	0,&8,&0,&9,&6
+8: 	mkdel	3,&7
+	mark	0
+	delay	
+9: 	glvx2	0,0,3
+5: 	t	4,0,&3
+	tr	4,0,&4
+6: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	pro	
+	.clause
+3:	gc	0,$'nop'
+	gvara	0,3
+	cutx	2
+	exec	2,&'deleteNops'/2
+	.clause
+4:	gl	1
+	ulvx	0
+	uvara	1
+	gvara	0,3
+	exec	2,&'deleteNops'/2
+	last
+
+	.pred	'assignLabels',2
+9: 	labelx	2
+	sot	0,&10,&0,&11,&8
+10: 	mkdel	3,&9
+	mark	0
+	delay	
+11: 	glvx2	0,0,3
+7: 	t	4,0,&4
+	r	4,0,&5
+	tr	4,0,&6
+8: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	pro	
+	.clause
+4:	gsx1	0,4,$'$'/1
+	glvx2	3,5,6
+	gs	5,$'$'/1
+	uvalx	4
+	cutx	2
+	ps	5,$'$'/1
+	uvalx	4
+	pl	0
+	uvalx	5
+	uvalx	6
+	exec	2,&'assignLabels'/2
+	.clause
+5:	gsx1	0,4,$'$'/1
+	glvx2	3,5,6
+	gs	5,$'j'/1
+	uvalx	4
+	cutx	2
+	ps	5,$'j'/1
+	uvalx	4
+	pl	0
+	uvalx	5
+	uvalx	6
+	exec	2,&'assignLabels'/2
+	.clause
+6:	gl	1
+	ulvx	0
+	all	2
+	uvary	0
+	gvary	1,3
+	labelx	1
+31: 	te	0,0,2,&32
+	gsx1	0,0,$'$'/1
+	typx	0,3
+	cutx	1
+	call	2,1,&'makeLabel'/1
+	j	&33
+32: 	tre	0,0
+33: 	pvaly	1,0
+	pvaly	0,1
+	dallexe	2,&'assignLabels'/2
+	last
+

@@ -1,0 +1,33 @@
+signal(X,Y) :-
+	signum(X,N),
+	sigfunc(Y,F),
+	sig(N,F).
+
+sigfunc(sig_dfl,0).	% this used to be 1 (in version 3.0)
+sigfunc(sig_ign,1).	% this used to be 0 (in version 3.0)
+sigfunc(sig_trap,2).
+
+signum(sighup,1).
+signum(sigint,2).
+signum(sigquit,3).
+signum(sigill,4).
+signum(sigtrap,5).
+signum(sigiot,6).
+signum(sigemt,7).
+signum(sigfpe,8).
+signum(sigkill,9).
+signum(sigbus,10).
+signum(sigsegv,11).
+signum(sigsys,12).
+signum(sigpipe,13).
+signum(sigalrm,14).
+signum(sigterm,15).
+signum(sigstop,17).
+signum(sigtstp,18).
+signum(sigcont,19).
+signum(sigchld,20).
+signum(sigttin,21).
+signum(sigttuo,22).
+signum(sigtint,23).
+signum(sigxcpu,24).
+signum(sigxfsz,25).

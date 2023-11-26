@@ -1,0 +1,406 @@
+/************************************************************************
+*									*
+*				MU-PROLOG				*
+*				=========				*
+*									*
+* (C) Copyright 1985 Lee Naish, Melbourne University			*
+*									*
+*	Written by Lee Naish, Department of Computer Science,		*
+*	Melbourne University, Parkville 3052, Australia.		*
+*									*
+*	No liability for errors or omissions in this system is		*
+*	expressed, implied, impressed or explied.			*
+*									*
+************************************************************************/
+
+
+?-hide(tmp(1).cmd(2).loopn(2).breakdel(1).[]).
+
+$main(X) :-
+	sig(2, 1),				% ignore interrupts
+	$loop(0),
+	write(1, 'End of session', 0),
+	nl(1),
+	exit(0).
+$main(X) :-
+	write(1, 'Abnormal termination', 0),
+	nl(1),
+	exit(1).
+
+$loop(B) :-
+	asserta(loopn(1, B)),
+	$ndelay(N),
+	asserta(breakdel(N)),
+	$loop,
+	retractall(cmd(_, B)),
+	retract(breakdel(N)),
+	retract(loopn(_, B)),
+	!.
+
+$loop :-
+	repeat,
+	loopn(C, B),
+	nl(1),
+	write(1, C),
+	write(1, '?- ', 0),
+	sig(2, 2),				% allow interrupts at prompt
+	read(0, X),
+	sig(2, 1),				% now ignore interrupts
+	(	X == (?-end),
+		nl(1)
+	;
+		$save1(X, C, B),
+		$retract1(loopn(C, B)),
+		C1 is C + 1,
+		asserta(loopn(C1, B)),
+		$cmd(C, B)
+	),
+	sig(2, 2),
+	!.
+
+$retract1(X) :-
+	retract(X),
+	!.
+
+$solve(X, []) :-
+	$bndelay(M),
+	(	$trX(X),
+		nl(1),
+		$ndelay(N),
+		(	N = M,
+			writeln(1, yes)
+		;
+			N1 is N - M,
+			write(1, N1),
+			write(1, ' call(s) delayed', 0),
+			nl(1),
+			write(1, '(maybe)', 0),
+			nl(1)
+		)
+	;
+		nl(1),
+		writeln(1, no)
+	),
+	!,
+	fail.
+$solve(X, S) :-
+	$copy(S, V),
+	$tron,
+	X,
+	$troff,
+	$writesoln(V, S),
+	$chkdel,
+	write(1, ' ? ', 0),
+	getc(0, C),
+	(	C = 10
+	;
+		skip(0, 10),
+		[C] \= ";"
+	),
+	!,
+	fail.
+$solve(_, _) :-
+	write(1, 'no (more) solutions', 0),
+	nl,
+	fail.
+
+$hasvars(T, V) :-		% V is the list of vars (not _) in H
+	$hv(T, V, []).
+
+$hv(V, D, D) :-
+	$is_(V),		% ignore underscores
+	!.
+$hv(V, D, D) :-
+	var(V),			% V is in the list already
+	occurs(V, D),
+	!.
+$hv(V, V.D, D) :-
+	var(V),			% new var - add to list
+	!.
+$hv(A, D, D) :-
+	atomic(A),		% atom/integer - ignore
+	!.
+$hv(C, D, D1) :-
+	C =.. F.A,		% complex term - (mutually) recurse
+	$lhv(A, D, D1).
+
+$lhv([], D, D).
+$lhv(H.T, D, D2) :-
+	$lhv(T, D1, D2),
+	$hv(H, D, D1).
+
+$writesoln([], []).
+$writesoln(V.V1, T.T1) :-
+	nl(1),
+	write(1, V, 0),
+	write(1, ' = ', 0),
+	write(1, T),
+	$writesoln(V1, T1).
+
+$copy(X, Y) :-
+	asserta(tmp(X)),
+	retract(tmp(Y)),
+	!.
+
+$trX(X) :-
+	$tron,
+	X,
+	$troff.
+
+$chkdel :-
+	$ndelay(N),
+	$bndelay(M),
+	N1 is N - M,
+	(	N1 = 0
+	;
+		N1 > 0,
+		putc(1, 9),
+		write(1, N1),
+		write(1, ' call(s) delayed', 0)
+	).
+
+$cmd(A, B) :-
+	sig(2, 2),		% interrupts trapped in commands
+	cmd(A, B).
+$cmd(A, B) :-
+	sig(2, 1),		% ignore interrupts in main loop
+	fail.
+
+$save1(X, N, B) :-
+	$save(X, N, B),
+	!.
+$save1(X, N, B) :-
+	write(2, 'Invalid goal', 0),
+	nl(2),
+	fail.
+
+$save(X, N, B) :-
+	M is N - 22,
+	retract((cmd(M, B) :- _)),
+	fail.
+$save(X, _, B) :-
+	var(X),
+	!,
+	fail.
+$save(-X, N, B) :-
+	int(X),
+	!,
+	Y is N - X,
+	clause(cmd(Y, B), Z),
+	assert((cmd(N, B) :- Z)),
+	Z = $solve(A, _),
+	write(1, A, 6),
+	nl(1).
+$save(X, N, B) :-
+	int(X),
+	!,
+	clause(cmd(X, B), Y),
+	assert((cmd(N, B) :- Y)),
+	Y = $solve(A, _),
+	write(1, A, 6),
+	nl(1).
+$save(X, N, B) :-
+	$hasvars(X, V),
+	assert((cmd(N, B) :- $solve(X, V))).
+
+$tron :-
+	$trace.
+$tron :-
+	$debug(0),
+	fail.
+
+$troff :-
+	$debug(0).
+$troff :-
+	$trace,
+	fail.
+
+h :-
+	$debug(0),
+	$breaklev(B),
+	clause(cmd(N, B), $solve(A, W)),
+	write(N),
+	put(9),
+	writef(A, 6),
+	nl,
+	fail.
+h.
+
+$breaklev(B) :-
+	loopn(_, B),
+	!.
+
+$bndelay(N) :-
+	breakdel(N),
+	!.
+
+break :-
+	$troff,
+	$breaklev(B),
+	B1 is B + 1,
+	$loop(B1),
+	$tron.
+
+?-$ret(($err(_) :- _)).
+
+$err(C) :-
+	sig(2, 1),			% ignore interrupts
+	$debug(0),
+	$errnum(N),
+	$entoc(N, E),
+	!,
+	error(E, C).
+
+error(eabort, C) :-
+	seen,
+	told,
+	hidden,
+	abort.
+error(eintr, C) :-
+	!,
+	(	ancestor(5, $loop),	% interrupt after top level prompt
+		!,
+		fail
+	;
+		ancestor(5, $errask(_)),	% interrupt after error prompt
+		seen,
+		told,
+		hidden,
+		abort
+	;
+		nl(2),
+		write(2, 'interrupt, call = ', 0),
+		$errask(C)
+	).
+error(enomem, C) :-
+	!,
+	write(2, 'out of memory - last ancestors are:', 0),
+	nl,
+	backtrace(10),
+	abort.
+error(E, C) :-
+	traperror(E, C, M),
+	!,
+	sig(2, 2),
+	M.
+error(E, C) :-
+	errhandler(E, C).
+
+errhandler(enoproc, C) :-
+	!,
+	write(2, 'Warning: undefined procedure called - ', 0),
+	writeln(2, C),
+	sig(2, 2),
+	fail.
+errhandler(E, C) :-
+	(	$emess(E)
+	;
+		write(2, 'error ', 0),
+		write(2, E)
+	),
+	!,
+	write(2, ': ', 0),
+	$errask(C).
+
+$errask(C) :-
+	sig(2, 2),
+	write(2, C),
+	write(2, ' ? ', 0),
+	read(0, C1),
+	true,			% so interrupts are not caught at ; (that
+	(	C1 = (C :- B),	% confuses ancestor)
+		B
+	;
+		C1 ~= (_ :- _),
+		C1
+	).
+
+$entoc(320, eintr).
+$entoc(360, eabort).
+$entoc(10, eelist).
+$entoc(11, eeconst).
+$entoc(12, eeint).
+$entoc(13, eefunct).
+$entoc(14, eestring).
+$entoc(15, ee01).
+$entoc(16, eevar).
+$entoc(17, eerwa).
+$entoc(50, euint).
+$entoc(51, eufunct).
+$entoc(100, eprotect).
+$entoc(110, eopen).
+$entoc(115, efile).
+$entoc(310, enoproc).
+$entoc(330, enomem).
+$entoc(340, efpe).
+$entoc(X, X).
+
+$emess(eelist) :-
+	write(2, list),
+	write(2, ' expected', 0).
+$emess(eeconst) :-
+	write(2, constant),
+	write(2, ' expected', 0).
+$emess(eeint) :-
+	write(2, integer),
+	write(2, ' expected', 0).
+$emess(eefunct) :-
+	write(2, functor),
+	write(2, ' expected', 0).
+$emess(eestring) :-
+	write(2, string),
+	write(2, ' expected', 0).
+$emess(ee01) :-
+	write(2, 'one or zero', 0),
+	write(2, ' expected', 0).
+$emess(eevar) :-
+	write(2, variable),
+	write(2, ' expected', 0).
+$emess(eerwa) :-
+	write(2, 'r, w or a', 0),
+	write(2, ' expected').
+$emess(euint) :-
+	write(2, 'unexpected integer', 0).
+$emess(eufunct) :-
+	write(2, 'unexpected functor', 0).
+$emess(eprotect) :-
+	write(2, 'protection violation', 0).
+$emess(eopen) :-
+	write(2, 'cant open file', 0).
+$emess(efile) :-
+	write(2, 'invalid file specification', 0).
+$emess(enotdelay) :-
+	write(2, 'calls delayed inside negation', 0).
+
+traperror(_, _, _).
+
+?-$ret((traperror(_, _, _) :- true)).
+?-$protect($loop),
+	$protect($loop(1)),
+	$protect($solve(1, 1)),
+	$protect($cmd(1, 1)),
+	$protect($retract1(1)),
+	$protect($save(1, 1, 1)),
+	$protect($save1(1, 1, 1)),
+	$protect($checkdel),
+	$protect($trX(1)),
+	$protect($err(1)),
+	$protect($errask(1)),
+	$protect($emess(1)),
+	$protect($entoc(1, 1)),
+	$protect($rread(1, 1)),
+	$protect($main(1)),
+	$protect(break),
+	$protect(error(1, 1)),
+	$protect(errhandler(1, 1)).
+?-$protect($hasvars(1, 1)),
+	$protect($hv(1, 1, 1)),
+	$protect($lhv(1, 1, 1)),
+	$protect($writesoln(1, 1)),
+	$protect($copy(1, 1)),
+	$protect($breaklev(1)),
+	$protect($bndelay(1)),
+	$protect($tron),
+	$protect($troff),
+	$protect(h),
+	$protect($chkdel).

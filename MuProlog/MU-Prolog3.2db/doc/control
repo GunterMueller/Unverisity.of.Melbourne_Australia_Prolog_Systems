@@ -1,0 +1,1122 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                 Automatic Generation of Control_______________________________
+                       for Logic Programs__________________
+
+                               by
+
+                            Lee Naish
+                      Technical Report 83/6
+
+                 Department of Computer Science
+                     University of Melbourne
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                       1
+
+
+
+                                    Abstract________
+
+               A model for the coroutined execution of PROLOG programs
+          is  presented  and  two  control  primitives  are described.
+          Heuristics  for  the  control  of  database   and  recursive
+          procedures   are   given,   which  lead  to  algorithms  for
+          generating control information.   These  algorithms  can  be
+          incorporated into a pre-processor for logic programs.  It is
+          argued that automatic  generation  should  be  an  important
+          consideration  when  designing  control  primitives and is a
+          significant   step   towards   simplifying   the   task   of
+          programming.
+
+
+
+
+
+
+
+
+
+
+          Keywords and Phrases____________________:
+               PROLOG,  control  facilities,   coroutines,   automatic
+          programming.
+
+          CR Categories_____________:
+
+          I.2.3  [Artificial  Intelligence]:  Deduction  and   Theorem
+          Proving - Logic Programming.
+          D.3.2 [Programming Languages]:  Language  Classifications  -
+          Very High-Level Languages.
+          H.3.4  [Information  Storage  and  Retrieval]:  Systems  and
+          Software - question answering systems.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                       2
+
+
+
+1. Introduction____________
+
+
+     A major goal of logic programming research is to build  systems  that  will
+efficiently  solve problems stated in simple logic.  Conventional PROLOG systems
+(for example, DEC-10 PROLOG [Pereira et al. 79]) have two  major  weaknesses  in
+this  regard:  the  unsound  implementation  of negation and the lack of control
+facilities.  Unsound implementation of negation leads to wrong answers and  poor
+control  leads  to  infinite  loops  and inefficiency.  To ensure efficiency and
+termination in these systems, it is often  necessary  to  make  the  logic  more
+complex.
+
+     There are now a  growing  number  of  PROLOG-based  systems  (and  proposed
+systems)  with  control  facilities which enable coroutining and, in some cases,
+sound implementations of negation.  Examples are  IC-PROLOG  [Clark  and  McCabe
+81],  Epilog  [Porto  82],  PROLOG-II [Colmerauer 82], and MU-PROLOG [Naish 83].
+The advantage of such systems is that it is possible to make programs  efficient
+by  adding  control  information,  rather than changing the logic [Kowalski 79].
+There are now many control primitives, implemented or proposed, but little  work
+has  been  done  on developing methodologies for their use.  Some primitives are
+difficult to apply due to their lack of power and  conversely,  the  power  some
+others provide is rarely necessary.
+
+     In this paper we introduce two control primitives  and  a  methodology  for
+using  them.  The  methodology  can  be  used  to  generate  control information
+automatically_____________ in many cases.  We show how this work can be incorporated  into  a
+program  which  will  take as input a logic program and output an equivalent MU-
+PROLOG program with control  information  added.   The  control  primitives  are
+fairly  simple,  compared  with  some, but we believe this approach will be very
+rewarding.  In fact, the  automation  of  control  can  be  applied  to  program
+transformation  [Gregory 80] and forms of compilation [Bellia et al. 83] as well
+as execution, as we discuss here.
+
+     We first present a general model of the execution mechanism  of  MU-PROLOG.
+Three classes of predicates are then discussed, to show how the control is used.
+They are  system,  database  and  a  class  of  recursively-defined  predicates.
+Control  heuristics  are given for database and recursive procedures, which lead
+to algorithms to generate control information, using  the  two  new  primitives.
+Next  we  describe  how  the algorithms can be used in a pre-processor for logic
+programs.  Finally, some alternative control  primitives  are  examined  and  we
+summarize our view of where this research is leading.
+
+
+2. The Execution Model___________________
+
+
+     PROLOG's computation rule can be changed to improve  efficiency  and  avoid
+non-termination without affecting correctness (see [Lloyd 82]).  In conventional
+PROLOG systems, a depth first, left to right computation rule is used to  select
+sub-goals  and each call either succeeds or fails.  In our model, calls may also
+delay and be resumed at a later point.  The delayed calls cause no bindings  so,
+in  effect,  they  just  change  the  computation  rule.  The default rule still
+selects the left-most goal at each stage.
+
+     In MU-PROLOG, all information controlling delays is attached to procedures,
+rather than calls. Some advantages of this are:
+
+
+
+
+
+
+                                       3
+
+
+
+(1) greater modularity (a procedure and its control information form a module),
+(2) greater separation of control information from the logic, and
+(3) less duplication when the same control is desired for several  calls,  which
+    is quite common.
+
+A disadvantage is that  different  calls  to  the  same  procedure  cannot  have
+different  control.   However,  it  is much easier to implement control on calls
+using control on procedures than vice versa.
+
+     Control is also local, in the sense that it can  only  apply  to  a  single
+procedure.   There are no control primitives which can affect calls to more than
+one procedure.  This does limit the power of the control but the  implementation
+is significantly less expensive and automatic generation of non-local control is
+likely to be more difficult.
+
+     There are several possible reasons for delaying a call, all  involving  the
+presence  of one or more variables in the call.  Some calls to system predicates
+delay because the presence of variables makes the result of a call difficult  or
+impossible to compute.  In other cases, delaying a call until some variables are
+bound can increase efficiency or prevent an infinite loop.  Whatever the reason,
+the offending variables are marked to indicate that the call is waiting for them
+to be bound. If a marked variable is bound at any stage, all the  calls  waiting
+on  it are woken up.  Some calls may also wake if all the non-delayed calls have
+completed.
+
+     At any point in a PROLOG computation, there is a current goal  clause.   In
+MU-PROLOG  there is also a set of delayed calls.  As an example, we will use the
+goal clause containing the atoms P, Q and R, with atoms S and T  delayed.   This
+will be represented by the following notation:
+
+        <- P, Q, R    &    S, T.
+
+P is now chosen, since it is the left-most goal. If  it  delays,  it  is  simply
+transferred from the left of the goal clause to the set of delayed calls:
+
+        <- Q, R    &    S, T, P.
+
+This is logically identical to the previous clause but now Q will be called.  In
+effect,  the  computation  rule  selects  Q  instead of P.  Suppose it matches a
+clause containing the atoms U and V.  The computation rule  is  depth-first,  so
+these replace Q at the left of the goal:
+
+        <- U, V, R    &    S, T, P.
+
+Now suppose U matches a clause containing the atom W, and in doing so  it  binds
+some  marked  variables  which S and P are waiting on. These two calls are woken
+and are placed at the left of the goal, in the order in which they were delayed,
+and U is replaced by W:
+
+        <- S, P, W, V, R    &    T.
+
+The computation is now continued normally, the next call being S.   Woken  calls
+are  likely to be tests so it is important that they are put at the start of the
+goal and hence resumed as soon as  possible.   The  order  in  which  calls  are
+resumed  rarely  makes  much  difference  since  tests require relatively little
+computation.
+
+
+
+
+
+
+                                       4
+
+
+
+     When a goal  fails,  we  backtrack  to  the  most  recent  call  which  has
+alternative  clauses to try.  Points where calls were delayed are ignored, since
+logically, delays have no effect.  The computation may terminate in one of three
+ways:  we  may backtrack past the initial goal (failure), we may reach the empty
+goal clause (success) or we may reach a goal containing only delayed calls, none
+of which get woken.  This last case can be treated as a control error and rarely
+occurs with well-written programs and reasonable goals.
+
+
+3. System Predicates_________________
+
+
+     The delaying mechanism outlined above can be used to good effect by many of
+the  system  predicates.   Perhaps  the  most  useful  application  is  for  the
+implementation of negation, a significant problem in most  PROLOG  systems.   In
+MU-PROLOG,  a  call  to  ~  (not)  will delay until its argument is ground, then
+continue with the normal negation as failure rule.  This has been shown to be  a
+sound  implementation  of  negation  [Clark  78].   There  is  also  a similarly
+implemented _i_f-_t_h_e_n-_e_l_s_e predicate and ~= (not equals), which delays  until  the
+call  is  sufficiently  (not  necessarily completely) instantiated.  Using these
+predicates, instead of their unsoundly  implemented  counterparts,  ensures  the
+correctness of answers.
+
+     Many meta-logical predicates, such as _n_a_m_e and _f_u_n_c_t_o_r, also  delay  rather
+than  cause  errors  or  just fail. This enables greater programming flexibility
+while maintaining correctness.  The same applies for  calls  to  the  arithmetic
+predicates  like  <,  which delays until both its arguments are ground, and _p_l_u_s
+which delays until at least two arguments are ground.   Delaying  insufficiently
+instantiated calls to system predicates can also be used to increase efficiency.
+
+
+4. Database Procedures___________________
+
+
+     A database procedure is made  up  of  a  (generally  large)  collection  of
+ground,  unit  clauses.  An  important  application  of  such  procedures  is in
+deductive database systems (see [Lloyd 83], [Dahl 82]).  A flexible  computation
+rule in this context, can be used for query optimization, and similar control is
+also useful for smaller collections of facts stored in main memory.  The control
+regime  we  suggest  extends  the  method  of query optimization used in CHAT-80
+[Warren 81] and generalized in [Stabler and Elcock 83].  Both these systems rely
+on  static  analysis  and  reordering  of the initial query and/or the bodies of
+rules in the program.  In contrast, the control method we present is part of the
+computation rule of the interpreter.
+
+     Central to all these systems is a way to estimate the number  of  solutions
+to an arbitrary call to a database procedure.  This can be seen as the number of
+clauses in the procedure multiplied by the probability of the sub-goal  matching
+an  arbitrary clause.  To simplify matters, it is assumed that the probabilities
+of the different arguments matching are independent.  The probability of a  sub-
+goal  matching  is  then  the  product of the probabilities of each instantiated
+argument matching.  The probabilities can be given by a programmer or  found  by
+taking statistics over some period of typical usage.  Alternatively, they can be
+estimated automatically  by  taking  the  inverse  of  the  number  of  distinct
+constants in each argument of the procedure.
+
+
+
+
+
+
+
+                                       5
+
+
+
+     With an accurate estimate of the number of solutions to each  call,  it  is
+possible  to  optimize  the  number of calls required to find all solutions to a
+database query.  The number of calls is a  reasonable  indication  of  the  time
+taken  and  is  independent  of  any  clause  indexing.   Given a database query
+consisting of M sub-goals, the problem is to minimize
+
+        1 + N918.(1 + N928.( . . . .(1 + N9M-18) . . .))
+
+where N9i8 is the number of solutions of the  i8th9  sub-goal  (after  all  previous
+sub-goals  have  been  solved).   The  choice  of the first sub-goal affects the
+number of solutions to subsequent calls, so simply  minimizing  N918  (as  CHAT-80
+does) is not always optimal.  Whether a more complex ordering algorithm can lead
+to improved performance is a matter for experimentation.
+
+4.1. Priority Declarations_____________________
+
+     The implementation we propose allows each  database  procedure  to  have  a
+priority________  declaration___________, which specifies the number of clauses and the probability
+of a match for each argument.  As in CHAT-80, the inverse of each probability is
+given,  to  avoid  fractions.   The  following  example  declares that procedure
+_s_t_u_d__u_n_i_t has 500  clauses  and  the  probabilities  of  the  first  and  second
+arguments matching a call are 1/100 and 1/10, respectively.
+
+    ?- priority(stud_unit(100, 10), 500).
+
+     The  effect  of  priority  declarations  is  to  delay  calls  to  database
+procedures  until  all  other  calls  have  been  tried.   The  delayed database
+procedure calls are then  analysed  and  resumed  in  an  efficient  order.   In
+practice,  delaying  ground  calls is rarely worth while (and it complicates the
+implementation).  Consider the following program:
+
+    busy(P, T) :- class_time(U, T), attends(P, U).
+
+    attends(S, U) :- stud_unit(S, U).
+    attends(L, U) :- lect_unit(L, U).
+
+    ?- priority(stud_unit(100, 10), 500).
+    ?- priority(lect_unit(8, 10), 10).
+    ?- priority(class_time(10, 25), 30).
+    . . . .
+
+The times each person is busy can be computed as follows:
+
+        <- busy(P, T).
+        <- class_time(U, T), attends(P, U).
+        <- attends(P, U)   &   class_time(U, T).
+        <- stud_unit(P, U)   &   class_time(U, T).
+        <-    &   class_time(U, T), stud_unit(P, U).
+
+At this point, the delayed calls are analysed, with reference  to  the  priority
+declarations.   _c_l_a_s_s__t_i_m_e  has  fewer  solutions (30 compared to 500), so it is
+resumed first.  The call to _c_l_a_s_s__t_i_m_e binds  U,  so  the  subsequent  calls  to
+_s_t_u_d__u_n_i_t  have  an  average  of  500/10=50  solutions.  After finding all these
+solutions by backtracking, the second clause for _a_t_t_e_n_d_s is  tried,  leading  to
+the goal
+
+        <-    &   class_time(U, T), lect_unit(P, U).
+
+
+
+
+
+                                       6
+
+
+
+Now there is a call to _l_e_c_t__u_n_i_t, with only 10 solutions, instead  of  _s_t_u_d__u_n_i_t
+and it is resumed first.
+
+     This behaviour can not be achieved by static re-ordering.  _c_l_a_s_s__t_i_m_e would
+either  be  called  first  each time or second each time, both of which are less
+efficient.  Similarly, without dynamic re-ordering of the goal, it would not  be
+possible  to  call  anything between the calls to _c_l_a_s_s__t_i_m_e and _s_t_u_d__u_n_i_t, even
+though this may be the  most  efficient  order.   Thus,  by  incorporating  more
+knowledge  into  the computation rule, the efficiency can be improved. MU-PROLOG
+has a facility (under development) for  storing  large  database  procedures  in
+files and we plan to implement priority declarations also.
+
+
+5. Recursive Procedures____________________
+
+
+     Under this heading, we include most procedures which  manipulate  recursive
+data  structures, such as lists and trees. They are generally made up of a small
+number of clauses; some containing recursive calls and some being  non-recursive
+"base  cases"  (for  example,  facts  containing  nil).  In  conventional PROLOG
+systems, the order of the calls in these procedures is  very  important.   Often
+all orders cause inefficient or infinite computations for some calls.
+
+5.1. Wait Declarations_________________
+
+     In this section, a control primitive which can overcome these  problems  is
+presented.   It  is MU-PROLOG's wait____ declaration___________.  An algorithm to generate wait
+declarations, mentioned in [Naish 82], is then  given,  along  with  some  other
+heuristics for improving efficiency.
+
+     We first describe wait declarations with the following example:
+
+    ?- wait append(1, 1, 0).
+    ?- wait append(0, 1, 1).
+    append([], A, A).
+    append(A.B, C, A.D) :- append(B, C, D).
+
+
+     The ones in a wait declaration define the (positions) set of arguments in a
+call   which  may  be  constructed  (this  is  defined  below).   Multiple  wait
+declarations provide alternative ways of  calling  procedures.   The  effect  of
+these  wait declarations is to delay calls to _a_p_p_e_n_d which need to construct the
+first and third arguments.
+
+     As each argument of a call is being unified with the corresponding argument
+in  a  procedure  head,  we check if it is constructed. An argument of a call is
+constructed___________ if a variable in it  is  unified  with  a  non-variable  or  another
+variable  in  the  call.   The  result  of  a successful unification is a set of
+variable bindings and a set C of positions at which arguments were  constructed.
+If  the procedure has no wait declarations or C is a subset of the positions set
+of any wait declaration then the call succeeds; otherwise  it  delays.   When  a
+call delays, all the variables which were bound are reset and marked.
+
+     Consider the call:
+
+        <- append(X, 3.[], 1.2.3.[]).
+
+
+
+
+
+
+                                       7
+
+
+
+Only the first argument is constructed (X is  bound  to  A.B).  The  first  wait
+declaration allows this, so the call succeeds. Similarly, the call:
+
+        <- append(1.2.[], 3.[], X).
+
+constructs only the third argument (X is bound to 1.D), which  is  permitted  by
+the second wait declaration. However, for the call:
+
+        <- append(X, 3.[], Y).
+
+the first and third arguments are constructed (X and Y are bound to [] and 3.[],
+respectively).  Because  no  wait  declaration  has  ones in the first and third
+arguments, the call delays and X and Y are marked.
+
+     Append without wait declarations can efficiently join and split  lists  but
+when  it  is  part  of a larger program, it can cause problems, as the following
+procedure illustrates:
+
+    append3(A, B, D, E) :- append(A, B, C), append(C, D, E).
+
+Without wait declarations on _a_p_p_e_n_d this program is excellent for joining  lists
+but not splitting them. Consider the goal:
+
+        <- append3(X, 3.[], 4.[], 1.2.3.4.[]).
+
+     Successive  solutions  to  the  first  call  to   _a_p_p_e_n_d   are   found   by
+backtracking.   The  second call keeps failing until the first call binds X to a
+list of the correct length.  The time taken is proportional to the square of the
+length  and  if  backtracking  occurs subsequently, the further solutions to the
+first call cause an infinite loop.  If the calls to _a_p_p_e_n_d were  reversed,  then
+the  same problems would occur for joining lists and if the order of the clauses
+of _a_p_p_e_n_d were reversed, then an infinite  loop  would  occur  immediately.   No
+order  works  for  both  splitting  and  joining,  and  some  goals, such as the
+following one, cause infinite loops for all___ orders:
+
+        <- append3(1.W, X, Y, 2.Z).
+
+     The behaviour of _a_p_p_e_n_d_3 is typical of many PROLOG programs.  It is usually
+possible  to  re-write these programs to make them behave better but it is often
+difficult (see [Elcock 83]) and is an  undesirable  burden  on  the  programmer.
+Adding  control  information is far easier and the result is more readable.  The
+following computation starts with the same goal  for  splitting  lists,  but  we
+assume that _a_p_p_e_n_d has the wait declarations given above:
+
+        <- append3(X, 3.[], 4.[], 1.2.3.4.[]).
+        <- append(X, 3.[], C), append(C, 4.[], 1.2.3.4.[]).
+        <- append(C, 4.[], 1.2.3.4.[])    &    append(X, 3.[], C).
+        <- append(X, 3.[], 1.C1), append(C1, 4.[], 2.3.4.[]).
+        <- append(X1, 3.[], C1), append(C1, 4.[], 2.3.4.[]).
+        . . .
+
+     In this case, the first call to _a_p_p_e_n_d delays. The second call binds  C  to
+1.C1  and  wakes the delayed call. This can now proceed, binding X to 1.X1, then
+calling itself recursively. The two calls act as  coroutines,  making  the  time
+taken  proportional to the length of X and avoiding the infinite loop.  In fact,
+with wait declarations, the program works for splitting, joining and testing the
+front  of  lists  for  any___ order of goals and clauses.  Furthermore, the control
+
+
+
+
+
+                                       8
+
+
+
+information can be generated automatically, so  the  programmer  needs  only  to
+consider the logic.
+
+     The reason why the program works so well  is  that  calls  to  _a_p_p_e_n_d  with
+variables  in  the first and third arguments delay.  Such calls have an infinite________
+number of possible bindings for these  arguments.   Without  wait  declarations,
+this  causes  infinite  loops  and  inefficient  "guessing" of the length of the
+lists.  In this lies an excellent control heuristic: calls should  delay  rather
+than  "guess"  one  of  a infinite number of possible bindings for any variable.
+This is very similar to a heuristic, developed independently  and  described  in
+[Babb  83],  for  system predicates in a PROLOG system not based on unification.
+Its properties, in terms of efficiency, termination and completeness, are  under
+investigation.  In this paper, we just note its effectiveness in practice.
+
+5.2. Generating Wait Declarations____________________________
+
+     It is not possible to use the heuristic mentioned above directly  but  wait
+declarations can often achieve the same result.  They can easily be written by a
+programmer  or  generated  automatically,  which  is  what  is  discussed  here.
+Consider the append program, for example.  The reason for the infinite number of
+solutions and infinite loop, is that the second clause can keep  calling  itself
+indefinitely.  Each  call  generates  a solution and another recursive call. The
+wait declarations stop this by preventing the first and  third  arguments  of  a
+call  being constructed.  The method of generating wait declarations then, is to
+look for potentially infinite loops and add sufficient waits  to  prevent  them.
+We  will  now  show  how  wait  declarations  can be generated for the following
+program, then the algorithm will be summarized.
+
+    merge([], L, L).
+    merge(L, [], L).
+    merge(N.X, M.Y, N.Z) :- N < M, merge(X, M.Y, Z).
+    merge(N.X, M.Y, M.Z) :- N >= M, merge(N.X, Y, Z).
+
+     Both recursive calls can lead to infinite loops.  To investigate the  first
+loop,  we  compare  the  call  with the head of the clause.  The first and third
+arguments of the call are more____ general_______ than the  same  arguments  in  the  head.
+Therefore,  an  infinite  loop must keep constructing both of these arguments in
+the calls.  The least restrictive way to prevent the loop is to delay  precisely
+these  calls.   In other words, only allow calls which don't construct the first
+argument or don't construct the third argument.   This  can  be  done  with  the
+following  two  wait  declarations  (the  wait  declarations  of  _a_p_p_e_n_d  can be
+generated in this way):
+
+    ?- wait merge(0, 1, 1).
+    ?- wait merge(1, 1, 0).
+
+     In the second loop, the second and third arguments in  the  call  are  more
+general  than  the  ones in the head.  To prevent this loop, it is sufficient to
+have two wait declarations, with  zeros  in  the  second  and  third  arguments,
+respectively and ones in the other arguments:
+
+    ?- wait merge(1, 0, 1).
+    ?- wait merge(1, 1, 0).
+
+     It is now necessary to combine the two groups of wait declarations, so both
+loops  are  prevented.   No  wait  declaration in the first group will allow the
+first loop.  Similarly for the second group.  Therefore, the set intersection of
+
+
+
+
+
+                                       9
+
+
+
+wait  declarations  from  the  first and second groups cannot allow either loop.
+Including all intersections, of one  wait  from  each  group,  gives  the  least
+restrictive set of wait declarations which will stop both loops:
+
+    ?- wait merge(0, 0, 1).
+    ?- wait merge(0, 1, 0).
+    ?- wait merge(1, 0, 0).
+    ?- wait merge(1, 1, 0).
+
+     These wait declarations delay _m_e_r_g_e precisely when it tries to guess one of
+an  infinite  number  of  possibilities.   However,  the  second  and third wait
+declarations are subsets of the fourth wait declaration.  Any  call  allowed  by
+these  waits  must  be  allowed  by the fourth wait, so they are redundant.  The
+final wait declarations are therefore:
+
+    ?- wait merge(0, 0, 1).
+    ?- wait merge(1, 1, 0).
+
+     To summarize, the algorithm is as follows. For  each  potentially  infinite
+loop  a  set  of wait declarations is obtained. These are found by comparing the
+looping call with the clause head. For each argument which is  less  general  in
+the  head,  a  wait declaration is generated. It has a zero in that argument and
+ones in all others.  If there are no arguments which are  less  general  in  the
+head  then  wait  declarations  cannot be generated (see below).  To combine the
+sets, we take all possible intersections,  of  one  wait  from  each  set.   The
+resulting set of waits may contain some redundancies.  A wait declaration can be
+removed if it is a subset of another.
+
+5.3. Difficulties With the Algorithm_______________________________
+
+     The algorithm can fail at  one  point:  when  a  recursive  call  is  being
+compared  with  a  clause  head.  If  the  head  is  as general as the call then
+variables in the call will not be constructed, so the call cannot be delayed  by
+wait  declarations.  In  this case it is worth advising the programmer that some
+more complex control or logic may be needed at  this  point.   In  some  complex
+cases  of  mutual  recursion,  there are also difficulties finding all potential
+loops.  However, even if all potential infinite  loops  are  found,  it  is  not
+always possible to decide if they can all cause actual infinite loops.
+
+     The algorithm also tends to  be  too  conservative.  For  most  computation
+rules,  some  of  the infinite loops cannot occur. The result can be unnecessary
+wait declarations, wait declarations with more zeros than necessary, or too  few
+wait  declarations.   Calls  which  could not cause infinite loops may delay.  A
+common reason for this is the use of PROLOG's representation of integers, rather
+than  zero  and the successor function.  For example, if the _l_e_n_g_t_h predicate is
+written using the successor notation, the right wait declarations are  found  by
+the   algorithm.    Below  is  an  equivalent  program,  using  PROLOG's  normal
+representation of integers.
+
+    ?- wait length(0, 1).
+    ?- wait length(1, 0).
+    length([], 0).
+    length(H.T, N) :- N > 0, plus(M, 1, N), length(T, M).
+
+     Only the first wait declaration is found by the algorithm, so  the  program
+would  delay  rather  than  constructing a list of a given length. However, when
+used in this way, infinite loops could occur if
+
+
+
+
+
+                                       10
+
+
+
+    (1) the clause order is changed,
+    (2) the call to > is left out, or
+    (3) _l_e_n_g_t_h is called before >.
+
+     Any proof that the program avoids infinite loops must consider  the  clause
+selection  rule, the computation rule and the relationship between the constants
+zero and one, and the predicates > and _p_l_u_s. It would be difficult for a program
+to  analyse  this  and  programmers  should  be  very  careful  before  changing
+automatically generated wait declarations.  Other control or even the logic  may
+need to be changed to prevent loops.
+
+5.4. Ordering Sub-Goals__________________
+
+     The behaviour of _l_e_n_g_t_h shows that the order of sub-goals can be important,
+even  with extra control information. Heuristics for ordering goals are entirely
+dependent on the default computation rule.  We assume here that the depth-first,
+left  to  right rule is used.  In the _l_e_n_g_t_h example it was noted that calling >
+before _l_e_n_g_t_h prevents an infinite loop.  As a general rule, recursive sub-goals
+should  be  placed  last.   In  most  cases,  loops  would  be prevented by wait
+declarations anyway but  there  seem  to  be  no  disadvantages  of  using  this
+heuristic.
+
+     A heuristic which is more often useful, is to put _t_e_s_t_s  before  _g_e_n_e_r_a_t_e_s.
+Tests_____  are  calls which cause no backtrack points.  They either fail immediately
+or fail when backtracking takes place.  Generates_________ may  have  several  solutions.
+If  tests  are called first, they can coroutine with generates, often increasing
+efficiency.  Initially, tests are often  insufficiently  instantiated,  so  they
+delay.  This  allows a generate to start. As soon as a marked variable is bound,
+some test(s) are resumed and may fail, causing the generate to backtrack.   This
+contrasts  with  the conventional PROLOG generate and test algorithms, where the
+generate must produce a complete solution (to the generate) before it is tested.
+A good example of this is the eight queens problem, given later.
+
+     Most MU-PROLOG system predicates are tests and these can  be  stored  in  a
+table.   Determining what calls of user-defined procedures are tests can require
+detailed analysis of the calls  and  procedures.  However,  there  is  a  simple
+heuristic,  based  on the wait declarations which are generated.  It can be used
+on its own or could be a starting point for further analysis.  If all  the  wait
+declarations  of  a  procedure  prevent some argument, or set of arguments, from
+being constructed, then calls to the procedure are likely to  be  tests.   Calls
+must delay until that argument (set) are no more general than the argument (set)
+in the clause heads. This usually eliminates backtrack points.
+
+     In the absence of detailed  analysis  or  more  clever  heuristics,  it  is
+possible  to  rely  partly  on  the  programmer  for  goal ordering. Programmers
+generally have a good idea of what calls  are  tests  and  have  little  trouble
+finding  an efficient goal order.  The ordering algorithm should therefore avoid
+changes that dont seem necessary.  Another alternative to extending the ordering
+algorithm  is  changing  the  default  computation  rule,  so  the order is less
+important.  Developing practical computation rules with a greater  breadth-first
+component  (for example, [Pereira and Porto 79] and [Lassez and Maher 82]) seems
+very promising.
+
+
+
+
+
+
+
+
+
+
+                                       11
+
+
+
+6. A Program to Generate Control Information_________________________________________
+
+
+     We will now describe a pre-processor  for  logic  programs,  which  we  are
+developing.   The  program  will  input  the  logic  of  a problem (which can be
+considered a specification) and outputs a  program  with  equivalent  logic  and
+control  information  to  aid  efficiency  and  termination.   Comments are also
+produced, to show the results of analysis, what changes are made and  where  the
+pre-processor  was  unable  to generate control information (so a programmer can
+intervene). To illustrate its behaviour, we shall use the following eight queens
+program as an example.
+
+
+    queen(X) :- perm(1.2.3.4.5.6.7.8.[], X), safe(X).
+
+    perm([], []).
+    perm(X.Y, U.V) :- perm(Z, V), delete(U, X.Y, Z).
+
+    delete(A, A.L, L).
+    delete(X, A.B.L, A.R) :- delete(X, B.L, R).
+
+    safe([]).
+    safe(N.L) :- safe(L), nodiag(N, 1, L).
+
+    nodiag(_, _, []).
+    nodiag(B, D, N.L) :-
+                    D =\= N-B, D =\= B-N,
+                    D1 is D + 1, nodiag(B, D1, L).
+
+     The pre-processor currently has three passes, each storing information used
+by  later passes and/or generating control information. The first pass reads the
+input, stores it and initializes some  book-keeping  information.   During  this
+pass  recursion and mutual recursion are detected to help with the generation of
+wait declarations.  For the eight queens program, it just notes which procedures
+are recursive.
+
+     In the next pass each procedure is analysed and control primitives, such as
+wait  and  priority  declarations,  are  added.  The analysis also reveals which
+procedures should be used as tests. We have described, in general terms, how  to
+recognize  and  add  control  information for database and recursive procedures.
+This can be extended to other types of  procedures  for  which  control  can  be
+automated.   A  further  extension is to split procedures and make other changes
+which result in equivalent logic,  but  facilitate  the  generation  of  control
+information.   If  a  procedure  is  not  a  recognisable type, a message should
+printed, indicating that programmer assistance is desirable.
+
+     In  the  eight  queens  example,  the  _q_u_e_e_n  predicate  needs  no  control
+primitives  but  all  the  others  are  recognized as recursive procedures.  The
+following wait declarations are generated,  using  the  algorithm  described  in
+section  5.   Procedures  _s_a_f_e  and  _n_o_d_i_a_g  are recognised as tests, due to the
+single wait declarations containing zero.
+
+
+
+
+
+
+
+
+
+
+
+                                       12
+
+
+
+    ?- wait perm(1, 0).
+    ?- wait perm(0, 1).
+    ?- wait delete(1, 1, 0).
+    ?- wait delete(1, 0, 1).
+    ?- wait safe(0).
+    ?- wait nodiag(1, 1, 0).
+
+     The final pass adjusts the order of calls in each clause. Tests are put  at
+the  start  of  clauses  and  recursive calls are placed last then the reordered
+program, complete with control  information,  is  output.  The  result  of  pre-
+processing the eight queens program is as follows:
+
+    queen(X) :- safe(X), perm(1.2.3.4.5.6.7.8.[], X).
+
+    ?- wait perm(1, 0).
+    ?- wait perm(0, 1).
+    perm([], []).
+    perm(X.Y, U.V) :- delete(U, X.Y, Z), perm(Z, V).
+
+    ?- wait delete(1, 1, 0).
+    ?- wait delete(1, 0, 1).
+    delete(A, A.L, L).
+    delete(X, A.B.L, A.R) :- delete(X, B.L, R).
+
+    ?- wait safe(0).
+    safe([]).
+    safe(N.L) :- nodiag(N, 1, L), safe(L).
+
+    ?- wait nodiag(1, 1, 0).
+    nodiag(_, _, []).
+    nodiag(B, D, N.L) :-
+                    D =\= N-B, D =\= B-N,
+                    D1 is D + 1, nodiag(B, D1, L).
+
+     To solve the eight queens problem with this  program,  the  following  goal
+would normally be used:
+
+        <- queen(X).
+
+     The pre-processor  has  found  the  three  pieces  of  control  information
+necessary to make this goal execute efficiently:
+
+(1) _s_a_f_e is called before _p_e_r_m.  This makes the tests delay initially,  so  they
+    can act as coroutines, waking whenever _p_e_r_m further instantiates the list of
+    queen positions.
+(2) _s_a_f_e has a zero wait declaration, to stop it from attempting  to  guess  the
+    length  of the list. This would be inefficient and would lead to an infinite
+    loop if all solutions were sought.
+(3) _n_o_d_i_a_g also has a wait declaration, with the last  argument  zero,  for  the
+    same reasons.
+
+     _p_e_r_m generates the list of queen positions and coroutines with the _s_a_f_e and
+_n_o_d_i_a_g  tests.   After  the  positions  of the first N queens have been decided,
+there is one call to _s_a_f_e delayed, and N calls to _n_o_d_i_a_g delayed (one  for  each
+queen).  When  a new queen is added, these calls are woken. Each of the calls to
+_n_o_d_i_a_g checks if the new queen can be taken.  The call to _s_a_f_e creates a call to
+_n_o_d_i_a_g, for the new queen, and another call to _s_a_f_e.  When all eight queens have
+
+
+
+
+
+                                       13
+
+
+
+been successfully placed, _p_e_r_m binds the end of the  list  to  []  and  all  the
+delayed calls succeed.
+
+     Because _p_e_r_m constructs the list X before the next queen position is chosen
+(by  _d_e_l_e_t_e), there is some unnecessary delaying of calls.  This does not affect
+the order of efficiency, however, and can be avoided if the program is  slightly
+altered.   Thus, in this case, the pre-processor is able to make the program run
+efficiently. Even when programmer intervention is needed, it helps considerably,
+by providing some control information, as well as comments.  A final point about
+this example is that the problems with _p_e_r_m discussed in [Elcock  83]  are  also
+solved.   In  most PROLOG systems, _p_e_r_m causes an infinite loop if the arguments
+to the initial call  are  swapped  but,  in  MU-PROLOG,  the  wait  declarations
+generated for _d_e_l_e_t_e prevent this.
+
+
+7. Other Control Primitives________________________
+
+
+     Most proposed methods of control for database procedures are fairly similar
+to  priority  declarations,  so this section will just deal with alternatives to
+wait declarations.  A major factor in the comparisons we  give  is  whether  the
+control primitives can be generated automatically, for example, by modifying the
+algorithm given to generate wait declarations.  First, control which is local to
+single  calls  is  discussed,  followed  by the more difficult area of non-local
+control.
+
+7.1. Local Control_____________
+
+     A primitive similar to the _k_e_y facility in ABSYS [Foster and Elcock 69] has
+been  suggested by Warren [Warren 79], called _t_r_i_g_g_e_r_s.  _T_r_i_g_g_e_r_s are similar to
+wait declarations but they cause delays if arguments in the call are  variables,
+rather  than  if  the  arguments  get  constructed.   They are simpler than wait
+declarations, since  their  effect  is  independent  of  the  clause  heads  and
+unification  algorithm  and calls cannot succeed with the first clause and delay
+when other clauses are tried.  Triggers can be generated and used  in  the  same
+way  as  wait  declarations in many cases, but not all, as the following example
+illustrates.
+
+    ordered([]).
+    ordered([A]).
+    ordered(A.B.C) :- A =< B, ordered(B.C).
+
+     Triggers cannot delay the recursive call to _o_r_d_e_r_e_d since its  argument  is
+never a variable (though it may be constructed, causing an infinite loop).  Such
+cases are not uncommon and we consider that this  outweighs  the  advantages  of
+triggers.   It  is  possible  to  combine  most  of  the advantages of waits and
+triggers by allowing more complex terms in the declarations,  rather  than  just
+zeros  and  ones.   A  more  complex  algorithm is needed to determine if a call
+delays, so interpreting these declarations would be slower.  However, they could
+be implemented efficiently in a compiler-based system.
+
+     Control information attached to calls was mentioned in section 2 and we now
+discuss  it  further.  The simplest primitive of this kind is the _g_e_l_e_r (freeze)
+predicate of PROLOG-II [Colmerauer 82].  An example of its use is:
+
+
+
+
+
+
+
+
+                                       14
+
+
+
+    ordered([]).
+    ordered([A]).
+    ordered(A.B.C) :- A =< B, geler(C, ordered(B.C)).
+
+The effect of _g_e_l_e_r here is to delay the recursive call to _o_r_d_e_r_e_d until C is  a
+non-variable.   When  called  with  a  variable as its argument, this version of
+_o_r_d_e_r_e_d makes two "guesses" at the length of the list and then delays,  avoiding
+further inefficiency and a possible infinite loop.
+
+     The wait declaration algorithm can be modified to produce control  attached
+to calls if there is a primitive which will delay calls until any one of several
+arguments is sufficiently instantiated.  _G_e_l_e_r only waits for one variable to be
+bound  and  can  not easily provide the control we used for _a_p_p_e_n_d or _m_e_r_g_e.  It
+seems useful to extend _g_e_l_e_r so it accepts a list, and delays until at least one
+member  is  a  non-variable.   This can be implemented (with one slight problem)
+using _g_e_l_e_r but a lower level implementation would be  better.   Like  triggers,
+even  an  extended  form of _g_e_l_e_r can not provide adequate control in some cases
+where clause heads have more than  one  level  of  functor.   For  example,  the
+following  program  and goal cause an infinite loop which cannot be avoided just
+by using _g_e_l_e_r for calls to _e_v_e_n.
+
+    even(0).
+    even(s(s(N))) :- even(N).
+
+        <- even(X), even(Y), Y = s(X), . . .
+
+7.2. Non-local Control_________________
+
+     Non-local control is generally  more  expensive  to  implement  than  local
+control,  since  more  information is needed to determine whether a call delays.
+Typically, the ancestors of the call may need to be examined.  We  believe  that
+forms  of  non-local  control should be devised specifically for the areas where
+local control is insufficient and, if possible, with automation  in  mind.   IC-
+PROLOG's  lazy  producers  provide  the  type  of  control  needed  for multiple
+generates to act as coroutines.  It may be possible  to  generate  this  control
+information  automatically, probably relying on program analysis similar to that
+needed to determine which calls are tests.  Where clause heads are as general as
+recursive  calls  (so  waits  have  no  effect) it can be useful to have control
+primitives which will examine the ancestors of the call to try to avoid infinite
+loops.   In  practice,  most  infinite  loops in PROLOG are quite simple, so the
+undecidability of the halting problem does not imply such control is futile.
+
+     There have been some forms of control suggested which do not merely  affect
+the  computation  rule.  Altering  the  clause  selection  rule  is  one example
+[Gallaire and Lassere 80].  If  this  control  is  abused,  the  correctness  of
+programs can be affected, so extra knowledge about the program or problem domain
+is necessary for the safe use of  this  control.   If  a  lot  of  analysis  and
+knowledge  are needed to generate control information then it may be feasible to
+use the knowledge for program transformation instead.  Advantages  of  this  are
+that  simpler  control  is  needed  at  run-time  and it is easier to extend the
+language to include a larger subset of first order logic.
+
+
+
+
+
+
+
+
+
+
+
+                                       15
+
+
+
+8. Summary_______
+
+
+     In conventional PROLOG, simple, lucid programs often  lead  to  inefficient
+algorithms  and infinite loops.  Efficiency can only be achieved by transforming
+the logic of the program.  There are now  several  systems  in  which  the  same
+result  can often be achieved more easily, simply by adding control information.
+We believe the next stage of  development  is  the  automation  of  control.   A
+further  step is to automate program transformation.  There will always be a use
+for experts, who know or can invent clever algorithms but this does not  detract
+from  the  usefulness  of  such  systems.  For runnable specifications, once-off
+programs and programs written by inexperienced programmers, ease of  writing  is
+far more important than efficiency of execution.
+
+     The system we have  described  in  this  paper  is  a  first  step  towards
+automation  of  control  and  the results obtained so far have been encouraging.
+Priority declarations are an  extension  to  a  proven  method  of  control  for
+database  procedures  and  we  have  found  wait declarations to be a simple and
+effective form of control for recursive procedures.   More  work  is  needed  on
+other  forms  of  control and implementation techniques, especially compilation.
+Finally, the lessons learned from investigating the control  of  logic  programs
+should be of great use in developing program transformation systems.
+
+
+9. Acknowledgements________________
+
+
+     The author wishes to thank John Lloyd, Rodney Topor  and  Jean-Lois  Lassez
+for many useful discussions and comments on earlier drafts of this paper.
+
+
+10. References__________
+
+
+
+[Babb 83] Babb, E., "Finite Computation Principal -  An  Alternative  Method  of
+        Adapting   Resolution  for  Logic  Programming",  Proceedings  of  Logic
+        Programming Workshop '83, Portugal, 1983, pp 443-460.
+
+[Bellia et al. 83] Bellia, M., Levi, G. and Martelli, M., "On  Compiling  Prolog
+        Programs   on   Demand   Driven  Architectures",  Proceedings  of  Logic
+        Programming Workshop '83, Portugal, 1983, pp 518-535.
+
+[Colmerauer 82]  Colmerauer,  A.,  "PROLOG-II  Manuel  de  Reference  et  Modele
+        Theorique", Groupe Intelligence Artificelle, Univerisite d'Aix-Marseille
+        II.
+
+[Clark 78] Clark, K.L., "Negation as Failure", in Gallaire,  H.  and  Minker  J.
+        (Eds.),  "Logic  and  Data Bases", Plenum Press, New York, 1978, pp 122-
+        149.
+
+[Clark and McCabe 81] Clark, K.L. and McCabe, F.,  "The  Control  Facilities  of
+        IC-PROLOG",  in "Expert Systems in the Micro Electronic Age", D. Mitchie
+        (Ed), Edinburgh University Press, pp 122-149.
+
+[Dahl 82] Dahl,  V.,  "On  Database  Systems  Development  through  Logic",  ACM
+        Transactions on Database Systems, vol. 7, no. 3 (March 82), pp. 102-123.
+
+
+
+
+
+                                       16
+
+
+
+[Elcock  83]  Elcock,  E.  W.,  "The  Pragmatic  of  Prolog  :  Some  Comments",
+        Proceedings  of  Logic  Programming Workshop '83, Portugal, 1983, pp 94-
+        106.
+
+[Foster and Elcock 69] Foster, J.M. and Elcock, E. W., "Absys 1: An  Incremental
+        Compiler  for Assertions: An Introduction", In Meltzer, B.  and Mitchie,
+        D. (Eds), Machine Intelligence 4, Edinburgh University Press, 1969.
+
+[Gallaire  and Lassere 80] Gallaire H., and Lassere C., "Metalevel  Control  for
+        Logic  Programs",  in  Clark,  K.L.  and  Tarnlund,  S-A. (Eds.), "Logic
+        Programming", Academic Press, New York, 1982, pp 173-188.
+
+[Gregory 80] Gregory, S., "Towards the Compilation of Annotated Logic Programs",
+        CCD  Publication  No.  80/16, Department of Computing, Imperial College,
+        London.
+
+[Kowalski 79] Kowalski, R., "Algorithm = Logic + Control",  CACM,  22,  7  (July
+        1979), pp 424-436.
+
+[Lassez and Maher 82]  Lassez, J-L., Maher, M., "Closure  and  Fairness  in  the
+        Semantics of Programming Logic", to appear in TCS.
+
+[Lloyd 82] Lloyd, J.W., "Foundations of Logic Programming", TR 82/7,  Department
+        of Computer Science, University of Melbourne, 1982.
+
+[Lloyd 83] Lloyd, J.W., "An Introduction to Deductive  Database  Systems",  ACJ,
+        15, 2 (May 1983), pp52-57.
+
+[Naish 82] Naish, L., "An Introduction to MU-PROLOG",  TR  82/2,  Department  of
+        Computer Science, University of Melbourne.
+
+[Naish 83] Naish, L., "MU-PROLOG 3.0 Reference Manual", Department  of  Computer
+        Science, University of Melbourne, 1983.
+
+[Pereira and Porto 79] Pereira, L.M. and Porto,  A.,  "Intelligent  Backtracking
+        and  Sidetracking  in  Horn Clause Programs -- The Theory", CIUNL Report
+        no. 2/79, University Nova de Lisboa, 1979.
+
+[Pereira et al. 79] Pereira, L.M., Pereira F.C.N and Warren, D., "Users Guide to
+        DECsystem-10  Prolog", DAI Occasional Paper 15, Department of Artificial
+        Intelligence, University of Edinburgh, 1979.
+
+[Porto 82] Porto, A., "Epilog: A Language for Extended  Programming  in  Logic",
+        Proceedings  of  First International Logic Programming Conference, ADDP,
+        Marseille (September 1982), pp 31-37.
+
+[Stabler and Elcock 83] Stabler, E. and Elcock, E. W., "Knowledge Representation
+        in  an  Efficient  Deductive  Inference  System",  Proceedings  of Logic
+        Programming Workshop '83, Portugal, 1983, pp 216-228.
+
+[Warren 79] Warren, D.H.D., "Coroutining Facilities for PROLOG,  Implemented  in
+        PROLOG", DAI Working Paper (unnumbered), University of Edinburgh, August
+        1979.
+
+[Warren 81] Warren, D.H.D.,  "Efficient  Processing  of  Interactive  Relational
+        Database   Queries   Expressed   in  Logic",  Proceedings  of  7th  VLBD
+        Conference, Cannes (September 1981), pp 272-281.
+
+
+
+

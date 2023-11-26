@@ -1,0 +1,84 @@
+<HTML>
+<TITLE>
+MU-Prolog implementation
+</TITLE>
+<H1>
+MU-Prolog implementation
+</H1>
+<hr>
+
+MU-Prolog was implemented in the early 1980's.
+Its an interpreter written in C and was ported to many UNIX systems
+over the years.  It is now more or less oblolete but may be of
+historical interest.
+It ran at about 1.5K LIPS on a VAX (remember them?), compared
+to about 2K LIPS for CProlog, which used similar implementation
+technology - a structure sharing interpreter.
+
+<P>
+In its day it was quite an innovative system.
+<UL>
+<LI> It was the first system with flexible and easy to use facilities
+for coroutining without a major efficiency penalty.  Wait declarations
+allow programmers to specify when calls to procedures should proceed or
+delay based on how instantiated they are.  A tool was implemented to
+automatically generate these declarations and reorder code to improve
+termination and efficiency in many cases.
+
+<LI> It had the best facilities for soundly implemented negation and
+the first "pure" all solutions predicate.
+Negated and conditional goals delay until they are ground and an inequality
+predicate supporting (implicit) universal quantification is supported.
+
+<LI> It was one of the first Prolog systems which was connected to
+database systems.  Provided with the system is code to implement
+disk-resident relations supporting partial match retrieval.  It was used
+for one of the very early deductive database systems.
+
+<LI> It was one of the first Prolog systems with a form of module
+system.
+
+<LI> It was the first Prolog system to use "executable" saved states and
+many other UNIX-friendly features.
+
+<LI> It was one of the first Prolog systems to support dynamic loading
+and linking of object files from C and other languages.
+
+</UL>
+
+It was used as a vehicle for experimenting with many aspects of language
+design, implementation, program transformation, deductive databases and
+debugging.  After the invention of the Warren Abstract Machine the time
+was right to move on.  Development of MU-Prolog was stopped in the
+mid 1980's when <A HREF="../nuprolog/">NU-Prolog</A>, a compiled Prolog
+system, was designed and implemented.
+<P>
+The most complete reference for MU-Prolog is my thesis:
+<PRE>
+@book{naish:thesis:86,
+        author =        {Naish, Lee},
+        title  =        {Negation and control in {Prolog}},
+        series =        {Lecture Notes in Computer Science},
+        publisher =     {Springer-Verlag},
+        address =       {New York},
+        number =        {238},
+        year   =        {1986},
+        pages  =        {119},
+        comment = {Technical report 85/12, Department of Computer Science,
+                University of Melbourne}
+}
+</PRE>
+<hr>
+
+<A HREF="./Copyright.txt">Copyright</A> file.<br><br>
+
+<A HREF="./README.txt">README</A> file.<br><br>
+
+<A HREF="./MU-Prolog3.2db.tar.gz">
+MU-Prolog 3.2db</A> (330kb gzip'ed tar file) <br><br>
+
+<hr>
+<br>
+<A HREF="http://people.eng.unimelb.edu.au/lee/"> Lee </A>
+
+</HTML>

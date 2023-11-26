@@ -1,0 +1,16 @@
+p(X) :- X ~= Y.
+p(X) :- not X.		% BUG
+p(X) :- if q(X) then r(X) else s(X).
+p(X) :- some(Y, q(X,Y)).
+p(X) :- all(Y, X~=f(Y,Y)).
+p(A) :- all(Lo, not not some(Li, p(Lo,Li))).
+p(X, Y) :- if some(Y, q(X,Z))
+	then r(Y, a)
+	else r(Y, A), some(B, s(A, B)).
+p(X, Y) :- if g_some(Y, q(X,Z))
+	then r(Y, a)
+	else r(Y, A), some(B, s(A, B)).
+p(X) :- all(Y.X, not r(Y,X)).
+p(X) :- g_all(Y.X, not r(Y,X)).
+
+p(X, S) :- solutions(Y, solutions(Z, some(A, p(X,A,Z)), Y), S).

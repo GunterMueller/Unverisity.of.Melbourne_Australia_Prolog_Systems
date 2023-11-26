@@ -1,0 +1,16 @@
+/*
+ * Test Prolog database systems
+ */
+
+?- lib db, db_cons(db).
+
+s1 :- simc(123,X,Y), writeln(simc(123,X,Y)), fail.
+s2 :- simc(X,a,Y), writeln(simc(X,a,Y)), fail.
+s3 :- simc(X,Y,aforementioned), writeln(simc(X,Y,aforementioned)), fail.
+s4 :- simc(X,Y,Z), writeln(simc(X,Y,Z)), fail.
+
+r1 :- rlhp(123,X,Y), writeln(rlhp(123,X,Y)), fail.
+r2 :- rlhp(X,a,Y), writeln(rlhp(X,a,Y)), fail.
+r3 :- rlhp(X,Y,aforementioned), writeln(rlhp(X,Y,aforementioned)), fail.
+r4 :- rlhp(X,Y,Z), writeln(rlhp(X,Y,Z)), fail.
+

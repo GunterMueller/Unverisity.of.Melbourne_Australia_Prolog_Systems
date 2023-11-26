@@ -1,0 +1,37 @@
+.TH DDB 1-ucb
+.SH ORIGIN
+4.2BSD
+.SH NAME
+ddb \- simple interactive query/update facility for
+.I simc
+relations
+.SH SYNOPSIS
+.B ddb
+db
+.SH DESCRIPTION
+.I ddb
+provides an interactive front-end for
+running queries and updates on relations in a
+.I simc
+style database.
+.TP 4
+.B query
+Initiate a query on the database. Takes one argument
+which is a Prolog-like specification of a partial-match
+query on the relation: e.g.
+.br
+      ``query employee(_,_,analyst,_,30000)''
+.TP 4
+.B run
+Execute a query and print all the answers.
+.SH FILES
+db/rel/desc	Index files
+.br
+db/rel/00*	Data files
+.SH SEE ALSO
+consult(1), dbinfo(1), dbparams(1), newrel(1), prefix(1)
+.SH DIAGNOSTICS
+Occasional terse messages if you do something wrong.
+.SH BUGS
+It was originally intended as a simple debugging tool,
+but has grown haphazardly into a messy front-end.

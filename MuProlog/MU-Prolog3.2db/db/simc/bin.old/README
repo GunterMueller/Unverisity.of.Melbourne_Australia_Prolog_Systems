@@ -1,0 +1,5 @@
+These are the database utilities for the superimposed codeword indexing scheme.
+
+Before "make"ing them, check/correct the paths and parameters in the Makefile.
+
+NOTE: you can't make these until MU-Prolog is running.

@@ -1,0 +1,501 @@
+
+	.pred	'$sysOp',3
+86: 	sot	0,&79,&87,&85,&85
+79: 	t	3,0,&0
+	r	3,0,&1
+	r	3,0,&2
+	r	3,0,&3
+	r	3,0,&4
+	r	3,0,&5
+	r	3,0,&6
+	r	3,0,&7
+	r	3,0,&8
+	r	3,0,&9
+	r	3,0,&10
+	r	3,0,&11
+	r	3,0,&12
+	r	3,0,&13
+	r	3,0,&14
+	r	3,0,&15
+	r	3,0,&16
+	r	3,0,&17
+	r	3,0,&18
+	r	3,0,&19
+	r	3,0,&20
+	r	3,0,&21
+	r	3,0,&22
+	r	3,0,&23
+	r	3,0,&24
+	r	3,0,&25
+	r	3,0,&26
+	r	3,0,&27
+	r	3,0,&28
+	r	3,0,&29
+	r	3,0,&30
+	r	3,0,&31
+	r	3,0,&32
+	r	3,0,&33
+	r	3,0,&34
+	r	3,0,&35
+	r	3,0,&36
+	r	3,0,&37
+	r	3,0,&38
+	r	3,0,&39
+	r	3,0,&40
+	r	3,0,&41
+	r	3,0,&42
+	r	3,0,&43
+	r	3,0,&44
+	r	3,0,&45
+	r	3,0,&46
+	r	3,0,&47
+	r	3,0,&48
+	r	3,0,&49
+	r	3,0,&50
+	r	3,0,&51
+	r	3,0,&52
+	r	3,0,&53
+	r	3,0,&54
+	r	3,0,&55
+	r	3,0,&56
+	r	3,0,&57
+	r	3,0,&58
+	r	3,0,&59
+	r	3,0,&60
+	r	3,0,&61
+	r	3,0,&62
+	r	3,0,&63
+	r	3,0,&64
+	r	3,0,&65
+	r	3,0,&66
+	r	3,0,&67
+	r	3,0,&68
+	r	3,0,&69
+	r	3,0,&70
+	r	3,0,&71
+	r	3,0,&72
+	r	3,0,&73
+	r	3,0,&74
+	r	3,0,&75
+	r	3,0,&76
+	tr	3,0,&77
+87: 	soc	0,&($'*':&70,$'**':&75,$'+':&80,$',':&23,$'-':&81,$'-->':&0,$'->':&22,$'.':&62,$'/':&71,$'//':&72,$'/\\':&67,$':':&82,$':-':&83,$';':&21,$'<':&45,$'<<':&73,$'<=':&29,$'<=>':&30,$'=':&46,$'=..':&47,$'=:=':&48,$'=<':&49,$'==':&50,$'=>':&31,$'=\\=':&51,$'>':&52,$'>=':&53,$'>>':&74,$'?-':&3,$'@<':&54,$'@=<':&55,$'@>':&56,$'@>=':&57,$'\\':&68,$'\\+':&32,$'\\/':&69,$'\\=':&58,$'\\==':&59,$'^':&77,$'all':&25,$'and':&44,$'delete':&9,$'dynamic':&18,$'else':&16,$'gAll':&26,$'gSome':&27,$'if':&17,$'in':&13,$'insert':&10,$'is':&60,$'lib':&33,$'listing':&34,$'man':&35,$'mod':&76,$'nospy':&36,$'not':&37,$'once':&38,$'or':&43,$'pred':&4,$'pure':&20,$'some':&28,$'sorted':&84,$'spy':&39,$'then':&19,$'to':&24,$'type':&5,$'update':&11,$'useIf':&6,$'wait':&40,$'when':&41,$'where':&12,$'~':&42,$'~=':&61),&85
+80: 	t	3,0,&63
+	tr	3,0,&64
+81: 	t	3,0,&65
+	tr	3,0,&66
+82: 	t	3,0,&7
+	tr	3,0,&8
+83: 	t	3,0,&1
+	tr	3,0,&2
+84: 	t	3,0,&14
+	tr	3,0,&15
+85: 	fail	
+	.clause
+0:	gc	0,$'-->'
+	gc	1,$1200
+	gc	2,$'xfx'
+	pro	
+	.clause
+1:	gc	0,$':-'
+	gc	1,$1200
+	gc	2,$'fx'
+	pro	
+	.clause
+2:	gc	0,$':-'
+	gc	1,$1200
+	gc	2,$'xfx'
+	pro	
+	.clause
+3:	gc	0,$'?-'
+	gc	1,$1200
+	gc	2,$'fx'
+	pro	
+	.clause
+4:	gc	0,$'pred'
+	gc	1,$1180
+	gc	2,$'fx'
+	pro	
+	.clause
+5:	gc	0,$'type'
+	gc	1,$1180
+	gc	2,$'fx'
+	pro	
+	.clause
+6:	gc	0,$'useIf'
+	gc	1,$1180
+	gc	2,$'fx'
+	pro	
+	.clause
+7:	gc	0,$':'
+	gc	1,$1175
+	gc	2,$'fx'
+	pro	
+	.clause
+8:	gc	0,$':'
+	gc	1,$1175
+	gc	2,$'xfx'
+	pro	
+	.clause
+9:	gc	0,$'delete'
+	gc	1,$1175
+	gc	2,$'fy'
+	pro	
+	.clause
+10:	gc	0,$'insert'
+	gc	1,$1175
+	gc	2,$'fy'
+	pro	
+	.clause
+11:	gc	0,$'update'
+	gc	1,$1175
+	gc	2,$'fy'
+	pro	
+	.clause
+12:	gc	0,$'where'
+	gc	1,$1175
+	gc	2,$'xfx'
+	pro	
+	.clause
+13:	gc	0,$'in'
+	gc	1,$1172
+	gc	2,$'xfx'
+	pro	
+	.clause
+14:	gc	0,$'sorted'
+	gc	1,$1171
+	gc	2,$'xf'
+	pro	
+	.clause
+15:	gc	0,$'sorted'
+	gc	1,$1171
+	gc	2,$'xfx'
+	pro	
+	.clause
+16:	gc	0,$'else'
+	gc	1,$1170
+	gc	2,$'xfy'
+	pro	
+	.clause
+17:	gc	0,$'if'
+	gc	1,$1160
+	gc	2,$'fx'
+	pro	
+	.clause
+18:	gc	0,$'dynamic'
+	gc	1,$1150
+	gc	2,$'fy'
+	pro	
+	.clause
+19:	gc	0,$'then'
+	gc	1,$1150
+	gc	2,$'xfx'
+	pro	
+	.clause
+20:	gc	0,$'pure'
+	gc	1,$1150
+	gc	2,$'fy'
+	pro	
+	.clause
+21:	gc	0,$';'
+	gc	1,$1100
+	gc	2,$'xfy'
+	pro	
+	.clause
+22:	gc	0,$'->'
+	gc	1,$1050
+	gc	2,$'xfy'
+	pro	
+	.clause
+23:	gc	0,$','
+	gc	1,$1000
+	gc	2,$'xfy'
+	pro	
+	.clause
+24:	gc	0,$'to'
+	gc	1,$980
+	gc	2,$'xfx'
+	pro	
+	.clause
+25:	gc	0,$'all'
+	gc	1,$950
+	gc	2,$'fxy'
+	pro	
+	.clause
+26:	gc	0,$'gAll'
+	gc	1,$950
+	gc	2,$'fxy'
+	pro	
+	.clause
+27:	gc	0,$'gSome'
+	gc	1,$950
+	gc	2,$'fxy'
+	pro	
+	.clause
+28:	gc	0,$'some'
+	gc	1,$950
+	gc	2,$'fxy'
+	pro	
+	.clause
+29:	gc	0,$'<='
+	gc	1,$920
+	gc	2,$'xfy'
+	pro	
+	.clause
+30:	gc	0,$'<=>'
+	gc	1,$920
+	gc	2,$'xfy'
+	pro	
+	.clause
+31:	gc	0,$'=>'
+	gc	1,$920
+	gc	2,$'xfy'
+	pro	
+	.clause
+32:	gc	0,$'\\+'
+	gc	1,$900
+	gc	2,$'fy'
+	pro	
+	.clause
+33:	gc	0,$'lib'
+	gc	1,$900
+	gc	2,$'fy'
+	pro	
+	.clause
+34:	gc	0,$'listing'
+	gc	1,$900
+	gc	2,$'fy'
+	pro	
+	.clause
+35:	gc	0,$'man'
+	gc	1,$900
+	gc	2,$'fy'
+	pro	
+	.clause
+36:	gc	0,$'nospy'
+	gc	1,$900
+	gc	2,$'fy'
+	pro	
+	.clause
+37:	gc	0,$'not'
+	gc	1,$900
+	gc	2,$'fy'
+	pro	
+	.clause
+38:	gc	0,$'once'
+	gc	1,$900
+	gc	2,$'fy'
+	pro	
+	.clause
+39:	gc	0,$'spy'
+	gc	1,$900
+	gc	2,$'fy'
+	pro	
+	.clause
+40:	gc	0,$'wait'
+	gc	1,$900
+	gc	2,$'fy'
+	pro	
+	.clause
+41:	gc	0,$'when'
+	gc	1,$900
+	gc	2,$'xfx'
+	pro	
+	.clause
+42:	gc	0,$'~'
+	gc	1,$900
+	gc	2,$'fy'
+	pro	
+	.clause
+43:	gc	0,$'or'
+	gc	1,$740
+	gc	2,$'xfy'
+	pro	
+	.clause
+44:	gc	0,$'and'
+	gc	1,$720
+	gc	2,$'xfy'
+	pro	
+	.clause
+45:	gc	0,$'<'
+	gc	1,$700
+	gc	2,$'xfx'
+	pro	
+	.clause
+46:	gc	0,$'='
+	gc	1,$700
+	gc	2,$'xfx'
+	pro	
+	.clause
+47:	gc	0,$'=..'
+	gc	1,$700
+	gc	2,$'xfx'
+	pro	
+	.clause
+48:	gc	0,$'=:='
+	gc	1,$700
+	gc	2,$'xfx'
+	pro	
+	.clause
+49:	gc	0,$'=<'
+	gc	1,$700
+	gc	2,$'xfx'
+	pro	
+	.clause
+50:	gc	0,$'=='
+	gc	1,$700
+	gc	2,$'xfx'
+	pro	
+	.clause
+51:	gc	0,$'=\\='
+	gc	1,$700
+	gc	2,$'xfx'
+	pro	
+	.clause
+52:	gc	0,$'>'
+	gc	1,$700
+	gc	2,$'xfx'
+	pro	
+	.clause
+53:	gc	0,$'>='
+	gc	1,$700
+	gc	2,$'xfx'
+	pro	
+	.clause
+54:	gc	0,$'@<'
+	gc	1,$700
+	gc	2,$'xfx'
+	pro	
+	.clause
+55:	gc	0,$'@=<'
+	gc	1,$700
+	gc	2,$'xfx'
+	pro	
+	.clause
+56:	gc	0,$'@>'
+	gc	1,$700
+	gc	2,$'xfx'
+	pro	
+	.clause
+57:	gc	0,$'@>='
+	gc	1,$700
+	gc	2,$'xfx'
+	pro	
+	.clause
+58:	gc	0,$'\\='
+	gc	1,$700
+	gc	2,$'xfx'
+	pro	
+	.clause
+59:	gc	0,$'\\=='
+	gc	1,$700
+	gc	2,$'xfx'
+	pro	
+	.clause
+60:	gc	0,$'is'
+	gc	1,$700
+	gc	2,$'xfx'
+	pro	
+	.clause
+61:	gc	0,$'~='
+	gc	1,$700
+	gc	2,$'xfx'
+	pro	
+	.clause
+62:	gc	0,$'.'
+	gc	1,$600
+	gc	2,$'xfy'
+	pro	
+	.clause
+63:	gc	0,$'+'
+	gc	1,$500
+	gc	2,$'fx'
+	pro	
+	.clause
+64:	gc	0,$'+'
+	gc	1,$500
+	gc	2,$'yfx'
+	pro	
+	.clause
+65:	gc	0,$'-'
+	gc	1,$500
+	gc	2,$'fx'
+	pro	
+	.clause
+66:	gc	0,$'-'
+	gc	1,$500
+	gc	2,$'yfx'
+	pro	
+	.clause
+67:	gc	0,$'/\\'
+	gc	1,$500
+	gc	2,$'yfx'
+	pro	
+	.clause
+68:	gc	0,$'\\'
+	gc	1,$500
+	gc	2,$'fx'
+	pro	
+	.clause
+69:	gc	0,$'\\/'
+	gc	1,$500
+	gc	2,$'yfx'
+	pro	
+	.clause
+70:	gc	0,$'*'
+	gc	1,$400
+	gc	2,$'yfx'
+	pro	
+	.clause
+71:	gc	0,$'/'
+	gc	1,$400
+	gc	2,$'yfx'
+	pro	
+	.clause
+72:	gc	0,$'//'
+	gc	1,$400
+	gc	2,$'yfx'
+	pro	
+	.clause
+73:	gc	0,$'<<'
+	gc	1,$400
+	gc	2,$'yfx'
+	pro	
+	.clause
+74:	gc	0,$'>>'
+	gc	1,$400
+	gc	2,$'yfx'
+	pro	
+	.clause
+75:	gc	0,$'**'
+	gc	1,$300
+	gc	2,$'xfy'
+	pro	
+	.clause
+76:	gc	0,$'mod'
+	gc	1,$300
+	gc	2,$'xfx'
+	pro	
+	.clause
+77:	gc	0,$'^'
+	gc	1,$200
+	gc	2,$'xfy'
+	pro	
+	last
+
+	.pred	'$init',0
+	.clause
+78:	all	4
+	labely	0
+	call	4,0,&'initializing'/0
+	pvary	1,0
+	pvary	3,1
+	pvary	2,2
+	call	4,3,&'$sysOp'/3
+	puval	3,0
+	puval	2,1
+	puval	1,2
+	call	1,3,&'op'/3
+	fail	
+	last
+

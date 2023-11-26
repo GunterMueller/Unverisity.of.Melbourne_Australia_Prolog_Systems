@@ -1,0 +1,22 @@
+/* SL : Sameleaves example #1 */
+
+
+leaves( t(Left,Right), L,Z) :- leaves(Left,L,L2), leaves(Right,L2,Z).
+leaves( l(X), [X|Z], Z).
+
+?- wait cleaves(0,0,0).
+
+cleaves( t(Left,Right), [A|B],Z)
+     :- cleaves(Left,[A|B],L2),
+	cleaves(Right,L2,Z).
+cleaves( l(X), [X|Z], Z).
+
+
+leaves( Tree, Leaves ) :- leaves(Tree,Leaves,[]).
+
+cleaves( Tree, Leaves ) :- cleaves(Tree,Leaves,[]).
+
+sl(Tree1,Tree2) :- cleaves(Tree1,L), leaves(Tree2,L).
+
+mt(0,t(l(a),t(l(b),l(c)))).
+mt(1,t(t(l(a),l(b)),l(c))).

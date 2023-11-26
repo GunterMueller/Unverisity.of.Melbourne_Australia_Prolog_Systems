@@ -1,0 +1,70 @@
+% Examples of lazy evaluation in NUE-Prolog
+
+A + B == C :- C is quote(A + B).
+A - B == C :- C is quote(A - B).
+
+	% infinite list of ones
+:- lazy ones/0.
+ones = 1.ones.
+
+	% Nth element of a list
+	% assumes N > 0 (should test)
+	% could declare lazy
+nth_member(N, H.T) = (N =:= 1 ? H : nth_member(N - 1, T)).
+
+	% first N elements of a list
+	% could declare lazy
+	% more efficient on some systems if args are reversed
+front(_, []) = [].
+front(N, A.B) = (N > 0 ? A.front(N - 1, B) : []).
+
+%%%%%%%%%%%%% PRIME NUMBERS
+
+	% Nth prime
+prime(N) = nth_member(N, primes).
+
+	% first N primes
+primes(N) = front(N, primes).
+
+	% list of all primes
+:- lazy primes/0.
+primes = sift(ints(2)).
+
+	% list of all integers >= N
+:- lazy ints/1.
+ints(N) = N.ints(N + 1).
+
+	% seive: return first one and filter rest
+:- lazy sift/1.
+sift(H.T) = H.sift(filter(H, T)).
+
+	% remove all multiples of M from list
+:- lazy filter/2.
+filter(M, N.L) = (N mod M =:= 0 ? filter(M, L) : N.filter(M, L)).
+
+%%%%%%%%%%%%% FIBONACCI NUMBERS
+
+	% first N Fibonacci numbers
+fib(N) = front(N, fib).
+
+	% list of all Fibonacci numbers
+%fib = [0, 1 | X] :-
+%	X = add_lists([0, 1 | X], [1 | X]).	% Prolog = stops lazy eval
+:- function fib/0.
+fib([0, 1 | X]) :- add_lists([0, 1 | X], [1 | X], X).
+
+	% add elements of lists
+:- lazy add_lists/2.
+add_lists([], []) = [].	% not needed here
+add_lists(A.AL, B.BL) = (A + B).add_lists(AL, BL).
+
+% Should code this verion:
+% let fib = 1 : 1 : map2 (+) fib (tl fib);
+
+	% append
+concat([], A) = A.
+concat(A.B, C) = A.concat(B, C).
+
+	% illustrate indexing/$lazy stuff
+p(f(a), _) = a.
+p(b, a) = b.

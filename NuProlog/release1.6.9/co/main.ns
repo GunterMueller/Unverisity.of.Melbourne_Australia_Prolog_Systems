@@ -1,0 +1,1696 @@
+
+	.pred	'main',1
+	.clause
+0:	gl	0
+	uvoid	1
+	all	3
+	uvary	1
+	labely	2
+7: 	te	0,0,0,&8
+	call	3,0,&'co$unexplainedAbort'/0
+	cuty	2
+	pc	1,#(CHR,&5)
+	pc	0,$'user_error'
+	pnil	2
+	call	2,3,&'$format'/3
+	pc	1,$1
+	exit	1
+	j	&9
+8: 	tre	0,0
+9: 	call	2,0,&'initCompiler'/0
+	pvaly	1,0
+	call	1,1,&'mainL'/1
+	labely	0
+10: 	te	0,0,0,&11
+	call	1,0,&'co$compilationErrors'/0
+	cuty	0
+	pc	1,$1
+	exit	1
+	dallpro	
+11: 	tre	0,0
+	dallpro	
+12: 	last
+5: 	.string	"~NError -- Unexplained abort.~n"
+
+	.pred	'nuc',1
+	.clause
+0:	all	1
+	gvary	0,0
+	call	1,0,&'initCompiler'/0
+	pl	0
+	ulvy	0
+	uc	$[]
+	dallexe	1,&'mainL'/1
+	last
+
+	.pred	'mainL',1
+	labelx	1
+14: 	sot	0,&11,&0,&15,&13
+11: 	t	2,0,&0
+	r	2,0,&1
+	r	2,0,&2
+	r	2,0,&3
+	r	2,0,&4
+	tr	2,0,&5
+15: 	glvx2	0,0,2
+12: 	t	3,0,&6
+	r	3,0,&7
+	r	3,0,&8
+	r	3,0,&9
+	tr	3,0,&10
+13: 	fail	
+	.clause
+0:	gnil	0
+	pro	
+	.clause
+1:	gl	0
+	uc	$'-F'
+	ul	255
+	all	2
+	uvary	1
+	uvary	0
+	cutx	1
+	pvaly	1,3
+	pc	4,$'pnc'
+	idtest	3,4
+	jfail	&23
+	pc	0,$900
+	pc	1,$'fy'
+	pc	2,$'$pcall'
+	call	2,3,&'op'/3
+	j	&23
+23: 	ps	0,$'option'/1
+	uvaly	1
+	call	1,1,&'asserta'/1
+	pvaly	0,0
+	dallexe	1,&'mainL'/1
+	.clause
+2:	gl	0
+	uc	$'-D'
+	uc	$[]
+	cutx	1
+	all	3
+	call	3,0,&'repeat'/0
+	pvary	1,0
+	call	3,1,&'read'/1
+	labely	2
+32: 	te	0,0,0,&33
+	pvaly	1,0
+	call	3,1,&'isEof'/1
+	cuty	2
+	dallpro	
+33: 	tre	0,0
+	puval	1,0
+	pvary	0,1
+	call	1,2,&'expandTerm'/2
+	puval	0,0
+	call	0,1,&'portraycl'/1
+	currstr	1,3
+	pc	4,#(CHR,&31)
+	sputl	3,4
+	fail	
+34: 	.clause
+3:	gl	0
+	all	6
+	uvary	3
+	uvary	4
+	pc	1,#(CHR,&40)
+	pl	2
+	uvaly	3
+	uc	$[]
+	pc	0,$'user_output'
+	call	6,3,&'$quickFormat'/3
+	call	6,0,&'reinitCompiler'/0
+	labely	5
+59: 	te	0,0,0,&60
+	pvaly	3,0
+	call	6,1,&'see'/1
+	cuty	5
+	j	&61
+60: 	tre	0,0
+	pc	1,#(CHR,&45)
+	pl	2
+	uvaly	3
+	uc	$[]
+	pc	0,$'user_error'
+	call	5,3,&'$quickFormat'/3
+	pc	3,$1
+	exit	3
+61: 	labelx	1
+62: 	te	0,0,2,&63
+	pvaly	4,255
+	gl	255
+	uc	$'-o'
+	ul	255
+	uvarx	0
+	uvoid	1
+	cutx	1
+	j	&64
+63: 	tre	0,0
+	pvaly	3,3
+	pvarx	2,2
+	name	3,2
+	pc	1,#(CHR,&49)
+	pvary	2,0
+	call	3,3,&'append'/3
+	pc	1,#(CHR,&53)
+	puval	2,0
+	pvary	1,2
+	call	2,3,&'append'/3
+	pvarx	0,0
+	puval	1,3
+	name	0,3
+64: 	labely	0
+65: 	te	1,0,1,&66
+	call	1,1,&'tell'/1
+	cuty	0
+	j	&67
+66: 	tre	1,0
+	pc	1,#(CHR,&58)
+	pl	2
+	uvalx	0
+	uc	$[]
+	pc	0,$'user_error'
+	call	0,3,&'$quickFormat'/3
+	pc	3,$1
+	exit	3
+67: 	call	0,0,&'fileErrors'/0
+	dallexe	0,&'co$doRead'/0
+	.clause
+4:	glvx2	0,255,255
+	all	0
+	call	0,0,&'noFileErrors'/0
+	call	0,0,&'seen'/0
+	call	0,0,&'co$retrieveInits'/0
+	call	0,0,&'compile'/0
+	fail	
+	.clause
+5:	gl	0
+	uvoid	1
+	all	1
+	uvary	0
+	pc	3,$10
+	put	3
+	call	1,0,&'told'/0
+	labelx	1
+74: 	te	0,0,2,&75
+	pvaly	0,255
+	gl	255
+	uc	$'-o'
+	ul	255
+	uvoid	1
+	uvarx	0
+	cutx	1
+	dallexe	1,&'mainL'/1
+75: 	tre	0,0
+	pvaly	0,0
+	dallexe	1,&'mainL'/1
+76: 	.clause
+6:	gc	0,$'-F'
+	gl	2
+	all	2
+	uvary	1
+	uvary	0
+	cutx	1
+	pvaly	1,3
+	pc	4,$'pnc'
+	idtest	3,4
+	jfail	&85
+	pc	0,$900
+	pc	1,$'fy'
+	pc	2,$'$pcall'
+	call	2,3,&'op'/3
+	j	&85
+85: 	ps	0,$'option'/1
+	uvaly	1
+	call	1,1,&'asserta'/1
+	pvaly	0,0
+	dallexe	1,&'mainL'/1
+	.clause
+7:	gc	0,$'-D'
+	gnil	2
+	cutx	1
+	all	3
+	call	3,0,&'repeat'/0
+	pvary	1,0
+	call	3,1,&'read'/1
+	labely	2
+95: 	te	0,0,0,&96
+	pvaly	1,0
+	call	3,1,&'isEof'/1
+	cuty	2
+	dallpro	
+96: 	tre	0,0
+	puval	1,0
+	pvary	0,1
+	call	1,2,&'expandTerm'/2
+	puval	0,0
+	call	0,1,&'portraycl'/1
+	currstr	1,3
+	pc	4,#(CHR,&94)
+	sputl	3,4
+	fail	
+97: 	.clause
+8:	all	6
+	gvary	3,0
+	gvary	4,2
+	pc	1,#(CHR,&104)
+	pl	2
+	ulvy	3
+	uc	$[]
+	pc	0,$'user_output'
+	call	6,3,&'$quickFormat'/3
+	call	6,0,&'reinitCompiler'/0
+	labely	5
+123: 	te	0,0,0,&124
+	pvaly	3,0
+	call	6,1,&'see'/1
+	cuty	5
+	j	&125
+124: 	tre	0,0
+	pc	1,#(CHR,&109)
+	pl	2
+	ulvy	3
+	uc	$[]
+	pc	0,$'user_error'
+	call	5,3,&'$quickFormat'/3
+	pc	3,$1
+	exit	3
+125: 	labelx	1
+126: 	te	0,0,2,&127
+	pvaly	4,255
+	gl	255
+	uc	$'-o'
+	ul	255
+	uvarx	0
+	uvoid	1
+	cutx	1
+	j	&128
+127: 	tre	0,0
+	pvaly	3,3
+	pvarx	2,2
+	name	3,2
+	pc	1,#(CHR,&113)
+	pvary	2,0
+	call	3,3,&'append'/3
+	pc	1,#(CHR,&117)
+	puval	2,0
+	pvary	1,2
+	call	2,3,&'append'/3
+	pvarx	0,0
+	puval	1,3
+	name	0,3
+128: 	labely	0
+129: 	te	1,0,1,&130
+	call	1,1,&'tell'/1
+	cuty	0
+	j	&131
+130: 	tre	1,0
+	pc	1,#(CHR,&122)
+	pl	2
+	uvalx	0
+	uc	$[]
+	pc	0,$'user_error'
+	call	0,3,&'$quickFormat'/3
+	pc	3,$1
+	exit	3
+131: 	call	0,0,&'fileErrors'/0
+	dallexe	0,&'co$doRead'/0
+	.clause
+9:	all	0
+	call	0,0,&'noFileErrors'/0
+	call	0,0,&'seen'/0
+	call	0,0,&'co$retrieveInits'/0
+	call	0,0,&'compile'/0
+	fail	
+	.clause
+10:	all	1
+	gvary	0,2
+	pc	3,$10
+	put	3
+	call	1,0,&'told'/0
+	labelx	1
+140: 	te	0,0,2,&141
+	pvaly	0,255
+	gl	255
+	uc	$'-o'
+	ul	255
+	uvoid	1
+	uvarx	0
+	cutx	1
+	dallexe	1,&'mainL'/1
+141: 	tre	0,0
+	pvaly	0,0
+	dallexe	1,&'mainL'/1
+142: 	last
+122: 	.string	"Unable to write ~w.~n"
+117: 	.string	".ns"
+113: 	.string	".nl"
+109: 	.string	"Unable to read ~w.~n"
+104: 	.string	"Reading and compiling ~a.~n"
+94: 	.string	". \n"
+58: 	.string	"Unable to write ~w.~n"
+53: 	.string	".ns"
+49: 	.string	".nl"
+45: 	.string	"Unable to read ~w.~n"
+40: 	.string	"Reading and compiling ~a.~n"
+31: 	.string	". \n"
+
+	.pred	'initCompiler',0
+	.clause
+0:	pc	0,$'co$unexplainedAbort'
+	all	0
+	call	0,1,&'assert'/1
+	call	0,0,&'noFileErrors'/0
+	pc	0,$'vr'
+	pvarx	1,1
+	name	0,1
+	pc	0,$1
+	pc	2,$1
+	replacn	0,1,2
+	pc	0,$'fence'
+	pvarx	1,1
+	name	0,1
+	pc	0,$1
+	pc	2,$1
+	replacn	0,1,2
+	pc	0,$'conj'
+	pvarx	1,1
+	name	0,1
+	pc	0,$1
+	pc	2,$1
+	replacn	0,1,2
+	pc	0,$'disj'
+	pvarx	1,1
+	name	0,1
+	pc	0,$1
+	pc	2,$1
+	replacn	0,1,2
+	dallpro	
+	last
+
+	.pred	'reinitCompiler',0
+	.clause
+0:	all	5
+	call	5,0,&'noFileErrors'/0
+	pc	0,$'label'
+	pc	1,$'$label'
+	pc	2,$0
+	call	5,3,&'putprop'/3
+	labely	2
+22: 	te	0,0,0,&23
+	ps	2,$'/'/2
+	uvary	4
+	uvary	3
+	pc	0,$'$predicates'
+	pc	1,$'$compiling'
+	call	5,3,&'getprop'/3
+	ps	1,$'$compileClause'/2
+	uvaly	4
+	uvaly	3
+	pc	0,$'$clauses'
+	call	5,2,&'remprop'/2
+	ps	1,$'$compileWhen'/2
+	uvaly	4
+	uvaly	3
+	pc	0,$'$whens'
+	call	3,2,&'remprop'/2
+	fail	
+23: 	tre	0,0
+24: 	labely	0
+25: 	te	0,0,0,&26
+	ps	2,$'/'/2
+	uvary	1
+	uvoid	1
+	pc	0,$'$alreadyCompiledPredicates'
+	pc	1,$'$compiled'
+	call	2,3,&'getprop'/3
+	pvaly	1,0
+	pc	1,$'$compiled'
+	call	1,2,&'remprop'/2
+	fail	
+26: 	tre	0,0
+27: 	pc	0,$'$alreadyCompiledPredicates'
+	pc	1,$'$compiled'
+	call	0,2,&'remprop'/2
+	pc	0,$'$predicates'
+	pc	1,$'$compiling'
+	call	0,2,&'remprop'/2
+	pc	0,$'$inits'
+	pc	1,$'$compilerInit'
+	dallexe	2,&'remprop'/2
+	last
+
+	.pred	'compile',0
+	.clause
+0:	pc	0,$'$predicates'
+	pc	1,$'$compiling'
+	all	5
+	pvary	4,2
+	call	5,3,&'properties'/3
+	puval	4,0
+	pvary	3,1
+	call	4,2,&'reverse'/2
+	labely	0
+9: 	te	0,0,0,&10
+	ps	0,$'/'/2
+	uvary	2
+	uvary	1
+	puval	3,1
+	call	3,2,&'member'/2
+	ps	0,$'/'/2
+	uvaly	2
+	uvaly	1
+	call	1,1,&'compile'/1
+	fail	
+10: 	tre	0,0
+	dallpro	
+11: 	last
+
+	.pred	'compileSoFar',2
+	.clause
+0:	all	8
+	gvary	5,0
+	gvary	4,1
+	labely	7
+36: 	te	0,0,0,&37
+	ps	2,$'/'/2
+	ulvy	5
+	ulvy	4
+	pc	0,$'$predicates'
+	pc	1,$'$compiling'
+	call	8,3,&'getprop'/3
+	cuty	7
+	fail	
+37: 	tre	0,0
+38: 	labely	6
+39: 	te	0,0,0,&40
+	pvaly	5,0
+	pc	1,$'$compiled'
+	pvaly	4,2
+	call	7,3,&'getprop'/3
+	cuty	6
+	pc	0,$'co$compilationErrors'
+	call	6,1,&'assert'/1
+	currstr	1,2
+	pc	3,#(CHR,&35)
+	sputl	2,3
+	ps	2,$'/'/2
+	ulvy	5
+	ulvy	4
+	pc	0,$'$alreadyCompiledPredicates'
+	pc	1,$'$compiled'
+	call	6,3,&'remprop'/3
+	pc	1,#(CHR,&16)
+	pl	2
+	ulvy	5
+	ul	255
+	ulvy	4
+	uc	$[]
+	pc	0,$'user_error'
+	call	4,3,&'$format'/3
+	j	&41
+40: 	tre	0,0
+41: 	pc	0,$'$predicates'
+	pc	1,$'$compiling'
+	pvary	3,2
+	call	4,3,&'properties'/3
+	labely	0
+42: 	te	0,0,0,&43
+	ps	0,$'/'/2
+	uvary	2
+	uvary	1
+	puval	3,1
+	call	3,2,&'member'/2
+	ps	2,$'/'/2
+	uvaly	2
+	uvaly	1
+	pc	0,$'$predicates'
+	pc	1,$'$compiling'
+	call	3,3,&'remprop'/3
+	pvaly	2,0
+	pc	1,$'$compiled'
+	pvaly	1,2
+	call	3,3,&'addpropa'/3
+	ps	2,$'/'/2
+	uvaly	2
+	uvaly	1
+	pc	0,$'$alreadyCompiledPredicates'
+	pc	1,$'$compiled'
+	call	3,3,&'addpropa'/3
+	ps	0,$'/'/2
+	uvaly	2
+	uvaly	1
+	call	1,1,&'compile'/1
+	fail	
+43: 	tre	0,0
+44: 	pc	0,$'label'
+	pc	1,$'$label'
+	pc	2,$0
+	dallexe	3,&'putprop'/3
+	last
+35: 	.string	"THIS .NS FILE IS NOT VALID\n"
+16: 	.string	"~NError: ~a/~d has clauses separated by another predicate.~n"
+
+	.pred	'compile',1
+	.clause
+0:	gs	0,$'/'/2
+	all	5
+	uvary	4
+	uvary	3
+	pc	0,$'groundTerm'
+	pc	1,$3
+	call	5,2,&'retractall'/2
+	pvaly	4,0
+	pvaly	3,1
+	pvary	2,2
+	pvary	1,3
+	call	5,4,&'collectClauses'/4
+	pvaly	4,0
+	pvaly	3,1
+	pvaly	1,2
+	pvary	0,3
+	call	5,4,&'collectWhens'/4
+	jtypy	0,48,&21
+	puval	2,1
+	pnil	2
+	idtest	1,2
+	jfail	&21
+	pc	1,#(CHR,&15)
+	pl	2
+	uvaly	4
+	ul	255
+	uvaly	3
+	uc	$[]
+	pc	0,$'user_error'
+	dallexe	3,&'$format'/3
+21: 	pvaly	4,0
+	pvaly	3,1
+	puval	2,2
+	puval	1,3
+	puval	0,4
+	dallexe	5,&'compile1'/5
+22: 	last
+15: 	.string	"~NError in compiling ~a/~d -- when declaration(s), but no clauses given.~n"
+
+	.pred	'compile1',5
+	.clause
+0:	all	28
+	gvary	7,0
+	gvary	6,1
+	gvary	15,2
+	gvary	22,3
+	gvary	23,4
+	pc	0,$'characterEscapes'
+	pvary	0,1
+	pc	2,$'on'
+	call	28,3,&'prologFlag'/3
+	currstr	1,5
+	pc	6,#(CHR,&63)
+	sputl	5,6
+	pvaly	7,0
+	call	28,1,&'putIdentifier'/1
+	pc	5,$44
+	put	5
+	pvaly	6,0
+	call	28,1,&'display'/1
+	pc	5,$10
+	put	5
+	pvaly	23,0
+	pvaly	22,1
+	pvaly	15,2
+	pvary	24,3
+	call	28,4,&'compileWhens'/4
+	pvaly	24,0
+	pvary	27,1
+	pnil	2
+	call	28,3,&'choicesOfPrelude'/3
+	puval	27,0
+	pvary	26,1
+	call	27,2,&'uniqueChoices'/2
+	puval	26,0
+	pc	1,$0
+	pvary	5,2
+	pvary	25,3
+	pnil	4
+	call	26,5,&'clausesUsed'/5
+	puval	25,0
+	pvary	12,1
+	call	25,2,&'labelsUsed'/2
+	pvaly	12,0
+	pvary	9,1
+	call	25,2,&'makeMap'/2
+	labely	21
+	puval	24,0
+	pvaly	6,1
+	pvaly	9,2
+	pvaly	23,3
+	pvaly	22,4
+	pvary	20,5
+	pnil	6
+	call	22,7,&'compilePrelude'/7
+	cuty	21
+	puval	20,0
+	pvary	19,1
+	call	20,2,&'polishCode'/2
+	puval	19,0
+	pvary	4,1
+	call	19,2,&'optimizePrelude'/2
+	labely	18
+	pvaly	4,0
+	pvary	17,1
+	pnil	2
+	call	19,3,&'emitCode'/3
+	cuty	18
+	labely	16
+	puval	17,0
+	call	17,1,&'emitAsm'/1
+	cuty	16
+	pvaly	15,0
+	pvary	14,1
+	call	15,2,&'keyClauses'/2
+	labely	13
+	puval	14,0
+	pvary	10,1
+	call	14,2,&'makeKeyedLookupTree'/2
+	cuty	13
+	labely	1
+65: 	te	0,0,0,&66
+	pvary	11,0
+	puval	12,1
+	call	12,2,&'member'/2
+	puval	11,0
+	puval	10,1
+	puval	9,2
+	pvary	8,3
+	pvary	3,4
+	pvary	2,5
+	call	9,6,&'getClauseForLabel'/6
+	ps	0,$'compileAndEmit1Clause'/7
+	ulvy	8
+	ulvy	7
+	ulvy	6
+	ulvy	5
+	ulvy	3
+	ulvy	2
+	ulvy	4
+	pc	5,#(CHR,&59)
+	ps	6,$':-'/2
+	ulvy	3
+	ulvy	2
+	ps	7,$'format'/3
+	uc	$'user_error'
+	uvalx	5
+	ul	255
+	uvalx	6
+	uc	$[]
+	ps	2,$','/2
+	uvalx	7
+	us	255,$'call'/1
+	uvarx	1
+	call	2,3,&'catchCompilerError'/3
+	fail	
+66: 	tre	0,0
+67: 	currstr	1,5
+	pc	6,#(CHR,&64)
+	sputl	5,6
+	call	1,0,&'compileConstants'/0
+	pc	0,$'characterEscapes'
+	pvarx	1,1
+	puval	0,2
+	dallexe	3,&'prologFlag'/3
+	last
+64: 	.string	"	last\n"
+63: 	.string	"\n	.pred	"
+59: 	.string	"~NError in compiling (~w).~n"
+
+	.pred	'getClauseForLabel',6
+	.clause
+0:	all	6
+	gvary	2,0
+	gvary	3,1
+	gvara	1,2
+	gvara	2,3
+	gvary	0,4
+	gvary	5,5
+	jctypy	2,17,&21
+	gvaly	2,2
+	ps	2,$'clause'/5
+	uvoid	2
+	ulvy	0
+	ulvy	5
+	uvoid	1
+	pvaly	2,0
+	pvaly	3,1
+	dallexe	3,&'lookupKeyedTree'/3
+21: 	pvaly	2,0
+	call	6,3,&'mapLabel'/3
+	pvaly	2,0
+	pvary	4,1
+	call	6,2,&'$last'/2
+	ps	2,$'clause'/5
+	uvoid	2
+	uvary	1
+	ulvy	5
+	uvoid	1
+	puval	4,0
+	pvaly	3,1
+	call	3,3,&'lookupKeyedTree'/3
+	pvaly	2,0
+	pvaly	1,1
+	pvaly	0,2
+	dallexe	3,&'expandHead'/3
+22: 	last
+
+	.pred	'compileAndEmit1Clause',7
+	.clause
+0:	all	10
+	gvary	2,0
+	gvary	6,1
+	gvary	5,2
+	gvara	2,3
+	gvara	0,4
+	gvara	1,5
+	gvary	8,6
+	labely	9
+30: 	te	3,0,3,&31
+	pvary	1,3
+	call	10,4,&'compile1SimpleClause'/4
+	cuty	9
+	j	&34
+31: 	tre	3,0
+	pvary	3,3
+	call	9,4,&'compile1Clause'/4
+	labely	7
+32: 	te	0,0,0,&33
+	pvaly	8,255
+	gl	255
+	uvarx	7
+	ul	255
+	uvary	4
+	uvoid	1
+	gsx1	7,255,$'$'/1
+	pvaly	4,0
+	call	8,1,&'isSmallBranchInstruction'/1
+	cuty	7
+	puval	3,0
+	pvaly	6,1
+	pvaly	5,2
+	pvaly	4,3
+	pvary	1,4
+	call	3,5,&'polishCode'/5
+	j	&34
+33: 	tre	0,0
+	puval	3,0
+	pvary	1,1
+	call	3,2,&'polishCode'/2
+34: 	currstr	1,7
+	pc	8,#(CHR,&29)
+	sputl	7,8
+	pvaly	2,0
+	call	2,1,&'display'/1
+	pc	7,$58
+	put	7
+	puval	1,0
+	pvary	0,1
+	pnil	2
+	call	1,3,&'emitCode'/3
+	puval	0,0
+	dallexe	1,&'emitAsm'/1
+	last
+29: 	.string	"	.clause\n"
+
+	.pred	'collectClauses',4
+	.clause
+0:	all	6
+	gvary	5,0
+	gvary	3,1
+	gvary	1,2
+	gvary	0,3
+	ps	1,$'$compileClause'/2
+	ulvy	5
+	ulvy	3
+	pc	0,$'$clauses'
+	pvary	2,2
+	call	6,3,&'properties'/3
+	ps	1,$'$compileClause'/2
+	ulvy	5
+	ulvy	3
+	pc	0,$'$clauses'
+	call	5,2,&'remprop'/2
+	labely	4
+16: 	te	0,0,0,&17
+	ps	0,$'clause'/4
+	uvoid	3
+	us	255,$'cut'/1
+	uvoid	1
+	pvaly	2,1
+	call	5,2,&'member'/2
+	cuty	4
+	pvaly	2,0
+	pvaly	1,1
+	call	4,2,&'addCuts'/2
+	pvaly	0,255
+	gs	255,$'yes'/1
+	ulvy	3
+	dallpro	
+17: 	tre	0,0
+	puval	2,0
+	pvaly	1,1
+	call	1,2,&'noCuts'/2
+	pvaly	0,255
+	gc	255,$'no'
+	dallpro	
+18: 	last
+
+	.pred	'addCuts',2
+3: 	sot	0,&4,&0,&1,&2
+4: 	sot	1,&5,&0,&1,&2
+5: 	mkdel	2,&3
+	mark	1
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	pro	
+	.clause
+1:	gl	0
+	uvarx	3
+	all	4
+	uvary	1
+	gs	3,$'clause'/4
+	uvarx	4
+	uvarx	5
+	uvarx	3
+	uvara	0
+	gsx2	3,3,6,$':-'/2
+	gl	1
+	uvarx	7
+	uvary	0
+	gs	7,$'clause'/5
+	uvalx	4
+	uvalx	5
+	uvary	3
+	uvalx	6
+	uvalx	0
+	labelx	1
+	pvarx	2,2
+13: 	te	4,0,4,&14
+	gs	0,$'cut'/1
+	uvalx	2
+	cutx	1
+	j	&15
+14: 	tre	4,0
+15: 	pvarx	0,0
+	univ	3,0
+	pl	1
+	uvalx	2
+	uc	$[]
+	pvary	2,2
+	call	4,3,&'append'/3
+	pvaly	3,3
+	puval	2,4
+	univ	3,4
+	pvaly	1,0
+	pvaly	0,1
+	dall	
+	execsot	2,0,&4,&0,&1,&2
+	last
+
+	.pred	'noCuts',2
+3: 	sot	0,&4,&0,&1,&2
+4: 	sot	1,&5,&0,&1,&2
+5: 	mkdel	2,&3
+	mark	1
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	pro	
+	.clause
+1:	glvx2	0,2,0
+	gs	2,$'clause'/4
+	uvarx	2
+	uvarx	3
+	uvarx	4
+	uvoid	1
+	gsx2	4,4,5,$':-'/2
+	glvx2	1,6,1
+	gs	6,$'clause'/5
+	uvalx	2
+	uvalx	3
+	uvalx	4
+	uvalx	5
+	uc	$'no'
+	execsot	2,0,&4,&0,&1,&2
+	last
+
+	.pred	'collectWhens',4
+	.clause
+0:	all	5
+	gvary	4,0
+	gvary	3,1
+	gvary	2,2
+	gvary	0,3
+	ps	1,$'$compileWhen'/2
+	ulvy	4
+	ulvy	3
+	pc	0,$'$whens'
+	pvary	1,2
+	call	5,3,&'properties'/3
+	ps	1,$'$compileWhen'/2
+	ulvy	4
+	ulvy	3
+	pc	0,$'$whens'
+	call	3,2,&'remprop'/2
+	labelx	0
+12: 	te	0,0,1,&13
+	pvaly	2,255
+	gc	255,$'no'
+	cutx	0
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+13: 	tre	0,0
+	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'addCutsToWhens'/2
+14: 	last
+
+	.pred	'addCutsToWhens',2
+3: 	sot	0,&4,&0,&1,&2
+4: 	sot	1,&5,&0,&1,&2
+5: 	mkdel	2,&3
+	mark	1
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	pro	
+	.clause
+1:	gl	0
+	uvarx	2
+	all	2
+	uvary	1
+	gs	2,$'when'/3
+	uvarx	2
+	uvara	0
+	uvarx	3
+	gl	1
+	uvarx	4
+	uvary	0
+	gs	4,$'when'/3
+	uvalx	2
+	uvarx	2
+	uvalx	3
+	pl	1
+	uvoid	1
+	uc	$[]
+	call	2,3,&'append'/3
+	pvaly	1,0
+	pvaly	0,1
+	dall	
+	execsot	2,0,&4,&0,&1,&2
+	last
+
+	.pred	'keyClauses',2
+3: 	sot	0,&4,&0,&1,&2
+4: 	sot	1,&5,&0,&1,&2
+5: 	mkdel	2,&3
+	mark	1
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	pro	
+	.clause
+1:	glvx2	0,2,0
+	glvx2	1,3,1
+	gs	3,$'-'/2
+	uvarx	3
+	uvalx	2
+	gs	2,$'clause'/5
+	uvoid	1
+	uvalx	3
+	uvoid	3
+	execsot	2,0,&4,&0,&1,&2
+	last
+
+	.pred	'compileConstants',0
+	.clause
+0:	all	4
+	labely	0
+8: 	te	0,0,0,&9
+	pvarx	0,0
+	pvary	3,1
+	pvary	2,2
+	call	4,3,&'groundTerm'/3
+	puval	3,0
+	puval	2,1
+	pvary	1,2
+	call	2,3,&'emitConstant'/3
+	puval	1,0
+	call	1,1,&'emitAsm'/1
+	fail	
+9: 	tre	0,0
+	dallpro	
+10: 	last
+
+	.pred	'compile1SimpleClause',4
+	.clause
+0:	gc	1,$'true'
+	gvara	1,2
+	all	2
+	gvary	0,3
+	pvary	1,2
+	call	2,3,&'compile1Head'/3
+	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'codegenCleanUp'/2
+	last
+
+	.pred	'compile1Clause',4
+	labelx	4
+	.clause
+0:	all	11
+	gvary	4,2
+	gvary	1,3
+	gvary	0,4
+	pvary	9,2
+	pvary	8,3
+	pvary	3,4
+	call	11,5,&'canonicalize'/5
+	pvaly	9,0
+	pvary	10,1
+	call	11,2,&'varsOfClause'/2
+	pvaly	10,0
+	call	11,1,&'addInitializers'/1
+	puval	10,0
+	call	10,1,&'detVars'/1
+	puval	9,0
+	pvary	5,1
+	puval	8,2
+	pvary	6,3
+	call	8,4,&'complexBuiltins'/4
+	pvaly	5,0
+	pvary	7,1
+	call	8,2,&'varsOfClause'/2
+	puval	7,0
+	call	7,1,&'varInstances'/1
+	pvaly	5,0
+	pvaly	4,1
+	call	7,2,&'allocateTemps'/2
+	pvaly	5,0
+	pvary	2,1
+	call	7,2,&'allocatePerms'/2
+	pvaly	5,0
+	puval	6,1
+	call	6,2,&'local'/2
+	puval	5,0
+	pvaly	4,1
+	puval	3,2
+	puval	2,3
+	pvaly	1,4
+	call	1,5,&'codegen'/5
+	cuty	0
+	dallpro	
+	last
+
+	.pred	'allocateTemps',2
+	.clause
+0:	all	5
+	gvary	4,0
+	gvary	0,1
+	pvaly	4,0
+	pvary	3,1
+	call	5,2,&'tempsOfClause'/2
+	pvaly	4,0
+	pvary	2,1
+	call	4,2,&'desireList'/2
+	puval	3,0
+	pvary	1,1
+	call	3,2,&'constrainRegs'/2
+	puval	2,0
+	call	2,1,&'fulfillDesires'/1
+	puval	1,0
+	pvaly	0,1
+	pvarx	2,2
+	dallexe	3,&'allocateTemps'/3
+	last
+
+	.pred	'co$doRead',0
+	labelx	0
+	.clause
+0:	all	7
+	gvary	0,0
+	currstr	0,1
+	gvary	6,1
+	call	7,0,&'repeat'/0
+	pvaly	6,0
+	pvary	1,1
+	call	6,2,&'lineCount'/2
+	labely	5
+	pvary	2,255
+9: 	te	0,0,0,&10
+	pvaly	2,0
+	call	6,1,&'read1'/1
+	cuty	5
+	j	&11
+10: 	tre	0,0
+	pc	0,$'co$compilationErrors'
+	call	5,1,&'assert'/1
+	fail	
+11: 	labely	3
+12: 	te	0,0,0,&16
+	labely	4
+13: 	te	0,0,0,&14
+	pvaly	2,0
+	call	5,1,&'isEof'/1
+	cuty	4
+	fail	
+14: 	tre	0,0
+15: 	cuty	3
+	puval	2,0
+	puval	1,1
+	call	1,2,&'co$storeClause'/2
+	fail	
+16: 	tre	0,0
+17: 	cuty	0
+	fail	
+	last
+
+	.pred	'co$storeClause',2
+	.clause
+0:	all	2
+	gvary	0,1
+	pvary	1,1
+	call	2,2,&'expandTerm'/2
+	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'co$storeClause2'/2
+	last
+
+	.pred	'co$storeClause2',2
+	labelx	2
+17: 	sot	0,&12,&13,&13,&18
+12: 	t	3,0,&0
+	r	3,0,&1
+	r	3,0,&2
+	r	3,0,&3
+	r	3,0,&4
+	r	3,0,&5
+	r	3,0,&6
+	r	3,0,&7
+	r	3,0,&8
+	r	3,0,&9
+	r	3,0,&10
+	tr	3,0,&11
+13: 	t	3,0,&9
+	r	3,0,&10
+	tr	3,0,&11
+18: 	sose	0,&($':-'/1:&14,$':-'/2:&15,$'?-'/1:&16),&13
+14: 	t	3,0,&0
+	r	3,0,&1
+	tr	3,0,&4
+15: 	t	3,0,&6
+	r	3,0,&7
+	tr	3,0,&8
+16: 	t	3,0,&2
+	r	3,0,&3
+	tr	3,0,&5
+	.clause
+0:	gs	0,$':-'/1
+	us	255,$'when'/2
+	uvarx	3
+	uvoid	1
+	pvarx	0,0
+	pvarx	1,1
+	functor	3,0,1
+	all	0
+	call	0,2,&'compileSoFar'/2
+	fail	
+	.clause
+1:	gs	0,$':-'/1
+	us	255,$'when'/2
+	uvara	0
+	uvarx	3
+	gvarx	4,1
+	cutx	2
+	gvara	1,3
+	gvara	2,4
+	exec	3,&'co$storeWhen'/3
+	.clause
+2:	gs	0,$'?-'/1
+	us	255,$'when'/2
+	uvarx	3
+	uvoid	1
+	pvarx	0,0
+	pvarx	1,1
+	functor	3,0,1
+	all	0
+	call	0,2,&'compileSoFar'/2
+	fail	
+	.clause
+3:	gs	0,$'?-'/1
+	us	255,$'when'/2
+	uvara	0
+	uvarx	3
+	gvarx	4,1
+	cutx	2
+	gvara	1,3
+	gvara	2,4
+	exec	3,&'co$storeWhen'/3
+	.clause
+4:	gsx1	0,0,$':-'/1
+	cutx	2
+	exec	2,&'co$storeGoal'/2
+	.clause
+5:	gsx1	0,0,$'?-'/1
+	cutx	2
+	exec	2,&'co$storeGoal'/2
+	.clause
+6:	gsx2	0,3,255,$':-'/2
+	pvarx	0,0
+	pvarx	1,1
+	functor	3,0,1
+	all	0
+	call	0,2,&'compileSoFar'/2
+	fail	
+	.clause
+7:	gs	0,$':-'/2
+	all	4
+	uvary	2
+	uvary	1
+	gvary	0,1
+	gvary	3,2
+	pvaly	2,3
+	pvarx	0,0
+	pvarx	1,1
+	functor	3,0,1
+	call	4,2,&'dynamic'/2
+	cuty	3
+	ps	0,$':-'/2
+	uvaly	2
+	uvaly	1
+	call	3,1,&'assertz'/1
+	ps	3,$'assertz'/1
+	us	255,$':-'/2
+	uvaly	2
+	uvaly	1
+	ps	0,$','/2
+	uvalx	3
+	uc	$'fail'
+	pvaly	0,1
+	dallexe	2,&'co$storeInit'/2
+	.clause
+8:	gsx2	0,3,4,$':-'/2
+	all	4
+	gvary	0,1
+	cutx	2
+	ps	0,$':-'/2
+	uvalx	3
+	uvalx	4
+	ps	1,$':-'/2
+	uvary	3
+	uvary	2
+	pvary	1,2
+	call	4,3,&'$neg_trf'/3
+	pvaly	3,0
+	pvaly	2,1
+	pvaly	0,2
+	call	2,3,&'co$storeClause'/3
+	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'co$storeAuxPreds'/2
+	.clause
+9:	pvarx	3,3
+	pvarx	1,1
+	functor	0,3,1
+	gvara	0,3
+	all	0
+	call	0,2,&'compileSoFar'/2
+	fail	
+	.clause
+10:	all	3
+	gvary	1,0
+	gvary	0,1
+	gvary	2,2
+	pvaly	1,3
+	pvarx	0,0
+	pvarx	1,1
+	functor	3,0,1
+	call	3,2,&'dynamic'/2
+	cuty	2
+	pvaly	1,0
+	call	2,1,&'assertz'/1
+	ps	3,$'assertz'/1
+	ulvy	1
+	ps	0,$','/2
+	uvalx	3
+	uc	$'fail'
+	pvaly	0,1
+	dallexe	2,&'co$storeInit'/2
+	.clause
+11:	gvarx	3,1
+	pc	1,$'true'
+	gvara	2,3
+	exec	3,&'co$storeClause'/3
+	last
+
+	.pred	'when',2
+	.clause
+0:	pvarx	2,2
+	exec	3,&'co$storeWhen'/3
+	last
+
+	.pred	'co$storeWhen',3
+	.clause
+0:	gvarx	3,1
+	gvarx	4,2
+	pl	5
+	all	3
+	uvary	1
+	uvarx	6
+	univ	0,5
+	pvaly	1,5
+	pvary	0,7
+	functor	0,5,7
+	ps	1,$'$compileWhen'/2
+	uvaly	1
+	ulvy	0
+	ps	2,$'when'/3
+	ulvx	4
+	uvalx	6
+	ulvx	3
+	pc	0,$'$whens'
+	call	3,3,&'addpropz'/3
+	labely	2
+13: 	te	0,0,0,&14
+	ps	2,$'/'/2
+	uvaly	1
+	ulvy	0
+	pc	0,$'$predicates'
+	pc	1,$'$compiling'
+	call	3,3,&'getprop'/3
+	cuty	2
+	dallpro	
+14: 	tre	0,0
+	ps	2,$'/'/2
+	uvaly	1
+	ulvy	0
+	pc	0,$'$predicates'
+	pc	1,$'$compiling'
+	dallexe	3,&'addpropa'/3
+15: 	last
+
+	.pred	'co$storeGoal',2
+	labelx	2
+	.clause
+0:	all	3
+	gvary	2,0
+	gvary	1,1
+	gvary	0,2
+	pvaly	2,0
+	call	3,1,&'co$runGoal'/1
+7: 	te	0,0,0,&8
+	pvaly	2,255
+	gsx1	255,255,$'useIf'/1
+	j	&11
+8: 	re	0,0,&9
+	pvaly	2,255
+	gc	255,$'useElse'
+	j	&11
+9: 	re	0,0,&10
+	pvaly	2,255
+	gc	255,$'useEnd'
+	j	&11
+10: 	tre	0,0
+	ps	3,$'once'/1
+	ulvy	2
+	ps	0,$','/2
+	uvalx	3
+	uc	$'fail'
+	pvaly	1,1
+	call	1,2,&'co$storeInit'/2
+11: 	cuty	0
+	dallpro	
+	last
+
+	.pred	'co$runGoal',1
+	.clause
+0:	currstr	1,1
+	all	2
+	gvary	0,1
+	pc	1,$'user_output'
+	setstr	1,1
+3: 	te	0,0,1,&4
+	labely	1
+	call	2,1,&'call'/1
+	cuty	1
+	fail	
+4: 	tre	0,0
+5: 	pvaly	0,1
+	setstr	1,1
+	dallpro	
+	last
+
+	.pred	'co$storeClause',3
+	.clause
+0:	all	9
+	gvary	7,0
+	gvary	8,1
+	gvary	5,2
+	pvaly	7,3
+	pvary	1,4
+	pvary	0,5
+	functor	3,4,5
+	pvary	4,0
+	call	9,1,&'makeLabel'/1
+	pvaly	8,0
+	pvary	6,1
+	pvary	3,2
+	call	8,3,&'preFlatten'/3
+	labelx	0
+17: 	te	0,0,1,&18
+	pvaly	3,255
+	gc	255,$'no'
+	cutx	0
+	j	&19
+18: 	tre	0,0
+19: 	ps	1,$'$compileClause'/2
+	ulvy	1
+	ulvy	0
+	ps	3,$':-'/2
+	ulvy	7
+	ulvy	6
+	ps	2,$'clause'/4
+	ulvy	5
+	ulvy	4
+	uvalx	3
+	ulvy	3
+	pc	0,$'$clauses'
+	call	3,3,&'addpropz'/3
+	labely	2
+20: 	te	0,0,0,&21
+	ps	2,$'/'/2
+	ulvy	1
+	ulvy	0
+	pc	0,$'$predicates'
+	pc	1,$'$compiling'
+	call	3,3,&'getprop'/3
+	cuty	2
+	dallpro	
+21: 	tre	0,0
+	ps	2,$'/'/2
+	ulvy	1
+	ulvy	0
+	pc	0,$'$predicates'
+	pc	1,$'$compiling'
+	dallexe	3,&'addpropa'/3
+22: 	last
+
+	.pred	'co$storeInit',2
+	.clause
+0:	ps	2,$'init'/2
+	ulvx	0
+	ulvx	1
+	pc	0,$'$inits'
+	pc	1,$'$compilerInit'
+	exec	3,&'addpropz'/3
+	last
+
+	.pred	'co$retrieveInits',0
+	.clause
+0:	all	3
+	labely	0
+9: 	te	0,0,0,&10
+	ps	2,$'init'/2
+	uvary	2
+	uvary	1
+	pc	0,$'$inits'
+	pc	1,$'$compilerInit'
+	call	3,3,&'getprop'/3
+	pc	0,$'$init'
+	pvaly	2,1
+	pvaly	1,2
+	call	1,3,&'co$storeClause'/3
+	fail	
+10: 	tre	0,0
+11: 	pc	0,$'$inits'
+	pc	1,$'$compilerInit'
+	dallexe	2,&'remprop'/2
+	last
+
+	.pred	'co$storeAuxPreds',2
+	.clause
+0:	gvarx	2,0
+	all	5
+	gvary	1,1
+	labely	0
+9: 	te	0,0,3,&10
+	ps	0,$'defn'/3
+	uvary	4
+	uvary	3
+	uvary	2
+	gvarx	1,2
+	call	5,2,&'member'/2
+	pvaly	4,0
+	pvaly	3,1
+	pvaly	2,2
+	pvaly	1,3
+	call	1,4,&'co$storeAuxPred'/4
+	fail	
+10: 	tre	0,0
+	dallpro	
+11: 	last
+
+	.pred	'co$storeAuxPred',4
+	.clause
+0:	all	4
+	gvary	2,1
+	gvary	1,2
+	gvary	0,3
+	pnil	4
+	idtest	0,4
+	jtrue	&13
+	pvary	3,1
+	call	4,2,&'co$ltogwhens'/2
+	pvaly	2,0
+	puval	3,1
+	pvaly	0,2
+	call	3,3,&'co$storeWhen'/3
+	j	&13
+13: 	pvaly	2,0
+	pvaly	1,1
+	pvaly	0,2
+	dallexe	3,&'co$storeClause'/3
+	last
+
+	.pred	'co$ltogwhens',2
+7: 	sot	0,&4,&5,&8,&5
+4: 	t	2,0,&0
+	tr	2,0,&1
+5: 	fail	
+8: 	glvx2	0,0,2
+6: 	t	3,0,&2
+	tr	3,0,&3
+	.clause
+0:	gl	0
+	ulvx	1
+	uc	$[]
+	pro	
+	.clause
+1:	gl	0
+	uvarx	3
+	ul	255
+	uvarx	4
+	uvarx	5
+	gs	1,$'and'/2
+	uvalx	3
+	uvara	1
+	pl	0
+	uvalx	4
+	uvalx	5
+	execsot	2,0,&4,&5,&8,&5
+	.clause
+2:	gvalx	0,1
+	gnil	2
+	pro	
+	.clause
+3:	gs	1,$'and'/2
+	ulvx	0
+	uvara	1
+	glvx2	2,3,4
+	pl	0
+	uvalx	3
+	uvalx	4
+	execsot	2,0,&4,&5,&8,&5
+	last
+
+	.pred	'catchCompilerError',3
+	labelx	3
+	.clause
+0:	all	3
+	gvary	2,1
+	gvary	1,2
+	gvary	0,3
+	ps	1,$'co$error'/1
+	ulvy	2
+	call	3,2,&'catch'/2
+	jtypy	2,252,&13
+	cuty	0
+	pc	0,$'co$compilationErrors'
+	call	2,1,&'assert'/1
+	pc	1,#(CHR,&11)
+	pc	0,$'user_error'
+	pnil	2
+	call	2,3,&'$format'/3
+	pvaly	1,0
+	call	1,1,&'call'/1
+	cuty	0
+	fail	
+13: 	dallpro	
+14: 	last
+11: 	.string	"~NError in compilation.~n"
+
+	.pred	'throwCompilerError',1
+	.clause
+0:	ps	1,$'co$error'/1
+	ulvx	0
+	throw	1
+	pro	
+	last
+
+	.pred	'$init',0
+4: 	t	0,0,&1
+	tr	0,0,&2
+	.clause
+1:	all	1
+	labely	0
+	pc	0,#(STR,&6)
+	call	1,1,&'dynamic'/1
+	cuty	0
+	fail	
+	.clause
+2:	all	1
+	labely	0
+	pc	0,#(STR,&8)
+	call	1,1,&'dynamic'/1
+	cuty	0
+	fail	
+	last
+8: 	.word	$'/'/2
+	.word	$'co$unexplainedAbort'
+	.word	$0
+6: 	.word	$'/'/2
+	.word	$'co$compilationErrors'
+	.word	$0
+

@@ -1,0 +1,164 @@
+.bp
+.uh "A.1. ACCESS SCHEMES"
+.pp
+This appendix describes the standard external database
+facilities of version 3.2 of the MU-PROLOG interpreter.
+It is based on work by
+James Thom, John Shepherd, Lee Naish and Kotagiri Ramamohanarao.
+.uh "A.1.1. Recursive Linear Hashing"
+.pp
+For rlhp [\fIArgs\fP] must be list of the form
+[Lc, Bs, Ds1, Ds2, ... , Cv1, Cv2, ... , Nb].
+The elements in the list are numbers specifying various
+parameters of the database access method:
+.(b
+Lc	-  load control
+Bs	-  bucket size (in bytes)
+Ds\fIn\fP	-  descriptor size (in bits) for field \fIn\fP
+Cv\fIn\fP	-  choice vector for field \fIn\fP
+Nb	-  initial number of buckets
+.)b
+The load control is used to control the load factor of the hash file
+in which the relation is stored.
+An extra bucket is added to the main file after every \fILc\fP asserts.
+A descriptor size (in bits) and a choice vector must be given for each field.
+A non-zero descriptor can reduce the number of buckets searched, it that
+argument in a call to the relation is instantiated.
+The choice vectors are used to decide which fields are used as input to the
+hash function for each bit of the bucket address.
+If the estimate is that there will be up to one thousand (2^10) buckets in the
+file then ten bits is sufficient for the choice vectors.
+For each bit number, exactly one of the choice vectors should have a one in that
+position.
+.sp
+For example:
+.(b
+db_define(db,
+	phone_book,
+	4,		% surname, initials, address, phone_no
+			% (about 64 bytes)
+	rlhp( [	12,	% average of 12 records per bucket
+		1024,	% bucket size
+		64,		% descriptors: the first fields
+		32,		% are more often specificied so
+		0,		% more bits should be allocated
+		0,		% to them
+		2'0100100101,	% similarly with choice vectors
+		2'0001001010,	%
+		2'1000010000,	%
+		2'0010000000,	%
+		1000		% initial number of buckets
+	      ] )
+).
+.)b
+From the above the approximate load factor can be calculated as folows:
+.br
+approx load factor = Lc / (Bs / Record_size) = 12/(1024/64) = 0.75
+.br
+which is reasonable for the load factor (an estimate of the amount of space
+actual used in the file)
+.uh "A.1.2. Superimposed Coding"
+.pp
+For simc and dsimc [\fIArgs\fP] must be a list of the form
+[Av, Nr, Ss, Nd, ``template''].
+The first four elements in the list are numbers specifying various
+parameters of the database access method:
+.(b
+Av	-  average record length
+Nr	-  maximum number of records
+Ss	-  segment size
+Nd	-  number of data files
+.)b
+.\"[Br, Bs, Kr, Ks, Ur, Us, Nr, Ns, Nd, Av, ``template''].
+.\"The elements in the list are numbers specifying various
+.\"parameters of the database access method:
+.\".(b
+.\"Br	-  total number of bits in record descriptors
+.\"Bs	-  total number of bits in segment descriptors
+.\"Kr	-  number of bits set in record descriptors
+.\"Kr	-  number of bits set in segment descriptors
+.\"Ur	-  number of bits to use to determine matching records
+.\"Us	-  number of bits to use to determine matching segments
+.\"Nr	-  number of records per segment
+.\"Ns	-  number of segments
+.\"Nd	-  number of data files
+.\"Av	-  average record length
+.\".)b
+.\"The total number of records in the file is given by the product of
+.\"Nr and Ns; if you can estimate how many records the database will require,
+.\"it is best to create the file that size to begin with.
+.\"The larger the descriptors are, the better will be the retrieval performance,
+.\"in the sense of finding less ``false matches'' (which the Prolog unification
+.\"routines then has to filter out); of course, larger descriptors require
+.\"more storage.
+.\"The number of bits which are set also controls the accuracy of hashing
+.\"but it is expensive to set more bits, and the chance of generating false
+.\"segment matches increases as more bits are set and overlayed in the segment
+.\"descriptor.
+.\"The more bits which are used (Us,Ur), the more accurate will be the hash,
+.\"but it takes time to test for all these bits.
+The ``template'' takes the same form as the relation would take
+when used in the program (prefix functional notation), but each element
+in the template is a tuple describing properties of the corresponding
+argument to the relation.
+.\"It is envisaged that future versions of the system will have an
+.\"intelligent interface which can perform optimization of these parameters
+.\"using relatively simple information supplied by the user.
+.\".sp
+.\"To clarify things a bit, consider the following example of a relation 
+.\"describing an arc in a graph.
+.\"Each record in this relation looks something like
+.\"``connect(arc_id,node1,node2)'', where arc_id is a unique identifying
+.\"number for arc.
+.\"We know that there are going to be around 30000 facts in this database,
+.\"and each fact will be around 20 characters long,
+.\"so using optimization formulas we can derive the following set of
+.\"paramaters
+.\".(b
+.\".ft AS
+.\"Br   Bs     Kr Ks Ur Us Nr   Ns   Nd Av
+.\"47   13934  10 3  10 3  237  96   1  20
+.\".ft R
+.\".)b
+.\"Since the most common type of query we will ask on this relation
+.\"involves finding an arc_id, given the two node, then we would like to
+.\"allocate more bits of the codeword from the second two arguments.
+Each element in the template has the form "flag:nbits:mask".
+The \fIflag\fR tells whether we are ever going to store variables in this
+field (this allows us to optimize database access time).
+A value of \f(ASg\fR for the \fIflag\fR means that only ground values
+will ever be stored in that field, a value of \f(ASv\fR means that
+it may be used to store variables.
+The \fInbits\fR field tells relatively how many bits to set for this
+field in the superimposed codewords.
+These values are normalised by the database system. A field which is
+very often used in queries should be assigned a value which is much
+larger than the value for a field which is almost never used.
+The value can be zero, which means that the value in the field is
+never considered when answering queries from the database.
+The \fImask\fR field specifies how much weight is to be associated
+with the field in clustering records within the database.
+To determine in which segment to place a new record, the system ANDs
+the cluster mask with a hash value for the corresponding field.
+The results for all fields are then OR'ed together to generate
+the segment number.
+.pp
+Consider the following example where we have a relation with three
+fields
+The first field is an uninteresting value which is never
+used in queries, and hence it is allocated a relatively
+low \fInbits\fR value, and has not many bits set in the cluster
+mask.
+The other two fields are equally likely to be used in a query
+and have the same relatively high \fInbits\fP value and the
+same number of bits in the cluster mask.
+The initial \f(ASg:0:0\fP represents the functor, and should
+\fBalways\fR have this value; it is required by the system
+merely for the sake of completeness.
+.(b
+.ft AS
+connect(arc_id,   node1,   node2)
+
+g:0:0(g:2:2040,g:8:4d9b,g:8:9224)
+.ft R
+.)b

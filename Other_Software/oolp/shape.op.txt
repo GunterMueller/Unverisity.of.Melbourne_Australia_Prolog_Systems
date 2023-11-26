@@ -1,0 +1,106 @@
+% examples of  parameterised objects and associated
+% programming styles
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% point, using cartesian coordinates
+def_object point(x,y) isa object.
+xval(x).
+yval(y).
+
+% move point by distance DX and DY, returning new point
+move(DX, DY, point(X, Y)) :-
+	plus(x, DX, X),
+	plus(y, DY, Y).
+end_def point(x,y).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% a rectangle, defined with the origin (bottom left point) + two side lengths
+def_object rectangle(origin, xlength, ylength).
+
+origin(origin).	% perhaps we should generate these automatically
+xlength(xlength).
+ylength(ylength).
+
+% move rectangle by distance DX and DY, returning new rectangle
+% - just have to move origin same distance
+move(DX, DY, rectangle(O, xlength, ylength)) :-
+	origin :: move(DX, DY, O).
+
+% perimeter of rectangle
+perimeter(P) :- P is 2 * (xlength + ylength).
+
+% area of rectangle
+area(A) :- A is xlength * ylength.
+
+% rotate rectangle: return rectangle object rotated 90 degrees
+% around centre (would be reversible if float arithmetic was)
+rotate(rectangle(O, ylength, xlength)) :-
+	plus(DY2, xlength, ylength),
+	plus(DX2, ylength, xlength),
+	% times(DX, 2, DX2), % only works for integers
+	% times(DY, 2, DY2), % only works for integers
+	DX is DX2 / 2,
+	DY is DY2 / 2,
+	origin :: move(DX, DY, O).
+
+% intersection of rectangle with another rectangle
+% take max of x and y values of origins + min of x and y vals
+% of top right corner to get origin and top right corner of
+% intersection.  If top right is not above/right of origin there is
+% no overlap.  We represent this by zero length sides.
+intersection(R1, rectangle(point(OX, OY), XLen, YLen)) :-
+	% find new origin OX,OY
+	R1 :: origin(O1),
+	O1 :: xval(OX1),
+	O1 :: yval(OY1),
+	origin :: xval(OX0),
+	origin :: yval(OY0),
+	maximum(OX0, OX1, OX),
+	maximum(OY0, OY1, OY),
+	% find new top right coordinates TRX,TRY
+	R1 :: xlength(XLen1),
+	R1 :: ylength(YLen1),
+	plus(OX1, XLen1, TRX1),
+	plus(OY1, YLen1, TRY1),
+	plus(OX0, xlength, TRX0),
+	plus(OY0, ylength, TRY0),
+	minimum(TRX0, TRX1, TRX),
+	minimum(TRY0, TRY1, TRY),
+	% find side lengths XLen,YLen
+	plus(OX, XLen2, TRX),
+	plus(OY, YLen2, TRY),
+	(if XLen2 >= 0, YLen2 >= 0 then
+		XLen = XLen2,
+		YLen = YLen2
+	else
+		XLen = 0,
+		YLen = 0
+	).
+
+end_def rectangle(origin, xlength, ylength).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% a square is a rectangle with sides the same length
+% perimeter and rotation can be calculated more efficiently
+def_object square(origin, length) isa rectangle(origin, length, length).
+perimeter(P) :- P is 4 * length.
+rotate(square(origin, length)).
+end_def square(origin, length).
+
+
+        % max of two numbers
+maximum(A, B, M) :-
+        (if A > B then
+                M = A
+        else
+                M = B
+        ).
+
+        % min of two numbers
+minimum(A, B, M) :-
+        (if A =< B then
+                M = A
+        else
+                M = B
+        ).
+

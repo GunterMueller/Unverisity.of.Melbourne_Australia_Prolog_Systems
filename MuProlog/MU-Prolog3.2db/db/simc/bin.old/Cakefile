@@ -1,0 +1,77 @@
+$
+$ Makefile  -  deductive database utilities
+$
+$ $Header$
+$ $Log$
+$
+
+#define	BIN	/l/jas/db/bin
+#define	LDIR	/l/jas/db/src/lib
+
+#define	BINS	assert consult ddb dbparams info newrel prefix query
+#define	OBJS	assert.o consult.o ddb.o dbparams.o info.o newrel.o query.o
+#define	SRCS	assert.c consult.c ddb.c dbparams.c info.c newrel.c query.c
+
+#define	INCS	LDIR/muddlib.h
+#define	LINCS	LDIR/bits.h LDIR/defs.h LDIR/fact.h LDIR/files.h \
+		LDIR/parse.h LDIR/rec.h LDIR/reln.h LDIR/seg.h \
+		LDIR/trans.h LDIR/util.h
+#define	LIBS	LDIR/dblib
+
+$define	CFLAGS	-I\"LDIR\" -pg -DDBUG
+$define	CFLAGS	-I\"LDIR\" -DDBUG
+$define	CFLAGS	-I\"LDIR\" -O
+#define	CFLAGS	-I\"LDIR\" -DDBUG
+
+#define	PLSAVE	BIN/plsave
+
+#define	VERS
+#define	MSG	"Latest version"
+
+#define	CPATH	-I\"LDIR\"
+#include <Cnone>
+
+default&	: install
+
+all&		: BINS
+
+install&	: all
+	cp BINS BIN
+
+assert		: LIBS assert.o
+	CC CFLAGS -o assert assert.o LIBS
+
+consult		: LIBS consult.o
+	CC CFLAGS -o consult consult.o LIBS
+
+dbparams		: dbparams.o
+	CC CFLAGS -o dbparams dbparams.o -lm
+
+ddb		: LIBS ddb.o
+	CC CFLAGS -o ddb ddb.o LIBS
+
+info		: LIBS info.o
+	CC CFLAGS -o info info.o LIBS
+
+query		: LIBS query.o
+	CC CFLAGS -o query query.o LIBS
+
+prefix		: prefix.pl
+	PLSAVE prefix.pl
+
+newrel		: LIBS newrel.o
+	CC CFLAGS -o newrel newrel.o LIBS
+
+OBJS		: LINCS
+
+LIBS@		:
+	+cd LDIR; cake CAKEFLAGS
+
+clean&		:
+	rm -f core OBJS BINS
+
+version&	:
+	co -l/**/VERS INCS SRCS
+
+newvers&	:
+	ci -l -m/**/MSG INCS SRCS

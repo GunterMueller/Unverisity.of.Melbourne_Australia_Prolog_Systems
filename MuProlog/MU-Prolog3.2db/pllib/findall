@@ -1,0 +1,20 @@
+findall(X,G,_) :-
+     asserta(found(mark)),
+     call(G),
+     asserta(found(X)),
+     fail.
+findall(_,_,L) :-
+     collect_found([],M),!,L=M.
+
+?- protect(findall(3)).
+
+collect_found(S,L) :-
+     getnext(X),
+     !,
+     collect_found([X|S],L).
+collect_found(L,L).
+
+getnext(X) :-
+     retract(found(X)),
+     !,
+     X \== mark.

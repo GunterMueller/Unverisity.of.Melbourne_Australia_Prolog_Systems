@@ -1,0 +1,76 @@
+%%%%%%%%%%%%%%%%%%%%%%%%% Header
+:- op(800, fx, (def_object)).
+:- op(800, fx, (end_def)).
+:- op(401, xfx, (::)).
+:- op(600, xfx, (isa)).
+%%%%%%%%%%%%%%%%%%%%%%%%% OBJECT.op
+'OBJECT'(defines_property(A), B) :-
+	defines_prop(B, A).
+'OBJECT'(parent(A), B) :-
+	B isa A.
+%%%%%%%%%%%%%%%%%%%%%%%%% sample.op
+:- op(300, fx, dummyop).
+dummyop 2.
+
+% desk isa OBJECT
+desk(d_len(70), A).
+desk(d_num(3), A).
+desk(d_width(30), A).
+desk(d_tot_area(A), B) :-
+	B :: d_num(C),
+	B :: d_len(D),
+	B :: d_width(E),
+	A is C * D * E.
+
+% my_desk isa desk
+my_desk(d_num(4), A).
+
+% his_desk isa desk
+his_desk(d_len(50), A).
+
+% room isa OBJECT
+room(d_area(A), B) :-
+	my_desk :: d_tot_area(C),
+	his_desk :: d_tot_area(D),
+	A is C + D.
+
+
+desk isa 'OBJECT'.
+my_desk isa desk.
+his_desk isa desk.
+room isa 'OBJECT'.
+
+object('OBJECT').
+object(desk).
+object(my_desk).
+object(his_desk).
+object(room).
+
+defines_prop('OBJECT', defines_property(A)).
+defines_prop('OBJECT', parent(A)).
+defines_prop(desk, d_len(A)).
+defines_prop(desk, d_num(A)).
+defines_prop(desk, d_width(A)).
+defines_prop(desk, d_tot_area(A)).
+defines_prop(my_desk, d_num(A)).
+defines_prop(his_desk, d_len(A)).
+defines_prop(room, d_area(A)).
+
+call_object('OBJECT', defines_property(A), B) :-
+	'OBJECT'(defines_property(A), B).
+call_object('OBJECT', parent(A), B) :-
+	'OBJECT'(parent(A), B).
+call_object(desk, d_len(A), B) :-
+	desk(d_len(A), B).
+call_object(desk, d_num(A), B) :-
+	desk(d_num(A), B).
+call_object(desk, d_width(A), B) :-
+	desk(d_width(A), B).
+call_object(desk, d_tot_area(A), B) :-
+	desk(d_tot_area(A), B).
+call_object(my_desk, d_num(A), B) :-
+	my_desk(d_num(A), B).
+call_object(his_desk, d_len(A), B) :-
+	his_desk(d_len(A), B).
+call_object(room, d_area(A), B) :-
+	room(d_area(A), B).

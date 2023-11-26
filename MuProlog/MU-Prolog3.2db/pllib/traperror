@@ -1,0 +1,74 @@
+%	This traps the enoproc (undefined procedure called) error
+%	and checks if the procedure is available in some library
+%	(or other) file. If so, it reconsults that file.
+%	The inlib predicate can be extended/modified - this is
+%	just an example.
+
+?- assert(traperror(enoproc, C, fromlib(C))).
+
+fromlib(C) :-
+	inlib(C, File),
+	!,
+	reconsult(File),
+	C.
+fromlib(C) :-
+	errhandler(enoproc, C).
+
+%##inlib(append(_,_,_), 'LIB/pllib/append').
+inlib(append(_,_,_), '/usr/lib/prolog/pllib/append').
+%##inlib(merge(_,_,_), 'LIB/pllib/merge').
+inlib(merge(_,_,_), '/usr/lib/prolog/pllib/merge').
+%##inlib(delete(_,_,_), 'LIB/pllib/delete').
+inlib(delete(_,_,_), '/usr/lib/prolog/pllib/delete').
+%##inlib(nmemb(_,_,_), 'LIB/pllib/lists').
+inlib(nmemb(_,_,_), '/usr/lib/prolog/pllib/lists').
+%##inlib(member(_,_), 'LIB/pllib/member').
+inlib(member(_,_), '/usr/lib/prolog/pllib/member').
+%##inlib(perm(_,_), 'LIB/pllib/perm').
+inlib(perm(_,_), '/usr/lib/prolog/pllib/perm').
+%##inlib(str_int(_,_), 'LIB/pllib/convert').
+inlib(str_int(_,_), '/usr/lib/prolog/pllib/convert').
+%##inlib(int_const(_,_), 'LIB/pllib/convert').
+inlib(int_const(_,_), '/usr/lib/prolog/pllib/convert').
+%##inlib(str_uint(_,_), 'LIB/pllib/convert').
+inlib(str_uint(_,_), '/usr/lib/prolog/pllib/convert').
+
+%	This traps the efile (illegal file specification) error.
+%	If it is basicaly due to lack of quotes around a file name,
+%	the error is fixed, and the file opened. It handles dots
+%	(for file name extensions), slashes in and at the start of
+%	path names and "../" at the start of path names.
+
+?- assert(traperror(efile, open(F, N, M), eopen(F, N, M))).
+
+?- op(400, fx, (/)).
+?- op(400, fx, ../).
+
+eopen(F, N, M) :-
+	fixfname(F, F1),
+	atom(F1),
+	F ~= F1,
+	!,
+	open(F1, N, M).
+eopen(F, N, M) :-
+	errhandler(efile, open(F, N, M)).
+
+fixfname(F, F) :-
+	atom(F).
+fixfname(N.E, F) :-
+	joinfn(N, ".", E, F).
+fixfname(D/N, F) :-
+	joinfn(D, "/", N, F).
+fixfname(/P, F) :-
+	joinfn('', "/", P, F).
+fixfname(../P, F) :-
+	joinfn('', "../", P, F).
+
+joinfn(A, M, B, F) :-
+	fixfname(A, A1),
+	fixfname(B, B1),
+	name(A1, As),
+	name(B1, Bs),
+	append(As, M, AMs),
+	append(AMs, Bs, Fs),
+	name(F, Fs).

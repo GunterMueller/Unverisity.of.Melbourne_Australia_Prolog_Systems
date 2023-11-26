@@ -1,0 +1,37 @@
+			/* Colmerauers "geler" (freeze) */
+		/* (wait until first arg is a non-var then call second arg). */
+?- wait freeze(0,1).
+freeze(1, _) :- fail.
+freeze(_, P) :- P.
+
+			/* Freeze with a list of vars (more useful) */
+		/* Waits until arg1 is a list of determinate length or */
+		/* contains a non-variable (or is too long). */
+?- wait lfreeze(0,1).
+lfreeze(1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1, _) :- fail.
+lfreeze(_, P) :- P.
+ 
+			/* Freeze with two vars, implemented with freeze. */
+	/* This is just to demonstrate the geler/freeze can be extended */
+	/* though rather dirtily! Both args should become non-variables */
+	/* eventually (or a call is never woken). This is not often a problem */
+	/* though it would be nice to fix it (I dont know how to) */
+freeze2(X, Y, P) :-
+	freeze(X, once(Linkvar, P)),
+	freeze(Y, once(Linkvar, P)).
+
+	/* This stops P (as above) from being called twice */
+once(Linkvar, P) :-
+	var(Linkvar),
+	Linkvar = 1,
+	P.
+once(Linkvar, P) :-
+	nonvar(Linkvar).
+
+			/* Delay until first arg is ground */
+	/* This uses the fudged system pred $nground, used to implement ~. */
+	/* If its arg is ground, it fails, otherwise it "delays" the */
+	/* PREVIOUS (parent) call on the first variable it finds. */
+whengrnd(T, P) :- $nground(T).
+whengrnd(_, P) :- P.
+

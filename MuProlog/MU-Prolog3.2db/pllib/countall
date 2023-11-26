@@ -1,0 +1,18 @@
+?- hide([count1(3), counttst(1)]).
+
+count(Y, Z) :- depth(D), count1(D, Y, Z).
+
+count1(D, Y, _) :- call(Y), counttst(D).
+count1(D, _, Z) :- zcount(D, Z), !, retract(zcount(D, Z)).
+count1(_, _, 0).
+counttst(D) :- 
+	zcount(D, C), 
+	!, 
+	C1 is C + 1,
+	retract(zcount(D, C)), 
+	assert(zcount(D, C1)), 
+	!, 
+	fail.
+counttst(D) :- assert(zcount(D, 1)), !, fail.
+?- hidden.
+?- assert(zcount(0, 0)), retract(zcount(0, 0)).

@@ -1,0 +1,34 @@
+Implement clustering strategy on assert - DONE
+
+Clear locks on receipt of fatal-type signals
+
+Check why space is not being released somewhere  - DONE
+
+Try not to close files BUT clear locks and set properly when re-used - DONE
+	(Prolog programs seem to be doing lots of short transactions)
+
+Make opening of data files a separate function. - DONE
+
+Too much flocking
+
+Random no generators & Hash functions
+
+Clean up - too much indirection (remove Reln) - DONE
+	 - ints vs. short
+
+Avoid deadlocks - DONE
+
+Stop double writes on insert (pointers + single data rec) - DONE
+
+Avoid writing seg desc slices if unchanged - DONE
+
+Remove widening of parse tree and store as a block
+	Also, don't malloc for e_names, use pointer to query + length
+
+Fix up Prolog/DB interface so retract is sensible
+
+Write Tech Report describing system
+
+NEWREL should NOT clobber existing relations
+
+Add fast batch insert capability (outside Prolog)

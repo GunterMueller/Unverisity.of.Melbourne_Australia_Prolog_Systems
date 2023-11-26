@@ -1,0 +1,474 @@
+
+	.pred	'compile1Head',3
+	.clause
+0:	all	5
+	gvary	2,0
+	gvary	4,1
+	gvary	0,2
+	pvaly	2,3
+	pvarx	4,4
+	pvary	3,5
+	functor	3,4,5
+	pvaly	3,0
+	pvaly	2,1
+	call	5,2,&'numberTopLevelVariables'/2
+	pvaly	3,0
+	pvaly	2,1
+	pvaly	4,2
+	pvary	1,3
+	call	4,4,&'numberRestOfVariables'/4
+	apushy	1
+	pushi	$$255
+	apred	2
+	pc	5,#(LST,&16)
+	pc	0,$1
+	puval	3,1
+	pvaly	2,2
+	puval	1,3
+	pvaly	0,4
+	dallexe	6,&'compile1Head'/6
+	last
+16: 	.word	$'pro'
+	.word	$[]
+
+	.pred	'numberTopLevelVariables',2
+	.clause
+0:	apushx	0
+	pushi	$$0
+	jpred	4,&6
+	arg	0,1,2
+	apushx	0
+	afunc	47
+	popx	0
+	jtypx	2,3,&5
+	gs	2,$'vr'/2
+	uvalx	0
+	uc	$'local'
+	j	&5
+5: 	exec	2,&'numberTopLevelVariables'/2
+6: 	pro	
+7: 	last
+
+	.pred	'numberRestOfVariables',3
+	.clause
+0:	gvarx	4,0
+	gvarx	5,1
+	gvarx	3,2
+	jtypx	4,3,&8
+	gsx2	4,255,255,$'vr'/2
+	gvalx	5,3
+	pro	
+8: 	jtypx	4,12,&9
+	gvalx	5,3
+	pro	
+9: 	labelx	0
+10: 	te	6,0,6,&12
+	gsx2	4,1,255,$'vr'/2
+	cutx	0
+	jtypx	1,3,&11
+	gvalx	5,1
+	apushx	5
+	afunc	46
+	popvx	3
+	pro	
+11: 	gvalx	5,3
+	pro	
+	j	&13
+12: 	tre	6,0
+	pvarx	6,6
+	pvarx	0,0
+	functor	4,6,0
+	gvara	1,4
+	gvara	2,5
+	exec	4,&'numberRestOfVariables'/4
+13: 	last
+
+	.pred	'numberRestOfVariables',4
+	.clause
+0:	all	4
+	gvary	3,0
+	gvary	2,1
+	gvara	1,2
+	gvary	0,3
+	apushy	3
+	pushi	$$0
+	jpred	4,&12
+	pvaly	3,4
+	pvaly	2,5
+	arg	4,5,0
+	pvary	1,2
+	call	4,3,&'numberRestOfVariables'/3
+	apushy	3
+	afunc	47
+	popx	0
+	pvaly	2,1
+	puval	1,2
+	pvaly	0,3
+	dallexe	4,&'numberRestOfVariables'/4
+12: 	gvaly	0,1
+	dallpro	
+13: 	last
+
+	.pred	'compile1Head',6
+	.clause
+0:	all	8
+	gvary	5,0
+	gvary	4,1
+	gvary	3,2
+	gvary	2,3
+	gvara	3,4
+	gvary	0,5
+	apushy	5
+	pushy	4
+	jpred	3,&22
+	pvaly	5,6
+	pvaly	3,7
+	arg	6,7,1
+	apushy	5
+	afunc	47
+	popx	0
+	pvary	7,2
+	pvary	6,4
+	call	8,5,&'compileHeadArg'/5
+	puval	7,0
+	pvaly	2,1
+	puval	6,2
+	pvary	1,3
+	call	6,4,&'compileDeferredHeadArgs'/4
+	apushy	5
+	afunc	46
+	popx	0
+	pvaly	4,1
+	pvaly	3,2
+	pvaly	2,3
+	puval	1,4
+	pvaly	0,5
+	dallexe	6,&'compile1Head'/6
+22: 	gvaly	0,3
+	dallpro	
+23: 	last
+
+	.pred	'compileHeadArg',5
+	.clause
+0:	gvarx	7,1
+	gvarx	8,2
+	gvarx	6,4
+	jtypx	7,12,&25
+	glvx2	3,9,10
+	gs	9,$'gc'/2
+	uvarx	9
+	us	255,$'const'/1
+	ulvx	7
+	gs	9,$'temp'/1
+	ulvx	0
+	gnil	8
+	gvalx	6,10
+	pro	
+25: 	labelx	1
+26: 	te	9,0,9,&28
+	gsx2	7,2,255,$'vr'/2
+	cutx	1
+	jctypx	2,17,&27
+	apushx	2
+	pushx	0
+	jpred	7,&27
+	glvx2	3,9,3
+	gs	9,$'gval'/2
+	uvarx	9
+	us	255,$'temp'/1
+	uvalx	2
+	gs	9,$'temp'/1
+	ulvx	0
+	j	&27
+27: 	gnil	8
+	gvalx	6,3
+	pro	
+28: 	re	9,0,&29
+	typx	7,32
+	gl	7
+	uvoid	1
+	ul	255
+	uvoid	2
+	cutx	1
+	gvara	1,7
+	gvara	2,8
+	gvara	4,6
+	exec	5,&'compileHeadArgString'/5
+29: 	tre	9,0
+	jtypx	7,48,&30
+	glvx2	3,9,5
+	gs	9,$'gl'/1
+	us	255,$'temp'/1
+	ulvx	0
+	pc	0,$1
+	pc	1,$2
+	gvara	2,7
+	gvara	3,8
+	pnil	4
+	exec	7,&'compileHeadArgs'/7
+30: 	pvarx	9,9
+	pvarx	1,1
+	functor	7,9,1
+	glvx2	3,10,5
+	gs	10,$'gs'/2
+	uvarx	10
+	us	255,$'/'/2
+	uvalx	9
+	uvalx	1
+	gs	10,$'temp'/1
+	ulvx	0
+	pc	0,$1
+	gvara	2,7
+	gvara	3,8
+	pnil	4
+	exec	7,&'compileHeadArgs'/7
+31: 	last
+
+	.pred	'compileHeadArgString',5
+	.clause
+0:	all	5
+	gvary	0,4
+	pvary	2,255
+	gs	255,$'string'/1
+	ulvx	1
+	gl	3
+	uvarx	5
+	ul	255
+	uvarx	6
+	uvary	1
+	gs	5,$'pc'/2
+	uvarx	5
+	us	255,$'temp'/1
+	uc	$255
+	gs	5,$'#'/3
+	uvary	4
+	uvary	3
+	uvaly	2
+	gs	6,$'gval'/2
+	uvarx	5
+	us	255,$'temp'/1
+	uc	$255
+	gs	5,$'temp'/1
+	ulvx	0
+	pvaly	2,0
+	pvaly	4,1
+	call	5,2,&'tagOfTerm'/2
+	pvaly	3,0
+	call	5,1,&'makeLabel'/1
+	ps	0,$'groundTerm'/3
+	uvaly	4
+	uvaly	3
+	uvaly	2
+	call	2,1,&'asserta'/1
+	pvaly	0,255
+	gvaly	1,255
+	dallpro	
+	last
+
+	.pred	'compileHeadArgs',7
+	.clause
+0:	all	7
+	gvary	6,0
+	gvary	5,1
+	gvary	4,2
+	gvara	2,3
+	gvary	1,4
+	gvara	4,5
+	gvary	0,6
+	apushy	6
+	pushy	5
+	jpred	3,&21
+	pvaly	6,7
+	pvaly	4,8
+	arg	7,8,0
+	apushy	6
+	pushy	5
+	afunc	35
+	popx	1
+	pvary	3,3
+	pvary	2,5
+	call	7,6,&'compileNestedHeadArg'/6
+	apushy	6
+	afunc	46
+	popx	0
+	pvaly	5,1
+	pvaly	4,2
+	puval	3,3
+	pvaly	1,4
+	puval	2,5
+	pvaly	0,6
+	dallexe	7,&'compileHeadArgs'/7
+21: 	gvaly	1,2
+	gvaly	0,4
+	dallpro	
+22: 	last
+
+	.pred	'compileNestedHeadArg',6
+	.clause
+0:	gvarx	7,0
+	gvarx	9,2
+	gvarx	8,3
+	gvarx	6,5
+	jtypx	7,12,&21
+	glvx2	4,10,11
+	gs	10,$'uc'/1
+	us	255,$'const'/1
+	ulvx	7
+	gvalx	9,8
+	gvalx	6,11
+	pro	
+21: 	labelx	0
+22: 	te	10,0,10,&27
+	gsx2	7,1,2,$'vr'/2
+	cutx	0
+	jtypx	1,3,&23
+	glvx2	4,10,11
+	gs	10,$'uvoid'/1
+	uc	$1
+	j	&26
+23: 	jtypx	2,3,&24
+	gvalx	1,2
+	glvx2	4,10,11
+	gs	10,$'uvar'/1
+	us	255,$'temp'/1
+	uvalx	1
+	j	&26
+24: 	jctypx	2,17,&25
+	glvx2	4,10,11
+	gs	10,$'uval'/2
+	uvarx	10
+	uc	$'global'
+	gs	10,$'temp'/1
+	uvalx	1
+	j	&26
+25: 	glvx2	4,10,11
+	gs	10,$'uval'/2
+	uvarx	10
+	uc	$'local'
+	gs	10,$'temp'/1
+	uvalx	1
+26: 	gvalx	9,8
+	gvalx	6,11
+	pro	
+27: 	tre	10,0
+	jtypx	7,48,&29
+	jtypx	7,32,&28
+	j	&29
+28: 	pc	10,$1
+	idtest	1,10
+	jfail	&29
+	cutx	0
+	gl	4
+	uc	$'ul'
+	uvara	5
+	pc	0,$1
+	pc	1,$2
+	gvara	2,7
+	gvara	3,9
+	gvara	4,8
+	exec	7,&'compileHeadArgs'/7
+29: 	jtypx	7,64,&30
+	pc	10,$1
+	idtest	1,10
+	jfail	&30
+	pvarx	10,10
+	pvarx	1,1
+	functor	7,10,1
+	glvx2	4,11,5
+	gs	11,$'us'/1
+	us	255,$'/'/2
+	uvalx	10
+	uvalx	1
+	pc	0,$1
+	gvara	2,7
+	gvara	3,9
+	gvara	4,8
+	exec	7,&'compileHeadArgs'/7
+30: 	glvx2	4,10,11
+	gs	10,$'uvar'/1
+	us	255,$'temp'/1
+	uvarx	10
+	gl	9
+	uvara	9
+	ulvx	8
+	gs	9,$'='/2
+	uvalx	10
+	ulvx	7
+	gvalx	6,11
+	pro	
+31: 	last
+
+	.pred	'compileDeferredHeadArgs',4
+	.clause
+0:	all	4
+	gvary	3,0
+	gvary	1,2
+	gvary	0,3
+	pvaly	3,0
+	pvary	2,2
+	call	4,3,&'allocateDestructuringTemps'/3
+	pvaly	3,0
+	puval	2,1
+	pvaly	1,2
+	pvaly	0,3
+	dallexe	4,&'compileDeferredHeadArgs1'/4
+	last
+
+	.pred	'allocateDestructuringTemps',3
+4: 	sot	0,&2,&0,&1,&3
+2: 	t	3,0,&0
+	tr	3,0,&1
+3: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	1,2
+	apushx	1
+	pushi	$$255
+	apred	2
+	pro	
+	.clause
+1:	glvx2	0,3,0
+	gsx2	3,3,255,$'='/2
+	gvalx	3,1
+	apushx	3
+	afunc	46
+	popx	1
+	execsot	3,0,&2,&0,&1,&3
+	last
+
+	.pred	'compileDeferredHeadArgs1',4
+4: 	sot	0,&2,&0,&1,&3
+2: 	t	4,0,&0
+	tr	4,0,&1
+3: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	2,3
+	pro	
+	.clause
+1:	gl	0
+	uvarx	4
+	all	6
+	uvary	3
+	gsx2	4,0,4,$'='/2
+	gvary	2,1
+	gvarx	5,2
+	gvary	0,3
+	gvara	1,4
+	pvary	5,2
+	gvara	3,5
+	pvary	4,4
+	call	6,5,&'compileHeadArg'/5
+	puval	5,0
+	pvaly	2,1
+	puval	4,2
+	pvary	1,3
+	call	4,4,&'compileDeferredHeadArgs'/4
+	pvaly	3,0
+	pvaly	2,1
+	puval	1,2
+	pvaly	0,3
+	dall	
+	execsot	4,0,&2,&0,&1,&3
+	last
+

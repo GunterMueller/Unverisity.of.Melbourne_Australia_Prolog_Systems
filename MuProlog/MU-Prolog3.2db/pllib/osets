@@ -1,0 +1,348 @@
+%   File   : /usr/lib/prolog/ordsets
+%   Author : R.A.O'Keefe
+%   Updated: 22 May 1983
+%   Purpose: Ordered set manipulation utilities
+
+%   In this module, sets are represented by ordered lists with no
+%   duplicates.  Thus {c,r,a,f,t} would be [a,c,f,r,t].  The ordering
+%   is defined by the @< family of term comparison predicates, which
+%   is the ordering used by sort/2 and setof/3.
+
+%   The benefit of the ordered representation is that the elementary
+%   set operations can be done in time proportional to the Sum of the
+%   argument sizes rather than their Product.  Some of the unordered
+%   set routines, such as member/2, length/2,, select/3 can be used
+%   unchanged.  The main difficulty with the ordered representation is
+%   remembering to use it!
+
+%   This version works only for sets of integers or sets of atoms,
+%   (not mixed sets) and has been modified for use with mu-prolog.
+%   Modified by Philip Dart (philip).
+
+/*
+:- public
+	list_to_set/2,		%  List -> Set
+	merge/3,		%  OrdList x OrdList -> OrdList
+	add_element/3		%  Element x Set -> Set
+	del_element/3		%  Element x Set -> Set
+	member/2		%  Element <- Set
+	memberchk/2		%  Element x Set ->
+	disjoint/2,		%  Set x Set ->
+	intersect/2,		%  Set x Set ->
+	intersect/3,		%  Set x Set -> Set
+	seteq/2,		%  Set x Set ->
+	subset/2,		%  Set x Set ->
+	subtract/3,		%  Set x Set -> Set
+	symdiff/3,		%  Set x Set -> Set
+	union/3.		%  Set x Set -> Set
+
+:- mode
+	list_to_set(+, ?),
+	merge(+, +, -),
+	add_element(+, +, ?),
+	    add_element(+, +, +, +, ?)
+	del_element(+, +, ?),
+	    del_element(+, +, +, +, ?)
+	member(?, ?),
+	memberchk(+, +),
+	disjoint(+, +),
+	    disjoint(+, +, +, +, +),
+	intersect(+, +),
+	    intersect(+, +, +, +, +),
+	intersect(+, +, ?),
+	    intersect(+, +, +, +, +, ?),
+	seteq(+, +),
+	subset(+, +),
+	    subset(+, +, +, +, +),
+	subtract(+, +, ?), 
+	    subtract(+, +, +, +, +, ?),
+	symdiff(+, +, ?),
+	    symdiff(+, +, +, +, +, ?),
+	union(+, +, ?),
+	    union(+, +, +, +, +, ?).
+*/
+?- hide([ add_element(5), del_element(5), disjoint(5), intersect(5), 
+	intersect(6), subset(5), subtract(6), symdiff(6), union(6),
+	tsort(2), tinsert(3)]).
+
+
+%   list_to_set(+List, ?Set)
+%   is true when Set is the ordered representation of the set represented
+%   by the unordered representation List.  The only reason for giving it
+%   a name at all is that you may not have realised that tsort/2 could be
+%   used this way.
+
+
+list_to_set(List, Set) :-
+	tsort(List, Set).
+
+
+tsort([], []).
+tsort(A.B, C.D) :-
+	tsort(B, E),
+	tinsert(A, E, C.D).
+
+tinsert(A, [], [A]).
+tinsert(A, B.C, D) :-
+	compare(R, A, B),
+	(	R = (<),
+		D = A.B.C
+	;
+		R = (=),
+		tinsert(A, C, D)
+	;
+		R = (>),
+		D = B.E,
+		tinsert(A, C, E)
+	).
+
+%   merge(+List1, +List2, -Merged)
+%   is true when Merged is the stable merge of the two given lists.
+%   If the two lists are not ordered, the merge doesn't mean a great
+%   deal.  Merging is perfectly well defined when the inputs contain
+%   duplicates, and all copies of an element are preserved in the
+%   output, e.g. merge("122357", "34568", "12233455678").  Study this
+%   routine carefully, as it is the basis for all the rest.
+/*  This is now part of C-Prolog v1.4
+merge([Head1|Tail1], [Head2|Tail2], [Head2|Merged]) :-
+	Head1 @> Head2, !,
+	merge([Head1|Tail1], Tail2, Merged).
+merge([Head1|Tail1], List2, [Head1|Merged]) :-
+	List2 \== [], !,
+	merge(Tail1, List2, Merged).
+merge([], List2, List2) :- !.
+merge(List1, [], List1).
+*/
+
+
+%   add_element(Elem, Set1, Set2)
+%   is true when Set1 and Set2 are sets represented as ordered lists,
+%   and Set2 = Set1 U {Elem}.  It may only be used to calculate Set2
+%   given Elem and Set1.  However, if Set1 is a list with a variable at
+%   the end, it may still be used, and will add new elements at the end.
+
+add_element(Elem, [], [Elem]) :- !.
+add_element(Elem, [Head|Tail], Set) :-
+	compare(Order, Elem, Head),
+	add_element(Order, Elem, Head, Tail, Set).
+add_element(>, Elem, Head, Tail, [Head|Set]) :-
+	add_element(Elem, Tail, Set).
+add_element(=, Head, Head, Tail, [Head|Tail]).
+add_element(<, Elem, Head, Tail, [Elem|[Head|Tail]]).
+
+
+%   del_element(Elem, Set1, Set2)
+%   is true when Set1 and Set2 are sets represented as ordered lists,
+%   and Set2 = Set1 \ {Elem}.  It may only be used to calculate Set2
+%   given Elem and Set1.  If Set1 does not contain Elem, Set2 and Set1
+%   will be equal.  I wanted to call this predicate 'delete', but other
+%   Prologs have used that for 'select'.  
+
+del_element(_, [], []) :- !.
+del_element(Elem, [Head|Tail], Set) :-
+	compare(Order, Elem, Head),
+	del_element(Order, Elem, Head, Tail, Set).
+del_element(>, Elem, Head, Tail, [Head|Set]) :-
+	del_element(Elem, Tail, Set).
+del_element(=, Head, Head, Tail, Tail).
+del_element(<, Elem, Head, Tail, [Head|Tail]).
+
+
+%   member(?Element, ?Set)
+%   is true when Set is a list, and Element occurs in it.  It may be used
+%   to test for an element or to enumerate all the elements by backtracking.
+%   Indeed, it may be used to generate the Set!
+
+member(Element, [Element|_]).
+member(Element, [_|Rest]) :-
+	member(Element, Rest).
+
+
+
+%   memberchk(+Element, +Set)
+%   means the same thing, but may only be used to test whether a known
+%   Element occurs in a known Set.  In return for this limited use, it
+%   is more efficient when it is applicable.
+
+memberchk(Element, [Element|_]) :- !.
+memberchk(Element, [First|Rest]) :-
+	compare(>, Element, First),
+	memberchk(Element, Rest).
+
+
+
+%   disjoint(+Set1, +Set2)
+%   is true when the two ordered sets have no element in common.  If the
+%   arguments are not ordered, I have no idea what happens.
+
+disjoint([], _) :- !.
+disjoint(_, []) :- !.
+disjoint([Head1|Tail1], [Head2|Tail2]) :-
+	compare(Order, Head1, Head2),
+	disjoint(Order, Head1, Tail1, Head2, Tail2).
+
+disjoint(<, _, Tail1, Head2, Tail2) :-
+	disjoint(Tail1, [Head2|Tail2]).
+disjoint(>, Head1, Tail1, _, Tail2) :-
+	disjoint([Head1|Tail1], Tail2).
+
+
+
+%   intersect(+Set1, +Set2)
+%   is true when the two ordered sets have at least one element in common.
+%   Note that the test is == rather than = .
+
+intersect([Head1|Tail1], [Head2|Tail2]) :-
+	compare(Order, Head1, Head2),
+	intersect(Order, Head1, Tail1, Head2, Tail2).
+
+intersect(=, _, _, _, _).
+intersect(<, _, Tail1, Head2, Tail2) :-
+	intersect(Tail1, [Head2|Tail2]).
+intersect(>, Head1, Tail1, _, Tail2) :-
+	intersect([Head1|Tail1], Tail2).
+
+
+
+%   intersect(+Set1, +Set2, ?Intersection)
+%   is true when Intersection is the ordered representation of Set1
+%   and Set2, provided that Set1 and Set2 are ordered sets.
+
+intersect(_, [], []) :- !.
+intersect([], _, []) :- !.
+intersect([Head1|Tail1], [Head2|Tail2], Intersection) :-
+	compare(Order, Head1, Head2),
+	intersect(Order, Head1, Tail1, Head2, Tail2, Intersection).
+
+intersect(=, Head,  Tail1, _,     Tail2, [Head|Intersection]) :-
+	intersect(Tail1, Tail2, Intersection).
+intersect(<, _,     Tail1, Head2, Tail2, Intersection) :-
+	intersect(Tail1, [Head2|Tail2], Intersection).
+intersect(>, Head1, Tail1, _,     Tail2, Intersection) :-
+	intersect([Head1|Tail1], Tail2, Intersection).
+
+
+
+%   seteq(+Set1, +Set2)
+%   is true when the two arguments represent the same set.  Since they
+%   are assumed to be ordered representations, they must be identical.
+
+
+seteq(Set1, Set2) :-
+	Set1 == Set2.
+
+
+
+%   subset(+Set1, +Set2)
+%   is true when every element of the ordered set Set1 appears in the
+%   ordered set Set2.
+
+subset([], _) :- !.
+subset([Head1|Tail1], [Head2|Tail2]) :-
+	compare(Order, Head1, Head2),
+	subset(Order, Head1, Tail1, Head2, Tail2).
+
+subset(=, _, Tail1, _, Tail2) :-
+	subset(Tail1, Tail2).
+subset(>, Head1, Tail1, _, Tail2) :-
+	subset([Head1|Tail1], Tail2).
+
+
+
+%   subtract(+Set1, +Set2, ?Difference)
+%   is true when Difference contains all and only the elements of Set1
+%   which are not also in Set2.
+
+
+subtract(Set1, [], Set1) :- !.
+subtract([], _, []) :- !.
+subtract([Head1|Tail1], [Head2|Tail2], Difference) :-
+	compare(Order, Head1, Head2),
+	subtract(Order, Head1, Tail1, Head2, Tail2, Difference).
+
+subtract(=, _,     Tail1, _,     Tail2, Difference) :-
+	subtract(Tail1, Tail2, Difference).
+subtract(<, Head1, Tail1, Head2, Tail2, [Head1|Difference]) :-
+	subtract(Tail1, [Head2|Tail2], Difference).
+subtract(>, Head1, Tail1, _,     Tail2, Difference) :-
+	subtract([Head1|Tail1], Tail2, Difference).
+
+
+
+%   symdiff(+Set1, +Set2, ?Difference)
+%   is true when Difference is the symmetric difference of Set1 and Set2.
+
+symdiff(Set1, [], Set1) :- !.
+symdiff([], Set2, Set2) :- !.
+symdiff([Head1|Tail1], [Head2|Tail2], Difference) :-
+	compare(Order, Head1, Head2),
+	symdiff(Order, Head1, Tail1, Head2, Tail2, Difference).
+
+symdiff(=, _,     Tail1, _,     Tail2, Difference) :-
+	symdiff(Tail1, Tail2, Difference).
+symdiff(<, Head1, Tail1, Head2, Tail2, [Head1|Difference]) :-
+	symdiff(Tail1, [Head2|Tail2], Difference).
+symdiff(>, Head1, Tail1, Head2, Tail2, [Head2|Difference]) :-
+	symdiff([Head1|Tail1], Tail2, Difference).
+
+
+
+%   union(+Set1, +Set2, ?Union)
+%   is true when Union is the union of Set1 and Set2.  Note that when
+%   something occurs in both sets, we want to retain only one copy.
+
+union(Set1, [], Set1) :- !.
+union([], Set2, Set2) :- !.
+union([Head1|Tail1], [Head2|Tail2], Union) :-
+	compare(Order, Head1, Head2),
+	union(Order, Head1, Tail1, Head2, Tail2, Union).
+
+union(=, Head,  Tail1, _,     Tail2, [Head|Union]) :-
+	union(Tail1, Tail2, Union).
+union(<, Head1, Tail1, Head2, Tail2, [Head1|Union]) :-
+	union(Tail1, [Head2|Tail2], Union).
+union(>, Head1, Tail1, Head2, Tail2, [Head2|Union]) :-
+	union([Head1|Tail1], Tail2, Union).
+
+?- hidden.
+?- protect([add_element(3), del_element(3), member(2), memberchk(2), 
+	disjoint(2), intersect(2), intersect(3), seteq(2), subset(2), 
+	subtract(3), symdiff(3), union(3), list_to_set(2)]).
+	
+	% term comparison
+	% (compare/2, @</2, $</2 etc not here yet)
+	% logical version is term_compare/3 which delays with vars
+	% (and causes a bit of backtracking too).
+	% This should really be implemented in C.
+?- hide([ compare1(3), scompare(3), is_atom(1)]).
+
+compare(=, X, X).
+compare(C, X, Y) :- X ~= Y, compare1(X, Y, C).
+
+?- wait compare1(0, 0, 1).
+compare1(1, _, _) :-		% causes delay with vars
+	fail.
+compare1(_, 1, _) :-
+	fail.
+compare1(X, Y, <) :- int(X), int(Y), X < Y.
+compare1(X, Y, >) :- int(X), int(Y), X > Y.
+compare1(X, Y, C) :-
+	is_atom(X),
+	is_atom(Y),
+	name(X, XN),
+	name(Y, YN),
+	scompare(XN, YN, C).
+
+?- wait scompare(0, 0, 1).
+% scompare([], [], =).		/* Not used in this application */
+scompare([], _._, <).
+scompare(_._, [], >).
+scompare(A.X, A.Y, C) :- scompare(X, Y, C).
+scompare(A.X, B.Y, <) :- A < B.
+scompare(A.X, B.Y, >) :- A > B.
+
+is_atom(X) :- X =.. [X].
+
+?- hidden.
+?- protect(compare(3)).
+

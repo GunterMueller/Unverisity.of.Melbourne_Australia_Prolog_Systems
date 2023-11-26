@@ -1,0 +1,1499 @@
+
+	.pred	'true',0
+	.clause
+0:	pro	
+	last
+
+	.pred	'fail',0
+	.clause
+0:	fail	
+	last
+
+	.pred	'$cutd',1
+	.clause
+0:	cutx	0
+	pro	
+	last
+
+	.pred	'$softCut',1
+	.clause
+0:	softcut	0
+	pro	
+	last
+
+	.pred	'$label',1
+	.clause
+0:	pc	1,#(CHR,&5)
+	ps	3,$'$label'/1
+	ulvx	0
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	abort	
+	dallpro	
+	last
+5: 	.string	"~NError in ~w -- not permitted in interpreted code at the moment.~n"
+
+	.pred	'$funcall',1
+	.clause
+0:	funcall	0
+	last
+
+	.pred	'$funcall',2
+	.clause
+0:	funcall	1
+	last
+
+	.pred	'$funcall',3
+	.clause
+0:	funcall	2
+	last
+
+	.pred	'$funcall',4
+	.clause
+0:	funcall	3
+	last
+
+	.pred	'$funcall',5
+	.clause
+0:	funcall	4
+	last
+
+	.pred	'$funcall',6
+	.clause
+0:	funcall	5
+	last
+
+	.pred	'$funcall',7
+	.clause
+0:	funcall	6
+	last
+
+	.pred	'$apply',2
+	.clause
+0:	apply	1
+	last
+
+	.pred	'$apply',3
+	.clause
+0:	apply	2
+	last
+
+	.pred	'$apply',4
+	.clause
+0:	apply	3
+	last
+
+	.pred	'$apply',5
+	.clause
+0:	apply	4
+	last
+
+	.pred	'$apply',6
+	.clause
+0:	apply	5
+	last
+
+	.pred	'$apply',7
+	.clause
+0:	apply	6
+	last
+
+	.pred	'$execs',1
+	.clause
+0:	exec	1,&'$execs'/1
+	last
+
+	.pred	'throw',1
+	.clause
+0:	throw	0
+	pro	
+	last
+
+	.pred	'var',1
+	.clause
+0:	typx	0,3
+	pro	
+	last
+
+	.pred	'$ref',1
+	.clause
+0:	exec	1,&'$ref'/1
+	last
+
+	.pred	'$del',1
+	.clause
+0:	typx	0,2
+	pro	
+	last
+
+	.pred	'nonvar',1
+	.clause
+0:	typx	0,252
+	pro	
+	last
+
+	.pred	'$icn',1
+	.clause
+0:	typx	0,4
+	pro	
+	last
+
+	.pred	'$ucn',1
+	.clause
+0:	typx	0,8
+	pro	
+	last
+
+	.pred	'compound',1
+	.clause
+0:	typx	0,112
+	pro	
+	last
+
+	.pred	'const',1
+	.clause
+0:	typx	0,12
+	pro	
+	last
+
+	.pred	'cons',1
+	.clause
+0:	typx	0,48
+	pro	
+	last
+
+	.pred	'$string',1
+	.clause
+0:	typx	0,32
+	pro	
+	last
+
+	.pred	'term',1
+	.clause
+0:	typx	0,112
+	pro	
+	last
+
+	.pred	'$struct',1
+	.clause
+0:	typx	0,64
+	pro	
+	last
+
+	.pred	'$bmv',1
+	.clause
+0:	typx	0,128
+	pro	
+	last
+
+	.pred	'atom',1
+	.clause
+0:	ctypx	0,2
+	pro	
+	last
+
+	.pred	'integer',1
+	.clause
+0:	ctypx	0,17
+	pro	
+	last
+
+	.pred	'atomic',1
+	.clause
+0:	ctypx	0,51
+	pro	
+	last
+
+	.pred	'$block',1
+	.clause
+0:	ctypx	0,8
+	pro	
+	last
+
+	.pred	'float',1
+	.clause
+0:	ctypx	0,32
+	pro	
+	last
+
+	.pred	'number',1
+	.clause
+0:	ctypx	0,49
+	pro	
+	last
+
+	.pred	'=',2
+	.clause
+0:	gvalx	1,0
+	pro	
+	last
+
+	.pred	'<',2
+	.clause
+0:	apushx	0
+	pushx	1
+	apred	2
+	pro	
+	last
+
+	.pred	'=<',2
+	.clause
+0:	apushx	0
+	pushx	1
+	apred	3
+	pro	
+	last
+
+	.pred	'>',2
+	.clause
+0:	apushx	1
+	pushx	0
+	apred	2
+	pro	
+	last
+
+	.pred	'>=',2
+	.clause
+0:	apushx	1
+	pushx	0
+	apred	3
+	pro	
+	last
+
+	.pred	'=:=',2
+	.clause
+0:	apushx	0
+	pushx	1
+	apred	6
+	pro	
+	last
+
+	.pred	'=\\=',2
+	.clause
+0:	apushx	0
+	pushx	1
+	apred	7
+	pro	
+	last
+
+	.pred	'is',2
+	.clause
+0:	apushx	1
+	popvx	0
+	pro	
+	last
+
+	.pred	'==',2
+	.clause
+0:	id	0,1
+	pro	
+	last
+
+	.pred	'\\==',2
+	.clause
+0:	notid	0,1
+	pro	
+	last
+
+	.pred	'$eRef',2
+	.clause
+0:	eref	0,2
+	gvalx	1,2
+	pro	
+	last
+
+	.pred	'$mkObj',4
+	.clause
+0:	mkobj	0,1,2,4
+	gvalx	3,4
+	pro	
+	last
+
+	.pred	'@<',2
+	.clause
+0:	compare	2,0,1
+	gc	2,$'<'
+	pro	
+	last
+
+	.pred	'@=<',2
+	.clause
+0:	compare	2,0,1
+	gvara	0,2
+	exec	1,&'$compareLE'/1
+	last
+
+	.pred	'@>',2
+	.clause
+0:	compare	2,1,0
+	gc	2,$'<'
+	pro	
+	last
+
+	.pred	'@>=',2
+	.clause
+0:	compare	2,1,0
+	gvara	0,2
+	exec	1,&'$compareLE'/1
+	last
+
+	.pred	'compare',3
+	.clause
+0:	compare	3,1,2
+	gvalx	0,3
+	pro	
+	last
+
+	.pred	'$sort',3
+	.clause
+0:	sort	0,1,3
+	gvalx	2,3
+	pro	
+	last
+
+	.pred	'and',2
+	.clause
+0:	apushx	0
+	pushx	1
+	apred	0
+	pro	
+	last
+
+	.pred	'or',2
+	.clause
+0:	apushx	0
+	pushx	1
+	apred	1
+	pro	
+	last
+
+	.pred	'~=',2
+	.clause
+0:3: 	te	0,0,2,&4
+	iseq	0,1,2
+	gc	2,$'fail'
+	pro	
+4: 	tre	0,0
+	fail	
+5: 	last
+
+	.pred	'$copyVariablesToTopOfHeap:-)',1
+	.clause
+0:	cvttoh	0
+	pro	
+	last
+
+	.pred	'$fvar',2
+	.clause
+0:	fvar	0,2
+	gvalx	1,2
+	pro	
+	last
+
+	.pred	'ground',1
+	.clause
+0:	fvar	0,255
+	typx	255,252
+	pro	
+	last
+
+	.pred	'$load',1
+	.clause
+0:	load	0
+	pro	
+	last
+
+	.pred	'$iload',3
+	.clause
+0:	iload	0,1,2
+	pro	
+	last
+
+	.pred	'$fload',4
+	.clause
+0:	fload	0,1,2,4
+	gvalx	3,4
+	pro	
+	last
+
+	.pred	'fork',3
+	.clause
+0:	fork	0,3,4,5,0
+	gvalx	0,3
+	gvalx	1,4
+	gvalx	2,5
+	pro	
+	last
+
+	.pred	'fork',4
+	.clause
+0:	fork	1,4,5,6,7
+	gvalx	0,4
+	gvalx	1,5
+	gvalx	2,6
+	gvalx	3,7
+	pro	
+	last
+
+	.pred	'$spy',2
+	.clause
+0:	spy	0,1
+	pro	
+	last
+
+	.pred	'$nospy',2
+	.clause
+0:	nospy	0,1
+	pro	
+	last
+
+	.pred	'$replacn',3
+	.clause
+0:	replacn	0,1,2
+	pro	
+	last
+
+	.pred	'setarg',3
+	.clause
+0:	setarg	0,1,2
+	pro	
+	last
+
+	.pred	'$oncut',2
+	.clause
+0:	oncut	0,1
+	pro	
+	last
+
+	.pred	'put',1
+	.clause
+0:	put	0
+	pro	
+	last
+
+	.pred	'put',2
+	.clause
+0:	sput	0,1
+	pro	
+	last
+
+	.pred	'putl',1
+	.clause
+0:	currstr	1,1
+	sputl	1,0
+	pro	
+	last
+
+	.pred	'putl',2
+	.clause
+0:	sputl	0,1
+	pro	
+	last
+
+	.pred	'$display',1
+	.clause
+0:	dispx	0
+	pro	
+	last
+
+	.pred	'$display',2
+	.clause
+0:	currstr	1,2
+	setstr	1,0
+	dispx	1
+	setstr	1,2
+	pro	
+	last
+
+	.pred	'$printf',3
+	.clause
+0:	printf	0,1,2
+	pro	
+	last
+
+	.pred	'$printNumber',4
+	.clause
+0:	prtnum	0,1,2,4
+	gvalx	3,4
+	pro	
+	last
+
+	.pred	'$sprt',3
+	.clause
+0:	sprt	0,1,3
+	gvalx	2,3
+	pro	
+	last
+
+	.pred	'=..',2
+	.clause
+0:	univ	0,1
+	pro	
+	last
+
+	.pred	'occurs',2
+	.clause
+0:	occurs	0,1
+	pro	
+	last
+
+	.pred	'name',2
+	.clause
+0:	name	0,1
+	pro	
+	last
+
+	.pred	'$listToString',2
+	.clause
+0:	ltos	0,1
+	pro	
+	last
+
+	.pred	'$flags',1
+	.clause
+0:	flags	1
+	gvalx	0,1
+	pro	
+	last
+
+	.pred	'$defined',2
+	.clause
+0:	defined	0,1,2,3
+	pro	
+	last
+
+	.pred	'$defined',4
+	.clause
+0:	defined	0,1,4,5
+	gvalx	2,4
+	gvalx	3,5
+	pro	
+	last
+
+	.pred	'$predicateArities',2
+	.clause
+0:	arities	0,2
+	gvalx	1,2
+	pro	
+	last
+
+	.pred	'plus',3
+	.clause
+0:	plus	0,1,2
+	pro	
+	last
+
+	.pred	'times',3
+	.clause
+0:	apushx	0
+	pushx	1
+	afunc	2
+	popvx	2
+	apushx	2
+	pushx	0
+	afunc	4
+	popvx	1
+	apushx	2
+	pushx	1
+	afunc	4
+	popvx	0
+	pro	
+	last
+
+	.pred	'.adivides4',4
+3: 	jnvx	0,&1
+2: 	mkdel	4,&3
+	mark	0
+	delay	
+	.clause
+1:	pc	4,$0
+	idtest	0,4
+	jfail	&8
+	pro	
+8: 	apushx	2
+	pushx	3
+	afunc	1
+	pushx	0
+	afunc	4
+	popvx	1
+	pro	
+9: 	last
+
+	.pred	'divides',4
+	.clause
+0:	gvarx	4,0
+	gvara	0,2
+	apushx	4
+	pushx	1
+	afunc	4
+	popvx	0
+	apushx	4
+	pushx	1
+	afunc	5
+	popvx	3
+	apushx	1
+	pushx	0
+	afunc	2
+	pushx	3
+	afunc	0
+	popvx	4
+	gvara	2,4
+	exec	4,&'.adivides4'/4
+	last
+
+	.pred	'functor',3
+	.clause
+0:	functor	0,1,2
+	pro	
+	last
+
+	.pred	'arg',3
+	.clause
+0:	arg	0,1,3
+	gvalx	2,3
+	pro	
+	last
+
+	.pred	'$aref',3
+	.clause
+0:	aref	0,1,3,0
+	gvalx	2,3
+	pro	
+	last
+
+	.pred	'$arefl',3
+	.clause
+0:	aref	0,1,3,1
+	gvalx	2,3
+	pro	
+	last
+
+	.pred	'$aset',4
+	.clause
+0:	aset	0,1,2,4,0
+	gvalx	3,4
+	pro	
+	last
+
+	.pred	'$error',2
+	.clause
+0:	gvarx	2,1
+	pc	1,#(CHR,&6)
+	ps	3,$'$error'/2
+	ulvx	0
+	ulvx	2
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	fail	
+	last
+6: 	.string	"~NError in ~w -- not permitted in interpreted code at the moment.~n"
+
+	.pred	'repeat',0
+2: 	t	0,0,&0
+	tr	0,0,&1
+	.clause
+0:	pro	
+	.clause
+1:	exec	0,&'repeat'/0
+	last
+
+	.pred	'!',0
+	.clause
+0:	pc	1,#(CHR,&4)
+	pc	2,#(LST,&5)
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	fail	
+	last
+5: 	.word	$'!'
+	.word	$[]
+4: 	.string	"~NError in ~w.~nShould not be possible to call this directly.~n"
+
+	.pred	'$softCut',0
+	.clause
+0:	pc	1,#(CHR,&4)
+	pc	2,#(LST,&5)
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	fail	
+	last
+5: 	.word	$'$softCut'
+	.word	$[]
+4: 	.string	"~NError in ~w.~nShould not be possible to call this directly.~n"
+
+	.pred	',',2
+	.clause
+0:	gvarx	2,1
+	pc	1,#(CHR,&6)
+	ps	3,$','/2
+	ulvx	0
+	ulvx	2
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	fail	
+	last
+6: 	.string	"~NError in ~w.~nShould not be possible to call this directly.~n"
+
+	.pred	';',2
+	.clause
+0:	gvarx	2,1
+	pc	1,#(CHR,&6)
+	ps	3,$';'/2
+	ulvx	0
+	ulvx	2
+	pl	2
+	uvalx	3
+	uc	$[]
+	pc	0,$'user_error'
+	all	0
+	call	0,3,&'$format'/3
+	fail	
+	last
+6: 	.string	"~NError in ~w.~nShould not be possible to call this directly.~n"
+
+	.pred	'\\+',1
+	.clause
+0:	all	1
+	labely	0
+3: 	te	0,0,1,&4
+	call	1,1,&'call'/1
+	cuty	0
+	fail	
+4: 	tre	0,0
+	dallpro	
+5: 	last
+
+	.pred	'once',1
+	.clause
+0:	all	1
+	labely	0
+	call	1,1,&'call'/1
+	cuty	0
+	dallpro	
+	last
+
+	.pred	'->',2
+	.clause
+0:	all	2
+	gvary	0,1
+	labely	1
+5: 	te	0,0,1,&6
+	call	2,1,&'call'/1
+	cuty	1
+	pvaly	0,0
+	dallexe	1,&'call'/1
+6: 	tre	0,0
+	dallpro	
+7: 	last
+
+	.pred	'\\=',2
+	.clause
+0:	labelx	2
+3: 	te	0,0,3,&4
+	gvalx	1,0
+	cutx	2
+	fail	
+4: 	tre	0,0
+	pro	
+5: 	last
+
+	.pred	'abort',0
+	.clause
+0:	abort	
+	pro	
+	last
+
+	.pred	'exit',1
+	.clause
+0:	exit	0
+	pro	
+	last
+
+	.pred	'$symbol',2
+	.clause
+0:	symbol	0,2
+	gvalx	1,2
+	pro	
+	last
+
+	.pred	'$copy',4
+4: 	sot	0,&2,&5,&3,&3
+2: 	t	4,0,&0
+	tr	4,0,&1
+5: 	soc	0,&($0:&0,$1:&1),&3
+3: 	fail	
+	.clause
+0:	gc	0,$0
+	pc	4,$0
+	copy	4,1,4,5
+	gvalx	3,5
+	gvalx	2,4
+	pro	
+	.clause
+1:	gc	0,$1
+	pc	4,$1
+	copy	4,1,4,5
+	gvalx	3,5
+	gvalx	2,4
+	pro	
+	last
+
+	.pred	'$uncopy',3
+	.clause
+0:	uncopy	0,1,3
+	gvalx	2,3
+	pro	
+	last
+
+	.pred	'erase',1
+	.clause
+0:	erase	0
+	pro	
+	last
+
+	.pred	'$abolishCode',2
+	.clause
+0:	abolish	0,1
+	pro	
+	last
+
+	.pred	'$makeBMT',4
+	.clause
+0:	makebmt	0,1,4,5
+	gvalx	3,5
+	gvalx	2,4
+	pro	
+	last
+
+	.pred	'$linkBMT',3
+4: 	sot	0,&2,&5,&3,&3
+2: 	t	3,0,&0
+	tr	3,0,&1
+5: 	soc	0,&($0:&0,$1:&1),&3
+3: 	fail	
+	.clause
+0:	gc	0,$0
+	linkbmt	0,1,2
+	pro	
+	.clause
+1:	gc	0,$1
+	linkbmt	1,1,2
+	pro	
+	last
+
+	.pred	'instance',2
+	.clause
+0:	inst	0,2,3
+	gvalx	1,3
+	pro	
+	last
+
+	.pred	'instance',3
+	.clause
+0:	inst	0,3,4
+	gvalx	2,4
+	gvalx	1,3
+	pro	
+	last
+
+	.pred	'$proplist',2
+	.clause
+0:	pvarx	2,2
+	props	0,2,2
+	gvalx	1,2
+	pro	
+	last
+
+	.pred	'$proplist',3
+	.clause
+0:	props	0,1,3
+	gvalx	2,3
+	pro	
+	last
+
+	.pred	'get0',1
+	.clause
+0:	get	1,0
+	gvalx	0,1
+	pro	
+	last
+
+	.pred	'get',1
+	.clause
+0:	get	1,1
+	gvalx	0,1
+	pro	
+	last
+
+	.pred	'get0',2
+	.clause
+0:	sget	0,2,0
+	gvalx	1,2
+	pro	
+	last
+
+	.pred	'get',2
+	.clause
+0:	sget	0,2,1
+	gvalx	1,2
+	pro	
+	last
+
+	.pred	'getToken',3
+	.clause
+0:	sgettok	0,3,4
+	gvalx	1,3
+	gvalx	2,4
+	pro	
+	last
+
+	.pred	'$tokenize',4
+	.clause
+0:	token	0,4,5,6
+	gvalx	1,4
+	gvalx	2,5
+	gvalx	3,6
+	pro	
+	last
+
+	.pred	'nl',0
+	.clause
+0:	pc	0,$10
+	put	0
+	pro	
+	last
+
+	.pred	'nl',1
+	.clause
+0:	pc	1,$10
+	sput	0,1
+	pro	
+	last
+
+	.pred	'$open',3
+	.clause
+0:	open	0,1,3
+	gvalx	2,3
+	pro	
+	last
+
+	.pred	'$close',1
+	.clause
+0:	close	0,1
+	pro	
+	last
+
+	.pred	'$currentStream',4
+	.clause
+0:	getstr	0,4
+	gs	4,$'$stream'/7
+	ulvx	1
+	ulvx	2
+	ulvx	3
+	uvoid	4
+	pnil	4
+	notid	3,4
+	pro	
+	last
+
+	.pred	'$getStream',2
+	.clause
+0:	getstr	0,2
+	gvalx	1,2
+	pro	
+	last
+
+	.pred	'flushOutput',1
+	.clause
+0:	flush	0
+	pro	
+	last
+
+	.pred	'clearIOError',1
+	.clause
+0:	clrerr	0
+	pro	
+	last
+
+	.pred	'setInput',1
+	.clause
+0:	setstr	0,0
+	pro	
+	last
+
+	.pred	'setOutput',1
+	.clause
+0:	setstr	1,0
+	pro	
+	last
+
+	.pred	'currentInput',1
+	.clause
+0:	currstr	0,1
+	gvalx	0,1
+	pro	
+	last
+
+	.pred	'currentOutput',1
+	.clause
+0:	currstr	1,1
+	gvalx	0,1
+	pro	
+	last
+
+	.pred	'ttyget0',1
+	.clause
+0:	pc	1,$'user'
+	sget	1,1,0
+	gvalx	0,1
+	pro	
+	last
+
+	.pred	'ttyget',1
+	.clause
+0:	pc	1,$'user'
+	sget	1,1,1
+	gvalx	0,1
+	pro	
+	last
+
+	.pred	'ttyskip',1
+	.clause
+0:	gvarx	1,0
+	pc	0,$'user'
+	exec	2,&'skip'/2
+	last
+
+	.pred	'ttyput',1
+	.clause
+0:	pc	1,$'user'
+	sput	1,0
+	pro	
+	last
+
+	.pred	'ttynl',0
+	.clause
+0:	pc	0,$'user'
+	pc	1,$10
+	sput	0,1
+	pro	
+	last
+
+	.pred	'ttytab',1
+	.clause
+0:	gvarx	1,0
+	pc	0,$'user'
+	exec	2,&'tab'/2
+	last
+
+	.pred	'ttyflush',0
+	.clause
+0:	pc	0,$'user'
+	flush	0
+	pro	
+	last
+
+	.pred	'isAtom',1
+2: 	jnvx	0,&0
+1: 	mkdel	1,&2
+	mark	0
+	delay	
+	.clause
+0:	ctypx	0,2
+	pro	
+	last
+
+	.pred	'isAtomic',1
+2: 	jnvx	0,&0
+1: 	mkdel	1,&2
+	mark	0
+	delay	
+	.clause
+0:	ctypx	0,51
+	pro	
+	last
+
+	.pred	'isConst',1
+2: 	jnvx	0,&0
+1: 	mkdel	1,&2
+	mark	0
+	delay	
+	.clause
+0:	typx	0,12
+	pro	
+	last
+
+	.pred	'isCons',1
+2: 	jnvx	0,&0
+1: 	mkdel	1,&2
+	mark	0
+	delay	
+	.clause
+0:	typx	0,48
+	pro	
+	last
+
+	.pred	'isInt',1
+2: 	jnvx	0,&0
+1: 	mkdel	1,&2
+	mark	0
+	delay	
+	.clause
+0:	ctypx	0,17
+	pro	
+	last
+
+	.pred	'isFloat',1
+2: 	jnvx	0,&0
+1: 	mkdel	1,&2
+	mark	0
+	delay	
+	.clause
+0:	ctypx	0,32
+	pro	
+	last
+
+	.pred	'isNumber',1
+2: 	jnvx	0,&0
+1: 	mkdel	1,&2
+	mark	0
+	delay	
+	.clause
+0:	ctypx	0,49
+	pro	
+	last
+
+	.pred	'isTerm',1
+2: 	jnvx	0,&0
+1: 	mkdel	1,&2
+	mark	0
+	delay	
+	.clause
+0:	typx	0,112
+	pro	
+	last
+
+	.pred	'isExpression',1
+59: 	sot	0,&60,&61,&58,&62
+60: 	mkdel	1,&59
+	mark	0
+	delay	
+61: 	soce	0,&($'maxint':&2,$'minint':&3,$'pi':&1),&0
+58: 	fail	
+62: 	sos	0,&($'*'/2:&23,$'**'/2:&27,$'+'/1:&5,$'+'/2:&21,$'-'/1:&6,$'-'/2:&22,$'/'/2:&24,$'//'/2:&25,$'/\\'/2:&29,$'<'/2:&36,$'<<'/2:&32,$'=:='/2:&34,$'=<'/2:&37,$'=\\='/2:&35,$'>'/2:&38,$'>='/2:&39,$'>>'/2:&33,$'\\'/1:&7,$'\\/'/2:&30,$'^'/2:&31,$'acos'/1:&12,$'addressAt'/1:&52,$'address_at'/1:&53,$'and'/2:&40,$'asin'/1:&11,$'atan'/1:&13,$'atan2'/2:&28,$'cos'/1:&9,$'doubleAt'/1:&56,$'double_at'/1:&57,$'exp'/1:&14,$'float'/1:&19,$'integer'/1:&18,$'integer16At'/1:&46,$'integer8At'/1:&42,$'integerAt'/1:&50,$'integer_16_at'/1:&47,$'integer_8_at'/1:&43,$'integer_at'/1:&51,$'log'/1:&15,$'log10'/1:&16,$'mod'/2:&26,$'not'/1:&4,$'or'/2:&41,$'round'/1:&20,$'sin'/1:&8,$'singleAt'/1:&54,$'single_at'/1:&55,$'sqrt'/1:&17,$'tan'/1:&10,$'unsigned16At'/1:&48,$'unsigned8At'/1:&44,$'unsigned_16_at'/1:&49,$'unsigned_8_at'/1:&45),&58
+	.clause
+0:	ctypx	0,49
+	pro	
+	.clause
+1:	gc	0,$'pi'
+	pro	
+	.clause
+2:	gc	0,$'maxint'
+	pro	
+	.clause
+3:	gc	0,$'minint'
+	pro	
+	.clause
+4:	gsx1	0,0,$'not'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+5:	gsx1	0,0,$'+'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+6:	gsx1	0,0,$'-'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+7:	gsx1	0,0,$'\\'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+8:	gsx1	0,0,$'sin'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+9:	gsx1	0,0,$'cos'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+10:	gsx1	0,0,$'tan'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+11:	gsx1	0,0,$'asin'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+12:	gsx1	0,0,$'acos'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+13:	gsx1	0,0,$'atan'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+14:	gsx1	0,0,$'exp'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+15:	gsx1	0,0,$'log'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+16:	gsx1	0,0,$'log10'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+17:	gsx1	0,0,$'sqrt'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+18:	gsx1	0,0,$'integer'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+19:	gsx1	0,0,$'float'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+20:	gsx1	0,0,$'round'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+21:	gs	0,$'+'/2
+	uvara	0
+	all	1
+	uvary	0
+	call	1,1,&'isExpression'/1
+	pvaly	0,0
+	dall	
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+22:	gs	0,$'-'/2
+	uvara	0
+	all	1
+	uvary	0
+	call	1,1,&'isExpression'/1
+	pvaly	0,0
+	dall	
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+23:	gs	0,$'*'/2
+	uvara	0
+	all	1
+	uvary	0
+	call	1,1,&'isExpression'/1
+	pvaly	0,0
+	dall	
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+24:	gs	0,$'/'/2
+	uvara	0
+	all	1
+	uvary	0
+	call	1,1,&'isExpression'/1
+	pvaly	0,0
+	dall	
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+25:	gs	0,$'//'/2
+	uvara	0
+	all	1
+	uvary	0
+	call	1,1,&'isExpression'/1
+	pvaly	0,0
+	dall	
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+26:	gs	0,$'mod'/2
+	uvara	0
+	all	1
+	uvary	0
+	call	1,1,&'isExpression'/1
+	pvaly	0,0
+	dall	
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+27:	gs	0,$'**'/2
+	uvara	0
+	all	1
+	uvary	0
+	call	1,1,&'isExpression'/1
+	pvaly	0,0
+	dall	
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+28:	gs	0,$'atan2'/2
+	uvara	0
+	all	1
+	uvary	0
+	call	1,1,&'isExpression'/1
+	pvaly	0,0
+	dall	
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+29:	gs	0,$'/\\'/2
+	uvara	0
+	all	1
+	uvary	0
+	call	1,1,&'isExpression'/1
+	pvaly	0,0
+	dall	
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+30:	gs	0,$'\\/'/2
+	uvara	0
+	all	1
+	uvary	0
+	call	1,1,&'isExpression'/1
+	pvaly	0,0
+	dall	
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+31:	gs	0,$'^'/2
+	uvara	0
+	all	1
+	uvary	0
+	call	1,1,&'isExpression'/1
+	pvaly	0,0
+	dall	
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+32:	gs	0,$'<<'/2
+	uvara	0
+	all	1
+	uvary	0
+	call	1,1,&'isExpression'/1
+	pvaly	0,0
+	dall	
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+33:	gs	0,$'>>'/2
+	uvara	0
+	all	1
+	uvary	0
+	call	1,1,&'isExpression'/1
+	pvaly	0,0
+	dall	
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+34:	gs	0,$'=:='/2
+	uvara	0
+	all	1
+	uvary	0
+	call	1,1,&'isExpression'/1
+	pvaly	0,0
+	dall	
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+35:	gs	0,$'=\\='/2
+	uvara	0
+	all	1
+	uvary	0
+	call	1,1,&'isExpression'/1
+	pvaly	0,0
+	dall	
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+36:	gs	0,$'<'/2
+	uvara	0
+	all	1
+	uvary	0
+	call	1,1,&'isExpression'/1
+	pvaly	0,0
+	dall	
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+37:	gs	0,$'=<'/2
+	uvara	0
+	all	1
+	uvary	0
+	call	1,1,&'isExpression'/1
+	pvaly	0,0
+	dall	
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+38:	gs	0,$'>'/2
+	uvara	0
+	all	1
+	uvary	0
+	call	1,1,&'isExpression'/1
+	pvaly	0,0
+	dall	
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+39:	gs	0,$'>='/2
+	uvara	0
+	all	1
+	uvary	0
+	call	1,1,&'isExpression'/1
+	pvaly	0,0
+	dall	
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+40:	gs	0,$'and'/2
+	uvara	0
+	all	1
+	uvary	0
+	call	1,1,&'isExpression'/1
+	pvaly	0,0
+	dall	
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+41:	gs	0,$'or'/2
+	uvara	0
+	all	1
+	uvary	0
+	call	1,1,&'isExpression'/1
+	pvaly	0,0
+	dall	
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+42:	gsx1	0,0,$'integer8At'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+43:	gsx1	0,0,$'integer_8_at'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+44:	gsx1	0,0,$'unsigned8At'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+45:	gsx1	0,0,$'unsigned_8_at'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+46:	gsx1	0,0,$'integer16At'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+47:	gsx1	0,0,$'integer_16_at'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+48:	gsx1	0,0,$'unsigned16At'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+49:	gsx1	0,0,$'unsigned_16_at'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+50:	gsx1	0,0,$'integerAt'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+51:	gsx1	0,0,$'integer_at'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+52:	gsx1	0,0,$'addressAt'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+53:	gsx1	0,0,$'address_at'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+54:	gsx1	0,0,$'singleAt'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+55:	gsx1	0,0,$'single_at'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+56:	gsx1	0,0,$'doubleAt'/1
+	execsot	1,0,&60,&61,&58,&62
+	.clause
+57:	gsx1	0,0,$'double_at'/1
+	execsot	1,0,&60,&61,&58,&62
+	last
+

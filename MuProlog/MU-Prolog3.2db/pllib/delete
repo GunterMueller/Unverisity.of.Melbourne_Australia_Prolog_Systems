@@ -1,0 +1,5 @@
+/*	_3 is _2 with element _1 removed */
+?- wait delete(1,0,1).
+?- wait delete(0,1,0).
+delete(A, A.B, B).
+delete(A, B.C.D, B.E) :- delete(A, C.D, E).

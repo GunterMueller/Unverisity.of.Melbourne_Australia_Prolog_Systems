@@ -1,0 +1,413 @@
+
+	.pred	'sortConstantWhens',5
+	.clause
+0:	all	9
+	gvary	8,0
+	gvary	7,2
+	gvary	2,3
+	gvary	0,4
+	pvaly	8,0
+	pvary	6,2
+	call	9,3,&'constantWhenKeys'/3
+	pvaly	8,0
+	pvaly	7,1
+	pvary	5,2
+	call	7,3,&'constantHeadKeys'/3
+	puval	6,0
+	puval	5,1
+	pvary	4,2
+	call	5,3,&'append'/3
+	puval	4,0
+	pvary	3,1
+	call	4,2,&'keySort'/2
+	puval	3,0
+	pvaly	2,1
+	pvary	1,2
+	call	2,3,&'leftOverWhens'/3
+	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'stripKeys'/2
+	last
+
+	.pred	'sortConstantHeads',3
+	.clause
+0:	all	3
+	gvary	0,2
+	pvary	2,2
+	call	3,3,&'constantHeadKeys'/3
+	puval	2,0
+	pvary	1,1
+	call	2,2,&'keySort'/2
+	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'groupTuples'/2
+	last
+
+	.pred	'sortStructWhens',5
+	.clause
+0:	all	9
+	gvary	8,0
+	gvary	7,2
+	gvary	2,3
+	gvary	0,4
+	pvaly	8,0
+	pvary	6,2
+	call	9,3,&'structWhenKeys'/3
+	pvaly	8,0
+	pvaly	7,1
+	pvary	5,2
+	call	7,3,&'structHeadKeys'/3
+	puval	6,0
+	puval	5,1
+	pvary	4,2
+	call	5,3,&'append'/3
+	puval	4,0
+	pvary	3,1
+	call	4,2,&'keySort'/2
+	puval	3,0
+	pvaly	2,1
+	pvary	1,2
+	call	2,3,&'leftOverWhens'/3
+	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'stripKeys'/2
+	last
+
+	.pred	'sortStructHeads',3
+	.clause
+0:	all	3
+	gvary	0,2
+	pvary	2,2
+	call	3,3,&'structHeadKeys'/3
+	puval	2,0
+	pvary	1,1
+	call	2,2,&'keySort'/2
+	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'groupTuples'/2
+	last
+
+	.pred	'leftOverWhens',3
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	3,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	gnil	2
+	pro	
+	.clause
+1:	glvx2	0,4,5
+	gl	1
+	uvarx	3
+	all	5
+	uvary	1
+	gs	3,$'group'/3
+	uvary	3
+	uvary	4
+	uvarx	3
+	gvary	0,2
+	gs	4,$'-'/2
+	uvaly	3
+	uvoid	1
+	pl	1
+	uvalx	4
+	uvalx	5
+	pvaly	3,0
+	pvaly	4,2
+	pvary	2,4
+	call	5,5,&'keyGroup'/5
+	pvaly	4,3
+	pnil	4
+	idtest	3,4
+	jfail	&19
+	pc	3,$'user_error'
+	pc	4,#(CHR,&18)
+	sputl	3,4
+	pc	0,$'user_error'
+	pvaly	3,1
+	call	3,2,&'writeln'/2
+	j	&19
+19: 	puval	2,0
+	pvaly	1,1
+	pvaly	0,2
+	dall	
+	execsot	3,0,&4,&0,&1,&2
+	last
+18: 	.string	"Warning: no when declaration matches clause containing "
+
+	.pred	'keyGroup',5
+3: 	sot	1,&4,&0,&1,&2
+4: 	mkdel	5,&3
+	mark	1
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	1
+	gnil	2
+	gnil	3
+	gnil	4
+	pro	
+	.clause
+1:	gvarx	8,1
+	glvx2	8,9,1
+	gsx2	9,5,6,$'-'/2
+	labelx	7
+17: 	te	9,0,9,&18
+	gvalx	5,0
+	cutx	7
+	gvara	5,6
+	exec	7,&'keyGroup'/7
+18: 	tre	9,0
+	gvalx	8,4
+	gnil	2
+	gnil	3
+	pro	
+19: 	last
+
+	.pred	'keyGroup',7
+3: 	sot	5,&4,&2,&2,&5
+4: 	mkdel	7,&3
+	mark	5
+	delay	
+2: 	fail	
+5: 	sos	5,&($'clause'/5:&0,$'when'/2:&1),&2
+	.clause
+0:	glvx2	3,7,3
+	gs	5,$'clause'/5
+	uvoid	5
+	gvalx	7,6
+	exec	5,&'keyGroup'/5
+	.clause
+1:	glvx2	2,7,2
+	gsx2	5,255,255,$'when'/2
+	gvalx	7,6
+	exec	5,&'keyGroup'/5
+	last
+
+	.pred	'groupTuples',2
+3: 	sot	0,&4,&0,&1,&2
+4: 	sot	1,&5,&0,&1,&2
+5: 	mkdel	2,&3
+	mark	1
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	pro	
+	.clause
+1:	glvx2	0,3,4
+	gl	1
+	uvarx	2
+	all	2
+	uvary	0
+	gs	2,$'group'/2
+	uvara	0
+	ul	255
+	uvarx	5
+	uvarx	2
+	gs	3,$'-'/2
+	uvalx	0
+	uvalx	5
+	gvara	1,4
+	pvary	1,3
+	call	2,4,&'keyPrefix'/4
+	puval	1,0
+	pvaly	0,1
+	dall	
+	execsot	2,0,&4,&0,&1,&2
+	last
+
+	.pred	'keyPrefix',4
+3: 	sot	1,&4,&0,&1,&2
+4: 	mkdel	4,&3
+	mark	1
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	1
+	gnil	2
+	gnil	3
+	pro	
+	.clause
+1:	gvarx	7,1
+	glvx2	7,8,1
+	gsx2	8,4,6,$'-'/2
+	labelx	5
+13: 	te	8,0,8,&14
+	gvalx	4,0
+	cutx	5
+	gl	2
+	uvalx	6
+	uvara	2
+	exec	4,&'keyPrefix'/4
+14: 	tre	8,0
+	gvalx	7,3
+	gnil	2
+	pro	
+15: 	last
+
+	.pred	'constantWhenKeys',3
+3: 	sot	1,&4,&0,&1,&2
+4: 	mkdel	3,&3
+	mark	1
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	1
+	gnil	2
+	pro	
+	.clause
+1:	all	3
+	gvary	2,0
+	gl	1
+	uvarx	3
+	uvary	1
+	gl	2
+	uvarx	4
+	uvary	0
+	gs	4,$'-'/2
+	uvara	2
+	uvalx	3
+	gsx2	3,1,255,$'when'/2
+	pvaly	2,0
+	call	3,3,&'nth0'/3
+	pvaly	2,0
+	pvaly	1,1
+	pvaly	0,2
+	dall	
+	execsot	3,1,&4,&0,&1,&2
+	last
+
+	.pred	'constantHeadKeys',3
+	.clause
+0:	apushx	0
+	afunc	46
+	popx	0
+	exec	3,&'constantHeadKeys1'/3
+	last
+
+	.pred	'constantHeadKeys1',3
+3: 	sot	1,&4,&0,&1,&2
+4: 	mkdel	3,&3
+	mark	1
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	1
+	gnil	2
+	pro	
+	.clause
+1:	glvx2	1,3,1
+	glvx2	2,4,2
+	gs	4,$'-'/2
+	uvarx	4
+	uvalx	3
+	gs	3,$'clause'/5
+	uvoid	2
+	uvarx	3
+	uvoid	2
+	arg	0,3,3
+	gvalx	4,3
+	execsot	3,1,&4,&0,&1,&2
+	last
+
+	.pred	'structWhenKeys',3
+3: 	sot	1,&4,&0,&1,&2
+4: 	mkdel	3,&3
+	mark	1
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	1
+	gnil	2
+	pro	
+	.clause
+1:	all	6
+	gvary	2,0
+	gl	1
+	uvarx	3
+	uvary	1
+	gl	2
+	uvarx	4
+	uvary	0
+	gs	4,$'-'/2
+	uvarx	4
+	uvalx	3
+	gs	4,$'/'/2
+	uvary	4
+	uvary	3
+	gsx2	3,1,255,$'when'/2
+	pvaly	2,0
+	pvary	5,2
+	call	6,3,&'nth0'/3
+	puval	5,3
+	pvaly	4,4
+	pvaly	3,5
+	functor	3,4,5
+	pvaly	2,0
+	pvaly	1,1
+	pvaly	0,2
+	dall	
+	execsot	3,1,&4,&0,&1,&2
+	last
+
+	.pred	'structHeadKeys',3
+	.clause
+0:	apushx	0
+	afunc	46
+	popx	0
+	exec	3,&'structHeadKeys1'/3
+	last
+
+	.pred	'structHeadKeys1',3
+3: 	sot	1,&4,&0,&1,&2
+4: 	mkdel	3,&3
+	mark	1
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	1
+	gnil	2
+	pro	
+	.clause
+1:	glvx2	1,3,1
+	glvx2	2,4,2
+	gs	4,$'-'/2
+	uvarx	4
+	uvalx	3
+	gsx2	4,4,5,$'/'/2
+	gs	3,$'clause'/5
+	uvoid	2
+	uvarx	3
+	uvoid	2
+	arg	0,3,3
+	functor	3,4,5
+	execsot	3,1,&4,&0,&1,&2
+	last
+
+	.pred	'stripKeys',2
+3: 	sot	0,&4,&0,&1,&2
+4: 	sot	1,&5,&0,&1,&2
+5: 	mkdel	2,&3
+	mark	1
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	pro	
+	.clause
+1:	glvx2	0,2,0
+	gsx2	2,255,2,$'-'/2
+	gl	1
+	uvalx	2
+	uvara	1
+	execsot	2,0,&4,&0,&1,&2
+	last
+

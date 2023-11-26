@@ -1,0 +1,90 @@
+#!/mip/usr/bin/perl
+
+$file = $ARGV[0];
+
+open(FILE, $file) || die "Can't open file $file";
+while(<FILE>) {
+	next unless(/^(L%\w*):/);
+	for($i = 0; /^(L%\w*):/; $i = $i+1) {
+#print 'label: ', $1, "\n";
+		$labels[$i] = $1;
+		$_ = <FILE>;
+	}
+#print;
+	next unless($_ =~ /^	bra	(L%\w*)/);
+	$target = $1;
+#print 'target: ', $target, "\n";
+	for($i = $i - 1; $i >= 0; $i = $i - 1) {
+#print $labels[$i], ' -> ', $target, "\n";
+		$jumps{$labels[$i]} = $target;
+	}
+}
+
+#	The following is probably only needed on the Sun4 and the Mac II
+@labels = keys(jumps);
+while($#labels >= 0) {
+	$k = pop(@labels);
+	for($t = $k; $jumps{$t}; $t = $jumps{$t})
+		{ }
+	$jumps{$k} = $t;
+}
+
+@labels = keys(jumps);
+while($#labels >= 0) {
+	$l = pop(@labels);
+	$targets{$jumps{$l}} .= "$l:\n";
+}
+
+#exit;
+
+open(FILE, $file) || die "Can't open file $file";
+$acc = '';
+while(<FILE>) {
+	print $acc;
+	$acc = '';
+#	if(/^(L%\w*):/) {
+#		next if($jumps{$1});
+#		print $targets{$1} if($targets{$1});
+#		print;
+#		next;
+#	}
+	$acc = $_;
+	next unless (/^	cmp.l	%d0,.255/);
+	$_ = <FILE>;
+	$acc .= $_;
+	$s = "^	bhi	";
+	next unless ($_ =~ $s);
+	$_ = <FILE>;
+	$acc .= $_;
+	next unless (/^	mov.l	.%pc,%d0.w.2,8.b.,%d0/);
+	$_ = <FILE>;
+	$acc .= $_;
+	next unless (/^	jmp	.%pc,%d0.w,6.b./);
+	$_ = <FILE>;
+	$acc .= $_;
+	next unless (/^	swbeg	.256/);
+	$acc = '';
+	print "	mov.l	(%pc,%d0.l*4,10.b),%d0\n";
+	print "	jmp	(%pc,%d0.l,6.b)\n";
+	print "	swbeg	&256\n";
+	$_ = <FILE>;
+	print;
+	for($_ = <FILE>; /short/; $_ = <FILE>) {
+		s/short/long/;
+		print;
+	}
+	$acc = $_;
+}
+print $acc;
+
+#@keys = keys(jumps);
+#@values = values(jumps);
+#while($#keys >= 0) {
+#	print pop(@keys),' = ',pop(@values),"\n";
+#}
+#
+#@keys = keys(targets);
+#@values = values(targets);
+#while($#keys >= 0) {
+#	print pop(@keys),' = ',pop(@values),"\n";
+#}

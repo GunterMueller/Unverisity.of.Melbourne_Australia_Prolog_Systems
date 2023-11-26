@@ -1,0 +1,58 @@
+	% all solutions predicate, modified from Logic Programming
+	% Newsletter #2 (Luis Pereria).
+	% Usage: all(Term, Goal, List)
+
+?-hide(solve(1).set(1).build(2).produce(3).split(4).end_soln.one(1).set1(1).all1(3).[]).
+?-op(50, xfx, same).
+
+all(X, Goal, All) :-
+	all1(X, Goal, All).
+
+all1(T, G same X, S) :-
+	!,
+	all(T same X, G, Sx),
+	produce(Sx, S, X).
+all1(T, G, S) :-
+	asserta(one(end_soln)),
+	solve(G),
+	asserta(one(T)),
+	fail.
+all1(T, G, S) :-
+	set(S).
+
+solve(G) :-
+	G.
+
+set(S) :-
+	build(S, []),
+	asserta(set1(S)),
+	fail.
+set(S) :-
+	retract(set1(S)).
+
+build(NS, S) :-
+	retract(one(X)),
+	(	nonvar(X),
+		X = end_soln,
+		NS = S
+	;
+		build(NS, X.S)
+	),
+	!.
+
+produce(T1 same X1.Tn, S, X) :-
+	split(Tn, X1, S1, S2),
+	(	S = T1.S1,
+		X = X1
+	;
+		!,
+		produce(S2, S, X)
+	).
+
+split([], _, [], []).
+split(T same X.Tn, X, T.S1, S2) :-
+	split(Tn, X, S1, S2).
+split(T1.Tn, X, S1, T1.S2) :-
+	split(Tn, X, S1, S2).
+
+?-hidden.

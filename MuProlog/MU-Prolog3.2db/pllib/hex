@@ -1,0 +1,55 @@
+	% conversion between (hexadecimal) integers and strings
+	%
+	% hex numbers may include 0-9 a-f A-F
+	%
+	% adapted by jat from /usr/lib/prolog/pllib/convert on 22/10/85
+
+
+str_hex(S, I) :-	/* uses var, cut beause 'times' doesn't exist yet */
+		var(S),
+		!,
+		xtos(I, [], S).
+str_hex(S, I) :-
+		stox(S, 0, I).
+
+stox([D], N, I) :-
+		("0" =< D) and (D =< "9"),
+		I is N*16 + D - "0".
+stox([D], N, I) :-
+		("a" =< D) and (D =< "f"),
+		I is N*16 + 10 + D - "a".
+stox([D], N, I) :-
+		("A" =< D) and (D =< "F"),
+		I is N*16 + 10 + D - "A".
+stox(D.D1.S, N, I) :-
+		("0" =< D) and (D =< "9"),
+		N1 is N*16 + D - "0",
+		stox(D1.S, N1, I).
+stox(D.D1.S, N, I) :-
+		("a" =< D) and (D =< "f"),
+		N1 is N*16 + 10 + D - "a",
+		stox(D1.S, N1, I).
+stox(D.D1.S, N, I) :-
+		("A" =< D) and (D =< "F"),
+		N1 is N*16 + 10 + D - "A",
+		stox(D1.S, N1, I).
+
+xtos(I, S, D.S) :-
+		I =< 9,
+		D is I + "0".
+xtos(I, S, D.S) :-
+		(I >= 10) and (I =< 15),
+		D is I - 10 + "a".
+xtos(I, S, S1) :-
+		I >= 16,
+		D is I mod 16 + "0",
+		("0" =< D) and (D =< "9"),
+		I2 is I/16,
+		xtos(I2, D.S, S1).
+xtos(I, S, S1) :-
+		I >= 16,
+		D is I mod 16 + "a" - 10,
+		("a" =< D) and (D =< "f"),
+		I2 is I/16,
+		xtos(I2, D.S, S1).
+

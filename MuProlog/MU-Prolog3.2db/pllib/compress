@@ -1,0 +1,33 @@
+/*	a) for all terms T, T unifies with a member of _1
+			iff T unifies with a member of _2,
+	b) _2 is the shortest such list.
+*/
+compress(S, C) :- join1(S, [], C).
+
+join1([], A, A).
+join1(A.B, C, F) :- rmlg(A, C, D), inmg(A, D, E), join1(B, E, F).
+
+/*	_3 is the members of _2 that _1 is not as general as
+*/
+rmlg(_, [], []).
+rmlg(A, B.C, D) :- asgen(A, B), !, rmlg(A, C, D).
+rmlg(A, B.C, B.D) :- rmlg(A, C, D).
+
+/*	_3 is _2 with _1 inserted if no member of _2 is as general
+*/
+inmg(A, [], [A]).
+inmg(A, B.C, B.C) :- asgen(B, A), !.
+inmg(A, B.C, B.D) :- inmg(A, C, D).
+
+/*	_1 is (at least) as general as _2
+*/
+asgen(A, B) :- not(not(asgen1(A, B))).
+
+asgen1(A, B) :- bindvars(0, _, B), A = B.
+
+bindvars(N, M, b(N)) :- M is N+1, !.
+bindvars(N, N, M) :- int(M), !.
+bindvars(N, M, T) :- T =.. (F.A), bindlv(N, M, A).
+
+bindlv(N, N, []).
+bindlv(N, M, H.T) :- bindvars(N, N1, H), bindlv(N1, M, T).

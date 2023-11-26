@@ -1,0 +1,8 @@
+l(a,x).
+l(a,y).
+l(b,x).
+l(b,z).
+
+t1(X) :- solutions(A-B, l(A,B), X).
+t2(X) :- solutions(A, some(B, l(B,A)), X).
+t3(X) :- solutions(A, l(B,A), X).

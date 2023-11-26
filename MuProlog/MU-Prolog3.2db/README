@@ -1,0 +1,44 @@
+MU-Prolog 3.2 Distribution
+
+This is the top level of the MU-Prolog distribution tree.
+It should contain the following files and directories:
+
+Makefile
+	Main Makefile for the MU-Prolog system.  Before making the system,
+	you should check that the configuration parameters are correct for
+	your site. Details of how to do this are given in the Makefile.
+
+	To actually create the MU-Prolog system, type:
+
+		make install
+
+	*after* you have fixed the configration parameters. The `make'
+	should take around 30 mins on a lightly loaded Vax 11/780.
+
+db/
+	Sources for the various database indexing schemes which MU-prolog
+	supports.
+
+doc/
+	Documentation: including a User Manual (which should already have
+	in hard-copy format), and a number of Technical Reports describing
+	aspects of the system.
+
+lib/
+	Prolog libraries.
+
+lpp/
+	Source for a logic pre-processor (written in MU-Prolog) which
+	converts logic programs expressed in a language close to first-
+	order logic into standard MU-Prolog.
+
+negpp/
+	Source for a Negation Pre-Processor (written in MU-Prolog) which
+	transforms MU-prolog programs into programs with safe negation.
+
+pllib/
+	Prolog libraries.
+
+prolog/
+	Source for the MU-Prolog system.
+

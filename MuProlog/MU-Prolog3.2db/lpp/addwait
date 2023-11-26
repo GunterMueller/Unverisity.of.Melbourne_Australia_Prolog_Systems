@@ -1,0 +1,292 @@
+%	LOGIC PREPROCESSOR
+%
+%	code for adding wait declarations
+%	and (some) code for checking for tests
+%
+%	Written by Lee Naish
+
+?- hide([genwaits(2), possloops(2), possloops(2), cloops(3), recursive(2),
+	allwaits(2), lcwaits(2), callwaits(2), bpat(3), bpatwaits(2),
+	patwait(4), combinew(2), andw(2), andrest(3), and(3), eqvwaits(2),
+	compactw(3), remove(3), notinw(2), wadd(2), check_det(3),
+	ass_non_det(1), append(3), member(2), copy(2), tmp(1), rm(3),
+	all(3),
+	compress(2), asgen(2),
+	no_cons(1), is_local_det(2)]).
+
+% add waits and calculate cost for a proc
+addwait(P) :-
+	all((P:-B), clause(P, B), Clauses),
+	genwaits(Clauses, W),
+	functor(P, P1, N),
+	wadd(P1, W),
+	check_det(P, Clauses, W).
+
+% generate waits for a proc
+genwaits(Clauses, Waits) :-
+	possloops(Clauses, Plp),
+	compress(Plp, Loops),
+	allwaits(Loops, Awaits),
+	eqvwaits(Awaits, Waits).
+
+% find possible looping heads and calls from list of clauses
+possloops([], []).
+possloops((H:-B).L, Lps) :-
+	copy(H, H1),
+	cloops(H1, B, Lps1),
+	possloops(L, Lps2),
+	append(Lps1, Lps2, Lps).
+
+% find possible loops in a single clause
+cloops(H,C,[]) :-
+        var(C),
+	write('% Meta-variable ignored in procedure '),
+        functor(H,F,N),
+        write(F),
+	write(/),
+	writeln(N),
+        !.
+cloops(H, (C, Cl), R) :-
+	var(C),
+	!,
+	write('% Meta-variable ignored in procedure '),
+        functor(H,F,N),
+        write(F),
+	write(/),
+	writeln(N),
+	cloops(H, Cl, R).
+cloops(H, (C1, C2), R) :-
+	!,
+	cloops(H, C1, R1),
+	cloops(H, C2, R2),
+	append(R1, R2, R).
+cloops(H, (C1 ; C2), R) :-
+	!,
+	cloops(H, C1, R1),
+	cloops(H, C2, R2),
+	append(R1, R2, R).
+cloops(H, (if C then C1 else C2), R) :-
+	!,
+	cloops(H, C1, R1),
+	cloops(H, C2, R2),
+	append(R1, R2, R).
+cloops(H, call(C), R) :-
+	!,
+	cloops(H, C, R).
+cloops(H, (if C then C1), R) :-
+	!,
+	cloops(H, C1, R).
+cloops(H, C, [Pat]) :-
+	recursive(H, C),
+	H =.. Hf.Ha,
+	C =.. Cf.Ca,
+	bpat(Ha, Ca, Pat),	% loops are represented by binding pattern
+	(	not member(1, Pat),
+		write('% possible infinite loop: '),
+		writef(H, 2'110110),
+		write(' :- ... '),
+		writef(C, 2'110110),
+		nl,
+		functor(H, F, N),
+		functor(P, F, N),
+		asserta(poss_loop(P))
+	;
+		true
+	),
+	!.
+cloops(H, C, []).
+
+% is C a recursive call? - will handle mutual recursion some time
+recursive(H, C) :-
+	not H \= C.
+
+% get list of waits from list of possible loops
+allwaits(L, W) :-
+	lcwaits(L, Wl),
+	compress(Wl, Cwl),
+	combinew(Cwl, W).
+
+% get list of list of waits from possible loops
+lcwaits([],[]).
+lcwaits(B.L, Wl) :-
+	callwaits(B, W),
+	lcwaits(L, W2),
+	append(W, W2, Wl).
+
+% get list of a list of waits for a single call - [[waits]]
+% or [] if there are no waits generated
+callwaits(B, WL) :-
+	(if member(1, B) then
+		bpatwaits(B, W),
+		WL = [W]
+	else
+		WL = []
+	).
+
+% find which head arguments are less general than call arguments
+bpat([], [], []).
+bpat(H.I, C.D, 0.A) :-
+	asgen(H, C),
+	!,
+	bpat(I, D, A).
+bpat(H.I, C.D, 1.A) :-
+	bpat(I, D, A).
+
+% generate list of waits from what args need to be bound
+bpatwaits(A, B) :-
+	length(A, N),
+	length(L, N),
+	patwait(A, L, [], B).
+
+% as above
+% arg 1 is a list of ones (head is less general) and zeros (head as general)
+% args 2 and 3 are lists of ones. Their lengths sum to the length of arg 1.
+patwait([], [], A, []).
+patwait(0.A, 1.B, C, D) :-
+	patwait(A, B, 1.C, D).
+patwait(1.A, 1.B, C, D.E) :-
+	append(C, 0.B, D),
+	patwait(A, B, 1.C, E).
+
+% combine list of list of waits (one for each loop) to get one list of waits
+combinew(A, B) :-
+	all(W, andw(A, W), B).
+
+% and together one wait from each group of waits
+andw(A.B, C) :-
+	member(D, A),
+	andrest(D, B, C).
+
+andrest(D, [], D).
+andrest(D, A.B, C) :-
+	member(E, A),
+	and(D, E, F),
+	andrest(F, B, C).
+
+% and two waits
+and([], [], []).
+and(1.A, 1.B, 1.C) :-
+	!,
+	and(A, B, C).
+and(_.A, _.B, 0.C) :-
+	and(A, B, C).
+
+% remove redundancies from a list of waits
+eqvwaits(A, B) :-
+	compactw(A, [], B).
+
+% as above
+compactw([], A, A).
+compactw(A.B, C, D) :-
+	remove(A, B, E),
+	remove(A, C, F),
+	compactw(E, A.F, D).
+
+% remove waits which are subsumed by a given wait
+remove(A, [], []).
+remove(A, B.C, B.D) :-
+	notinw(B, A),
+	!,
+	remove(A, C, D).
+remove(A, B.C, D) :-
+	remove(A, C, D).
+
+% is a wait subsumed by another?
+notinw(1.A, 0.B).
+notinw(A.B, C.D) :-
+	notinw(B, D).
+
+% add list of wait declarations
+wadd(P, []).
+wadd(P, A.B) :-
+	W =.. P.A,
+	wait W,
+	wadd(P, B).
+
+% calculate cost of a proc from its waits and clauses
+check_det(P, Clauses, Waits) :-
+        functor(P,F,N),
+	(if no_cons(Waits) then
+		write('% procedure '),
+		write(F),
+		write(/),
+		write(N),
+		writeln(' doesnt construct some arg(s)'),
+		asserta(nocons(P))
+	),
+	(is_local_det(Waits, Clauses) ->	% meta vars
+		write('% procedure '),
+		write(F),
+		write(/),
+		write(N),
+		writeln(' is locally deterministic')
+	;
+		not(non_det(P)),	% not marked as non-det already
+		ass_non_det(P)
+	).
+
+% given a (probably) non-deterministic proc, assert that it and its callers
+% are non-deterministic
+ass_non_det(P) :-
+	assertz(non_det(P)),
+	calls(Q, P),
+	not(non_det(Q)),
+	ass_non_det(Q),
+	fail.
+ass_non_det(_).
+
+% finds current cost of proc
+hascost(P, C) :-
+	cost(P, C),
+	!.
+
+% costs are 'asserta'ed before this
+cost(P, 50) :-
+		system(P).
+cost(_, 1000).
+
+% (probably) nondeterministic procs are asserted here
+non_det(repeat).
+non_det(clause(_, _)).
+non_det(retract(_)).
+non_det(ancestor(_, _)).
+
+% procs with possible loops which cant be stopped by waits asserted here
+poss_loop(repeat).
+
+% procs which dont construct some arg (set) are asserted here
+% perhaps we should have all system tests here
+nocons(_ < _).
+
+compress([], []).
+compress(A.B, A.C) :-
+	rm(A, B, D),
+	compress(D, C).
+
+rm(_, [], []).
+rm(A, A.C, D) :-
+	!,
+	rm(A, C, D).
+rm(A, B.C, B.D) :-
+	rm(A, C, D).
+
+append([], A, A).
+append(A.B, C, A.D) :-
+	append(B, C, D).
+
+member(A, A.B).
+member(A, B.C) :-
+	member(A, C).
+
+copy(A, C) :-
+	asserta(tmp(A)),
+	retract(tmp(C)),
+	!.
+
+tmp(0).
+?-retract(tmp(0)).
+
+?- [istest].
+?- [asgen].
+?- lib all.
+?- hidden.

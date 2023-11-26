@@ -1,0 +1,65 @@
+%	LOGIC PREPROCESSOR
+%
+% checks if a procedure with wait declarations
+%		a) cannot construct a particular argument (set)
+%		b) is locally deterministic
+% other code checks if it is deterministic
+% This is used for detecting tests, for reordering clause bodies
+%
+%	Written by Lee Naish
+
+?- hide([zeroarg(2), nmember(3),
+	local_det_a(2), local_det_w(3), select0(3)]).
+
+	% no construct test -
+	% each wait contains a zero in a particular position
+no_cons(W.Waits) :-
+	zeroarg(W.Waits, Position).	% could add ! to stop non-determinism
+
+	% checks if a particular arg is zero in all waits in a list
+	% (the first call to nmember finds positions of zeros in the
+	% first wait and subsequent calls test these positions in the
+	% other wait - nmember must behave logically)
+zeroarg([], _).
+zeroarg(W.WL, N) :-
+	nmember(N, W, 0),
+	zeroarg(WL, N).
+
+	% finds the Nth member of a list
+nmember(1, A.B, A).
+nmember(N, A.B, C) :-
+	N > 1,
+	plus(M, 1, N),
+	nmember(M, B, C).
+
+	% is proc locally deterministic (only one clause can match)?
+
+is_local_det(Waits, [Clause]).			% only one clause
+is_local_det(W.Waits, C1.C2.Clauses) :-		% > 1 clauses, >= 1 wait
+	local_det_a(W.Waits, C1.C2.Clauses).
+
+	% check all waits in list force local determinism
+local_det_a([], _).
+local_det_a(W.Waits, Clauses) :-
+	local_det_w(W, Clauses, []),
+	local_det_a(Waits, Clauses).
+
+	% check a single wait enforces determinism
+	% L is a list of arg lists corresponding to 0's in the wait
+	% for each new clause, we check the zero arg list does not unify
+	% with any zero arg lists from previous clauses
+	% This ensures that a call can only match with two clause heads if
+	% zero args are constructed (which is prevented by the wait).
+local_det_w(Wait, [], L).
+local_det_w(Wait, (H:-B).Clauses, L) :-
+	H =.. F.A,
+	select0(Wait, A, A0),
+	not member(A0, L),		% A0 and L are meta-vars
+	local_det_w(Wait, Clauses, A0.L).
+
+	% select args corresponding to 0's in wait
+select0([], [], []).
+select0(0.W, A.Args, A.A0) :-
+	select0(W, Args, A0).
+select0(1.W, A.Args, A0) :-
+	select0(W, Args, A0).

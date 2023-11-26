@@ -1,0 +1,24 @@
+
+%
+%	numbervars(Term,M,N)
+%	unifies each variable in Term with a special term $VAR(I)
+%	N is unbound in the call
+%
+
+numbervars($VAR(N1), N1, N2) :-
+	!,
+	N2 is N1 + 1.
+numbervars($VAR(N), N1, N1) :-
+	!.
+numbervars(Var, N1, N1) :-
+	atomic(Var),
+	!.
+numbervars(Term, N1, N2) :-
+	Term =.. F.L,
+	nmbvlist(L, N1, N2).
+
+?- wait nmbvlist(0, 1, 1).
+nmbvlist(Term.L, N1, N2) :-
+	numbervars(Term, N1, N3),
+	nmbvlist(L, N3, N2).
+nmbvlist([], N1, N1).

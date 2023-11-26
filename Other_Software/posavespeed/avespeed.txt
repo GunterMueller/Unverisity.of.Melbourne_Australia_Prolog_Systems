@@ -1,0 +1,67 @@
+#!/bin/sh
+#
+#	shell script to compute "positional" average speed from a GPX
+#	file contaning a track.  Uses gpsbabel to compute speed at each
+#	point.
+
+# XXX ignore this: would be nice but gpsbable doesn't support it:(
+# We remove track points with time difference less than TIME seconds
+# to smooth the data and hopefully get a more accurate result
+TIME=0.1
+TIME=5
+
+# We remove track points with position difference less than DISTANCE
+# to smooth the data and hopefully get a more accurate result
+# Seems like more clever noise reduction is needed for good results:(
+DISTANCE=10m
+DISTANCE=30m
+DISTANCE=70m
+DISTANCE=100m
+
+
+gpsbabel -t -i gpx -f $1 \
+	-x position,distance=$DISTANCE \
+	-x track,speed -o unicsv -F /tmp/pas$$.gpsbable
+
+# 	-x position,time=$TIME \
+
+awk -F "," '
+BEGIN { sumspeed = 0
+	sumactivespeed = 0
+	sumspeedsq = 0
+	numpoints = 0
+	numactivepoints = 0
+	maxspeed = 0
+	# to compute average active speed we to ignore time spent
+	# (almost) stationary.  We need a threshold speed for this.
+	ACTIVETHRESHOLD = 0.2
+}
+
+/[0-9].*/ {
+	speed = $5
+	numpoints++
+	if (speed >= ACTIVETHRESHOLD) {
+		numactivepoints++
+		sumactivespeed += speed
+	}
+	if (speed > maxspeed) {
+		maxspeed = speed
+	}
+	sumspeed += speed
+	sumspeedsq += speed * speed
+}
+
+END {
+# 	print numpoints
+# 	print sumspeed
+# 	print sumspeedsq
+# 	*3.6 converts m/s to km/h
+	print "maximum speed:", maxspeed *3.6
+	print "average speed:", sumspeed/numpoints *3.6
+	print "average active speed:", sumactivespeed/numactivepoints *3.6
+	print "positional average speed:", sumspeedsq/sumspeed *3.6
+}
+' < /tmp/pas$$.gpsbable
+
+# clean up our mess
+rm -rf /tmp/pas$$.gpsbable

@@ -1,0 +1,8 @@
+/*	if _1 and _2 are non-decreasing lists of integers then _3 is _1
+	merged with _2 (duplicates are not removed) */
+?- wait merge(0,0,1).
+?- wait merge(1,1,0).
+merge(A.B, C.D, A.E) :- A < C, merge(B, C.D, E).
+merge(A.B, C.D, C.E) :- A >= C, merge(A.B, D, E).
+merge([], A, A) :- A ~= [].
+merge(A, [], A).

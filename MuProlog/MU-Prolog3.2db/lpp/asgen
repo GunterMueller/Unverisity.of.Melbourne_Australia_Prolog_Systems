@@ -1,0 +1,15 @@
+	% check if a term is as general as another term
+
+?- hide([asgen1(2), bindvars(3), bindlv(3)]).
+
+	% A is as general as B
+asgen(A, B) :- not(not(asgen1(A, B))).
+
+asgen1(A, B) :- bindvars(0, _, B), A = B.
+
+bindvars(N, M, b(N)) :- M is N+1, !.
+bindvars(N, N, M) :- int(M), !.
+bindvars(N, M, T) :- T =.. (F.A), bindlv(N, M, A).
+
+bindlv(N, N, []).
+bindlv(N, M, H.T) :- bindvars(N, N1, H), bindlv(N1, M, T).

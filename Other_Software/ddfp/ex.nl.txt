@@ -1,0 +1,126 @@
+:- initializing, add_function(eval, 1).
+:- initializing, add_function(evalLazy, 1).
+:- initializing, add_function(fapply, 2).
+:- initializing, add_function(+, 2).
+:- initializing, add_function(-, 2).
+:- initializing, add_function(plus, 2).
+:- initializing, add_function(times, 2).
+:- initializing, add_function(primes, 1).
+:- initializing, add_function(primes, 0).
+:- initializing, add_function(ints, 1).
+:- initializing, add_function(sift, 1).
+:- initializing, add_function(filter, 2).
+:- initializing, add_function(filter1, 4).
+:- initializing, add_function(not_div, 2).
+:- initializing, add_function(take, 2).
+:- initializing, add_function(foldl, 3).
+:- initializing, add_function(sum, 1).
++(A9, B9, A, A) :-
+	evalLazy(A9, B),
+	evalLazy(B9, C),
+	A is B + C.
+-(A9, B9, A, A) :-
+	evalLazy(A9, B),
+	evalLazy(B9, C),
+	A is B - C.
+:- plus(0, A, B, C) when ever.
+:- plus($lazy(C, B, A), D, E, F) when ever.
+plus($lazy(C, B, A), D, E, F):- call(C), plus(B, D, E, F).
+plus(0, A9, A9, A9).
+:- plus(s(A), B, C, D) when ever.
+plus(s(A9), B9, A, $rewrite(plus(A9, B9), B, true)) :-
+	plus(A9, B9, A, B).
+:- times(0, A, B, C) when ever.
+:- times($lazy(C, B, A), D, E, F) when ever.
+times($lazy(C, B, A), D, E, F):- call(C), times(B, D, E, F).
+times(0, A9, 0, 0).
+:- times(s(A), B, C, D) when ever.
+times(s(A9), B9, A, $rewrite(plus(B9, $rewrite(times(A9, B9), B, true)), C, true)) :-
+	times(A9, B9, D, B),
+	plus(B9, D, A, C).
+:- primes(A, B, C) when ever.
+primes(A9, A, $rewrite(take(A9, $rewrite(primes, B, true)), C, true)) :-
+	primes(D, B),
+	take(A9, D, A, C).
+
+primes($lazy($lazy$primes(A, B), A, B), B).
+
+:- $lazy$primes(A, B) when ever.
+$lazy$primes(A, $rewrite(sift($rewrite(ints(2), B, true)), C, true)) :-
+	ints(2, D, B),
+	sift(D, A, C).
+
+ints(A, $lazy($lazy$ints(A, B, C), B, C), C).
+
+:- $lazy$ints(A, B, C) when ever.
+$lazy$ints(A9, [A9|A], [A9|$rewrite(ints($rewrite(A9 + 1, B, (evalLazy(A9, C), evalLazy(1, D), B is C + D))), E, true)]) :-
+	evalLazy(A9, C),
+	evalLazy(1, D),
+	B is C + D,
+	ints(B, A, E).
+
+sift(A, $lazy($lazy$sift(A, B, C), B, C), C).
+
+:- $lazy$sift([A|B], C, D) when ever.
+:- $lazy$sift($lazy(C, B, A), D, E) when ever.
+$lazy$sift($lazy(C, B, A), D, E):- call(C), $lazy$sift(B, D, E).
+$lazy$sift([A9|B9], [A9|A], [A9|$rewrite(sift($rewrite(filter(A9, B9), B, true)), C, true)]) :-
+	filter(A9, B9, D, B),
+	sift(D, A, C).
+
+filter(A, B, $lazy($lazy$filter(A, B, C, D), C, D), D).
+
+:- $lazy$filter(A, [B|C], D, E) when ever.
+:- $lazy$filter(D, $lazy(C, B, A), E, F) when ever.
+$lazy$filter(D, $lazy(C, B, A), E, F):- call(C), $lazy$filter(D, B, E, F).
+$lazy$filter(A9, [B9|C9], A, $rewrite(filter1($rewrite(not_div(B9, A9), B, true), A9, B9, C9), C, true)) :-
+	not_div(B9, A9, D, B),
+	filter1(D, A9, B9, C9, A, C).
+:- filter1(A, B, C, D, E, F) when ever.
+filter1(A9, B9, C9, D9, A, $rewrite($if(B, A9 = false, $rewrite(filter(B9, D9), C, true), [C9|$rewrite(filter(B9, D9), D, true)]), A, true)) :-
+	evalLazy(A9, E),
+	(if E = false then
+		B = true,
+		filter(B9, D9, F, C),
+		A = F
+	else
+		B = fail,
+		filter(B9, D9, G, D),
+		A = [C9|G]
+	).
+:- not_div(A, B, C, D) when ever.
+not_div(A9, B9, A, A) :-
+	( evalLazy(A9, B), evalLazy(B9, C), B mod C =:= 0 ->
+		A = true
+	;	A = false
+	).
+:- take(A, [], B, C) when ever.
+:- take(D, $lazy(C, B, A), E, F) when ever.
+take(D, $lazy(C, B, A), E, F):- call(C), take(D, B, E, F).
+take(A9, [], [], []).
+:- take(A, [B|C], D, E) when ever.
+take(A9, [B9|C9], A, $rewrite($if(B, A9 > 0, [B9|$rewrite(take($rewrite(A9 - 1, C, (evalLazy(A9, D), evalLazy(1, E), C is D - E)), C9), F, true)], []), A, true)) :-
+	evalLazy(A9, G),
+	(if G > 0 then
+		B = true,
+		evalLazy(A9, D),
+		evalLazy(1, E),
+		C is D - E,
+		take(C, C9, H, F),
+		A = [B9|H]
+	else
+		B = fail,
+		A = []
+	).
+:- foldl(A, B, [], C, D) when ever.
+:- foldl(D, E, $lazy(C, B, A), F, G) when ever.
+foldl(D, E, $lazy(C, B, A), F, G):- call(C), foldl(D, E, B, F, G).
+foldl(A9, B9, [], B9, B9).
+:- foldl(A, B, [C|D], E, F) when ever.
+foldl(A9, B9, [C9|D9], A, $rewrite(foldl(A9, $rewrite(fapply($rewrite(fapply(A9, B9), B, true), C9), C, true), D9), D, true)) :-
+	fapply(A9, B9, E, B),
+	fapply(E, C9, F, C),
+	foldl(A9, F, D9, A, D).
+:- sum(A, B, C) when ever.
+sum(A9, A, $rewrite(foldl(+, 1, A9), B, true)) :-
+	foldl(+, 1, A9, A, B).

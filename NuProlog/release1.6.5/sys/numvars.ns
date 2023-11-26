@@ -1,0 +1,161 @@
+
+	.pred	'numberVars',3
+2: 	jnvx	1,&0
+1: 	mkdel	3,&2
+	mark	1
+	delay	
+	.clause
+0:	gvarx	4,0
+	gvarx	5,1
+	gvarx	3,2
+	jtypx	4,3,&10
+	gs	4,$'$VAR'/1
+	ulvx	5
+	apushx	5
+	afunc	46
+	popvx	3
+	pro	
+10: 	jtypx	4,12,&11
+	gvalx	3,5
+	pro	
+11: 	labelx	0
+12: 	te	6,0,6,&13
+	gsx1	4,6,$'$VAR'/1
+	ctypx	6,17
+	cutx	0
+	gvalx	3,5
+	pro	
+13: 	tre	6,0
+	pvarx	6,6
+	pvarx	0,0
+	functor	4,6,0
+	gvara	1,4
+	gvara	2,5
+	exec	4,&'$numberVars'/4
+14: 	last
+
+	.pred	'$numberVars',4
+2: 	jnvx	0,&0
+1: 	mkdel	4,&2
+	mark	0
+	delay	
+	.clause
+0:	all	3
+	gvary	0,3
+	apushx	0
+	pushi	$$0
+	jpred	4,&14
+	apushx	0
+	afunc	47
+	popx	4
+	arg	0,1,5
+	gvary	2,5
+	gvara	0,4
+	pvary	1,3
+	call	3,4,&'$numberVars'/4
+	pvaly	2,0
+	puval	1,1
+	pvaly	0,2
+	dallexe	3,&'numberVars'/3
+14: 	gvaly	0,2
+	dallpro	
+15: 	last
+
+	.pred	'varNumbers',2
+	.clause
+0:	gvarx	2,1
+	pnil	1
+	pvarx	3,3
+	exec	4,&'$varNumbers'/4
+	last
+
+	.pred	'$varNumbers',4
+	.clause
+0:	gvarx	4,0
+	all	3
+	gvary	1,1
+	gvarx	5,2
+	gvary	0,3
+	jtypx	4,3,&12
+	pvaly	0,255
+	gvaly	1,255
+	gvalx	5,4
+	dallpro	
+12: 	jtypx	4,12,&13
+	pvaly	0,255
+	gvaly	1,255
+	gvalx	5,4
+	dallpro	
+13: 	labelx	0
+14: 	te	6,0,6,&17
+	gsx1	4,1,$'$VAR'/1
+	ctypx	1,17
+	cutx	0
+	labely	2
+15: 	te	6,0,6,&16
+	ps	0,$'-'/2
+	uvalx	1
+	ulvx	5
+	pvaly	1,1
+	call	3,2,&'member'/2
+	cuty	2
+	pvaly	1,255
+	gvaly	0,255
+	dallpro	
+16: 	tre	6,0
+	pvaly	0,255
+	gl	255
+	uvarx	6
+	ulvy	1
+	gs	6,$'-'/2
+	uvalx	1
+	ulvx	5
+	dallpro	
+	j	&18
+17: 	tre	6,0
+	pvarx	6,6
+	pvarx	0,0
+	functor	4,6,0
+	functor	5,6,0
+	gvara	1,4
+	pvaly	1,2
+	gvara	3,5
+	pvaly	0,4
+	dallexe	5,&'$varNumbers'/5
+18: 	last
+
+	.pred	'$varNumbers',5
+2: 	jnvx	0,&0
+1: 	mkdel	5,&2
+	mark	0
+	delay	
+	.clause
+0:	all	5
+	gvary	4,0
+	gvary	3,1
+	gvara	1,2
+	gvary	1,3
+	gvary	0,4
+	apushy	4
+	pushi	$$0
+	jpred	4,&17
+	pvaly	4,5
+	pvaly	3,6
+	arg	5,6,0
+	pvaly	4,5
+	pvaly	1,6
+	arg	5,6,2
+	pvary	2,3
+	call	5,4,&'$varNumbers'/4
+	apushy	4
+	afunc	47
+	popx	0
+	pvaly	3,1
+	puval	2,2
+	pvaly	1,3
+	pvaly	0,4
+	dallexe	5,&'$varNumbers'/5
+17: 	gvaly	0,1
+	dallpro	
+18: 	last
+

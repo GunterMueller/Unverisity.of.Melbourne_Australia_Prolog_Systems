@@ -1,0 +1,1752 @@
+
+	.pred	'debug',0
+	.clause
+0:	pc	0,$'debugging'
+	pc	1,$'debug'
+	exec	2,&'$setFlag'/2
+	last
+
+	.pred	'trace',0
+	.clause
+0:	pc	0,$'debugging'
+	pc	1,$'trace'
+	exec	2,&'$setFlag'/2
+	last
+
+	.pred	'nodebug',0
+	.clause
+0:	pc	0,$'debugging'
+	pc	1,$'off'
+	exec	2,&'$setFlag'/2
+	last
+
+	.pred	'notrace',0
+	.clause
+0:	pc	0,$'debugging'
+	pc	1,$'off'
+	exec	2,&'$setFlag'/2
+	last
+
+	.pred	'leash',1
+	labelx	1
+3: 	sot	0,&2,&4,&1,&1
+2: 	t	2,0,&0
+	tr	2,0,&1
+4: 	jc	0,$'all',&0
+	j	&1
+	j	&0
+	.clause
+0:	gc	0,$'all'
+	cutx	1
+	pc	0,#(LST,&8)
+	exec	1,&'leash'/1
+	.clause
+1:	all	2
+	gvary	1,0
+	gvary	0,1
+	pvaly	1,2
+	fvar	2,255
+	typx	255,252
+	pvaly	1,0
+	call	2,1,&'$list'/1
+	pc	0,$'spy$leashMode'
+	pc	1,$1
+	call	2,2,&'retractall'/2
+	ps	0,$'spy$leashMode'/1
+	ulvy	1
+	call	1,1,&'assert'/1
+	cuty	0
+	dallpro	
+	last
+8: 	.word	$'call'
+	.word	#(LST,&15)
+15: 	.word	$'exit'
+	.word	#(LST,&16)
+16: 	.word	$'redo'
+	.word	#(LST,&17)
+17: 	.word	$'fail'
+	.word	#(LST,&18)
+18: 	.word	$'delay'
+	.word	#(LST,&19)
+19: 	.word	$'wake'
+	.word	$[]
+
+	.pred	'spy$spying',0
+	.clause
+0:	all	1
+	labely	0
+3: 	te	0,0,0,&4
+	pc	0,$'localDebug'
+	pc	1,$'off'
+	call	1,2,&'$getFlag'/2
+	cuty	0
+	fail	
+4: 	tre	0,0
+	dallpro	
+5: 	last
+
+	.pred	'spy$spying',2
+	.clause
+0:	all	4
+	gvary	3,0
+	gvary	2,1
+	labely	0
+9: 	te	0,0,0,&16
+	labely	1
+10: 	te	0,0,0,&14
+11: 	te	0,0,0,&12
+	pc	0,$'localDebug'
+	pc	1,$'trace'
+	call	2,2,&'$getFlag'/2
+	j	&13
+12: 	tre	0,0
+	pc	0,$'localDebug'
+	pc	1,$'debug'
+	call	4,2,&'$getFlag'/2
+	pvaly	3,0
+	pvaly	2,1
+	call	2,2,&'$spypoint'/2
+13: 	cuty	1
+	fail	
+14: 	tre	0,0
+15: 	cuty	0
+	fail	
+16: 	tre	0,0
+	dallpro	
+17: 	last
+
+	.pred	'spy$leashing',2
+	.clause
+0:	all	6
+	gvary	3,1
+	labely	0
+10: 	te	0,0,1,&17
+	labely	1
+11: 	te	0,0,1,&15
+	labely	5
+12: 	te	0,0,1,&13
+	pvaly	3,1
+	pvary	4,2
+	call	6,3,&'leashCondition'/3
+	cuty	5
+	puval	4,0
+	call	2,1,&'call'/1
+	j	&14
+13: 	tre	0,0
+	pvary	2,0
+	call	4,1,&'spy$leashMode'/1
+	pvaly	3,0
+	puval	2,1
+	call	2,2,&'member'/2
+14: 	cuty	1
+	fail	
+15: 	tre	0,0
+16: 	cuty	0
+	fail	
+17: 	tre	0,0
+	dallpro	
+18: 	last
+
+	.pred	'debugging',0
+5: 	t	0,0,&0
+	r	0,0,&1
+	r	0,0,&2
+	r	0,0,&3
+	tr	0,0,&4
+	.clause
+0:	pc	0,$'debugging'
+	all	1
+	pvary	0,1
+	call	1,2,&'$getFlag'/2
+	pc	0,$'user'
+	puval	0,1
+	call	0,2,&'writeln'/2
+	fail	
+	.clause
+1:	all	1
+	pvary	0,0
+	call	1,1,&'spy$leashMode'/1
+	pc	1,#(CHR,&14)
+	pl	2
+	ulvy	0
+	uc	$[]
+	pc	0,$'user'
+	call	0,3,&'$quickFormat'/3
+	fail	
+	.clause
+2:	pc	0,$'user'
+	pc	1,#(CHR,&15)
+	sputl	0,1
+	fail	
+	.clause
+3:	pc	0,$'user'
+	pc	1,#(CHR,&22)
+	sputl	0,1
+	all	2
+	pvary	1,0
+	pvary	0,1
+	call	2,2,&'$spyingOn'/2
+	pc	1,#(CHR,&21)
+	pl	2
+	ulvy	1
+	ul	255
+	ulvy	0
+	uc	$[]
+	pc	0,$'user'
+	call	0,3,&'$quickFormat'/3
+	fail	
+	.clause
+4:	pro	
+	last
+22: 	.string	"There are spypoints on\n"
+21: 	.string	"    ~a/~d~n"
+15: 	.string	"Print warning and fail on undefined predicates\n"
+14: 	.string	"Tracing will pause at the ports ~w.~n"
+
+	.pred	'$spyingOn',2
+	.clause
+0:	all	3
+	gvary	1,0
+	gvary	0,1
+	pvaly	1,0
+	pvaly	0,1
+	call	3,2,&'$spypoint'/2
+	pvaly	1,2
+	pvaly	0,3
+	defined	2,3,2,1
+	labely	2
+8: 	te	0,0,2,&9
+	pc	0,$'spypoint'
+	call	3,2,&'$codeType'/2
+	cuty	2
+	dallpro	
+9: 	tre	0,0
+	ps	0,$'$spypoint'/2
+	ulvy	1
+	ulvy	0
+	call	0,1,&'retract'/1
+	fail	
+10: 	last
+
+	.pred	'spy',1
+	.clause
+0:	all	2
+	gvary	0,0
+	labely	1
+7: 	te	0,0,0,&8
+	pc	0,$'debugging'
+	pc	1,$'off'
+	call	2,2,&'prologFlag'/2
+	cuty	1
+	call	1,0,&'debug'/0
+	j	&9
+8: 	tre	0,0
+9: 	ps	2,$'$spy'/1
+	uvarx	0
+	pvaly	0,1
+	dallexe	3,&'$applyToEachPredicate'/3
+	last
+
+	.pred	'.a$spy1',1
+4: 	fvar	0,255
+	jnvx	255,&1
+3: 	mkdel	1,&4
+	mark	255
+	delay	
+	.clause
+1:	all	3
+	gvary	0,0
+14: 	te	0,0,0,&15
+	labely	2
+	pvaly	0,0
+	pvary	1,1
+	call	3,2,&'currentPredicate'/2
+	pvaly	2,1
+	softcut	1
+	pvaly	0,0
+	puval	1,1
+	call	0,2,&'spy$spy'/2
+	fail	
+15: 	tre	0,0
+	pc	1,#(CHR,&13)
+	ps	3,$'$spy'/1
+	ulvy	0
+	pl	2
+	uvalx	3
+	ul	255
+	ulvy	0
+	uc	$[]
+	pc	0,$'user_error'
+	dallexe	3,&'$format'/3
+16: 	last
+13: 	.string	"~NError in ~w.~nNo predicates defined for name ~a.~n"
+
+	.pred	'$spy',1
+18: 	sot	0,&2,&0,&17,&2
+17: 	fail	
+	.clause
+0:	ctypx	0,2
+	exec	1,&'.a$spy1'/1
+	.clause
+2:	gsx2	0,0,1,$'/'/2
+	ctypx	0,2
+	ctypx	1,17
+	exec	2,&'spy$spy'/2
+	last
+
+	.pred	'spy$spy',2
+	labelx	2
+4: 	t	3,0,&0
+	r	3,0,&1
+	r	3,0,&2
+	tr	3,0,&3
+	.clause
+0:	all	3
+	gvary	1,0
+	gvary	0,1
+	gvary	2,2
+	pvaly	1,0
+	pvaly	0,1
+	call	3,2,&'$spyingOn'/2
+	cuty	2
+	pc	1,#(CHR,&13)
+	ps	3,$'spy'/1
+	us	255,$'/'/2
+	ulvy	1
+	ulvy	0
+	pl	2
+	uvalx	3
+	ul	255
+	ulvy	1
+	ul	255
+	ulvy	0
+	uc	$[]
+	pc	0,$'user_error'
+	dallexe	3,&'$format'/3
+	.clause
+1:	all	4
+	gvary	3,0
+	gvary	2,1
+	gvary	0,2
+	pvaly	3,0
+	pvaly	2,1
+	call	4,2,&'systemPredicate'/2
+	pc	1,#(CHR,&22)
+	ps	3,$'spy'/1
+	us	255,$'/'/2
+	ulvy	3
+	ulvy	2
+	pl	2
+	uvalx	3
+	ul	255
+	ulvy	3
+	ul	255
+	ulvy	2
+	uc	$[]
+	pc	0,$'user_error'
+	call	2,3,&'$format'/3
+	labely	1
+26: 	te	0,0,0,&27
+	pc	0,$'wizard'
+	pc	1,$'on'
+	call	2,2,&'prologFlag'/2
+	cuty	1
+	pc	3,$'user_error'
+	pc	4,#(CHR,&25)
+	sputl	3,4
+	fail	
+27: 	tre	0,0
+28: 	cuty	0
+	dallpro	
+	.clause
+2:	all	2
+	gvary	1,0
+	gvary	0,1
+	pvaly	1,3
+	pvaly	0,4
+	defined	3,4,3,4
+	cutx	2
+	ps	0,$'$spypoint'/2
+	ulvy	1
+	ulvy	0
+	call	2,1,&'asserta'/1
+	pvaly	1,3
+	pvaly	0,4
+	spy	3,4
+	dallpro	
+	.clause
+3:	gvarx	3,1
+	pc	1,#(CHR,&39)
+	ps	4,$'spy'/1
+	us	255,$'/'/2
+	ulvx	0
+	ulvx	3
+	pl	2
+	uvalx	4
+	ul	255
+	ulvx	0
+	ul	255
+	ulvx	3
+	uc	$[]
+	pc	0,$'user_error'
+	exec	3,&'$format'/3
+	last
+39: 	.string	"~NError in ~w.~nTrying to set a spypoint on ~a/~d which is undefined.~n"
+25: 	.string	"... but you're a wizard, so ....\n"
+22: 	.string	"~NError in ~w.~nTrying to spy on ~a/~d which is a system predicate.~n"
+13: 	.string	"~NError in ~w.~nTrying to set a spypoint on ~a/~d which is all ready one.~n"
+
+	.pred	'nospy',1
+	.clause
+0:	gvarx	1,0
+	ps	2,$'$nospy'/1
+	uvara	0
+	exec	3,&'$applyToEachPredicate'/3
+	last
+
+	.pred	'$nospy',1
+3: 	sot	0,&1,&0,&2,&1
+2: 	fail	
+	.clause
+0:	all	3
+	gvary	2,0
+	ctypy	2,2
+	labely	0
+9: 	te	0,0,0,&10
+	pvaly	2,0
+	pvary	1,1
+	call	3,2,&'$spyingOn'/2
+	pvaly	2,0
+	puval	1,1
+	call	1,2,&'spy$nospy'/2
+	fail	
+10: 	tre	0,0
+	dallpro	
+11: 	.clause
+1:	gs	0,$'/'/2
+	all	3
+	uvary	1
+	uvary	0
+	ctypy	1,2
+	ctypy	0,17
+	labely	2
+	pvaly	1,0
+	pvaly	0,1
+	call	3,2,&'$spyingOn'/2
+	cuty	2
+	pvaly	1,0
+	pvaly	0,1
+	dallexe	2,&'spy$nospy'/2
+	last
+
+	.pred	'nospyall',0
+2: 	t	0,0,&0
+	tr	0,0,&1
+	.clause
+0:	ps	0,$'$spypoint'/2
+	all	2
+	uvary	1
+	uvary	0
+	call	2,1,&'retract'/1
+	pvaly	1,0
+	pvaly	0,1
+	nospy	0,1
+	fail	
+	.clause
+1:	pro	
+	last
+
+	.pred	'spy$nospy',2
+	labelx	2
+2: 	t	3,0,&0
+	tr	3,0,&1
+	.clause
+0:	all	3
+	gvary	1,0
+	gvary	0,1
+	gvary	2,2
+	ps	0,$'$spypoint'/2
+	ulvy	1
+	ulvy	0
+	call	3,1,&'retract'/1
+	cuty	2
+	pvaly	1,3
+	pvaly	0,4
+	nospy	3,4
+	dallpro	
+	.clause
+1:	gvarx	3,1
+	pc	1,#(CHR,&13)
+	ps	4,$'nospy'/1
+	us	255,$'/'/2
+	ulvx	0
+	ulvx	3
+	pl	2
+	uvalx	4
+	ul	255
+	ulvx	0
+	ul	255
+	ulvx	3
+	uc	$[]
+	pc	0,$'user_error'
+	exec	3,&'$format'/3
+	last
+13: 	.string	"~NError in ~w.~nTrying to remove a spypoint on ~a/~d which is not a spypoint.~n"
+
+	.pred	'spy$debug',2
+	.clause
+0:	gvarx	3,0
+	gvarx	2,1
+	gvara	0,3
+	gvara	1,3
+	pc	3,$0
+	pc	4,$'call'
+	exec	5,&'spy$debug'/5
+	last
+
+	.pred	'spy$wakeDebug',2
+	.clause
+0:	gvarx	3,0
+	gvarx	2,1
+	gvara	0,3
+	gvara	1,3
+	pc	3,$0
+	pc	4,$'wake'
+	exec	5,&'spy$debug'/5
+	last
+
+	.pred	'spy$wakeDebug',3
+	.clause
+0:	pc	3,$0
+	pc	4,$'wake'
+	exec	5,&'spy$debug'/5
+	last
+
+	.pred	'spy$debug',5
+	labelx	5
+	.clause
+0:	all	13
+	gvary	2,0
+	gvary	10,1
+	gvary	4,2
+	gvary	3,3
+	gvary	12,4
+	gvary	6,5
+	pc	0,$'callNumber'
+	pvary	9,1
+	call	13,2,&'$getFlag'/2
+	pvaly	12,6
+	pc	7,$'wake'
+	idtest	6,7
+	jfail	&60
+	pvaly	9,255
+	glvary	11,255
+	j	&61
+60: 	pvaly	4,255
+	glvary	11,255
+61: 	call	13,0,&'repeat'/0
+	labely	8
+	pc	0,$'callNumber'
+	pvaly	9,1
+	call	13,2,&'$setFlag'/2
+62: 	te	0,0,0,&63
+	labely	7
+	pvaly	2,0
+	pvaly	4,1
+	pvaly	3,2
+	pvaly	12,3
+	pvaly	8,4
+	pvaly	7,5
+	call	11,6,&'spy$act'/6
+	j	&64
+63: 	tre	0,0
+	labely	7
+	pc	0,$'callNumber'
+	puval	11,1
+	call	11,2,&'$setFlag'/2
+	pvaly	2,0
+	pvaly	4,1
+	pvaly	3,2
+	pc	3,$'fail'
+	pvaly	8,4
+	pvaly	7,5
+	call	11,6,&'spy$act'/6
+	cuty	6
+	fail	
+64: 	ps	0,$'$spyCall'/2
+	ulvy	10
+	ulvy	4
+	ps	1,$'$debugger'/1
+	uvary	5
+	call	10,2,&'$catch'/2
+	jtypy	5,3,&68
+65: 	te	0,0,0,&66
+	pc	0,$'delayed'
+	pc	1,$'true'
+	call	9,2,&'$getFlag'/2
+	cuty	6
+	pc	0,$'delayed'
+	pc	1,$'fail'
+	call	9,2,&'$setFlag'/2
+	pvaly	2,0
+	pvaly	4,1
+	pvaly	3,2
+	pc	3,$'delay'
+	pvaly	8,4
+	pvaly	7,5
+	dallexe	6,&'spy$act'/6
+66: 	re	0,0,&67
+	pvaly	2,0
+	pvaly	4,1
+	pvaly	3,2
+	pc	3,$'exit'
+	pvaly	8,4
+	pvaly	7,5
+	dallexe	6,&'spy$act'/6
+67: 	tre	0,0
+	pc	0,$'callNumber'
+	puval	9,1
+	call	9,2,&'$setFlag'/2
+	pvaly	2,0
+	pvaly	4,1
+	pvaly	3,2
+	pc	3,$'redo'
+	pvaly	8,4
+	pvaly	7,5
+	call	0,6,&'spy$act'/6
+	fail	
+	j	&76
+68: 	labelx	0
+69: 	te	1,0,1,&71
+	pvaly	5,255
+	gsx1	255,1,$'redo'/1
+	cutx	0
+	apushx	1
+	pushy	4
+	jpred	5,&70
+	cuty	8
+	fail	
+70: 	cuty	6
+	ps	6,$'$debugger'/1
+	uvaly	5
+	throw	6
+	dallpro	
+	j	&76
+71: 	re	1,0,&73
+	pvaly	5,255
+	gsx1	255,1,$'fail'/1
+	cutx	0
+	apushx	1
+	pushy	4
+	jpred	5,&72
+	cuty	7
+	fail	
+72: 	cuty	6
+	ps	6,$'$debugger'/1
+	uvaly	5
+	throw	6
+	dallpro	
+	j	&76
+73: 	re	1,0,&75
+	pvaly	5,255
+	gs	255,$'ancestors'/1
+	uvary	0
+	cutx	0
+	apushy	0
+	pushi	$$0
+	jpred	4,&74
+	pc	1,#(CHR,&54)
+	pl	2
+	ulvy	4
+	ul	255
+	ulvy	3
+	uc	$[]
+	pc	0,$'user'
+	call	3,3,&'$quickFormat'/3
+	pc	0,$'printDepth'
+	pvary	1,1
+	call	3,2,&'$getFlag'/2
+	pc	0,$'user'
+	pvaly	2,1
+	puval	1,2
+	call	1,3,&'print'/3
+	pc	6,$'user'
+	pc	7,$10
+	sput	6,7
+	apushy	0
+	afunc	47
+	popx	6
+	apushx	6
+	pushi	$$0
+	apred	4
+	ps	7,$'ancestors'/1
+	uvalx	6
+	ps	6,$'$debugger'/1
+	uvalx	7
+	throw	6
+	dallpro	
+74: 	fail	
+	j	&76
+75: 	tre	1,0
+	dallpro	
+76: 	last
+54: 	.string	"++ (~d) ~d : "
+
+	.pred	'$spyCall',2
+	.clause
+0:	execs	0,1
+	pro	
+	last
+
+	.pred	'spy$act',6
+	labelx	6
+2: 	t	7,0,&0
+	tr	7,0,&1
+	.clause
+0:	all	14
+	gvary	8,0
+	gvary	7,1
+	gvary	6,2
+	gvary	5,3
+	gvary	2,4
+	gvary	1,5
+	gvary	0,6
+	pvaly	7,0
+	pvary	3,1
+	call	14,2,&'spy$skip'/2
+	pc	0,$'localDebug'
+	pvary	4,1
+	pc	2,$'off'
+	call	14,3,&'prologFlag'/3
+48: 	te	0,0,0,&49
+	j	&50
+49: 	tre	0,0
+	pc	0,$'localDebug'
+	pvaly	4,1
+	call	14,2,&'$setFlag'/2
+	fail	
+50: 	pvaly	8,7
+	pvarx	0,0
+	pvarx	1,1
+	functor	7,0,1
+	labely	12
+51: 	te	0,0,2,&60
+	labely	13
+52: 	te	0,0,2,&53
+	call	14,2,&'$spypoint'/2
+	cuty	13
+	fail	
+53: 	tre	0,0
+54: 	cuty	12
+	labelx	0
+55: 	te	1,0,1,&56
+	pvaly	4,255
+	gc	255,$'trace'
+	j	&57
+56: 	tre	1,0
+	pvaly	3,255
+	gc	255,$'skip'
+57: 	cutx	0
+	labely	11
+58: 	te	0,0,0,&59
+	pvaly	8,0
+	pvaly	5,1
+	call	12,2,&'spy$leashing'/2
+	cuty	11
+	pvaly	8,0
+	pvaly	7,1
+	pvaly	6,2
+	pvaly	5,3
+	puval	4,4
+	puval	3,5
+	pvaly	2,6
+	pvaly	1,7
+	call	1,8,&'spy$act2'/8
+	j	&67
+59: 	tre	0,0
+	pvaly	7,0
+	pvaly	6,1
+	pvaly	5,2
+	pvaly	3,3
+	pvaly	8,4
+	call	5,5,&'spy$printPort'/5
+	pc	7,$'user'
+	pc	8,$10
+	sput	7,8
+	pc	0,$'localDebug'
+	puval	4,1
+	call	1,2,&'$setFlag'/2
+	j	&67
+60: 	tre	0,0
+	labelx	0
+61: 	te	1,0,1,&62
+	pvaly	4,255
+	gc	255,$'debug'
+	j	&63
+62: 	tre	1,0
+	pvaly	4,255
+	gc	255,$'trace'
+63: 	cutx	0
+	labely	10
+64: 	te	0,0,0,&65
+	pvaly	8,0
+	pvaly	5,1
+	pvary	9,2
+	call	11,3,&'spyCondition'/3
+	cuty	10
+	puval	9,0
+	call	9,1,&'call'/1
+	j	&66
+65: 	tre	0,0
+66: 	pvaly	8,0
+	pvaly	7,1
+	pvaly	6,2
+	pvaly	5,3
+	puval	4,4
+	puval	3,5
+	pvaly	2,6
+	pvaly	1,7
+	call	1,8,&'spy$act2'/8
+67: 	cuty	0
+	dallpro	
+	.clause
+1:	pro	
+	last
+
+	.pred	'spy$act2',8
+	labelx	8
+	.clause
+0:	all	10
+	gvary	7,0
+	gvary	6,1
+	gvary	5,2
+	gvary	4,3
+	gvary	3,4
+	gvary	9,5
+	gvary	2,6
+	gvary	1,7
+	gvary	0,8
+	call	10,0,&'repeat'/0
+	pvaly	6,0
+	pvaly	5,1
+	pvaly	4,2
+	pvaly	9,3
+	pvaly	7,4
+	call	9,5,&'spy$printPort'/5
+	labely	8
+	call	9,0,&'repeat'/0
+	pc	9,$'user'
+	sget	9,0,0
+	apushx	0
+	pushi	$$10
+	afunc	35
+	pushx	0
+	pushi	$$-1
+	afunc	35
+	pushx	0
+	pushi	$$32
+	afunc	34
+	pushx	0
+	pushi	$$127
+	afunc	31
+	afunc	11
+	afunc	12
+	apred	1
+	cuty	8
+	pvaly	7,1
+	pvaly	6,2
+	pvaly	5,3
+	pvaly	4,4
+	pvaly	3,5
+	pvaly	2,6
+	pvaly	1,7
+	call	1,8,&'spy$spyAction'/8
+	cuty	0
+	dallpro	
+	last
+
+	.pred	'spy$skip',2
+	labelx	2
+2: 	t	3,0,&0
+	tr	3,0,&1
+	.clause
+0:	all	4
+	gvary	3,0
+	gc	1,$'skip'
+	gvary	1,2
+	pvary	2,0
+	call	4,1,&'spy$skipping'/1
+	apushy	3
+	pushy	2
+	apred	3
+	ps	0,$'spy$skipping'/1
+	ulvy	2
+	call	2,1,&'retract'/1
+	cuty	1
+	pc	0,$'debugging'
+	pvary	0,1
+	call	1,2,&'$getFlag'/2
+	pc	0,$'localDebug'
+	puval	0,1
+	dallexe	2,&'$setFlag'/2
+	.clause
+1:	gc	1,$'no'
+	pro	
+	last
+
+	.pred	'spy$printPort',5
+2: 	t	5,0,&0
+	tr	5,0,&1
+	.clause
+0:	all	8
+	gvary	4,0
+	gvary	3,1
+	gvary	2,2
+	gvary	6,3
+	gvary	1,4
+	labely	7
+23: 	te	0,0,0,&24
+	pvaly	1,5
+	pvarx	0,0
+	pvarx	1,1
+	functor	5,0,1
+	call	8,2,&'$spypoint'/2
+	cuty	7
+	pc	0,$'spy'
+	j	&25
+24: 	tre	0,0
+	pc	0,$'trace'
+25: 	pvaly	6,1
+	pvary	5,2
+	call	6,3,&'spy$modeString'/3
+	pc	1,#(CHR,&16)
+	pl	2
+	ulvy	5
+	ul	255
+	ulvy	4
+	ul	255
+	ulvy	3
+	ul	255
+	ulvy	2
+	uc	$[]
+	pc	0,$'user'
+	call	2,3,&'$quickFormat'/3
+	pc	0,$'printDepth'
+	pvary	0,1
+	call	2,2,&'$getFlag'/2
+	pc	0,$'user'
+	pvaly	1,1
+	puval	0,2
+	call	0,3,&'print'/3
+	pc	5,$'user'
+	pc	6,#(CHR,&22)
+	sputl	5,6
+	pc	5,$'user'
+	flush	5
+	fail	
+	.clause
+1:	pro	
+	last
+22: 	.string	"? "
+16: 	.string	"~s (~d) ~d ~a: "
+
+	.pred	'spy$modeString',3
+8: 	sot	0,&4,&9,&7,&7
+4: 	t	3,0,&0
+	r	3,0,&1
+	r	3,0,&2
+	tr	3,0,&3
+9: 	soc	0,&($'spy':&5,$'trace':&6),&7
+5: 	t	3,0,&0
+	tr	3,0,&1
+6: 	t	3,0,&2
+	tr	3,0,&3
+7: 	fail	
+	.clause
+0:	gc	0,$'spy'
+	gc	1,$'no'
+	pc	255,#(CHR,&10)
+	gvalx	2,255
+	pro	
+	.clause
+1:	gc	0,$'spy'
+	gc	1,$'skip'
+	pc	255,#(CHR,&11)
+	gvalx	2,255
+	pro	
+	.clause
+2:	gc	0,$'trace'
+	gc	1,$'skip'
+	pc	255,#(CHR,&12)
+	gvalx	2,255
+	pro	
+	.clause
+3:	gc	0,$'trace'
+	gc	1,$'no'
+	pc	255,#(CHR,&13)
+	gvalx	2,255
+	pro	
+	last
+13: 	.string	"  "
+12: 	.string	" >"
+11: 	.string	"*>"
+10: 	.string	"**"
+
+	.pred	'spy$skipLine',0
+	.clause
+0:	pc	0,$'user'
+	pc	1,$10
+	exec	2,&'skip'/2
+	last
+
+	.pred	'spy$getNumber',1
+	.clause
+0:	all	2
+	gvary	0,0
+	pc	0,$'user'
+	pvary	1,1
+	call	2,2,&'getl'/2
+	puval	1,0
+	pvaly	0,1
+	pc	2,$'number'
+	pvarx	3,3
+	call	1,4,&'tokenize'/4
+	ctypy	0,17
+	dallpro	
+	last
+
+	.pred	'spy$spyAction',8
+	labelx	8
+24: 	sot	0,&23,&25,&22,&22
+23: 	t	9,0,&0
+	r	9,0,&1
+	r	9,0,&2
+	r	9,0,&3
+	r	9,0,&4
+	r	9,0,&5
+	r	9,0,&6
+	r	9,0,&7
+	r	9,0,&8
+	r	9,0,&9
+	r	9,0,&10
+	r	9,0,&11
+	r	9,0,&12
+	r	9,0,&13
+	r	9,0,&14
+	r	9,0,&15
+	r	9,0,&16
+	r	9,0,&17
+	r	9,0,&18
+	r	9,0,&19
+	r	9,0,&20
+	r	9,0,&21
+	tr	9,0,&22
+25: 	soce	0,&($-1:&0,$10:&1,$43:&2,$45:&3,$60:&6,$61:&5,$63:&7,$64:&4,$97:&9,$98:&10,$99:&11,$100:&12,$102:&13,$103:&14,$104:&15,$108:&16,$110:&17,$112:&18,$114:&19,$115:&20,$119:&21,$124:&8),&22
+	.clause
+0:	gc	0,$-1
+	cutx	8
+	pc	9,$'user_input'
+	clrerr	9
+	pc	9,$'user_input'
+	close	9,9
+	fail	
+	.clause
+1:	gc	0,$10
+	cutx	8
+	pc	0,$'localDebug'
+	pc	1,$'trace'
+	exec	2,&'$setFlag'/2
+	.clause
+2:	gc	0,$43
+	all	2
+	gvary	1,1
+	cutx	8
+	call	2,0,&'spy$skipLine'/0
+	pvaly	1,9
+	pvarx	2,2
+	pvarx	1,1
+	functor	9,2,1
+	labely	0
+59: 	te	3,0,3,&60
+	gvara	0,2
+	pc	2,$'spypoint'
+	call	1,3,&'predicateProperty'/3
+	cuty	0
+	j	&61
+60: 	tre	3,0
+	ps	0,$'/'/2
+	uvalx	2
+	uvalx	1
+	call	0,1,&'spy'/1
+61: 	fail	
+	.clause
+3:	gc	0,$45
+	all	4
+	gvary	3,1
+	cutx	8
+	call	4,0,&'spy$skipLine'/0
+	pvaly	3,9
+	pvary	1,10
+	pvary	0,11
+	functor	9,10,11
+	labely	2
+75: 	te	0,0,0,&76
+	pvaly	1,0
+	pvaly	0,1
+	pc	2,$'spypoint'
+	call	3,3,&'predicateProperty'/3
+	cuty	2
+	ps	0,$'/'/2
+	ulvy	1
+	ulvy	0
+	call	0,1,&'nospy'/1
+	j	&77
+76: 	tre	0,0
+77: 	fail	
+	.clause
+4:	gc	0,$64
+	cutx	8
+	all	2
+	pvary	1,0
+	call	2,1,&'read'/1
+	labely	0
+	puval	1,0
+	call	1,1,&'call'/1
+	cuty	0
+	fail	
+	.clause
+5:	gc	0,$61
+	cutx	8
+	all	0
+	call	0,0,&'spy$skipLine'/0
+	call	0,0,&'debugging'/0
+	fail	
+	.clause
+6:	gc	0,$60
+	cutx	8
+	all	2
+	labely	1
+110: 	te	0,0,0,&111
+	pvary	0,0
+	call	2,1,&'spy$getNumber'/1
+	apushy	0
+	pushi	$$0
+	apred	4
+	cuty	1
+	j	&112
+111: 	tre	0,0
+	apushi	$$2147483647
+	popy	0
+112: 	pc	0,$'printDepth'
+	puval	0,1
+	call	0,2,&'$setFlag'/2
+	fail	
+	.clause
+7:	gc	0,$63
+	cutx	8
+	pc	0,$104
+	pvarx	1,1
+	pvarx	2,2
+	pvarx	3,3
+	pvarx	4,4
+	pvarx	5,5
+	pvarx	6,6
+	pvarx	7,7
+	exec	8,&'spy$spyAction'/8
+	.clause
+8:	gc	0,$124
+	all	5
+	gvary	0,1
+	gvary	4,2
+	gvary	3,3
+	gvary	2,4
+	gvary	1,5
+	cutx	8
+	call	5,0,&'spy$skipLine'/0
+	ps	0,$'info'/4
+	ulvy	4
+	ulvy	3
+	ulvy	2
+	ulvy	1
+	pvaly	0,1
+	call	0,2,&'spyHook'/2
+	fail	
+	.clause
+9:	gc	0,$97
+	cutx	8
+	all	0
+	call	0,0,&'spy$skipLine'/0
+	abort	
+	dallpro	
+	.clause
+10:	gc	0,$98
+	cutx	8
+	all	0
+	call	0,0,&'spy$skipLine'/0
+	call	0,0,&'break'/0
+	fail	
+	.clause
+11:	gc	0,$99
+	cutx	8
+	all	0
+	call	0,0,&'spy$skipLine'/0
+	pc	0,$'localDebug'
+	pc	1,$'trace'
+	dallexe	2,&'$setFlag'/2
+	.clause
+12:	gc	0,$100
+	all	1
+	gvary	0,1
+	cutx	8
+	call	1,0,&'spy$skipLine'/0
+	pc	0,$'user'
+	pvaly	0,1
+	call	0,2,&'display'/2
+	pc	9,$'user'
+	pc	10,$10
+	sput	9,10
+	fail	
+	.clause
+13:	gc	0,$102
+	all	4
+	gvary	3,2
+	gvary	0,5
+	cutx	8
+	labely	2
+195: 	te	8,0,8,&196
+	gc	4,$'fail'
+	cuty	2
+	call	0,0,&'spy$skipLine'/0
+	fail	
+196: 	re	8,0,&197
+	pvary	1,0
+	call	4,1,&'spy$getNumber'/1
+	apushy	1
+	pushy	3
+	apred	2
+	cuty	2
+	pc	0,$'localDebug'
+	pvaly	0,1
+	call	2,2,&'$setFlag'/2
+	ps	9,$'fail'/1
+	ulvy	1
+	ps	10,$'$debugger'/1
+	uvalx	9
+	throw	10
+	dallpro	
+197: 	tre	8,0
+	cutx	7
+	pc	0,$'localDebug'
+	pvaly	0,1
+	call	0,2,&'$setFlag'/2
+	fail	
+198: 	.clause
+14:	gc	0,$103
+	cutx	8
+	all	2
+	labely	1
+209: 	te	0,0,0,&210
+	pvary	0,0
+	call	2,1,&'spy$getNumber'/1
+	cuty	1
+	j	&211
+210: 	tre	0,0
+	apushi	$$2147483647
+	popy	0
+211: 	ps	9,$'ancestors'/1
+	ulvy	0
+	ps	10,$'$debugger'/1
+	uvalx	9
+	throw	10
+	dallpro	
+	.clause
+15:	gc	0,$104
+	cutx	8
+	all	0
+	call	0,0,&'spy$skipLine'/0
+	pc	9,$'user'
+	pc	10,#(CHR,&221)
+	sputl	9,10
+	pc	9,$'user'
+	pc	10,#(CHR,&222)
+	sputl	9,10
+	fail	
+	.clause
+16:	gc	0,$108
+	cutx	8
+	all	0
+	call	0,0,&'spy$skipLine'/0
+	pc	0,$'localDebug'
+	pc	1,$'debug'
+	dallexe	2,&'$setFlag'/2
+	.clause
+17:	gc	0,$110
+	cutx	8
+	exec	0,&'spy$skipLine'/0
+	.clause
+18:	gc	0,$112
+	all	2
+	gvary	1,1
+	cutx	8
+	call	2,0,&'spy$skipLine'/0
+	pc	0,$'printDepth'
+	pvary	0,1
+	call	2,2,&'$getFlag'/2
+	pc	0,$'user'
+	pvaly	1,1
+	puval	0,2
+	call	0,3,&'print'/3
+	pc	9,$'user'
+	pc	10,$10
+	sput	9,10
+	fail	
+	.clause
+19:	gc	0,$114
+	all	4
+	gvary	3,2
+	gvary	0,5
+	cutx	8
+	labely	2
+271: 	te	7,0,7,&272
+	pvary	1,0
+	call	4,1,&'spy$getNumber'/1
+	apushy	1
+	pushy	3
+	apred	2
+	cuty	2
+	pc	0,$'localDebug'
+	pvaly	0,1
+	call	2,2,&'$setFlag'/2
+	ps	9,$'redo'/1
+	ulvy	1
+	ps	10,$'$debugger'/1
+	uvalx	9
+	throw	10
+	dallpro	
+272: 	tre	7,0
+	cutx	6
+	pc	0,$'localDebug'
+	pvaly	0,1
+	call	0,2,&'$setFlag'/2
+	fail	
+273: 	.clause
+20:	gc	0,$115
+	all	2
+	gvary	0,2
+	gvary	1,4
+	cutx	8
+	call	2,0,&'spy$skipLine'/0
+	pvaly	1,9
+	pc	10,$'call'
+	idtest	9,10
+	jfail	&286
+	j	&288
+286: 	pvaly	1,9
+	pc	10,$'wake'
+	idtest	9,10
+	jfail	&287
+	j	&288
+287: 	pvaly	1,9
+	pc	10,$'redo'
+	idtest	9,10
+	jfail	&289
+288: 	ps	0,$'spy$skipping'/1
+	ulvy	0
+	dallexe	1,&'assert'/1
+289: 	pc	0,$'localDebug'
+	pc	1,$'trace'
+	dallexe	2,&'$setFlag'/2
+290: 	.clause
+21:	gc	0,$119
+	all	1
+	gvary	0,1
+	cutx	8
+	call	1,0,&'spy$skipLine'/0
+	pc	0,$'user'
+	pvaly	0,1
+	call	0,2,&'write'/2
+	pc	9,$'user'
+	pc	10,$10
+	sput	9,10
+	fail	
+	.clause
+22:	all	0
+	call	0,0,&'spy$skipLine'/0
+	fail	
+	last
+222: 	.string	"    f <n> fail <n>\n    g     ancestors\n    g <n> last <n> ancestors\n    h/?   help\n    l     leap\n    n     nodebug\n    p     print\n    r     redo\n    r <n> redo <n>\n    s     skip\n    w     write\n"
+221: 	.string	"Prolog debugging options:\n    <cr>  creep\n    +/-   spy/nospy\n    @     single command\n    =     debugging\n    < <n> set print depth\n    |     spyHook(Info, Goal)\n    a     abort\n    b     break\n    c     creep\n    d     display\n    f     fail\n"
+
+	.pred	'spy$watch',1
+2: 	jnvx	0,&0
+1: 	mkdel	1,&2
+	mark	0
+	delay	
+	.clause
+0:	all	1
+	gvary	0,0
+	pc	0,$'callNumber'
+	pvarx	1,1
+	call	1,2,&'$getFlag'/2
+	labelx	1
+	pvaly	0,0
+	pc	2,$0
+	pnil	3
+	dallexe	4,&'spy$watch'/4
+	last
+
+	.pred	'spy$watch',3
+2: 	jnvx	0,&0
+1: 	mkdel	3,&2
+	mark	0
+	delay	
+	.clause
+0:	gvarx	4,1
+	gvarx	3,2
+	labelx	1
+	gvara	2,4
+	exec	4,&'spy$watch'/4
+	last
+
+	.pred	'spy$watch',4
+14: 	labelx	4
+	sot	0,&15,&16,&11,&17
+15: 	mkdel	5,&14
+	mark	0
+	delay	
+16: 	soce	0,&($'!':&12,$'$softCut':&5,$'fail':&7,$'true':&6),&11
+12: 	t	5,0,&4
+	tr	5,0,&11
+17: 	sose	0,&($','/2:&0,$'->'/2:&2,$';'/2:&13,$'ancestors'/1:&8,$'depth'/1:&10,$'subGoalOf'/1:&9),&11
+13: 	t	5,0,&1
+	tr	5,0,&3
+	.clause
+0:	gs	0,$','/2
+	uvara	0
+	all	4
+	uvary	3
+	gvary	2,1
+	gvary	1,2
+	gvary	0,3
+	cutx	4
+	pvaly	2,1
+	pvaly	1,2
+	pvaly	0,3
+	call	4,4,&'spy$watch'/4
+	pvaly	3,0
+	pvaly	2,1
+	pvaly	1,2
+	pvaly	0,3
+	dallexe	4,&'spy$watch'/4
+	.clause
+1:	gsx2	0,6,5,$';'/2
+	gs	6,$'->'/2
+	uvara	0
+	all	5
+	uvary	3
+	gvary	2,1
+	gvary	1,2
+	gvary	0,3
+	cutx	4
+	labely	4
+47: 	te	6,0,6,&48
+	pvaly	1,1
+	pvaly	0,2
+	call	5,3,&'spy$watch'/3
+	cuty	4
+	pvaly	3,0
+	pvaly	2,1
+	pvaly	1,2
+	pvaly	0,3
+	dallexe	4,&'spy$watch'/4
+48: 	tre	6,0
+	gvara	0,5
+	pvaly	2,1
+	pvaly	1,2
+	pvaly	0,3
+	dallexe	4,&'spy$watch'/4
+49: 	.clause
+2:	gs	0,$'->'/2
+	uvara	0
+	all	5
+	uvary	3
+	gvary	2,1
+	gvary	1,2
+	gvary	0,3
+	cutx	4
+	labely	4
+62: 	te	0,0,1,&63
+	pvaly	1,1
+	pvaly	0,2
+	call	5,3,&'spy$watch'/3
+	cuty	4
+	pvaly	3,0
+	pvaly	2,1
+	pvaly	1,2
+	pvaly	0,3
+	dallexe	4,&'spy$watch'/4
+63: 	tre	0,0
+	dallpro	
+64: 	.clause
+3:	gsx2	0,0,5,$';'/2
+	cutx	4
+78: 	te	6,0,6,&79
+	exec	4,&'spy$watch'/4
+79: 	tre	6,0
+	gvara	0,5
+	exec	4,&'spy$watch'/4
+80: 	.clause
+4:	gc	0,$'!'
+	cutx	1
+	pro	
+	.clause
+5:	gc	0,$'$softCut'
+	cutx	4
+	softcut	1
+	pro	
+	.clause
+6:	gc	0,$'true'
+	cutx	4
+	pro	
+	.clause
+7:	gc	0,$'fail'
+	cutx	4
+	fail	
+	.clause
+8:	gsx1	0,5,$'ancestors'/1
+	cutx	4
+	gvalx	3,5
+	pro	
+	.clause
+9:	gsx1	0,0,$'subGoalOf'/1
+	gvara	1,3
+	cutx	4
+	exec	2,&'member'/2
+	.clause
+10:	gsx1	0,5,$'depth'/1
+	cutx	4
+	gvalx	2,5
+	pro	
+	.clause
+11:	all	4
+	gvary	2,0
+	gvary	0,2
+	gvary	3,3
+	pc	0,$'callNumber'
+	pvary	1,1
+	call	4,2,&'$getFlag'/2
+	apushy	1
+	afunc	46
+	popx	1
+	pc	0,$'callNumber'
+	call	4,2,&'$setFlag'/2
+	ps	1,$'spy$watchCall'/4
+	ulvy	2
+	ulvy	1
+	ulvy	0
+	ulvy	3
+	pvaly	2,0
+	puval	1,2
+	pvaly	0,3
+	pc	4,$'call'
+	dallexe	5,&'spy$debug'/5
+	last
+
+	.pred	'spy$watchCall',4
+	.clause
+0:	all	11
+	gvary	0,0
+	gvary	7,1
+	gvary	3,2
+	gvary	2,3
+	labely	10
+27: 	te	0,0,0,&29
+	pvaly	0,4
+	pvary	6,5
+	pvary	5,6
+	functor	4,5,6
+	pvaly	6,0
+	pvaly	5,1
+	pc	2,$'dynamic'
+	call	11,3,&'predicateProperty'/3
+	cuty	10
+	pc	0,$'maxDepth'
+	pvary	9,1
+	call	10,2,&'$getFlag'/2
+	apushy	3
+	pushy	9
+	apred	2
+	pvaly	0,0
+	pvary	8,1
+	call	9,2,&'sys$readyToRun'/2
+	jtypy	8,3,&28
+	puval	8,0
+	pvaly	0,1
+	pvaly	7,2
+	pvaly	3,3
+	pvaly	2,4
+	call	0,5,&'spy$watchCallWhenReady'/5
+	pc	0,$'delayed'
+	pc	1,$'true'
+	dallexe	2,&'$setFlag'/2
+28: 	labely	1
+	puval	6,0
+	puval	5,1
+	pvary	4,2
+	call	5,3,&'getclause'/3
+	pvaly	4,255
+	gs	255,$':-'/2
+	ulvy	0
+	uvarx	0
+	apushy	3
+	afunc	46
+	popx	2
+	pl	3
+	ulvy	0
+	ulvy	2
+	pvaly	1,1
+	dallexe	4,&'spy$watch'/4
+	j	&30
+29: 	tre	0,0
+	pvaly	0,0
+	dallexe	1,&'$funcall'/1
+30: 	last
+
+	.pred	'spy$watchCallWhenReady',5
+2: 	jnvx	0,&0
+1: 	mkdel	5,&2
+	mark	0
+	delay	
+	.clause
+0:	gvara	0,1
+	ps	1,$'spy$callDynamic'/4
+	ulvx	0
+	ulvx	2
+	ulvx	3
+	ulvx	4
+	pc	4,$'wake'
+	exec	5,&'spy$debug'/5
+	last
+
+	.pred	'spy$callDynamic',4
+	.clause
+0:	all	5
+	gvary	2,0
+	gvary	3,2
+	gvary	1,3
+	pvaly	2,4
+	pvarx	0,0
+	pvarx	1,1
+	functor	4,0,1
+	labely	0
+	pvary	4,2
+	call	5,3,&'getclause'/3
+	pvaly	4,255
+	gs	255,$':-'/2
+	ulvy	2
+	uvara	0
+	apushy	3
+	afunc	46
+	popx	2
+	pl	3
+	ulvy	2
+	ulvy	1
+	pvaly	0,1
+	dallexe	4,&'spy$watch'/4
+	last
+
+	.pred	'$init',0
+19: 	t	0,0,&1
+	r	0,0,&2
+	r	0,0,&3
+	r	0,0,&4
+	r	0,0,&5
+	r	0,0,&6
+	tr	0,0,&7
+	.clause
+1:	all	1
+	labely	0
+	call	1,0,&'initializing'/0
+	pc	0,#(STR,&21)
+	call	1,1,&'$dynamic'/1
+	cuty	0
+	fail	
+	.clause
+2:	all	1
+	labely	0
+	call	1,0,&'initializing'/0
+	pc	0,#(STR,&23)
+	call	1,1,&'$dynamic'/1
+	cuty	0
+	fail	
+	.clause
+3:	all	1
+	labely	0
+	call	1,0,&'initializing'/0
+	pc	0,#(STR,&25)
+	call	1,1,&'$dynamic'/1
+	cuty	0
+	fail	
+	.clause
+4:	pc	0,#(STR,&27)
+	all	0
+	call	0,1,&'assertz'/1
+	fail	
+	.clause
+5:	all	1
+	labely	0
+	call	1,0,&'initializing'/0
+	pc	0,#(STR,&29)
+	call	1,1,&'$dynamic'/1
+	cuty	0
+	fail	
+	.clause
+6:	all	1
+	labely	0
+	call	1,0,&'initializing'/0
+	pc	0,#(STR,&31)
+	call	1,1,&'$dynamic'/1
+	cuty	0
+	fail	
+	.clause
+7:	all	1
+	labely	0
+	call	1,0,&'initializing'/0
+	pc	0,#(STR,&33)
+	call	1,1,&'$dynamic'/1
+	cuty	0
+	fail	
+	last
+33: 	.word	$'/'/2
+	.word	$'spyHook'
+	.word	$2
+31: 	.word	$'/'/2
+	.word	$'leashCondition'
+	.word	$3
+29: 	.word	$'/'/2
+	.word	$'spyCondition'
+	.word	$3
+27: 	.word	$'spy$leashMode'/1
+	.word	#(LST,&34)
+34: 	.word	$'call'
+	.word	#(LST,&35)
+35: 	.word	$'exit'
+	.word	#(LST,&36)
+36: 	.word	$'redo'
+	.word	#(LST,&37)
+37: 	.word	$'fail'
+	.word	#(LST,&38)
+38: 	.word	$'delay'
+	.word	#(LST,&39)
+39: 	.word	$'wake'
+	.word	$[]
+25: 	.word	$'/'/2
+	.word	$'spy$leashMode'
+	.word	$1
+23: 	.word	$'/'/2
+	.word	$'spy$skipping'
+	.word	$1
+21: 	.word	$'/'/2
+	.word	$'$spypoint'
+	.word	$2
+

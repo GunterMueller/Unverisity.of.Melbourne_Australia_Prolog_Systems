@@ -1,0 +1,65 @@
+A + B == C :- C is quote(A + B).
+A - B == C :- C is quote(A - B).
+
+% STRICT EVALUATION (SIMPLE)
+
+plus(0, I) = I.
+%plus(s(I), J) =  s(plus(I, J)). % correct version
+ plus(s(I), J) =  plus(I, J). % buggy version
+
+times(0, I) = 0.
+times(s(I), J) = plus(J, times(I, J)).
+
+% PRIME NUMBERS (LAZY)
+
+	% first N primes
+primes(N) = take(N, primes).
+
+	% list of all primes
+:- lazy primes/0.
+primes = sift(ints(2)).
+
+	% list of all integers >= N
+:- lazy ints/1.
+ints(N) = N.ints(N + 1).
+
+	% seive: return first one and filter rest
+:- lazy sift/1.
+sift(H.T) = H.sift(filter(H, T)).
+
+	% remove all multiples of M from list
+	% Hacked version to introduce new function for checking
+	% division (as in Nilsson paper); can't be directly called
+	% from ?: condition due to quantifier bug (fixed in new version)
+:- lazy filter/2.
+%filter(M, N.L) = (N mod M =:= 0 ? filter(M, L) : N.filter(M, L)).
+filter(M, N.L) =
+	filter1(not_div(N, M), M, N, L).
+
+filter1(D, M, N, L) =
+	(D = false ? filter(M, L) : N.filter(M, L)).
+
+not_div(N, M) = T :-
+	% ( N mod M =\= 0 ->
+	( N mod M =:= 0 ->		% bug
+		T = true
+	;
+		T = false
+	).
+
+	% first N elements of a list
+	% could declare lazy
+	% more efficient on some systems if args are reversed
+take(_, []) = [].
+take(N, A.B) = (N > 0 ? A.take(N - 1, B) : []).
+
+% HIGHER ORDER
+
+        % foldl as in Miranda
+foldl(F, B, []) = B.
+foldl(F, B, H.T) = foldl(F, fapply(fapply(F, B), H), T).
+
+        % sum of elements in a list
+% sum(X) = foldl(+, 0, X).
+sum(X) = foldl(+, 1, X).        % bug
+

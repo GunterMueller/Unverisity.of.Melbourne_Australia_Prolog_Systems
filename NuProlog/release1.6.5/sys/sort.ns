@@ -1,0 +1,396 @@
+
+	.pred	'$isList',2
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	2,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	pro	
+	.clause
+1:	glvx2	0,255,0
+	execsot	2,0,&4,&0,&1,&2
+	last
+
+	.pred	'sort',2
+	.clause
+0:	all	4
+	gvary	2,0
+	gvary	0,1
+	pvaly	2,0
+	pvary	3,1
+	call	4,2,&'$isList'/2
+	pc	0,$1
+	puval	3,1
+	pvaly	2,2
+	pvary	1,3
+	call	2,4,&'$sort'/4
+	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'$rmDups'/2
+	last
+
+	.pred	'$rmDups',2
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	2,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	pro	
+	.clause
+1:	glvx2	0,0,3
+	gl	1
+	uvalx	0
+	uvarx	2
+	gvara	1,3
+	exec	3,&'$rmDups'/3
+	last
+
+	.pred	'$rmDups',3
+3: 	sot	1,&4,&0,&1,&2
+4: 	mkdel	3,&3
+	mark	1
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	1
+	gnil	2
+	pro	
+	.clause
+1:	glvx2	1,3,1
+	idtest	0,3
+	jfail	&14
+	exec	3,&'$rmDups'/3
+14: 	gl	2
+	uvalx	3
+	uvara	2
+	gvara	0,3
+	exec	3,&'$rmDups'/3
+15: 	last
+
+	.pred	'sorted',1
+6: 	sot	0,&7,&0,&8,&11
+7: 	mkdel	1,&6
+	mark	0
+	delay	
+	j	&0
+8: 	glvx2	0,0,1
+9: 	sot	1,&10,&3,&4,&5
+10: 	mkdel	2,&9
+	mark	1
+	delay	
+5: 	fail	
+11: 	fail	
+	.clause
+0:	gnil	0
+	pro	
+	.clause
+3:	gnil	1
+	pro	
+	.clause
+4:	gl	1
+	all	2
+	uvary	1
+	uvary	0
+	pvaly	1,2
+	compare	3,0,2
+	gvara	0,3
+	call	2,1,&'$compareLE'/1
+	pl	0
+	uvaly	1
+	uvaly	0
+	dall	
+	execsot	1,0,&7,&0,&8,&11
+	last
+
+	.pred	'merge',3
+6: 	jnvx	0,&7
+3: 	mkdel	3,&6
+	mark	0
+	delay	
+7: 	sot	1,&8,&9,&5,&0
+8: 	mkdel	3,&7
+	mark	1
+	delay	
+9: 	jc	1,$[],&4
+	j	&0
+4: 	t	3,0,&0
+	tr	3,0,&1
+5: 	t	3,0,&0
+	tr	3,0,&2
+	.clause
+0:	gnil	0
+	gvalx	1,2
+	pro	
+	.clause
+1:	glvx2	0,4,3
+	gnil	1
+	gl	2
+	uvalx	4
+	uvalx	3
+	pro	
+	.clause
+2:	glvx2	0,6,7
+	glvx2	1,3,4
+	gvarx	5,2
+	compare	0,6,3
+	gvara	1,6
+	gvara	2,7
+	exec	6,&'$merge'/6
+	last
+
+	.pred	'$merge',6
+5: 	sot	0,&3,&6,&4,&4
+3: 	t	6,0,&0
+	r	6,0,&1
+	tr	6,0,&2
+6: 	soc	0,&($'<':&0,$'=':&1,$'>':&2),&4
+4: 	fail	
+	.clause
+0:	gc	0,$'<'
+	gvara	0,2
+	gl	5
+	ulvx	1
+	uvara	2
+	pl	1
+	ulvx	3
+	ulvx	4
+	exec	3,&'merge'/3
+	.clause
+1:	gc	0,$'='
+	gvara	0,2
+	gl	5
+	ulvx	1
+	uvara	2
+	gvara	1,4
+	exec	3,&'merge'/3
+	.clause
+2:	gc	0,$'>'
+	gl	5
+	ulvx	3
+	uvarx	6
+	pl	0
+	ulvx	1
+	ulvx	2
+	gvara	1,4
+	gvara	2,6
+	exec	3,&'merge'/3
+	last
+
+	.pred	'keySort',2
+	.clause
+0:	gvarx	3,0
+	gvarx	2,1
+	pc	0,$'+'
+	gvara	1,3
+	exec	3,&'keySort'/3
+	last
+
+	.pred	'keySort',3
+4: 	sot	0,&2,&5,&3,&3
+2: 	t	3,0,&0
+	tr	3,0,&1
+5: 	soc	0,&($'+':&0,$'-':&1),&3
+3: 	fail	
+	.clause
+0:	gc	0,$'+'
+	all	3
+	gvary	1,1
+	gvary	0,2
+	pvaly	1,0
+	pvary	2,1
+	call	3,2,&'$isList'/2
+	pc	0,$2
+	puval	2,1
+	pvaly	1,2
+	pvaly	0,3
+	dallexe	4,&'$sort'/4
+	.clause
+1:	gc	0,$'-'
+	all	3
+	gvary	1,1
+	gvary	0,2
+	pvaly	1,0
+	pvary	2,1
+	call	3,2,&'$isList'/2
+	pc	0,$-2
+	puval	2,1
+	pvaly	1,2
+	pvaly	0,3
+	dallexe	4,&'$sort'/4
+	last
+
+	.pred	'$sort',4
+2: 	jnvx	1,&0
+1: 	mkdel	4,&2
+	mark	1
+	delay	
+	.clause
+0:	sort	0,2,4
+	gvalx	3,4
+	pro	
+	last
+
+	.pred	'$sort',2
+	.clause
+0:	pc	2,$1
+	sort	2,0,2
+	gvalx	1,2
+	pro	
+	last
+
+	.pred	'multiKeySort',4
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	4,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	2,3
+	pro	
+	.clause
+1:	gl	0
+	all	8
+	uvary	7
+	uvara	0
+	gvary	5,1
+	gvary	0,3
+	pvaly	5,1
+	pvary	4,3
+	call	8,4,&'multiKeySort'/4
+	pvaly	7,0
+	pvary	3,1
+	pvary	6,2
+	call	7,3,&'$order'/3
+	puval	6,0
+	pvaly	5,1
+	puval	4,2
+	pvary	2,3
+	call	4,4,&'$keyList'/4
+	puval	3,0
+	puval	2,1
+	pvary	1,2
+	call	2,3,&'keySort'/3
+	puval	1,0
+	pvaly	0,1
+	dallexe	2,&'$stripKeys'/2
+	last
+
+	.pred	'$order',3
+	labelx	3
+7: 	sot	0,&4,&3,&3,&8
+4: 	t	4,0,&0
+	r	4,0,&1
+	r	4,0,&2
+	tr	4,0,&3
+8: 	sose	0,&($'+'/1:&5,$'-'/1:&6),&3
+5: 	t	4,0,&1
+	tr	4,0,&3
+6: 	t	4,0,&2
+	tr	4,0,&3
+	.clause
+0:	gc	1,$'+'
+	gvalx	0,2
+	typx	0,3
+	cutx	3
+	pro	
+	.clause
+1:	gsx1	0,4,$'+'/1
+	gc	1,$'+'
+	gvalx	4,2
+	cutx	3
+	pro	
+	.clause
+2:	gsx1	0,4,$'-'/1
+	gc	1,$'-'
+	gvalx	4,2
+	cutx	3
+	pro	
+	.clause
+3:	gvalx	0,2
+	gc	1,$'+'
+	pro	
+	last
+
+	.pred	'$keyList',4
+3: 	sot	2,&4,&0,&1,&2
+4: 	mkdel	4,&3
+	mark	2
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	2
+	gnil	3
+	pro	
+	.clause
+1:	all	4
+	gvary	3,0
+	gvary	2,1
+	gl	2
+	uvarx	4
+	uvary	1
+	gl	3
+	uvarx	5
+	uvary	0
+	gs	5,$'-'/2
+	uvarx	5
+	uvalx	4
+	ps	0,$'-'/2
+	ulvy	3
+	ulvy	2
+	ps	1,$'-'/2
+	uvalx	5
+	uvalx	4
+	call	4,2,&'duplicate'/2
+	pvaly	3,0
+	pvaly	2,1
+	pvaly	1,2
+	pvaly	0,3
+	dall	
+	execsot	4,2,&4,&0,&1,&2
+	last
+
+	.pred	'$stripKeys',2
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	2,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	pro	
+	.clause
+1:	glvx2	0,2,0
+	gsx2	2,255,2,$'-'/2
+	gl	1
+	uvalx	2
+	uvara	1
+	execsot	2,0,&4,&0,&1,&2
+	last
+
+	.pred	'duplicate',2
+	.clause
+0:	gvarx	2,0
+	all	3
+	gvary	1,1
+	labely	2
+	pc	0,$'$duplicate'
+	pc	1,$'$term'
+	call	3,3,&'putprop'/3
+	pc	0,$'$duplicate'
+	pc	1,$'$term'
+	pvary	0,2
+	call	3,3,&'getprop'/3
+	cuty	2
+	puval	0,255
+	gvaly	1,255
+	dallpro	
+	last
+

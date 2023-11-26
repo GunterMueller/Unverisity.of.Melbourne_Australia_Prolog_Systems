@@ -1,0 +1,111 @@
+<HTML>
+<HEAD>
+<!-- ------------------------------------------------------------------- -->
+<!-- http://people.eng.unimelb.edu.au/lee/src/forms/formnp.html - Modified 5/5/95 lee -->
+<!-- http://www.biodata.com/douglas/form.html - Modified 9/20/94 -=DCM=- -->
+<!-- ------------------------------------------------------------------- -->
+<TITLE>Prototypical HTML Forms</TITLE>
+</HEAD>
+<body>
+<H1>Prototypical HTML Forms</H1>
+
+<strong>NOTE: Due to the software not yet being ported to our
+departments latest Web server, this demo is broken.  I believe the code
+is correct though. </strong>
+<P>
+
+This document displays the various form gadgets currently supported.
+<P>
+<FORM ACTION="http://www.cs.mu.oz.au/us/cgi-bin/nptest" METHOD="POST">
+<HR>
+<H1>Text Fields</H1>
+Basic text entry field:
+<INPUT TYPE="text" NAME="entry1" VALUE=""> 
+<P>
+Text entry field with default value:
+<INPUT TYPE="text" NAME="entry2" VALUE="This is the default."> 
+<P>
+Text entry field of 40 characters:
+<INPUT TYPE="text" NAME="entry3" SIZE=40 VALUE=""> 
+<P>
+Text entry field of 5 characters, maximum:
+<INPUT TYPE="text" NAME="entry5" SIZE=5 MAXLENGTH=5 VALUE=""> 
+<P>
+Password entry field (*'s are echoed):
+<INPUT TYPE="password" NAME="password" SIZE=8 MAXLENGTH=8 VALUE=""> 
+<HR>
+<H1>Textareas</H1>
+A 60x3 scrollable textarea:
+<P>
+<TEXTAREA NAME="textarea" COLS=60 ROWS=3>NOTE:
+Default text can be entered here.
+</TEXTAREA>
+<HR>
+<H1>Checkboxes</H1>
+Here is a checkbox
+<INPUT TYPE="checkbox" NAME="Checkbox1" VALUE="TRUE">,
+and a checked checkbox
+<INPUT TYPE="checkbox" NAME="Checkbox2" VALUE="TRUE" CHECKED>
+. 
+<HR>
+<H1>Radio Buttons</H1>
+Radio buttons (one-of-many selection):
+<OL>
+<LI>
+<INPUT TYPE="radio" NAME="radio1" VALUE="value1">
+First choice. 
+<LI>
+<INPUT TYPE="radio" NAME="radio1" VALUE="value2" CHECKED>
+Second choice. (Default CHECKED.)
+<LI>
+<INPUT TYPE="radio" NAME="radio1" VALUE="value3">
+Third choice. 
+</OL>
+<HR>
+<H1>Option Menus</H1>
+One-of-many (Third Option selected by default):
+<SELECT NAME="first-menu">
+<OPTION>First Option</OPTION>
+<OPTION>Second Option</OPTION>
+<OPTION SELECTED>Third Option</OPTION>
+<OPTION>Fourth Option</OPTION>
+<OPTION>Last Option</OPTION>
+</SELECT>
+<P>
+Many-of-many (First and Third selected by default):
+<SELECT NAME="second-menu" MULTIPLE>
+<OPTION SELECTED>First Option</OPTION>
+<OPTION>Second Option</OPTION>
+<OPTION SELECTED>Third Option</OPTION>
+<OPTION>Fourth Option</OPTION>
+<OPTION>Last Option</OPTION>
+</SELECT>
+<P>
+<B>NOTE: Hold down CTRL and click to multiple-select in XMosaic.</B>
+<!-- You can also assign VALUEs using TYPE="hidden" -->
+<INPUT TYPE="hidden" NAME="hidden" VALUE="invisible">
+<HR>
+<H1>Special Buttons</H1>
+Submit button (mandatory):
+<INPUT TYPE="submit" VALUE="Submit Form">
+<P>
+Reset button (optional):
+<INPUT TYPE="reset" VALUE="Clear Values">
+<P>
+</FORM>
+<HR>
+<H1>References</H1>
+Heres a link to
+<A HREF="http://www.ncsa.uiuc.edu/SDG/Software/Mosaic/Docs/fill-out-forms/overview.html">
+a handy HTML forms reference
+</A>.
+<P>
+<HR>
+<ADDRESS>
+Prototypical HTML Form /
+<A HREF="http://people.eng.unimelb.edu.au/lee/index.html">
+lee@unimelb.edu.au
+</A>
+</ADDRESS>
+</body>
+</HTML>

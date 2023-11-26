@@ -1,0 +1,86 @@
+<HTML>
+<TITLE>
+Declarative debugging of lazy FP - implementation
+</TITLE>
+<H1>
+Declarative debugging of lazy FP - implementation
+</H1>
+<hr>
+
+<A HREF="../../papers/eq/">
+NUE-Prolog</A>
+is a combined relational plus functional language supporting higher
+order functions and lazy evaluation as well as full NU-Prolog, including
+coroutining.  It is an extension of
+NU-Prolog which allows evaluable functions to be defined.  It is
+implemented by transformation into standard NU-Prolog.
+<P>
+
+The declarative debugger for the functional part of the language is
+implemented by modifying the transformation so that functions return a
+representation of the computation performed as well as the final result
+of evaluation.  The debugger evaluates a functional expression and if
+the result is wrong the representation of the computation is used to
+query the user and find what function definition is buggy.
+For more details, see
+<A HREF="../../papers/ddfp/">
+the paper</A>.
+
+
+<P>
+
+
+<H2>
+Example
+</H2>
+
+<UL>
+
+<LI>
+Transform source:
+<A HREF="ex.ne.txt">
+input
+</A>
+&gt;
+<A HREF="ex.nl.txt">
+output
+</A>
+
+<LI>
+<A HREF="ex.script.txt">
+Debugging session
+</A>
+
+</UL>
+
+<H2>
+Source code
+</H2>
+
+<UL>
+
+<LI>
+<LI>
+The following is broken - e-mail me if you want a copy.
+<A HREF="file://turiel.cs.mu.oz.au/pub/nuedebug.tar.Z">
+Source code</A>
+(+ examples) are available by ftp:
+<PRE>
+ftp turiel.cs.mu.oz.au    (128.250.1.10)
+cd pub
+get nuedebug.tar.Z
+</PRE>
+
+<LI>
+To run it you will need a copy of
+<A HREF="./../nuprolog/">
+NU-Prolog</A>
+(maybe there will be a portable version some day)
+
+</UL>
+
+
+<br>
+<A HREF="http://people.eng.unimelb.edu.au/lee/"> Lee </A>
+
+</HTML>

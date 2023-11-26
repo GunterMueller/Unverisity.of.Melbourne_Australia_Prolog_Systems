@@ -1,0 +1,151 @@
+:- initializing, add_function(eval, 1).
+:- initializing, add_function(evalLazy, 1).
+:- initializing, add_function(+, 2).
+:- initializing, add_function(-, 2).
+:- initializing, add_function(ones, 0).
+:- initializing, add_function(nth_member, 2).
+:- initializing, add_function(front, 2).
+:- initializing, add_function(prime, 1).
+:- initializing, add_function(primes, 1).
+:- initializing, add_function(primes, 0).
+:- initializing, add_function(ints, 1).
+:- initializing, add_function(sift, 1).
+:- initializing, add_function(filter, 2).
+:- initializing, add_function(fib, 1).
+:- initializing, add_function(fib, 0).
+:- initializing, add_function(add_lists, 2).
+:- initializing, add_function(concat, 2).
+:- initializing, add_function(p, 2).
++(A9, B9, A) :-
+	evalLazy(A9, B),
+	evalLazy(B9, C),
+	A is B + C.
+-(A9, B9, A) :-
+	evalLazy(A9, B),
+	evalLazy(B9, C),
+	A is B - C.
+
+ones($lazy($lazy$ones(A), A)).
+
+:- $lazy$ones(A) when ever.
+$lazy$ones([1|A]) :-
+	ones(A).
+:- nth_member(A, [B|C], D) when ever.
+:- nth_member(C, $lazy(B, A), D) when ever.
+nth_member(C, $lazy(B, A), D):- call(B), nth_member(C, A, D).
+nth_member(A9, [B9|C9], A) :-
+	evalLazy(A9, B),
+	(if B =:= 1 then
+		A = B9
+	else
+		evalLazy(A9, C),
+		evalLazy(1, D),
+		E is C - D,
+		nth_member(E, C9, F),
+		A = F
+	).
+:- front(A, [], B) when ever.
+:- front(C, $lazy(B, A), D) when ever.
+front(C, $lazy(B, A), D):- call(B), front(C, A, D).
+front(A9, [], []).
+:- front(A, [B|C], D) when ever.
+front(A9, [B9|C9], A) :-
+	evalLazy(A9, B),
+	(if B > 0 then
+		evalLazy(A9, C),
+		evalLazy(1, D),
+		E is C - D,
+		front(E, C9, F),
+		A = [B9|F]
+	else
+		A = []
+	).
+:- prime(A, B) when ever.
+prime(A9, A) :-
+	primes(B),
+	nth_member(A9, B, A).
+:- primes(A, B) when ever.
+primes(A9, A) :-
+	primes(B),
+	front(A9, B, A).
+
+primes($lazy($lazy$primes(A), A)).
+
+:- $lazy$primes(A) when ever.
+$lazy$primes(A) :-
+	ints(2, B),
+	sift(B, A).
+
+ints(A, $lazy($lazy$ints(A, B), B)).
+
+:- $lazy$ints(A, B) when ever.
+$lazy$ints(A9, [A9|A]) :-
+	evalLazy(A9, B),
+	evalLazy(1, C),
+	D is B + C,
+	ints(D, A).
+
+sift(A, $lazy($lazy$sift(A, B), B)).
+
+:- $lazy$sift([A|B], C) when ever.
+:- $lazy$sift($lazy(B, A), C) when ever.
+$lazy$sift($lazy(B, A), C):- call(B), $lazy$sift(A, C).
+$lazy$sift([A9|B9], [A9|A]) :-
+	filter(A9, B9, B),
+	sift(B, A).
+
+filter(A, B, $lazy($lazy$filter(A, B, C), C)).
+
+:- $lazy$filter(A, [B|C], D) when ever.
+:- $lazy$filter(C, $lazy(B, A), D) when ever.
+$lazy$filter(C, $lazy(B, A), D):- call(B), $lazy$filter(C, A, D).
+$lazy$filter(A9, [B9|C9], A) :-
+	evalLazy(B9, B),
+	evalLazy(A9, C),
+	(if B mod C =:= 0 then
+		filter(A9, C9, D),
+		A = D
+	else
+		filter(A9, C9, E),
+		A = [B9|E]
+	).
+:- fib(A, B) when ever.
+fib(A9, A) :-
+	fib(B),
+	front(A9, B, A).
+fib([0, 1|A]) :-
+	add_lists([0, 1|A], [1|A], A).
+
+add_lists(A, B, $lazy($lazy$add_lists(A, B, C), C)).
+
+:- $lazy$add_lists([], [], A) when ever.
+:- $lazy$add_lists($lazy(B, A), C, D) when ever.
+$lazy$add_lists($lazy(B, A), C, D):- call(B), $lazy$add_lists(A, C, D).
+:- $lazy$add_lists([], $lazy(B, A), C) when ever.
+$lazy$add_lists([], $lazy(B, A), C):- call(B), $lazy$add_lists([], A, C).
+$lazy$add_lists([], [], []).
+:- $lazy$add_lists([A|B], [C|D], E) when ever.
+:- $lazy$add_lists([C|D], $lazy(B, A), E) when ever.
+$lazy$add_lists([C|D], $lazy(B, A), E):- call(B), $lazy$add_lists([C|D], A, E).
+$lazy$add_lists([A9|B9], [C9|D9], [A|B]) :-
+	evalLazy(A9, C),
+	evalLazy(C9, D),
+	A is C + D,
+	add_lists(B9, D9, B).
+:- concat([], A, B) when ever.
+:- concat($lazy(B, A), C, D) when ever.
+concat($lazy(B, A), C, D):- call(B), concat(A, C, D).
+concat([], A9, A9).
+:- concat([A|B], C, D) when ever.
+concat([A9|B9], C9, [A9|A]) :-
+	concat(B9, C9, A).
+:- p(f(a), A, B) when ever.
+:- p($lazy(B, A), C, D) when ever.
+p($lazy(B, A), C, D):- call(B), p(A, C, D).
+:- p(f($lazy(B, A)), C, D) when ever.
+p(f($lazy(B, A)), C, D):- call(B), p(f(A), C, D).
+p(f(a), A9, a).
+:- p(b, a, A) when ever.
+:- p(b, $lazy(B, A), C) when ever.
+p(b, $lazy(B, A), C):- call(B), p(b, A, C).
+p(b, a, b).

@@ -1,0 +1,10 @@
+/*
+This is a collection of useful vdu control predicates.
+They are intended for visual 200.
+*/
+
+writemess(V,H,MESS) :- cursor(V,H), cleartoeol, write(MESS).
+clearline(V,H) :- cursor(V,H), cleartoeol.
+clearpage :- put(027), put(118).
+cleartoeol :- put(027), put(120).
+cursor(R,C) :- R1 is R+32, C1 is C+32, put(027), put(089), put(R1), put(C1).

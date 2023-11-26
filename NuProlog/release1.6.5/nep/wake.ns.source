@@ -1,0 +1,79 @@
+/*
+ * Please note that this code is the property of
+ * the University of Melbourne and is Copyright 1985 by it.
+ * 
+ * All rights are reserved.
+ *
+ * Author: Jeff Schultz
+ */
+
+/*
+%	$wakeUp/1 is used when temporary variables have been saved
+%	on the stack.
+%
+%	Note that WOKEN determines how many variables were saved
+%	by comparing the environment it is deallocating with the one
+%	in which they are saved.
+$wakeUp(X) :-
+	$pureWakeUp(X),
+	$woken.
+
+%	$pureWakeUp/1 is used directly when no temporary variables
+%	have been saved.
+$pureWakeUp(X) :-
+	block(X),
+	$wake(X).
+$pureWakeUp(X.Y) :-
+	$pureWakeUp(X),
+	$pureWakeUp(Y).
+*/
+
+	.pred	'$wakeUp',1
+	all	0
+	call	0,1,&'$pureWakeUp'/1
+%	dall	% part of "woken"
+	woken	% Note that this is the only instance of "woken" in the system!
+	last
+
+	.pred	'$pureWakeUp',1
+	sot	0,&0,&1,&2,&0
+0:	fail
+1:	wake	0
+2:	all	1
+	gl	0
+	uvarx	0
+	uvary	0
+	call	1,1,&'$pureWakeUp'/1
+	pvaly	0,0
+	dall
+%	exec	1,&'$pureWakeUp'/1
+	execsot	1,0,&0,&1,&2,&0
+	last
+
+%	Catch/2 call/1s its first argument after setting up a stack
+%	frame for a descendent throw/1 to return to.  The argument
+%	to the throw is unified with the second argument of
+%	successively older catches until one succeeds.  Execution
+%	resumes after the catch.
+%
+%	These are the only instances of "catch" in the system.
+	.pred	'catch',2
+	all	1
+	gvary	0,1		% "catch" uses Y[0] for return value
+	catch	1,0,&'call'/1
+	dall
+	pro
+	last
+
+%	$catch/2 is like catch/2 except that it exect's its goal.
+	.pred	'$catch',2
+	all	1
+	gvary	0,1		% "catch" uses Y[0] for return value
+	catch	1,0,&'$exect'/1
+	dall
+	pro
+	last
+
+	.pred '$sd',0
+	pro
+	last

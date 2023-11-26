@@ -1,0 +1,114 @@
+	% system preds which are non-logical and calls to which should
+	% not be reordered (most cause side effects, some depend on whether
+	% variables are bound)
+
+noreorder(assert(X)).
+noreorder(asserta(X)).
+noreorder(assertz(X)).
+noreorder(clause(X,Y)).
+noreorder(consult(X)).
+noreorder(deny(X,Y)).
+noreorder(hidden).
+noreorder(hide(X)).
+noreorder(lib(X)).
+noreorder(protect(X)).
+noreorder(reconsult(X)).
+noreorder(retract(X)).
+noreorder(retractall(X)).
+noreorder([X]).
+noreorder(display(X)).
+noreorder(eof(X)).
+noreorder(get(X)).
+noreorder(get0(X)).
+noreorder(next(X,Y)).
+noreorder(nl).
+noreorder(op(X,Y,Z)).
+noreorder(portraycl(X)).
+noreorder(portraygoals(X)).
+noreorder(print(X)).
+noreorder(printf(X,Y)).
+noreorder(putatom(X)).
+noreorder(put(X)).
+noreorder(read(X)).
+noreorder(see(X)).
+noreorder(seeing(X)).
+noreorder(seen).
+noreorder(skip(X)).
+noreorder(tab(X)).
+noreorder(tell(X)).
+noreorder(telling(X)).
+noreorder(told).
+noreorder(wflags(X)).
+noreorder(write(X)).
+noreorder(writef(X,Y)).
+noreorder(writeln(X)).
+noreorder(abort).
+noreorder(backtrace(X)).
+noreorder(backtrace).
+noreorder(break).
+noreorder(debugging).
+noreorder(h).
+noreorder(ls).
+noreorder(listing).
+noreorder(ls(X)).
+noreorder(listing(X)).
+noreorder(nodebug).
+noreorder(nospy(X)).
+noreorder(notrace).
+noreorder(restore(X)).
+noreorder(save(X)).
+noreorder(spy(X)).
+noreorder(trace(X)).
+noreorder(trace).
+noreorder(ancestor(X,Y)).
+noreorder(depth(X)).
+noreorder(atom(X)).
+noreorder(atomic(X)).
+noreorder(integer(X)).
+noreorder(var(X)).
+noreorder(nonvar(X)).
+noreorder(not X).
+noreorder(occurs(X,Y)).
+noreorder(error(X)).
+noreorder(errhandler(X)).
+noreorder(repeat).
+noreorder(true).
+noreorder(fail).
+noreorder(wait(X)).
+noreorder(call(X)).
+noreorder(X == Y).
+noreorder(X \== Y).
+noreorder(X \= Y).
+noreorder((X -> Y)).
+noreorder((X -> Y ; Z)).
+noreorder(!).
+noreorder(open(X,Y,Z)).
+noreorder(getc(X,Y)).
+noreorder(putc(X,Y)).
+noreorder(read(X,Y)).
+noreorder(write(X,Y)).
+noreorder(write(X,Y,Z)).
+noreorder(writeln(X,Y)).
+noreorder(fprintf(X,Y,Z)).
+noreorder(pipe(X)).
+noreorder(pipe(X,Y)).
+noreorder(fork).
+noreorder(system(X,Y)).
+noreorder(argv(X)).
+noreorder(csh).
+noreorder(sh).
+noreorder(shell(X)).
+noreorder(more(X)).
+noreorder(edit(X)).
+noreorder(exit(X)).
+noreorder(getuid(X)).
+noreorder(isuser(X)).
+noreorder(sig(X,Y)).
+noreorder(dbcreate(X)).
+noreorder(dbrules(X,Y)).
+noreorder(createrel(X,Y)).
+noreorder(removerel(X,Y)).
+noreorder(dbcons(X)).
+noreorder(X) :-
+         functor(X,F,N),
+         name(F,[36|T]).	% name starts with $

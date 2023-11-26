@@ -1,0 +1,19 @@
+	% prime number sieve
+	% usage: p(Max_number, Prime_list)
+
+p(X, Y) :- ints(2, X), sift(X, Y).
+
+?- wait ints(0,0).
+ints(M,N.X) :- M = N, plus(N,1,N1), ints(N1,X).
+ints(N, []).
+
+?- wait sift(0,1).
+?- wait sift(1,0).
+sift(X.Y, X.Z) :- filter(X,Y,A), sift(A,Z).
+sift([], []).
+
+?- wait filter(0,0,1).
+?- wait filter(0,1,0).
+filter(X, [], []).
+filter(X,Y.Z, Y.A) :- N is Y mod X, N =\= 0, filter(X,Z,A).
+filter(X,Y.Z, A) :- 0 =:= Y mod X, filter(X,Z,A).

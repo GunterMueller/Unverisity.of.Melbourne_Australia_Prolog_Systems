@@ -1,0 +1,198 @@
+
+	.pred	'$compilerNegation',0
+	.clause
+0:	pro	
+	last
+
+	.pred	'$imp_not',5
+3: 	sot	0,&2,&0,&1,&1
+2: 	t	5,0,&0
+	tr	5,0,&1
+	.clause
+0:	gnil	0
+	gs	3,$'\\+'/1
+	ulvx	2
+	gnil	4
+	pro	
+	.clause
+1:	gvarx	5,2
+	gl	4
+	uvara	4
+	uc	$[]
+	typx	0,112
+	ps	2,$'\\+'/1
+	ulvx	5
+	exec	5,&'$new_pred'/5
+	last
+
+	.pred	'$imp_if',7
+3: 	sot	0,&2,&0,&1,&1
+2: 	t	7,0,&0
+	tr	7,0,&1
+	.clause
+0:	gnil	0
+	gs	5,$';'/2
+	uvarx	7
+	ulvx	4
+	gs	7,$'->'/2
+	ulvx	2
+	ulvx	3
+	gnil	6
+	pro	
+	.clause
+1:	gl	6
+	uvarx	7
+	uc	$[]
+	typx	0,112
+	ps	8,$'->'/2
+	ulvx	2
+	ulvx	3
+	ps	2,$';'/2
+	uvalx	8
+	ulvx	4
+	gvara	3,5
+	gvara	4,7
+	exec	5,&'$new_pred'/5
+	last
+
+	.pred	'$imp_if_soft',7
+3: 	sot	0,&2,&0,&1,&1
+2: 	t	7,0,&0
+	tr	7,0,&1
+	.clause
+0:	gnil	0
+	gs	5,$';'/2
+	uvarx	8
+	ulvx	4
+	gs	8,$','/2
+	uvarx	9
+	us	255,$','/2
+	ulvx	2
+	us	255,$','/2
+	uvarx	10
+	ulvx	3
+	gsx1	9,7,$'$label'/1
+	gs	10,$'$softCut'/1
+	uvalx	7
+	gnil	6
+	pro	
+	.clause
+1:	gl	6
+	uvarx	7
+	uc	$[]
+	typx	0,112
+	ps	8,$'$label'/1
+	uvarx	9
+	ps	10,$'$softCut'/1
+	uvalx	9
+	ps	9,$','/2
+	uvalx	8
+	us	255,$','/2
+	ulvx	2
+	us	255,$','/2
+	uvalx	10
+	ulvx	3
+	ps	2,$';'/2
+	uvalx	9
+	ulvx	4
+	gvara	3,5
+	gvara	4,7
+	exec	5,&'$new_pred'/5
+	last
+
+	.pred	'$imp_is_eq',7
+	.clause
+0:	gvara	0,1
+	all	2
+	gvary	0,4
+	gs	5,$','/2
+	uc	$'true'
+	us	255,$';'/2
+	uvarx	7
+	uvary	1
+	gnil	6
+	ps	1,$'$is_eq'/3
+	ulvx	2
+	ulvx	3
+	ulvy	0
+	gvara	2,7
+	call	2,3,&'$is_eq_header'/3
+	pvaly	0,7
+	pc	8,$'fail'
+	idtest	7,8
+	jfail	&11
+	pvaly	1,255
+	gc	255,$'fail'
+	dallpro	
+11: 	pvaly	1,255
+	gs	255,$'='/2
+	ulvy	0
+	uc	$'true'
+	dallpro	
+12: 	last
+
+	.pred	'$imp_solutions',7
+	.clause
+0:	gs	5,$'$solutions'/4
+	ulvx	0
+	ulvx	2
+	uvarx	7
+	ulvx	4
+	gl	6
+	uvara	4
+	uc	$[]
+	pnil	0
+	gvara	2,3
+	gvara	3,7
+	exec	5,&'$new_pred'/5
+	last
+
+	.pred	'$imp_limit',8
+	.clause
+0:	gs	6,$'$limit'/5
+	ulvx	0
+	ulvx	2
+	ulvx	3
+	uvara	3
+	ulvx	5
+	gl	7
+	uvarx	8
+	uc	$[]
+	pnil	0
+	gvara	2,4
+	gvara	4,8
+	exec	5,&'$new_pred'/5
+	last
+
+	.pred	'$imp_sum',8
+	.clause
+0:	gs	6,$'$sum'/5
+	ulvx	0
+	ulvx	2
+	ulvx	3
+	uvara	3
+	ulvx	5
+	gl	7
+	uvarx	8
+	uc	$[]
+	pnil	0
+	gvara	2,4
+	gvara	4,8
+	exec	5,&'$new_pred'/5
+	last
+
+	.pred	'$imp_freeze',5
+2: 	sot	0,&1,&0,&0,&0
+	.clause
+0:	typx	0,252
+	gvalx	3,2
+	gnil	4
+	pro	
+	.clause
+1:	typx	0,3
+	gl	4
+	uvara	4
+	uc	$[]
+	exec	5,&'$new_freeze_pred'/5
+	last
+

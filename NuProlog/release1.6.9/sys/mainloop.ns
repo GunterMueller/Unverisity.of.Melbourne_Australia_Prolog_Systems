@@ -1,0 +1,2088 @@
+
+	.pred	'main',0
+	.clause
+0:	exec	0,&'$mainloop'/0
+	last
+
+	.pred	'main',1
+	.clause
+0:	exec	1,&'$mainloop'/1
+	last
+
+	.pred	'$mainloop',0
+	.clause
+0:	pnil	0
+	exec	1,&'$mainloop'/1
+	last
+
+	.pred	'$mainloop',1
+	.clause
+0:	all	9
+	gvary	0,0
+	call	9,0,&'$setMainloopSignals'/0
+	labely	7
+28: 	te	0,0,0,&41
+	labely	8
+29: 	te	0,0,0,&30
+	pc	0,$'$mainloop'
+	pc	1,$'history$cnum'
+	pvarx	2,2
+	call	9,3,&'getprop'/3
+	cuty	8
+	fail	
+30: 	tre	0,0
+31: 	cuty	7
+	pc	0,$'$mainloop'
+	pc	1,$'history$cnum'
+	pc	2,$1
+	call	7,3,&'putprop'/3
+	labely	5
+32: 	te	0,0,0,&39
+	pvary	6,0
+	pvary	2,1
+	call	7,2,&'getenv'/2
+33: 	te	0,0,0,&34
+	pvaly	6,255
+	gc	255,$'VISUAL'
+	j	&35
+34: 	tre	0,0
+	pvaly	6,255
+	gc	255,$'EDITOR'
+35: 	typy	2,48
+	cuty	5
+	puval	2,1
+	pc	2,#(CHR,&27)
+	idtest	1,2
+	jfail	&36
+	pvary	1,255
+	gl	255
+	uc	$101
+	uvarx	1
+	gl	1
+	uc	$120
+	uvarx	1
+	gl	1
+	uc	$32
+	uvarx	1
+	gl	1
+	uc	$43
+	uvarx	1
+	gl	1
+	uc	$49
+	uvarx	1
+	gl	1
+	uc	$111
+	uvarx	1
+	gl	1
+	uc	$32
+	uc	$[]
+	j	&40
+36: 	labely	4
+37: 	te	0,0,0,&38
+	pc	1,#(CHR,&13)
+	pvary	3,0
+	pvaly	2,2
+	call	5,3,&'append'/3
+	cuty	4
+	pc	1,#(CHR,&17)
+	puval	3,0
+	pvary	1,2
+	call	2,3,&'append'/3
+	j	&40
+38: 	tre	0,0
+	pc	1,#(CHR,&21)
+	puval	2,0
+	pvary	1,2
+	call	2,3,&'append'/3
+	j	&40
+39: 	tre	0,0
+	pvary	1,255
+	gl	255
+	uc	$47
+	uvarx	1
+	gl	1
+	uc	$98
+	uvarx	1
+	gl	1
+	uc	$105
+	uvarx	1
+	gl	1
+	uc	$110
+	uvarx	1
+	gl	1
+	uc	$47
+	uvarx	1
+	gl	1
+	uc	$101
+	uvarx	1
+	gl	1
+	uc	$100
+	uvarx	1
+	gl	1
+	uc	$32
+	uc	$[]
+40: 	pc	0,$'$mainloop'
+	pc	1,$'$editor'
+	puval	1,2
+	call	1,3,&'putprop'/3
+	j	&42
+41: 	tre	0,0
+42: 	pvaly	0,0
+	pc	1,$0
+	dallexe	2,&'$mainloop'/2
+	last
+27: 	.string	"vi"
+21: 	.string	" "
+17: 	.string	"/ex +1o "
+13: 	.string	"/vi"
+
+	.pred	'$setMainloopSignals',0
+	.clause
+0:	pc	0,$'sigint'
+	pc	1,$'$break'
+	exec	2,&'signal'/2
+	last
+
+	.pred	'$mainloop',2
+	labelx	2
+	.clause
+0:	all	10
+	gvary	4,1
+	gvary	1,2
+	labely	9
+27: 	te	0,0,0,&31
+	pc	0,$'$mainloop'
+	pc	1,$'$restart'
+	pvary	7,2
+	call	10,3,&'getprop'/3
+	cuty	9
+	labely	8
+	pc	0,$'$mainloop'
+	pc	1,$'$restart'
+	pvaly	7,2
+	call	9,3,&'remprop'/3
+	cuty	8
+	pc	0,$'localDebug'
+	pc	1,$'off'
+	call	8,2,&'$setFlag'/2
+	labely	5
+28: 	te	0,0,0,&29
+	labely	6
+	puval	7,0
+	call	7,1,&'call'/1
+	cuty	6
+	fail	
+29: 	tre	0,0
+30: 	pc	3,$'user'
+	pc	4,#(CHR,&26)
+	sputl	3,4
+	j	&32
+31: 	tre	0,0
+	pvaly	4,0
+	call	5,1,&'$writeEntryMessage'/1
+32: 	pc	0,$'localDebug'
+	pc	1,$'off'
+	call	5,2,&'$setFlag'/2
+	pc	0,$'$mainloop'
+	pc	1,$'$breaklevel'
+	pvaly	4,2
+	call	4,3,&'putprop'/3
+	call	4,0,&'repeat'/0
+	labely	3
+	call	4,0,&'prompt'/0
+	cuty	3
+	pc	0,$'user'
+	pvary	2,1
+	call	3,2,&'getTokenList'/2
+	puval	2,0
+	call	2,1,&'$runGoal'/1
+	cuty	1
+	pc	0,$'debugging'
+	pvary	0,1
+	call	1,2,&'$getFlag'/2
+	pc	0,$'localDebug'
+	puval	0,1
+	dallexe	2,&'$setFlag'/2
+	last
+26: 	.string	"Re-entering prolog top-level.\n"
+
+	.pred	'$runGoal',1
+	labelx	1
+11: 	sot	0,&7,&8,&9,&10
+7: 	t	2,0,&0
+	r	2,0,&1
+	r	2,0,&2
+	r	2,0,&3
+	r	2,0,&4
+	r	2,0,&5
+	tr	2,0,&6
+8: 	t	2,0,&0
+	r	2,0,&1
+	tr	2,0,&6
+9: 	t	2,0,&0
+	r	2,0,&1
+	r	2,0,&2
+	r	2,0,&3
+	r	2,0,&4
+	r	2,0,&5
+	tr	2,0,&6
+10: 	t	2,0,&0
+	r	2,0,&1
+	tr	2,0,&6
+	.clause
+0:	all	1
+	gvary	0,1
+	call	1,1,&'ot$var'/1
+	cuty	0
+	pc	1,#(CHR,&18)
+	pc	0,$'user_error'
+	pnil	2
+	call	0,3,&'$format'/3
+	fail	
+	.clause
+1:	all	2
+	gvary	1,1
+	call	2,1,&'ot$eof'/1
+	cuty	1
+	pvary	0,0
+	call	1,1,&'breakLevel'/1
+	pvaly	0,0
+	call	1,1,&'$writeExitMessage'/1
+	apushy	0
+	afunc	47
+	popx	2
+	pc	0,$'$mainloop'
+	pc	1,$'$breaklevel'
+	call	0,3,&'putprop'/3
+	pc	2,$'user_input'
+	clrerr	2
+	dallpro	
+	.clause
+2:	gl	0
+	uvarx	2
+	uc	$[]
+	gl	2
+	uc	$'h'
+	uc	$'atom'
+	cutx	1
+	exec	0,&'$history'/0
+	.clause
+3:	all	14
+	gvary	0,1
+69: 	te	1,0,1,&70
+	gl	0
+	uvarx	2
+	ul	255
+	uvarx	3
+	uc	$[]
+	gl	2
+	uc	$'e'
+	uc	$'atom'
+	gl	3
+	uvara	0
+	uc	$'number'
+	j	&71
+70: 	tre	1,0
+	gl	0
+	uvarx	2
+	uc	$[]
+	gl	2
+	uc	$'e'
+	uc	$'atom'
+	pc	0,$-1
+71: 	cuty	0
+	labely	13
+72: 	te	0,0,1,&83
+	pvary	10,1
+	call	14,2,&'historyGoal'/2
+	cuty	13
+73: 	te	0,0,0,&82
+	pvary	12,0
+	call	13,1,&'getpid'/1
+	puval	12,0
+	pvary	11,1
+	call	12,2,&'intToString'/2
+	pc	0,#(CHR,&39)
+	puval	11,1
+	pvary	1,2
+	call	11,3,&'append'/3
+	pvaly	1,0
+	pc	1,$'write'
+	pvary	9,2
+	call	11,3,&'open'/3
+	pvaly	9,0
+	puval	10,1
+	call	10,2,&'putTokenList'/2
+	puval	9,0
+	call	9,1,&'close'/1
+	pc	0,$'$mainloop'
+	pc	1,$'$editor'
+	pvary	8,2
+	call	9,3,&'getprop'/3
+	puval	8,0
+	pvaly	1,1
+	pvary	7,2
+	call	8,3,&'append'/3
+	labely	6
+74: 	te	0,0,0,&81
+	puval	7,0
+	pc	1,$0
+	call	7,2,&'system'/2
+	cuty	6
+	pvaly	1,0
+	pc	1,$'read'
+	pvary	5,2
+	call	6,3,&'open'/3
+	pvaly	5,0
+	pvary	2,1
+	call	6,2,&'getTokenList'/2
+	puval	5,0
+	call	5,1,&'close'/1
+	pvaly	1,0
+	call	5,1,&'unlink'/1
+	labely	4
+75: 	te	0,0,0,&76
+	pvaly	2,0
+	call	5,1,&'ot$var'/1
+	cuty	4
+	fail	
+76: 	tre	0,0
+77: 	labely	3
+78: 	te	0,0,0,&79
+	pvaly	2,0
+	call	4,1,&'ot$eof'/1
+	cuty	3
+	fail	
+79: 	tre	0,0
+80: 	pvaly	2,0
+	call	3,1,&'$addHistory'/1
+	cuty	0
+	puval	2,0
+	call	1,1,&'$rGoal'/1
+	j	&84
+81: 	tre	0,0
+	pc	2,$'user'
+	pc	3,#(CHR,&66)
+	sputl	2,3
+	puval	1,0
+	call	1,1,&'unlink'/1
+	j	&84
+82: 	tre	0,0
+	pc	2,$'user'
+	pc	3,#(CHR,&67)
+	sputl	2,3
+	j	&84
+83: 	tre	0,0
+	pc	2,$'user'
+	pc	3,#(CHR,&68)
+	sputl	2,3
+84: 	cuty	0
+	fail	
+	.clause
+4:	gl	0
+	uvarx	2
+	ul	255
+	uvarx	3
+	uc	$[]
+	gl	2
+	uc	$'s'
+	uc	$'atom'
+	glvx2	3,0,2
+	all	3
+	gvary	0,1
+	cuty	0
+	pc	3,$'atom'
+	idtest	2,3
+	jfail	&99
+	j	&100
+99: 	pc	3,$'quoted'
+	idtest	2,3
+	jfail	&105
+100: 	te	0,0,1,&104
+	pc	1,$'write'
+	pvary	1,2
+	call	3,3,&'open'/3
+101: 	te	0,0,0,&102
+	ps	2,$'-'/2
+	uvoid	1
+	uvary	2
+	pc	0,$'$mainloop'
+	pc	1,$'history$goal'
+	call	3,3,&'getprop'/3
+	pvaly	1,0
+	pvaly	2,1
+	call	2,2,&'putTokenList'/2
+	fail	
+102: 	tre	0,0
+103: 	puval	1,0
+	call	1,1,&'close'/1
+	pc	2,$'user'
+	pc	3,#(CHR,&96)
+	sputl	2,3
+	j	&106
+104: 	tre	0,0
+	pc	2,$'user'
+	pc	3,#(CHR,&97)
+	sputl	2,3
+	j	&106
+105: 	pc	2,$'user'
+	pc	3,#(CHR,&98)
+	sputl	2,3
+106: 	cuty	0
+	fail	
+	.clause
+5:	gl	0
+	uvarx	2
+	ul	255
+	uvarx	3
+	uc	$[]
+	gl	2
+	uc	$'r'
+	uc	$'atom'
+	glvx2	3,0,2
+	all	5
+	gvary	0,1
+	cuty	0
+	pc	3,$'atom'
+	idtest	2,3
+	jfail	&121
+	j	&122
+121: 	pc	3,$'quoted'
+	idtest	2,3
+	jfail	&129
+122: 	te	0,0,1,&128
+	pc	1,$'read'
+	pvary	1,2
+	call	5,3,&'open'/3
+	call	5,0,&'repeat'/0
+	pvaly	1,0
+	pvary	3,1
+	call	5,2,&'getTokenList'/2
+	labely	4
+123: 	te	0,0,0,&124
+	pvaly	3,0
+	call	5,1,&'ot$var'/1
+	cuty	4
+	fail	
+124: 	tre	0,0
+125: 	te	0,0,0,&126
+	puval	3,0
+	call	2,1,&'ot$eof'/1
+	j	&127
+126: 	tre	0,0
+	labely	2
+	puval	3,0
+	call	3,1,&'$addHistory'/1
+	cuty	2
+	fail	
+127: 	pc	2,$'user'
+	pc	3,#(CHR,&118)
+	sputl	2,3
+	puval	1,0
+	call	1,1,&'close'/1
+	j	&130
+128: 	tre	0,0
+	pc	2,$'user'
+	pc	3,#(CHR,&119)
+	sputl	2,3
+	j	&130
+129: 	pc	2,$'user'
+	pc	3,#(CHR,&120)
+	sputl	2,3
+130: 	cuty	0
+	fail	
+	.clause
+6:	all	3
+	gvary	0,0
+	gvary	1,1
+	labelx	1
+142: 	te	0,0,2,&145
+	pvaly	0,255
+	gl	255
+	uvarx	2
+	uc	$[]
+	gl	2
+	uvarx	0
+	uc	$'number'
+	cutx	1
+143: 	te	0,0,1,&144
+	pvary	2,1
+	call	3,2,&'historyGoal'/2
+	pc	0,$'user'
+	pvaly	2,1
+	call	3,2,&'putTokenList'/2
+	pvaly	2,0
+	call	3,1,&'$addHistory'/1
+	cuty	1
+	puval	2,0
+	dallexe	1,&'$rGoal'/1
+144: 	tre	0,0
+	pc	2,$'user'
+	pc	3,#(CHR,&141)
+	sputl	2,3
+	cuty	1
+	fail	
+	j	&146
+145: 	tre	0,0
+	pvaly	0,0
+	call	2,1,&'$addHistory'/1
+	cuty	1
+	pvaly	0,0
+	dallexe	1,&'$rGoal'/1
+146: 	last
+141: 	.string	"Goal not in history list.\n"
+120: 	.string	"Usage: r Filename. where Filename is an atom.\n"
+119: 	.string	"Error: Restore file for history list.\n"
+118: 	.string	"History list restored.\n"
+98: 	.string	"Usage: s Filename. where Filename is an atom.\n"
+97: 	.string	"Error: Save file for history list.\n"
+96: 	.string	"History list saved.\n"
+68: 	.string	"Usage: e [N]. where N is a history list number.\n"
+67: 	.string	"Error: Temp file for history list update.\n"
+66: 	.string	"Error: Unable to invoke editor.\n"
+39: 	.string	"/tmp/np"
+18: 	.string	"~NVariable goal to top-level.~n"
+
+	.pred	'historyLength',1
+	.clause
+0:	gc	0,$20
+	pro	
+	last
+
+	.pred	'$addHistory',1
+	.clause
+0:	all	3
+	gvary	2,0
+	pc	0,$'$mainloop'
+	pc	1,$'history$cnum'
+	pvary	1,2
+	call	3,3,&'getprop'/3
+	ps	2,$'-'/2
+	ulvy	1
+	ulvy	2
+	pc	0,$'$mainloop'
+	pc	1,$'history$goal'
+	call	2,3,&'addpropz'/3
+	apushy	1
+	afunc	46
+	popx	2
+	pc	0,$'$mainloop'
+	pc	1,$'history$cnum'
+	call	2,3,&'putprop'/3
+	pvary	0,0
+	call	2,1,&'historyLength'/1
+	apushy	1
+	pushy	0
+	jpred	4,&15
+	apushy	1
+	pushy	0
+	afunc	1
+	popx	1
+	ps	2,$'-'/2
+	uvalx	1
+	uvoid	1
+	pc	0,$'$mainloop'
+	pc	1,$'history$goal'
+	dallexe	3,&'remprop'/3
+15: 	dallpro	
+16: 	last
+
+	.pred	'historyGoal',2
+	.clause
+0:	all	4
+	gvary	2,0
+	gvary	1,1
+	ctypy	2,17
+	apushy	2
+	pushi	$$0
+	jpred	5,&7
+	pvaly	2,3
+	j	&8
+7: 	pvary	3,0
+	call	4,1,&'commandNumber'/1
+	apushy	3
+	pushy	2
+	afunc	0
+	popx	3
+8: 	labely	0
+	ps	2,$'-'/2
+	ulvx	3
+	ulvy	1
+	pc	0,$'$mainloop'
+	pc	1,$'history$goal'
+	call	1,3,&'getprop'/3
+	cuty	0
+	dallpro	
+	last
+
+	.pred	'$history',0
+	.clause
+0:	ps	2,$'-'/2
+	all	3
+	uvary	2
+	uvary	1
+	pc	0,$'$mainloop'
+	pc	1,$'history$goal'
+	call	3,3,&'getprop'/3
+	labely	0
+	pc	1,#(CHR,&7)
+	pl	2
+	uvaly	2
+	uc	$[]
+	pc	0,$'user'
+	call	2,3,&'$quickFormat'/3
+	pc	0,$'user'
+	pvaly	1,1
+	call	1,2,&'putTokenList'/2
+	cuty	0
+	fail	
+	last
+7: 	.string	"~d	"
+
+	.pred	'$rGoal',1
+	.clause
+0:	all	8
+	labely	7
+	pvary	5,1
+	pvary	3,2
+	pvary	4,3
+	call	8,4,&'treadTerm'/4
+	cuty	7
+	labely	6
+	ps	0,$'$rGoal'/3
+	ulvy	5
+	ulvy	3
+	ulvy	4
+	pvary	0,1
+	call	7,2,&'catch'/2
+	jtypy	0,3,&16
+	cuty	6
+	j	&19
+16: 	labelx	0
+17: 	te	0,0,1,&18
+	pvaly	0,255
+	gs	255,$'$debugger'/1
+	us	255,$'ancestors'/1
+	uvoid	1
+	cutx	0
+	fail	
+18: 	tre	0,0
+	cuty	6
+	ps	0,$'+'/2
+	ulvy	5
+	ulvy	4
+	ps	1,$'+'/2
+	uvary	1
+	uvary	2
+	call	4,2,&'duplicate'/2
+	puval	3,0
+	pvaly	2,1
+	call	2,2,&'$matchNameList'/2
+	pc	1,#(CHR,&15)
+	pl	2
+	uvaly	1
+	ul	255
+	ulvy	0
+	uc	$[]
+	pc	0,$'user_error'
+	call	0,3,&'$format'/3
+19: 	fail	
+	last
+15: 	.string	"~NError in running ~w.~nUncaught thrown message ~w.~n"
+
+	.pred	'$rGoal',3
+	labelx	3
+7: 	sot	0,&6,&5,&5,&8
+6: 	t	4,0,&0
+	r	4,0,&1
+	r	4,0,&2
+	r	4,0,&3
+	r	4,0,&4
+	tr	4,0,&5
+8: 	sose	0,&($':'/1:&1,$':'/2:&0,$'delete'/1:&3,$'insert'/1:&2,$'update'/1:&4),&5
+	.clause
+0:	gsx2	0,0,4,$':'/2
+	cutx	3
+	gvara	1,4
+	exec	2,&'$:'/2
+	.clause
+1:	gsx1	0,0,$':'/1
+	cutx	3
+	exec	1,&'$:'/1
+	.clause
+2:	gsx1	0,0,$'insert'/1
+	cutx	3
+	exec	1,&'$insert'/1
+	.clause
+3:	gsx1	0,0,$'delete'/1
+	cutx	3
+	exec	1,&'$delete'/1
+	.clause
+4:	gsx1	0,0,$'update'/1
+	cutx	3
+	exec	1,&'$update'/1
+	.clause
+5:	all	4
+52: 	te	0,0,3,&56
+	labely	0
+	pvary	2,3
+	pvary	3,4
+	call	4,5,&'$transformOcall'/5
+	labelx	0
+53: 	te	0,0,1,&54
+	pvaly	2,255
+	gnil	255
+	cutx	0
+	pc	4,$'user'
+	pc	5,#(CHR,&50)
+	sputl	4,5
+	j	&55
+54: 	tre	0,0
+	puval	3,0
+	pvary	1,1
+	call	3,2,&'duplicate'/2
+	pvaly	2,0
+	pvaly	1,1
+	call	3,2,&'$matchNameList'/2
+	puval	2,0
+	puval	1,1
+	call	1,2,&'$writeGoalVars'/2
+	pc	4,$'user'
+	flush	4
+	call	1,0,&'$moreSolutions'/0
+55: 	cuty	0
+	dallpro	
+56: 	tre	0,0
+	pc	4,$'user'
+	pc	5,#(CHR,&51)
+	sputl	4,5
+	dallpro	
+57: 	last
+51: 	.string	"fail.\n"
+50: 	.string	"true.\n"
+
+	.pred	'$transformOcall',5
+	.clause
+0:	all	8
+	gvary	2,0
+	gvary	6,1
+	gvary	5,2
+	gvary	4,3
+	gvary	3,4
+	pvaly	2,0
+	pnil	1
+	pvary	7,2
+	call	8,3,&'$extra_vars'/3
+	puval	7,0
+	pvaly	6,1
+	pvaly	5,2
+	pvaly	4,3
+	pvaly	3,4
+	call	3,5,&'$rem_non_ev'/5
+	pvaly	2,0
+	pvary	1,1
+	call	3,2,&'$unique_vars'/2
+	pvaly	2,0
+	puval	1,1
+	pvary	0,2
+	call	1,3,&'$call_trf'/3
+	puval	0,0
+	dallexe	1,&'$ocall'/1
+	last
+
+	.pred	'$rem_non_ev',5
+	labelx	5
+3: 	t	6,0,&0
+	r	6,0,&1
+	tr	6,0,&2
+	.clause
+0:	gnil	1
+	gnil	2
+	gnil	3
+	gnil	4
+	pro	
+	.clause
+1:	glvx2	1,6,1
+	glvx2	2,7,2
+	gl	3
+	uvalx	6
+	uvara	3
+	gl	4
+	uvalx	7
+	uvara	4
+	occurs	7,0
+	cutx	5
+	exec	5,&'$rem_non_ev'/5
+	.clause
+2:	glvx2	1,255,1
+	glvx2	2,255,2
+	exec	5,&'$rem_non_ev'/5
+	last
+
+	.pred	'$writeEntryMessage',1
+	labelx	1
+3: 	sot	0,&2,&4,&1,&1
+2: 	t	2,0,&0
+	tr	2,0,&1
+4: 	jc	0,$0,&0
+	j	&1
+	j	&0
+	.clause
+0:	gc	0,$0
+	cutx	1
+	all	4
+	labely	3
+18: 	te	0,0,0,&19
+	pc	0,$'$mainloop'
+	pc	1,$'$breaklevel'
+	pvarx	2,2
+	call	4,3,&'getprop'/3
+	cuty	3
+	pc	2,$'user'
+	pc	3,#(CHR,&17)
+	sputl	2,3
+	dallpro	
+19: 	tre	0,0
+	pvary	2,0
+	pvary	1,1
+	pvary	0,2
+	call	3,3,&'$version'/3
+	pc	1,#(CHR,&16)
+	pl	2
+	ulvy	2
+	ul	255
+	ulvy	1
+	ul	255
+	ulvy	0
+	uc	$[]
+	pc	0,$'user'
+	dallexe	3,&'$quickFormat'/3
+20: 	.clause
+1:	pc	1,#(CHR,&26)
+	pl	2
+	ulvx	0
+	uc	$[]
+	pc	0,$'user'
+	exec	3,&'$format'/3
+	last
+26: 	.string	"~N[ Break (level ~d) ]~n"
+17: 	.string	"Prolog abort.\n"
+16: 	.string	"NU-Prolog ~d.~d.~d\n"
+
+	.pred	'$writeExitMessage',1
+	labelx	1
+3: 	sot	0,&2,&4,&1,&1
+2: 	t	2,0,&0
+	tr	2,0,&1
+4: 	jc	0,$0,&0
+	j	&1
+	j	&0
+	.clause
+0:	gc	0,$0
+	cutx	1
+	pc	2,$'user'
+	pc	3,#(CHR,&7)
+	sputl	2,3
+	pro	
+	.clause
+1:	pc	2,$'user'
+	pc	3,$10
+	sput	2,3
+	pro	
+	last
+7: 	.string	"End of Session\n"
+
+	.pred	'$version',3
+	.clause
+0:	all	4
+	gvary	3,0
+	gvary	2,1
+	gvary	0,2
+	pc	0,$'version'
+	pvary	1,1
+	call	4,2,&'prologFlag'/2
+	apushy	1
+	pushi	$$10000
+	afunc	4
+	popvy	3
+	apushy	1
+	pushi	$$100
+	afunc	4
+	pushi	$$100
+	afunc	5
+	popvy	2
+	apushy	1
+	pushi	$$100
+	afunc	5
+	popvy	0
+	dallpro	
+	last
+
+	.pred	'breakLevel',1
+	.clause
+0:	gvarx	2,0
+	all	1
+	labely	0
+	pc	0,$'$mainloop'
+	pc	1,$'$breaklevel'
+	call	1,3,&'getprop'/3
+	cuty	0
+	dallpro	
+	last
+
+	.pred	'commandNumber',1
+	.clause
+0:	gvarx	2,0
+	all	1
+	labely	0
+	pc	0,$'$mainloop'
+	pc	1,$'history$cnum'
+	call	1,3,&'getprop'/3
+	cuty	0
+	dallpro	
+	last
+
+	.pred	'prompt',0
+	.clause
+0:	all	2
+	pvary	1,0
+	call	2,1,&'breakLevel'/1
+	pvary	0,0
+	call	2,1,&'commandNumber'/1
+	puval	1,0
+	pc	1,$0
+	idtest	0,1
+	jfail	&11
+	pc	1,#(CHR,&6)
+	pl	2
+	ulvy	0
+	uc	$[]
+	pc	0,$'user'
+	call	0,3,&'$quickFormat'/3
+	j	&12
+11: 	pc	1,#(CHR,&10)
+	pl	2
+	ulvy	1
+	ul	255
+	ulvy	0
+	uc	$[]
+	pc	0,$'user'
+	call	0,3,&'$quickFormat'/3
+12: 	pc	0,$'user'
+	flush	0
+	dallpro	
+	last
+10: 	.string	"[~d] ~d?- "
+6: 	.string	"~d?- "
+
+	.pred	'$matchNameList',2
+	labelx	2
+4: 	sot	0,&2,&0,&1,&3
+2: 	t	3,0,&0
+	tr	3,0,&1
+3: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	cutx	2
+	pro	
+	.clause
+1:	glvx2	0,4,0
+	glvx2	1,3,1
+	jtypx	3,3,&13
+	gs	3,$'write$var'/1
+	uvalx	4
+	j	&13
+13: 	exec	2,&'$matchNameList'/2
+	last
+
+	.pred	'$writeGoalVars',2
+	.clause
+0:	gl	0
+	uvarx	2
+	all	6
+	uvary	1
+	gl	1
+	uvary	2
+	uvary	0
+	ps	1,$'write$var'/1
+	uvalx	2
+	pc	0,$'user'
+	call	6,2,&'write'/2
+	pc	2,$'user'
+	pc	3,#(CHR,&14)
+	sputl	2,3
+	labely	4
+	pvary	3,0
+	pvary	5,1
+	pc	2,$'='
+	call	6,3,&'currentOp'/3
+	puval	5,2
+	pl	3
+	uvoid	1
+	uc	$[]
+	pl	4
+	uc	$102
+	uvalx	3
+	pl	3
+	uvoid	1
+	uvalx	4
+	name	2,3
+	cuty	4
+	apushi	$$2147483647
+	popx	2
+	apushy	3
+	afunc	47
+	popx	3
+	pc	0,$'user'
+	pvaly	2,1
+	call	2,4,&'print'/4
+	pvaly	1,2
+	pnil	3
+	idtest	2,3
+	jfail	&16
+	pc	2,$'user'
+	pc	3,$32
+	sput	2,3
+	dallpro	
+16: 	pc	2,$'user'
+	pc	3,#(CHR,&15)
+	sputl	2,3
+	pvaly	1,0
+	pvaly	0,1
+	dallexe	2,&'$writeGoalVars'/2
+17: 	last
+15: 	.string	",\n"
+14: 	.string	" = "
+
+	.pred	'$moreSolutions',0
+	.clause
+0:	all	2
+	labely	1
+	call	2,0,&'repeat'/0
+	pc	0,$'user'
+	sget	0,0,0
+	gvary	0,0
+	pvaly	0,0
+	pc	1,$-1
+	idtest	0,1
+	jfail	&6
+	pc	0,$'user_input'
+	clrerr	0
+	pc	0,$'user_input'
+	close	0,0
+	j	&7
+6: 	pc	1,#(CHR,&3)
+	pvaly	0,0
+	call	2,2,&'member'/2
+7: 	cuty	1
+	pvaly	0,0
+	pc	1,$59
+	idtest	0,1
+	jfail	&8
+	pc	0,$'user'
+	pc	1,$10
+	call	0,2,&'skip'/2
+	fail	
+8: 	dallpro	
+9: 	last
+3: 	.string	";\n"
+
+	.pred	'$:',2
+	.clause
+0:	all	10
+	gvary	0,0
+	gvary	9,1
+	pc	2,$10
+	put	2
+	ps	0,$':'/2
+	ulvy	0
+	ulvy	9
+	pvary	8,1
+	call	10,2,&'$unique_vars'/2
+	pvaly	9,0
+	puval	8,1
+	pvary	1,2
+	call	8,3,&'$call_trf'/3
+	jtypy	0,3,&40
+38: 	te	0,0,0,&39
+	puval	1,0
+	call	1,1,&'$ocall'/1
+	pc	0,$'user'
+	pvaly	0,1
+	call	0,2,&'print'/2
+	pc	2,$'user'
+	pc	3,$10
+	sput	2,3
+	fail	
+39: 	tre	0,0
+	j	&49
+40: 	labelx	1
+41: 	te	2,0,2,&44
+	pvaly	0,255
+	gs	255,$'sorted'/1
+	uvary	5
+	cutx	1
+	ps	1,$'$ocall'/1
+	ulvy	1
+	pvaly	5,0
+	pvary	7,2
+	call	8,3,&'findall'/3
+	puval	7,0
+	pvary	3,1
+	call	4,2,&'sort'/2
+42: 	te	0,0,0,&43
+	pvary	2,0
+	puval	3,1
+	call	3,2,&'member'/2
+	pc	0,$'user'
+	puval	2,1
+	call	0,2,&'print'/2
+	pc	2,$'user'
+	pc	3,$10
+	sput	2,3
+	fail	
+43: 	tre	0,0
+	j	&49
+44: 	re	2,0,&47
+	pvaly	0,255
+	gs	255,$'sorted'/2
+	uvary	5
+	uvara	0
+	cutx	1
+	pvary	6,1
+	call	8,2,&'$toList'/2
+	ps	1,$'$ocall'/1
+	ulvy	1
+	pvaly	5,0
+	pvary	7,2
+	call	8,3,&'findall'/3
+	puval	7,0
+	pvary	4,1
+	call	7,2,&'sort'/2
+	puval	6,0
+	pvaly	5,1
+	puval	4,2
+	pvary	3,3
+	call	4,4,&'multiKeySort'/4
+45: 	te	0,0,0,&46
+	pvary	2,0
+	puval	3,1
+	call	3,2,&'member'/2
+	pc	0,$'user'
+	puval	2,1
+	call	0,2,&'print'/2
+	pc	2,$'user'
+	pc	3,$10
+	sput	2,3
+	fail	
+46: 	tre	0,0
+	j	&49
+47: 	re	2,0,&48
+	puval	1,0
+	call	1,1,&'$ocall'/1
+	pc	0,$'user'
+	pvaly	0,1
+	call	0,2,&'print'/2
+	pc	2,$'user'
+	pc	3,$10
+	sput	2,3
+	fail	
+48: 	tre	2,0
+49: 	pc	2,$10
+	put	2
+	dallpro	
+	last
+
+	.pred	'$:',1
+	.clause
+0:	all	4
+	gvary	3,0
+	pvaly	3,0
+	pvary	2,1
+	call	4,2,&'$unique_vars'/2
+	pvaly	3,0
+	puval	2,1
+	pvary	1,2
+	call	2,3,&'$call_trf'/3
+	labely	0
+10: 	te	0,0,0,&11
+	puval	1,0
+	call	1,1,&'$ocall'/1
+	cuty	0
+	pc	1,$'user'
+	pc	2,#(CHR,&8)
+	sputl	1,2
+	dallpro	
+11: 	tre	0,0
+	pc	1,$'user'
+	pc	2,#(CHR,&9)
+	sputl	1,2
+	dallpro	
+12: 	last
+9: 	.string	"\nNo.\n\n"
+8: 	.string	"\nYes.\n\n"
+
+	.pred	'$insert',1
+	.clause
+0:	labelx	1
+	all	8
+19: 	te	1,0,2,&20
+	gs	0,$'where'/2
+	uvary	7
+	uvary	4
+	cutx	1
+	j	&21
+20: 	tre	1,0
+	pvary	7,255
+	gvalx	0,255
+	pc	255,$'true'
+	gvary	4,255
+21: 	pvaly	7,0
+	pvary	6,1
+	call	8,2,&'listOfVars'/2
+	pvary	2,1
+	pl	2
+	uc	$'$term'
+	ulvy	6
+	univ	1,2
+	pvaly	7,0
+	pvary	1,1
+	call	8,2,&'$toList'/2
+	ps	0,$'where'/2
+	ulvy	7
+	uvaly	4
+	pvary	5,1
+	call	7,2,&'$unique_vars'/2
+	puval	6,0
+	puval	5,1
+	pvary	3,2
+	call	5,3,&'append'/3
+	pvaly	4,0
+	puval	3,1
+	pvary	0,2
+	call	3,3,&'$call_trf'/3
+	pnil	0
+	puval	2,1
+	puval	1,2
+	puval	0,3
+	call	0,4,&'$insert'/4
+	pc	1,$'user'
+	pc	2,#(CHR,&18)
+	sputl	1,2
+	dallpro	
+	last
+18: 	.string	"Insertion completed.\n"
+
+	.pred	'$delete',1
+	.clause
+0:	labelx	1
+	all	8
+19: 	te	1,0,2,&20
+	gs	0,$'where'/2
+	uvary	4
+	uvary	5
+	cutx	1
+	j	&21
+20: 	tre	1,0
+	pvary	4,255
+	gvalx	0,255
+	pc	255,$'true'
+	gvary	5,255
+21: 	pvaly	4,0
+	pvary	7,1
+	call	8,2,&'listOfVars'/2
+	pvary	2,1
+	pl	2
+	uc	$'$term'
+	ulvy	7
+	univ	1,2
+	pvaly	4,0
+	pvary	1,1
+	call	8,2,&'$toList'/2
+	ps	0,$','/2
+	uvaly	5
+	ulvy	4
+	pvary	6,1
+	call	8,2,&'$unique_vars'/2
+	puval	7,0
+	puval	6,1
+	pvary	3,2
+	call	6,3,&'append'/3
+	ps	0,$','/2
+	uvaly	5
+	ulvy	4
+	puval	3,1
+	pvary	0,2
+	call	3,3,&'$call_trf'/3
+	pnil	0
+	puval	2,1
+	puval	1,2
+	puval	0,3
+	call	0,4,&'$delete'/4
+	pc	1,$'user'
+	pc	2,#(CHR,&18)
+	sputl	1,2
+	dallpro	
+	last
+18: 	.string	"Deletion completed.\n"
+
+	.pred	'$update',1
+	labelx	1
+	.clause
+0:	labelx	2
+	all	14
+	pvary	9,255
+	pvary	8,255
+	pvary	13,255
+32: 	te	3,0,3,&33
+	gs	0,$'where'/2
+	uvarx	3
+	ulvy	9
+	gs	3,$'in'/2
+	ulvy	13
+	ulvy	8
+	cutx	2
+	j	&35
+33: 	re	3,0,&34
+	gs	0,$'in'/2
+	ulvy	13
+	ulvy	8
+	pvaly	9,255
+	gc	255,$'true'
+	cutx	2
+	j	&35
+34: 	tre	3,0
+	pc	2,$'user'
+	pc	3,#(CHR,&30)
+	sputl	2,3
+	cutx	1
+	fail	
+35: 	pvaly	8,0
+	pvary	10,1
+	call	14,2,&'$toList'/2
+	puval	13,0
+	pvary	12,1
+	call	13,2,&'$toList'/2
+	ps	0,$'$term'/3
+	ulvy	12
+	ulvy	10
+	ulvy	9
+	pc	1,$1
+	pvarx	2,2
+	call	13,3,&'numberVars'/3
+	puval	12,0
+	pvaly	10,1
+	pvary	11,2
+	call	12,3,&'$lsubst'/3
+	ps	0,$'$term'/3
+	ulvy	11
+	ulvy	10
+	us	255,$','/2
+	ulvy	9
+	ulvy	8
+	ps	1,$'$term'/3
+	uvary	2
+	uvary	1
+	uvary	5
+	call	8,2,&'varNumbers'/2
+	ps	0,$'-'/2
+	uvaly	1
+	uvaly	2
+	pvary	7,1
+	call	8,2,&'listOfVars'/2
+	pvary	3,2
+	pl	3
+	uc	$'$term'
+	ulvy	7
+	univ	2,3
+	pvaly	5,0
+	pvary	6,1
+	call	8,2,&'$unique_vars'/2
+	puval	7,0
+	puval	6,1
+	pvary	4,2
+	call	6,3,&'append'/3
+	pvaly	5,0
+	puval	4,1
+	pvary	0,2
+	call	4,3,&'$call_trf'/3
+	pnil	0
+	puval	3,1
+	pvaly	2,2
+	pvaly	1,3
+	puval	0,4
+	call	0,5,&'$update'/5
+	pc	2,$'user'
+	pc	3,#(CHR,&31)
+	sputl	2,3
+	dallpro	
+	last
+31: 	.string	"Update completed.\n"
+30: 	.string	"Update must include 'in' clause.\n"
+
+	.pred	'$subst',3
+	labelx	3
+4: 	t	4,0,&0
+	r	4,0,&1
+	r	4,0,&2
+	tr	4,0,&3
+	.clause
+0:	gvalx	1,2
+	typx	1,12
+	cutx	3
+	pro	
+	.clause
+1:	gvarx	4,0
+	gsx1	1,5,$'$VAR'/1
+	all	1
+	gvary	0,3
+	ctypx	5,51
+	ps	6,$'$VAR'/1
+	uvalx	5
+	ps	0,$'to'/2
+	uvalx	6
+	ulvx	2
+	gvara	1,4
+	call	1,2,&'member'/2
+	cuty	0
+	dallpro	
+	.clause
+2:	gsx1	1,4,$'$VAR'/1
+	gs	2,$'$VAR'/1
+	uvalx	4
+	ctypx	4,51
+	cutx	3
+	pro	
+	.clause
+3:	all	3
+	gvary	2,2
+	pl	4
+	uvary	1
+	uvarx	5
+	univ	1,4
+	gvara	1,5
+	pvary	0,2
+	call	3,3,&'$lsubst'/3
+	pvaly	2,4
+	pl	5
+	uvaly	1
+	ulvy	0
+	univ	4,5
+	dallpro	
+	last
+
+	.pred	'$lsubst',3
+3: 	sot	1,&4,&0,&1,&2
+4: 	sot	2,&5,&0,&1,&2
+5: 	mkdel	3,&3
+	mark	2
+	mark	1
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	1
+	gnil	2
+	pro	
+	.clause
+1:	all	3
+	gvary	2,0
+	gl	1
+	uvara	1
+	uvary	1
+	gl	2
+	uvara	2
+	uvary	0
+	pvaly	2,0
+	call	3,3,&'$subst'/3
+	pvaly	2,0
+	pvaly	1,1
+	pvaly	0,2
+	dall	
+	execsot	3,1,&4,&0,&1,&2
+	last
+
+	.pred	'$toList',2
+	labelx	2
+7: 	sot	0,&4,&3,&5,&8
+4: 	t	3,0,&0
+	r	3,0,&1
+	r	3,0,&2
+	tr	3,0,&3
+5: 	t	3,0,&1
+	tr	3,0,&3
+8: 	js	0,$','/2,&6
+	j	&3
+6: 	t	3,0,&2
+	tr	3,0,&3
+	.clause
+0:	gl	1
+	ulvx	0
+	uc	$[]
+	typx	0,3
+	cutx	2
+	pro	
+	.clause
+1:	gvalx	0,1
+	typx	0,48
+	cutx	2
+	all	1
+	labely	0
+20: 	te	1,0,1,&21
+	call	1,1,&'$list'/1
+	cuty	0
+	dallpro	
+21: 	tre	1,0
+	pc	1,#(CHR,&19)
+	pl	2
+	ulvx	0
+	uc	$[]
+	pc	0,$'user_error'
+	call	0,3,&'$format'/3
+	fail	
+22: 	.clause
+2:	gsx2	0,3,0,$','/2
+	gl	1
+	uvalx	3
+	uvara	1
+	cutx	2
+	exec	2,&'$toList'/2
+	.clause
+3:	gl	1
+	ulvx	0
+	uc	$[]
+	pro	
+	last
+19: 	.string	"~NInappropriate key term ~w to top-level goal.~n"
+
+	.pred	'$ocall',1
+	.clause
+0:	all	5
+	gvary	3,0
+	labely	4
+22: 	te	0,0,0,&23
+	pc	0,$'optimizeQuery'
+	pc	1,$'on'
+	call	5,2,&'prologFlag'/2
+	cuty	4
+	pvaly	3,0
+	pvary	1,1
+	call	3,2,&'$optimize'/2
+	j	&24
+23: 	tre	0,0
+	pvaly	3,255
+	glvary	1,255
+24: 	pc	0,$'callNumber'
+	pc	1,$0
+	call	3,2,&'$setFlag'/2
+	pc	0,$'debugging'
+	pvary	2,1
+	call	3,2,&'$getFlag'/2
+25: 	te	0,0,0,&26
+	pc	0,$'localDebug'
+	pvaly	2,1
+	call	3,2,&'$setFlag'/2
+	j	&27
+26: 	tre	0,0
+	pc	0,$'localDebug'
+	pc	1,$'off'
+	call	3,2,&'$setFlag'/2
+	fail	
+27: 	pvaly	1,0
+	call	3,1,&'call'/1
+28: 	te	0,0,0,&29
+	pc	0,$'localDebug'
+	pc	1,$'off'
+	call	2,2,&'$setFlag'/2
+	j	&30
+29: 	tre	0,0
+	pc	0,$'localDebug'
+	puval	2,1
+	call	2,2,&'$setFlag'/2
+	fail	
+30: 	puval	1,0
+	pvary	0,1
+	call	1,2,&'waitedOn'/2
+	jtypy	0,48,&31
+	pc	1,$'user_output'
+	pc	2,#(CHR,&21)
+	sputl	1,2
+	dallpro	
+31: 	dallpro	
+32: 	last
+21: 	.string	"Warning: Goal floundered.\n"
+
+	.pred	'restart',1
+	.clause
+0:	all	2
+	gvary	0,0
+	labely	1
+9: 	te	0,0,0,&10
+	pc	0,$'$mainloop'
+	pc	1,$'history$cnum'
+	pvarx	2,2
+	call	2,3,&'getprop'/3
+	cuty	1
+	pc	0,$'$mainloop'
+	pc	1,$'$restart'
+	pvaly	0,2
+	call	0,3,&'putprop'/3
+	abort	
+	dallpro	
+10: 	tre	0,0
+	pc	1,$'user_error'
+	pc	2,#(CHR,&8)
+	sputl	1,2
+	dallpro	
+11: 	last
+8: 	.string	"restart/1 called from outside $mainloop.\n"
+
+	.pred	'putTokenList',1
+	.clause
+0:	gvarx	2,0
+	currstr	1,0
+	pc	1,#(LST,&5)
+	exec	3,&'ot$putTokenList'/3
+	last
+5: 	.word	$'junk'
+	.word	$'rubbish'
+
+	.pred	'putTokenList',2
+	.clause
+0:	all	3
+	gvary	2,0
+	gvary	1,1
+	pc	0,$'vars'
+	pvary	0,1
+	pc	2,$'on'
+	call	3,3,&'prologFlag'/3
+12: 	te	0,0,0,&13
+	pc	1,#(LST,&9)
+	pvaly	2,0
+	pvaly	1,2
+	call	0,3,&'ot$putTokenList'/3
+	fail	
+13: 	tre	0,0
+	pc	0,$'vars'
+	puval	0,1
+	dallexe	2,&'$setFlag'/2
+14: 	last
+9: 	.word	$'junk'
+	.word	$'rubbish'
+
+	.pred	'ot$putTokenList',3
+3: 	sot	2,&4,&0,&1,&2
+4: 	mkdel	3,&3
+	mark	2
+	delay	
+2: 	fail	
+	.clause
+0:	all	2
+	gvary	0,0
+	glvx2	1,0,1
+	gnil	2
+	labely	1
+11: 	te	0,0,2,&12
+	gc	1,$'atom'
+	call	2,1,&'ot$syAtom'/1
+	cuty	1
+	pvaly	0,3
+	pc	4,#(CHR,&9)
+	sputl	3,4
+	dallpro	
+12: 	tre	0,0
+	pvaly	0,3
+	pc	4,#(CHR,&10)
+	sputl	3,4
+	dallpro	
+13: 	.clause
+1:	all	6
+	gvary	1,0
+	gvara	0,1
+	gl	2
+	uvarx	3
+	uvary	0
+	gl	3
+	uvary	3
+	uvary	2
+	labely	5
+25: 	te	0,0,1,&26
+	pl	1
+	uvaly	3
+	uvaly	2
+	call	6,2,&'ot$space'/2
+	cuty	5
+	pvaly	1,3
+	pc	4,$32
+	sput	3,4
+	j	&27
+26: 	tre	0,0
+27: 	labely	4
+	pvaly	1,0
+	pvaly	2,1
+	pvaly	3,2
+	call	5,3,&'ot$write'/3
+	cuty	4
+	pl	1
+	uvaly	3
+	uvaly	2
+	pvaly	1,0
+	pvaly	0,2
+	dall	
+	execsot	3,2,&4,&0,&1,&2
+	last
+10: 	.string	".\n"
+9: 	.string	" .\n"
+
+	.pred	'ot$write',3
+3: 	t	3,0,&0
+	r	3,0,&1
+	tr	3,0,&2
+	.clause
+0:	gc	1,$'var'
+	ps	1,$'$VAR'/1
+	ulvx	2
+	exec	2,&'write'/2
+	.clause
+1:	gc	1,$'quoted'
+	pc	1,#(LST,&15)
+	exec	3,&'writev'/3
+	.clause
+2:	gvara	1,2
+	exec	2,&'write'/2
+	last
+15: 	.word	$'quoteall'
+	.word	$[]
+
+	.pred	'ot$space',2
+	labelx	2
+12: 	sot	0,&10,&11,&10,&11
+10: 	t	3,0,&0
+	r	3,0,&1
+	r	3,0,&2
+	r	3,0,&3
+	r	3,0,&4
+	r	3,0,&5
+	r	3,0,&6
+	r	3,0,&7
+	r	3,0,&8
+	tr	3,0,&9
+11: 	t	3,0,&3
+	r	3,0,&6
+	tr	3,0,&9
+	.clause
+0:	gl	0
+	uc	$','
+	uc	$'atom'
+	gvara	0,1
+	all	1
+	gvary	0,2
+	call	1,1,&'ot$group'/1
+	cuty	0
+	dallpro	
+	.clause
+1:	gl	0
+	uc	$','
+	uc	$'atom'
+	gl	1
+	uvara	0
+	uc	$'atom'
+	all	1
+	gvary	0,2
+	call	1,1,&'ot$open'/1
+	cuty	0
+	dallpro	
+	.clause
+2:	gl	0
+	uc	$','
+	uc	$'atom'
+	cutx	2
+	fail	
+	.clause
+3:	gl	1
+	uc	$','
+	uc	$'atom'
+	cutx	2
+	fail	
+	.clause
+4:	gl	0
+	uvoid	1
+	uc	$'number'
+	gl	1
+	uc	$'.'
+	uc	$'atom'
+	cutx	2
+	pro	
+	.clause
+5:	gl	0
+	uvara	0
+	uc	$'atom'
+	gl	1
+	uc	$'.'
+	uc	$'atom'
+	cutx	2
+	exec	1,&'ot$syAtom'/1
+	.clause
+6:	gl	1
+	uc	$'.'
+	uc	$'atom'
+	cutx	2
+	fail	
+	.clause
+7:	gl	0
+	uc	$'.'
+	uc	$'atom'
+	cutx	2
+	fail	
+	.clause
+8:	gl	0
+	uvara	0
+	uc	$'atom'
+	all	2
+	gvary	0,1
+	gvary	1,2
+	call	2,1,&'ot$close'/1
+	cuty	1
+	pvaly	0,0
+	dallexe	1,&'ot$group'/1
+	.clause
+9:	all	1
+	gvary	0,1
+	call	1,1,&'ot$group'/1
+	pvaly	0,0
+	dallexe	1,&'ot$group'/1
+	last
+
+	.pred	'ot$group',1
+15: 	sot	0,&12,&13,&16,&13
+12: 	t	1,0,&0
+	r	1,0,&1
+	r	1,0,&2
+	r	1,0,&3
+	r	1,0,&4
+	tr	1,0,&5
+13: 	fail	
+16: 	glvx2	0,0,1
+14: 	t	2,0,&6
+	r	2,0,&7
+	r	2,0,&8
+	r	2,0,&9
+	r	2,0,&10
+	tr	2,0,&11
+	.clause
+0:	gl	0
+	uvoid	1
+	uc	$'var'
+	pro	
+	.clause
+1:	gl	0
+	uvoid	1
+	uc	$'string'
+	pro	
+	.clause
+2:	gl	0
+	uvoid	1
+	uc	$'quoted'
+	pro	
+	.clause
+3:	gl	0
+	uvoid	1
+	uc	$'number'
+	pro	
+	.clause
+4:	gl	0
+	uvara	0
+	uc	$'atom'
+	exec	1,&'ot$a$Atom'/1
+	.clause
+5:	gl	0
+	uvara	0
+	uc	$'atom'
+	exec	1,&'ot$syAtom'/1
+	.clause
+6:	gc	1,$'var'
+	pro	
+	.clause
+7:	gc	1,$'string'
+	pro	
+	.clause
+8:	gc	1,$'quoted'
+	pro	
+	.clause
+9:	gc	1,$'number'
+	pro	
+	.clause
+10:	gc	1,$'atom'
+	exec	1,&'ot$a$Atom'/1
+	.clause
+11:	gc	1,$'atom'
+	exec	1,&'ot$syAtom'/1
+	last
+
+	.pred	'ot$a$Atom',1
+	.clause
+0:	pl	1
+	all	1
+	uvary	0
+	uvoid	1
+	call	1,2,&'atomToString'/2
+	apushy	0
+	pushi	$$97
+	afunc	34
+	pushy	0
+	pushi	$$122
+	afunc	32
+	afunc	11
+	pushy	0
+	pushi	$$36
+	afunc	35
+	apred	1
+	dallpro	
+	last
+
+	.pred	'ot$syAtom',1
+	.clause
+0:	pl	1
+	all	1
+	uvary	0
+	uvoid	1
+	call	1,2,&'atomToString'/2
+	pvaly	0,0
+	dallexe	1,&'ot$symbol'/1
+	last
+
+	.pred	'ot$symbol',1
+18: 	sot	0,&16,&19,&17,&17
+16: 	t	1,0,&0
+	r	1,0,&1
+	r	1,0,&2
+	r	1,0,&3
+	r	1,0,&4
+	r	1,0,&5
+	r	1,0,&6
+	r	1,0,&7
+	r	1,0,&8
+	r	1,0,&9
+	r	1,0,&10
+	r	1,0,&11
+	r	1,0,&12
+	r	1,0,&13
+	r	1,0,&14
+	tr	1,0,&15
+19: 	soc	0,&($35:&13,$38:&14,$42:&2,$43:&0,$45:&1,$46:&10,$47:&3,$58:&9,$60:&5,$61:&6,$62:&7,$63:&11,$64:&12,$92:&15,$96:&8,$126:&4),&17
+17: 	fail	
+	.clause
+0:	gc	0,$43
+	pro	
+	.clause
+1:	gc	0,$45
+	pro	
+	.clause
+2:	gc	0,$42
+	pro	
+	.clause
+3:	gc	0,$47
+	pro	
+	.clause
+4:	gc	0,$126
+	pro	
+	.clause
+5:	gc	0,$60
+	pro	
+	.clause
+6:	gc	0,$61
+	pro	
+	.clause
+7:	gc	0,$62
+	pro	
+	.clause
+8:	gc	0,$96
+	pro	
+	.clause
+9:	gc	0,$58
+	pro	
+	.clause
+10:	gc	0,$46
+	pro	
+	.clause
+11:	gc	0,$63
+	pro	
+	.clause
+12:	gc	0,$64
+	pro	
+	.clause
+13:	gc	0,$35
+	pro	
+	.clause
+14:	gc	0,$38
+	pro	
+	.clause
+15:	gc	0,$92
+	pro	
+	last
+
+	.pred	'ot$open',1
+4: 	sot	0,&2,&5,&3,&3
+2: 	t	1,0,&0
+	tr	1,0,&1
+5: 	soc	0,&($'[':&0,$'{':&1),&3
+3: 	fail	
+	.clause
+0:	gc	0,$'['
+	pro	
+	.clause
+1:	gc	0,$'{'
+	pro	
+	last
+
+	.pred	'ot$close',1
+5: 	sot	0,&3,&6,&4,&4
+3: 	t	1,0,&0
+	r	1,0,&1
+	tr	1,0,&2
+6: 	soc	0,&($')':&0,$']':&1,$'}':&2),&4
+4: 	fail	
+	.clause
+0:	gc	0,$')'
+	pro	
+	.clause
+1:	gc	0,$']'
+	pro	
+	.clause
+2:	gc	0,$'}'
+	pro	
+	last
+
+	.pred	'ot$eof',1
+	labelx	1
+	.clause
+0:	all	2
+	gvary	0,1
+	pvary	1,1
+	call	2,2,&'$last'/2
+5: 	te	0,0,0,&6
+	pvaly	1,255
+	gl	255
+	uc	$[]
+	uc	$'end_of_file'
+	j	&7
+6: 	tre	0,0
+	pvaly	1,255
+	gl	255
+	uc	$'end_of_file'
+	uc	$'atom'
+7: 	cuty	0
+	dallpro	
+	last
+
+	.pred	'ot$var',1
+	.clause
+0:	gl	0
+	uvarx	1
+	uc	$[]
+	gl	1
+	uvoid	1
+	uc	$'var'
+	pro	
+	last
+

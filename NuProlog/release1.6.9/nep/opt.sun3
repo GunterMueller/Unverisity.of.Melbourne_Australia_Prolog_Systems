@@ -1,0 +1,108 @@
+#!/mip/usr/bin/perl
+
+$file = $ARGV[0];
+
+open(FILE, $file) || die "Can't open file $file";
+while(<FILE>) {
+	next unless(/^(\w*):/);
+	for($i = 0; /^(\w*):/; $i = $i+1) {
+		$labels[$i] = $1;
+		$_ = <FILE>;
+	}
+	next unless($_ =~ /^\tjra\t(\w*)/);
+	$target = $1;
+	for($i = $i - 1; $i >= 0; $i = $i - 1) {
+		$jumps{$labels[$i]} = $target;
+	}
+}
+
+#	The following is probably only needed on the Sun4
+@labels = keys(jumps);
+while($#labels >= 0) {
+	$k = pop(@labels);
+	for($t = $k; $jumps{$t}; $t = $jumps{$t})
+		{ }
+	$jumps{$k} = $t;
+}
+
+#@labels = keys(jumps);
+#while($#labels >= 0) {
+#	$l = pop(@labels);
+#	$targets{$jumps{$l}} .= "$l:\n";
+#}
+
+open(FILE, $file) || die "Can't open file $file";
+$acc = '';
+while(<FILE>) {
+	print $acc;
+	$acc = '';
+	if(/\t\.short\t(L\w*)-(L\w*)$/) {
+		if($jumps{$1}) {
+			print "\t.short\t", $jumps{$1}, "-", $2, "\n";
+		} else {
+			print;
+		}
+		next;
+	}
+	elsif(/\t\.long\t(L\w*)-(L\w*)$/) {
+		if($jumps{$1}) {
+			print "\t.long\t", $jumps{$1}, "-", $2, "\n";
+		} else {
+			print;
+		}
+		next;
+	}
+	elsif(/\t\.long\t(L\w*)$/) {
+		if($jumps{$1}) {
+			print "\t.long\t", $jumps{$1}, "\n";
+		} else {
+			print;
+		}
+		next;
+	}
+	$acc = $_;
+	next unless (/^\tmoveq\t#0,(\w*)/);
+	$r = $1;
+	$_ = <FILE>;
+	$acc .= $_;
+	$keep = $acc;
+	$s = "^\tmovb\t.*,$r";
+	next unless ($_ =~ $s);
+	$_ = <FILE>;
+	$acc .= $_;
+	$s = "^\tcmpl\t#255,$r";
+	next unless ($_ =~ $s);
+	$_ = <FILE>;
+	$acc .= $_;
+	if (/^\tjls\t/) {
+		s/jls/jra/;
+		$acc = $keep . $_;
+	} elsif (/^\tjhi\t/) {
+		$acc = $keep;
+	}
+#	$acc = $_;
+#	$keep = $acc;
+#	next unless (/^	ldub	.*,(.*)/);
+#	$r = $1;
+#	$_ = <FILE>;
+#	$acc .= $_;
+#	$s = "^	cmp	$r,255";
+#	next unless ($_ =~ $s);
+#	$_ = <FILE>;
+#	$acc .= $_;
+#	next unless (/^	bgu	/);
+#	$acc = $keep;
+}
+print $acc;
+
+#@keys = keys(jumps);
+#@values = values(jumps);
+#while($#keys >= 0) {
+#	print pop(@keys),' = ',pop(@values),"\n";
+#}
+#
+#@keys = keys(targets);
+#@values = values(targets);
+#while($#keys >= 0) {
+#	print pop(@keys),' = ',pop(@values),"\n";
+#}

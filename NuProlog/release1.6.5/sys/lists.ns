@@ -1,0 +1,1122 @@
+
+	.pred	'append',3
+4: 	sot	0,&5,&0,&1,&3
+5: 	sot	2,&6,&0,&2,&0
+6: 	mkdel	3,&4
+	mark	2
+	mark	0
+	delay	
+2: 	t	3,0,&0
+	tr	3,0,&1
+3: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	1,2
+	pro	
+	.clause
+1:	glvx2	0,3,0
+	gl	2
+	uvalx	3
+	uvara	2
+	execsot	3,0,&5,&0,&1,&3
+	last
+
+	.pred	'delete',3
+7: 	sot	1,&8,&5,&10,&5
+8: 	sot	2,&9,&0,&4,&0
+9: 	mkdel	3,&7
+	mark	2
+	mark	1
+	delay	
+4: 	t	3,0,&0
+	tr	3,0,&1
+5: 	fail	
+10: 	glvx2	1,1,3
+6: 	t	4,0,&2
+	tr	4,0,&3
+	.clause
+0:	gl	1
+	ulvx	0
+	ulvx	2
+	pro	
+	.clause
+1:	glvx2	1,4,1
+	gl	2
+	uvalx	4
+	uvara	2
+	execsot	3,1,&8,&5,&10,&5
+	.clause
+2:	gvalx	0,1
+	gvalx	2,3
+	pro	
+	.clause
+3:	gl	2
+	ulvx	1
+	uvara	2
+	gvara	1,3
+	execsot	3,1,&8,&5,&10,&5
+	last
+
+	.pred	'length',2
+3: 	sot	0,&4,&0,&1,&2
+4: 	sot	1,&5,&6,&1,&1
+5: 	mkdel	2,&3
+	mark	1
+	mark	0
+	delay	
+6: 	jc	1,$0,&0
+	j	&1
+	j	&0
+2: 	fail	
+	.clause
+0:	gnil	0
+	gc	1,$0
+	pro	
+	.clause
+1:	glvx2	0,255,0
+	apushx	1
+	pushi	$$0
+	apred	4
+	pvarx	2,2
+	pc	3,$1
+	plus	2,3,1
+	gvara	1,2
+	execsot	2,0,&4,&0,&1,&2
+	last
+
+	.pred	'member',2
+6: 	sot	1,&7,&4,&8,&4
+7: 	mkdel	2,&6
+	mark	1
+	delay	
+4: 	fail	
+8: 	glvx2	1,1,2
+5: 	t	3,0,&2
+	tr	3,0,&3
+	.clause
+2:	gvalx	0,1
+	pro	
+	.clause
+3:	gvara	1,2
+	execsot	2,1,&7,&4,&8,&4
+	last
+
+	.pred	'memberchk',2
+6: 	labelx	2
+	sot	1,&7,&4,&8,&4
+7: 	mkdel	3,&6
+	mark	1
+	delay	
+4: 	fail	
+8: 	glvx2	1,1,3
+5: 	t	4,0,&2
+	tr	4,0,&3
+	.clause
+2:	gvalx	0,1
+	cutx	2
+	pro	
+	.clause
+3:	gvara	1,3
+	exec	2,&'member'/2
+	last
+
+	.pred	'notMember',2
+3: 	sot	1,&4,&0,&2,&0
+4: 	mkdel	2,&3
+	mark	1
+	delay	
+2: 	t	2,0,&0
+	tr	2,0,&1
+	.clause
+0:7: 	te	0,0,2,&8
+	pl	2
+	uvoid	2
+	iseq	1,2,2
+	gc	2,$'fail'
+	pro	
+8: 	tre	0,0
+	fail	
+9: 	.clause
+1:	glvx2	1,2,1
+14: 	te	2,0,3,&15
+	iseq	0,2,2
+	gc	2,$'fail'
+	j	&16
+15: 	tre	2,0
+	fail	
+16: 	execsot	2,1,&4,&0,&2,&0
+	last
+
+	.pred	'member',3
+4: 	sot	1,&5,&2,&3,&2
+5: 	mkdel	3,&4
+	mark	1
+	delay	
+2: 	fail	
+3: 	t	3,0,&0
+	tr	3,0,&1
+	.clause
+0:	gvalx	1,2
+	gl	1
+	ulvx	0
+	uvoid	1
+	pro	
+	.clause
+1:	glvx2	1,255,1
+	execsot	3,1,&5,&2,&3,&2
+	last
+
+	.pred	'$last',2
+5: 	sot	0,&6,&7,&8,&12
+6: 	mkdel	2,&5
+	mark	0
+	delay	
+7: 	fail	
+8: 	glvx2	0,0,2
+9: 	sot	2,&10,&11,&3,&3
+10: 	mkdel	3,&9
+	mark	2
+	delay	
+11: 	jc	2,$[],&4
+	j	&3
+4: 	t	3,0,&2
+	tr	3,0,&3
+12: 	fail	
+	.clause
+2:	gvalx	0,1
+	gnil	2
+	pro	
+	.clause
+3:	gvara	0,2
+	execsot	2,0,&6,&7,&8,&12
+	last
+
+	.pred	'suffix',2
+3: 	sot	0,&4,&0,&2,&0
+4: 	mkdel	2,&3
+	mark	0
+	delay	
+2: 	t	2,0,&0
+	tr	2,0,&1
+	.clause
+0:	gvalx	0,1
+	pro	
+	.clause
+1:	glvx2	0,255,0
+	execsot	2,0,&4,&0,&2,&0
+	last
+
+	.pred	'isList',1
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	1,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	pro	
+	.clause
+1:	glvx2	0,255,0
+	execsot	1,0,&4,&0,&1,&2
+	last
+
+	.pred	'$list',1
+	labelx	1
+4: 	sot	0,&0,&1,&2,&3
+3: 	fail	
+	.clause
+0:	typx	0,3
+	cutx	1
+	fail	
+	.clause
+1:	gnil	0
+	pro	
+	.clause
+2:	glvx2	0,255,0
+	exec	1,&'$list'/1
+	last
+
+	.pred	'perm',2
+	.clause
+0:	gvarx	2,1
+	gvara	1,2
+	exec	3,&'$perm'/3
+	last
+
+	.pred	'$perm',3
+3: 	sot	0,&4,&0,&1,&2
+4: 	sot	2,&5,&0,&1,&2
+5: 	mkdel	3,&3
+	mark	2
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gnil	1
+	gnil	2
+	pro	
+	.clause
+1:	gl	0
+	all	3
+	uvary	2
+	uvara	0
+	gvary	1,1
+	glvx2	2,255,2
+	pvary	0,1
+	call	3,3,&'$perm'/3
+	pvaly	2,0
+	pvaly	1,1
+	puval	0,2
+	dallexe	3,&'delete'/3
+	last
+
+	.pred	'reverse',2
+	.clause
+0:	gvarx	2,1
+	pnil	1
+	exec	3,&'$rev2'/3
+	last
+
+	.pred	'$rev2',3
+3: 	sot	0,&4,&0,&1,&2
+4: 	mkdel	3,&3
+	mark	0
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	0
+	gvalx	1,2
+	pro	
+	.clause
+1:	glvx2	0,3,0
+	gvarx	4,1
+	pl	1
+	uvalx	3
+	ulvx	4
+	execsot	3,0,&4,&0,&1,&2
+	last
+
+	.pred	'nth0',3
+7: 	fvar	0,255
+	jvx	255,&4
+	sot	0,&8,&9,&1,&1
+8: 	fail	
+9: 	jc	0,$0,&0
+	j	&1
+	j	&0
+4: 	sot	1,&10,&5,&11,&5
+10: 	mkdel	3,&7
+	mark	1
+	mark	255
+	delay	
+5: 	fail	
+11: 	glvx2	1,1,3
+6: 	t	4,0,&2
+	tr	4,0,&3
+	.clause
+0:	gc	0,$0
+	gl	1
+	ulvx	2
+	uvoid	1
+	pro	
+	.clause
+1:	glvx2	1,255,1
+	apushx	0
+	pushi	$$0
+	apred	4
+	pvarx	4,4
+	pc	5,$1
+	plus	4,5,0
+	gvara	0,4
+	exec	3,&'nth0'/3
+	.clause
+2:	gc	0,$0
+	gvalx	1,2
+	pro	
+	.clause
+3:	gvara	1,3
+	apushx	0
+	pushi	$$0
+	apred	4
+	pvarx	4,4
+	pc	5,$1
+	plus	4,5,0
+	gvara	0,4
+	exec	3,&'nth0'/3
+	last
+
+	.pred	'nth0',4
+8: 	fvar	0,255
+	jvx	255,&4
+	sot	0,&9,&10,&1,&1
+9: 	fail	
+10: 	jc	0,$0,&0
+	j	&1
+	j	&0
+4: 	sot	1,&11,&6,&13,&6
+11: 	sot	3,&12,&0,&5,&0
+12: 	mkdel	4,&8
+	mark	3
+	mark	1
+	mark	255
+	delay	
+5: 	t	4,0,&0
+	tr	4,0,&1
+6: 	fail	
+13: 	glvx2	1,1,4
+7: 	t	5,0,&2
+	tr	5,0,&3
+	.clause
+0:	gc	0,$0
+	gl	1
+	ulvx	2
+	ulvx	3
+	pro	
+	.clause
+1:	glvx2	1,5,1
+	gl	3
+	uvalx	5
+	uvara	3
+	apushx	0
+	pushi	$$0
+	apred	4
+	pvarx	5,5
+	pc	6,$1
+	plus	5,6,0
+	gvara	0,5
+	exec	4,&'nth0'/4
+	.clause
+2:	gc	0,$0
+	gvalx	1,2
+	gvalx	3,4
+	pro	
+	.clause
+3:	gl	3
+	ulvx	1
+	uvara	3
+	gvara	1,4
+	apushx	0
+	pushi	$$0
+	apred	4
+	pvarx	5,5
+	pc	6,$1
+	plus	5,6,0
+	gvara	0,5
+	exec	4,&'nth0'/4
+	last
+
+	.pred	'nth1',3
+	.clause
+0:	pvarx	3,3
+	pc	4,$1
+	plus	3,4,0
+	gvara	0,3
+	exec	3,&'nth0'/3
+	last
+
+	.pred	'nth1',4
+	.clause
+0:	pvarx	4,4
+	pc	5,$1
+	plus	4,5,0
+	gvara	0,4
+	exec	4,&'nth0'/4
+	last
+
+	.pred	'mapList',2
+3: 	sot	1,&4,&0,&1,&2
+4: 	mkdel	2,&3
+	mark	1
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	1
+	pro	
+	.clause
+1:	all	2
+	gvary	1,0
+	gl	1
+	uvara	0
+	uvary	0
+	pvaly	1,1
+	call	2,2,&'$funcall'/2
+	pvaly	1,0
+	pvaly	0,1
+	dall	
+	execsot	2,1,&4,&0,&1,&2
+	last
+
+	.pred	'mapList',3
+3: 	sot	1,&4,&0,&1,&2
+4: 	sot	2,&5,&0,&1,&2
+5: 	mkdel	3,&3
+	mark	2
+	mark	1
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	1
+	gnil	2
+	pro	
+	.clause
+1:	all	3
+	gvary	2,0
+	gl	1
+	uvara	0
+	uvary	1
+	gl	2
+	uvara	1
+	uvary	0
+	pvaly	2,2
+	call	3,3,&'$funcall'/3
+	pvaly	2,0
+	pvaly	1,1
+	pvaly	0,2
+	dall	
+	execsot	3,1,&4,&0,&1,&2
+	last
+
+	.pred	'mapList',4
+3: 	sot	1,&4,&0,&1,&2
+4: 	sot	2,&5,&0,&1,&2
+5: 	sot	3,&6,&0,&1,&2
+6: 	mkdel	4,&3
+	mark	3
+	mark	2
+	mark	1
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	1
+	gnil	2
+	gnil	3
+	pro	
+	.clause
+1:	all	4
+	gvary	3,0
+	gl	1
+	uvara	0
+	uvary	2
+	gl	2
+	uvara	1
+	uvary	1
+	gl	3
+	uvara	2
+	uvary	0
+	pvaly	3,3
+	call	4,4,&'$funcall'/4
+	pvaly	3,0
+	pvaly	2,1
+	pvaly	1,2
+	pvaly	0,3
+	dall	
+	execsot	4,1,&4,&0,&1,&2
+	last
+
+	.pred	'cumList',4
+3: 	sot	1,&4,&0,&1,&2
+4: 	sot	3,&5,&0,&1,&2
+5: 	mkdel	4,&3
+	mark	3
+	mark	1
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	1
+	gnil	3
+	pro	
+	.clause
+1:	all	4
+	gvary	3,0
+	gl	1
+	uvara	0
+	uvary	2
+	gvara	1,2
+	gl	3
+	uvary	1
+	uvary	0
+	pvaly	1,2
+	pvaly	3,3
+	call	4,4,&'$funcall'/4
+	pvaly	3,0
+	pvaly	2,1
+	pvaly	1,2
+	pvaly	0,3
+	dall	
+	execsot	4,1,&4,&0,&1,&2
+	last
+
+	.pred	'cumList',5
+3: 	sot	1,&4,&0,&1,&2
+4: 	sot	2,&5,&0,&1,&2
+5: 	sot	4,&6,&0,&1,&2
+6: 	mkdel	5,&3
+	mark	4
+	mark	2
+	mark	1
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	1
+	gnil	2
+	gnil	4
+	pro	
+	.clause
+1:	all	5
+	gvary	4,0
+	gl	1
+	uvara	0
+	uvary	3
+	gl	2
+	uvara	1
+	uvary	2
+	gvara	2,3
+	gl	4
+	uvary	1
+	uvary	0
+	pvaly	1,3
+	pvaly	4,4
+	call	5,5,&'$funcall'/5
+	pvaly	4,0
+	pvaly	3,1
+	pvaly	2,2
+	pvaly	1,3
+	pvaly	0,4
+	dall	
+	execsot	5,1,&4,&0,&1,&2
+	last
+
+	.pred	'cumList',6
+3: 	sot	1,&4,&0,&1,&2
+4: 	sot	2,&5,&0,&1,&2
+5: 	sot	3,&6,&0,&1,&2
+6: 	sot	5,&7,&0,&1,&2
+7: 	mkdel	6,&3
+	mark	5
+	mark	3
+	mark	2
+	mark	1
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	1
+	gnil	2
+	gnil	3
+	gnil	5
+	pro	
+	.clause
+1:	all	6
+	gvary	5,0
+	gl	1
+	uvara	0
+	uvary	4
+	gl	2
+	uvara	1
+	uvary	3
+	gl	3
+	uvara	2
+	uvary	2
+	gvara	3,4
+	gl	5
+	uvary	1
+	uvary	0
+	pvaly	1,4
+	pvaly	5,5
+	call	6,6,&'$funcall'/6
+	pvaly	5,0
+	pvaly	4,1
+	pvaly	3,2
+	pvaly	2,3
+	pvaly	1,4
+	pvaly	0,5
+	dall	
+	execsot	6,1,&4,&0,&1,&2
+	last
+
+	.pred	'scanList',4
+3: 	sot	1,&4,&0,&1,&2
+4: 	mkdel	4,&3
+	mark	1
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	1
+	gvalx	2,3
+	pro	
+	.clause
+1:	all	4
+	gvary	3,0
+	gl	1
+	uvara	0
+	uvary	2
+	gvara	1,2
+	gvary	0,3
+	pvary	1,2
+	pvaly	3,3
+	call	4,4,&'$funcall'/4
+	pvaly	3,0
+	pvaly	2,1
+	puval	1,2
+	pvaly	0,3
+	dall	
+	execsot	4,1,&4,&0,&1,&2
+	last
+
+	.pred	'scanList',5
+3: 	sot	1,&4,&0,&1,&2
+4: 	sot	2,&5,&0,&1,&2
+5: 	mkdel	5,&3
+	mark	2
+	mark	1
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	1
+	gnil	2
+	gvalx	3,4
+	pro	
+	.clause
+1:	all	5
+	gvary	4,0
+	gl	1
+	uvara	0
+	uvary	3
+	gl	2
+	uvara	1
+	uvary	2
+	gvara	2,3
+	gvary	0,4
+	pvary	1,3
+	pvaly	4,4
+	call	5,5,&'$funcall'/5
+	pvaly	4,0
+	pvaly	3,1
+	pvaly	2,2
+	puval	1,3
+	pvaly	0,4
+	dall	
+	execsot	5,1,&4,&0,&1,&2
+	last
+
+	.pred	'scanList',6
+3: 	sot	1,&4,&0,&1,&2
+4: 	sot	2,&5,&0,&1,&2
+5: 	sot	3,&6,&0,&1,&2
+6: 	mkdel	6,&3
+	mark	3
+	mark	2
+	mark	1
+	delay	
+2: 	fail	
+	.clause
+0:	gnil	1
+	gnil	2
+	gnil	3
+	gvalx	4,5
+	pro	
+	.clause
+1:	all	6
+	gvary	5,0
+	gl	1
+	uvara	0
+	uvary	4
+	gl	2
+	uvara	1
+	uvary	3
+	gl	3
+	uvara	2
+	uvary	2
+	gvara	3,4
+	gvary	0,5
+	pvary	1,4
+	pvaly	5,5
+	call	6,6,&'$funcall'/6
+	pvaly	5,0
+	pvaly	4,1
+	pvaly	3,2
+	pvaly	2,3
+	puval	1,4
+	pvaly	0,5
+	dall	
+	execsot	6,1,&4,&0,&1,&2
+	last
+
+	.pred	'someMember',2
+6: 	sot	1,&7,&4,&8,&4
+7: 	mkdel	2,&6
+	mark	1
+	delay	
+4: 	fail	
+8: 	glvx2	1,1,2
+5: 	t	3,0,&2
+	tr	3,0,&3
+	.clause
+2:	gvarx	3,0
+	gvara	0,1
+	gvara	1,3
+	exec	2,&'$funcall'/2
+	.clause
+3:	gvara	1,2
+	execsot	2,1,&7,&4,&8,&4
+	last
+
+	.pred	'someMember',3
+9: 	sot	1,&10,&6,&13,&6
+10: 	sot	2,&11,&6,&12,&6
+11: 	mkdel	3,&9
+	mark	2
+	mark	1
+	delay	
+6: 	fail	
+12: 	glvx2	2,2,3
+7: 	t	4,0,&4
+	tr	4,0,&5
+13: 	glvx2	1,1,3
+8: 	t	4,0,&2
+	tr	4,0,&3
+	.clause
+2:	gvarx	4,0
+	gvara	0,1
+	glvx2	2,1,255
+	gvara	2,4
+	exec	3,&'$funcall'/3
+	.clause
+3:	glvx2	2,255,2
+	gvara	1,3
+	execsot	3,1,&10,&6,&13,&6
+	.clause
+4:	gvarx	4,0
+	glvx2	1,0,255
+	gvara	1,2
+	gvara	2,4
+	exec	3,&'$funcall'/3
+	.clause
+5:	glvx2	1,255,1
+	gvara	2,3
+	execsot	3,1,&10,&6,&13,&6
+	last
+
+	.pred	'someMember',4
+12: 	sot	1,&13,&8,&18,&8
+13: 	sot	2,&14,&8,&17,&8
+14: 	sot	3,&15,&8,&16,&8
+15: 	mkdel	4,&12
+	mark	3
+	mark	2
+	mark	1
+	delay	
+8: 	fail	
+16: 	glvx2	3,3,4
+9: 	t	5,0,&6
+	tr	5,0,&7
+17: 	glvx2	2,2,4
+10: 	t	5,0,&4
+	tr	5,0,&5
+18: 	glvx2	1,1,4
+11: 	t	5,0,&2
+	tr	5,0,&3
+	.clause
+2:	gvarx	5,0
+	gvara	0,1
+	glvx2	2,1,255
+	glvx2	3,2,255
+	gvara	3,5
+	exec	4,&'$funcall'/4
+	.clause
+3:	glvx2	2,255,2
+	glvx2	3,255,3
+	gvara	1,4
+	execsot	4,1,&13,&8,&18,&8
+	.clause
+4:	gvarx	5,0
+	glvx2	1,0,255
+	gvara	1,2
+	glvx2	3,2,255
+	gvara	3,5
+	exec	4,&'$funcall'/4
+	.clause
+5:	glvx2	1,255,1
+	glvx2	3,255,3
+	gvara	2,4
+	execsot	4,1,&13,&8,&18,&8
+	.clause
+6:	gvarx	5,0
+	glvx2	1,0,255
+	glvx2	2,1,255
+	gvara	2,3
+	gvara	3,5
+	exec	4,&'$funcall'/4
+	.clause
+7:	glvx2	1,255,1
+	glvx2	2,255,2
+	gvara	3,4
+	execsot	4,1,&13,&8,&18,&8
+	last
+
+	.pred	'someMemberchk',2
+6: 	labelx	2
+	sot	1,&7,&4,&8,&4
+7: 	mkdel	3,&6
+	mark	1
+	delay	
+4: 	fail	
+8: 	glvx2	1,1,3
+5: 	t	4,0,&2
+	tr	4,0,&3
+	.clause
+2:	gvarx	4,0
+	gvara	0,1
+	all	1
+	gvary	0,2
+	gvara	1,4
+	call	1,2,&'$funcall'/2
+	cuty	0
+	dallpro	
+	.clause
+3:	gvara	1,3
+	exec	2,&'someMemberchk'/2
+	last
+
+	.pred	'someMemberchk',3
+9: 	labelx	3
+	sot	1,&10,&6,&13,&6
+10: 	labelx	3
+	sot	2,&11,&6,&12,&6
+11: 	mkdel	4,&9
+	mark	2
+	mark	1
+	delay	
+6: 	fail	
+12: 	glvx2	2,2,4
+7: 	t	5,0,&4
+	tr	5,0,&5
+13: 	glvx2	1,1,4
+8: 	t	5,0,&2
+	tr	5,0,&3
+	.clause
+2:	gvarx	5,0
+	gvara	0,1
+	glvx2	2,1,255
+	all	1
+	gvary	0,3
+	gvara	2,5
+	call	1,3,&'$funcall'/3
+	cuty	0
+	dallpro	
+	.clause
+3:	glvx2	2,255,2
+	gvara	1,4
+	exec	3,&'someMemberchk'/3
+	.clause
+4:	gvarx	5,0
+	glvx2	1,0,255
+	gvara	1,2
+	all	1
+	gvary	0,3
+	gvara	2,5
+	call	1,3,&'$funcall'/3
+	cuty	0
+	dallpro	
+	.clause
+5:	glvx2	1,255,1
+	gvara	2,4
+	exec	3,&'someMemberchk'/3
+	last
+
+	.pred	'someMemberchk',4
+12: 	labelx	4
+	sot	1,&13,&8,&18,&8
+13: 	labelx	4
+	sot	2,&14,&8,&17,&8
+14: 	labelx	4
+	sot	3,&15,&8,&16,&8
+15: 	mkdel	5,&12
+	mark	3
+	mark	2
+	mark	1
+	delay	
+8: 	fail	
+16: 	glvx2	3,3,5
+9: 	t	6,0,&6
+	tr	6,0,&7
+17: 	glvx2	2,2,5
+10: 	t	6,0,&4
+	tr	6,0,&5
+18: 	glvx2	1,1,5
+11: 	t	6,0,&2
+	tr	6,0,&3
+	.clause
+2:	gvarx	6,0
+	gvara	0,1
+	glvx2	2,1,255
+	glvx2	3,2,255
+	all	1
+	gvary	0,4
+	gvara	3,6
+	call	1,4,&'$funcall'/4
+	cuty	0
+	dallpro	
+	.clause
+3:	glvx2	2,255,2
+	glvx2	3,255,3
+	gvara	1,5
+	exec	4,&'someMemberchk'/4
+	.clause
+4:	gvarx	6,0
+	glvx2	1,0,255
+	gvara	1,2
+	glvx2	3,2,255
+	all	1
+	gvary	0,4
+	gvara	3,6
+	call	1,4,&'$funcall'/4
+	cuty	0
+	dallpro	
+	.clause
+5:	glvx2	1,255,1
+	glvx2	3,255,3
+	gvara	2,5
+	exec	4,&'someMemberchk'/4
+	.clause
+6:	gvarx	6,0
+	glvx2	1,0,255
+	glvx2	2,1,255
+	gvara	2,3
+	all	1
+	gvary	0,4
+	gvara	3,6
+	call	1,4,&'$funcall'/4
+	cuty	0
+	dallpro	
+	.clause
+7:	glvx2	1,255,1
+	glvx2	2,255,2
+	gvara	3,5
+	exec	4,&'someMemberchk'/4
+	last
+
+	.pred	'spanList',4
+5: 	sot	1,&6,&0,&1,&4
+6: 	jnvx	2,&7
+2: 	mkdel	4,&5
+	mark	2
+	mark	1
+	delay	
+7: 	sot	3,&8,&9,&1,&1
+8: 	mkdel	4,&7
+	mark	3
+	mark	1
+	delay	
+9: 	jc	3,$[],&3
+	j	&1
+3: 	t	4,0,&0
+	tr	4,0,&1
+4: 	fail	
+	.clause
+0:	gnil	1
+	gnil	2
+	gnil	3
+	pro	
+	.clause
+1:	all	8
+	gvary	5,0
+	gl	1
+	uvary	1
+	uvary	0
+	gvary	3,2
+	gvary	2,3
+	jtypy	3,48,&28
+	pvaly	3,255
+	gl	255
+	uvaly	1
+	uvary	4
+	pvaly	1,0
+	pvaly	5,1
+	call	6,2,&'$funcall'/2
+	pvaly	5,0
+	pvaly	0,1
+	pvaly	4,2
+	pvaly	2,3
+	dallexe	4,&'spanList'/4
+28: 	jtypy	3,252,&31
+	pvaly	3,255
+	gnil	255
+	pvaly	2,255
+	gl	255
+	uvaly	1
+	uvaly	0
+	labely	7
+29: 	te	0,0,0,&30
+	pvaly	1,0
+	pvaly	5,1
+	call	8,2,&'$funcall'/2
+	cuty	7
+	fail	
+30: 	tre	0,0
+	dallpro	
+	j	&34
+31: 	labely	6
+32: 	te	0,0,0,&33
+	pvaly	1,0
+	pvaly	5,1
+	call	7,2,&'$funcall'/2
+	cuty	6
+	pvaly	3,255
+	gl	255
+	uvaly	1
+	uvary	4
+	pvaly	5,0
+	pvaly	0,1
+	pvaly	4,2
+	pvaly	2,3
+	dallexe	4,&'spanList'/4
+33: 	tre	0,0
+	pvaly	3,255
+	gnil	255
+	pvaly	2,255
+	gl	255
+	uvaly	1
+	uvaly	0
+	dallpro	
+34: 	last
+
+	.pred	'groupList',4
+2: 	jnvx	1,&0
+1: 	mkdel	4,&2
+	mark	1
+	delay	
+	.clause
+0:	all	4
+	gvary	3,0
+	gvary	0,2
+	jtypx	1,48,&20
+	gl	3
+	uvara	2
+	uvary	1
+	pvaly	3,0
+	pvary	2,3
+	call	4,4,&'spanList'/4
+	jtypy	2,48,&19
+	pvaly	2,255
+	glvx2	255,4,1
+	pvaly	0,255
+	gl	255
+	uvalx	4
+	uvara	2
+	pvaly	3,0
+	pvaly	1,3
+	dallexe	4,&'groupList'/4
+19: 	pvaly	3,0
+	puval	2,1
+	pvaly	0,2
+	pvaly	1,3
+	dallexe	4,&'groupList'/4
+	j	&21
+20: 	gnil	1
+	pvaly	0,255
+	gnil	255
+	gnil	3
+	dallpro	
+21: 	last
+

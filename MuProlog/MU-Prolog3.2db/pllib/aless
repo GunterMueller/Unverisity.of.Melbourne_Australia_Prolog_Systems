@@ -1,0 +1,7 @@
+	% less than for atoms
+
+aless(X,Y) :- name(X,L),name(Y,M),alessx(L,M).
+
+alessx([],[_|_]).
+alessx([X|_],[Y|_]) :- X < Y.
+alessx([H|X],[H|Y]) :- alessx(X,Y).

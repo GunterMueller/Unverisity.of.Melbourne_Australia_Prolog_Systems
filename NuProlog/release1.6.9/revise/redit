@@ -1,0 +1,54 @@
+#! /bin/sh
+#
+# Script for editing a file(s) in new revise system
+#
+# If backup copy of .nl file does not exist,
+# create it, then call editor
+# Also remove file@.n? (good idea?)
+
+ed="${EDITOR-vi}"
+cat=/bin/cat
+cp=/bin/cp
+rm=/bin/rm
+
+allargs=$*
+
+case $1
+in
+-t) shift ; shift ;;
+-*) shift ;;
++*) shift ;;
+esac
+
+for f in $*
+do
+#	check for *.nl@ or *@.nl
+	if expr $f : '.*.nl@' \| $f : '.*@.nl' > /dev/null
+	then
+		echo Editing $f is too confusing
+		exit 1
+	fi
+#	check for *.nl (if not, don't do any funny business)
+	if f1=`expr $f : '\(.*\).nl'`
+	then
+			# we have a .nl file
+		b=$f1.nl@
+			# check if backup file exists
+			# should check modify dates of .nl .ns (& .nl@?)
+			# if .nl older that .ns warn+dont create backup
+			# if .nl@ older that .ns warn?
+		if [ ! -f $b ]
+			# create backup file
+		then
+			if [ -f $f ]
+			then
+				$cp $f $b
+#			else
+#				$cat /dev/null > $b
+			fi
+				# clean up old diff files
+			$rm -f $f1@.nl $f1@.ns $f1@.no
+		fi
+	fi
+done
+$ed $allargs
