@@ -1,0 +1,805 @@
+%!PS-Adobe-1.0
+%%Title: Ditroff Postscript
+%%Creator: posttroff-ps
+%%Orientation: Portrait
+%%DocumentPaperSizes: A4
+%%PageOrder: Ascend
+%%CreationDate: Tue Jan 31 15:15:49 1995
+%%DocumentFonts: Times-Roman
+%%DocumentFonts: Times-Bold
+%%DocumentFonts: Courier-Bold
+%%DocumentFonts: Times-Italic
+%%DocumentFonts: Symbol
+%%Pages: 3
+%%EndComments
+/fp
+{
+	10 mul scalefont setfont
+} def
+/dsf
+{
+	dup FontDirectory exch known
+		{ findfont def }
+		{ pop /Courier findfont def }
+	ifelse
+} def
+/df
+{
+	findfont def
+} def
+/slab
+{
+	gsave
+	currentpoint newpath moveto
+	0 1 index rlineto
+	1 index 0 rlineto
+	0 1 index neg rlineto
+	closepath
+	pop pop
+	
+	gsave setgray fill grestore
+	gsave 0 setlinewidth stroke grestore
+	grestore
+} def
+/cursor
+{
+	gsave
+	0 -2 2 index mul rmoveto
+	.8 6 2 index mul 10 3 index mul slab
+	grestore
+	pop
+} def
+/square
+{
+	gsave
+	0 0 2 index mul rmoveto
+	1 3 2 index mul 3 3 index mul slab
+	grestore
+	pop
+} def
+/perp
+{
+	gsave
+	dup
+	S exch fp
+	6.6 mul dup rmoveto
+	180 rotate
+	(\136) show
+	grestore
+} def
+/join {
+	gsave
+	newpath
+	moveto
+	dup 7 mul dup rlineto
+	dup 7 mul neg 0 exch rlineto
+	dup 7 mul dup neg exch rlineto
+	closepath
+	2 setlinewidth stroke
+	pop
+	grestore
+} def
+/mtrx matrix def
+/ellipse {
+	/yrad exch def
+	/xrad exch def
+	/y exch def
+	/x exch def
+	/savematrix mtrx currentmatrix def
+	x y translate
+	xrad yrad scale
+	0 0 1 0 360 arc
+	savematrix setmatrix
+} def
+/inch { 720 mul } def
+/reporterr {
+	H 12 fp
+	850 6850 moveto
+	(The LaserWriter has encountered a PostScript language error.) show
+	HI 10 fp
+	850 6660 moveto
+	(Error name: ) show
+	show
+	850 6540 moveto
+	(Explanation: ) show
+	show
+	showpage
+	stop
+} def
+errordict begin
+/syntaxerror { (PostScript syntax error) (syntaxerror) reporterr } store
+/stackunderflow { (Too many entries removed from operand stack)
+	(stackunderflow) reporterr } store
+/dictfull { (Too many entries in a dictionary) (dictfull) reporterr } store
+/dictstackoverflow { (Dictionary stack has grown too large)
+	(dictstackoverflow) reporterr } store
+/dictstackunderflow { (Too many entries removed from dictionary stack)
+	(dictstackunderflow) reporterr } store
+/execstackoverflow { (Execution stack has overflowed) (execstackoverflow)
+	reporterr } store
+/interrupt { (Control-C hit in interactive use) (interrupt) reporterr } store
+/invalidaccess { (Improper reference to readonly entity) (invalidaccess)
+	reporterr } store
+/invalidexit { (Illegally placed exit statement) (invalidexit)
+	reporterr } store
+/invalidfileaccess { (Illegal file access string) (invalidfileaccess)
+	reporterr } store
+/invalidfont { (Illegal font specification) (invalidfont) reporterr } store
+/invalidrestore { (Illegal restore operation) (invalidrestore)
+	reporterr } store
+/ioerror { (I/O error) (ioerror) reporterr } store
+/limitcheck { (Implementation limit exceeded) (limitcheck) reporterr } store
+/nocurrentpoint { (Current path is empty) (nocurrentpoint) reporterr } store
+/rangecheck { (Out of bounds array or string reference) (rangecheck)
+	reporterr } store
+/stackoverflow { (Too many entries on operand stack) (stackoverflow)
+	reporterr } store
+/typecheck { (Operand has wrong type) (typecheck) reporterr } store
+/undefined { (Required name is missing) (undefined) reporterr } store
+/undefinedfilename { (File does not exist or cannot be opened)
+	(undefinedfilename) reporterr } store
+/undefinedresult { (Numeric overflow, divide by zero, or similar)
+	(undefinedresult) reporterr } store
+/unmatchedmark { (Missing mark on operand stack) (unmatchedmark)
+	reporterr } store
+/unregistered { (Internal error - may be serious) (unregistered)
+	reporterr } store
+/VMerror { (Internal memory error - may be serious) (VMerror)
+	reporterr } store
+end
+/s { show } def
+/m { 0 rmoveto } def
+/R /Times-Roman df
+/B /Times-Bold df
+/CB /Courier-Bold df
+/I /Times-Italic df
+/S /Symbol df
+%%EndProlog
+%%Page: 2 1
+/Page save def
+.1 .1 scale
+R 11 fp
+B 36 fp
+2142 5588 moveto
+(NU-Prolog)s -180 m
+B 24 fp
+2019 5120 moveto
+(Reference)s 79 m
+(Manual)s -67 m
+B 16 fp
+2477 4190 moveto
+(Version)s 53 m
+(1.5.24)s -80 m
+R 14 fp
+2706 3518 moveto
+(edited)s 46 m
+(by)s -70 m
+2067 3266 moveto
+(James)s 46 m
+(A.)s 46 m
+(Thom)s 46 m
+(&)s 46 m
+(Justin)s 46 m
+(Zobel)s -39 m
+2298 2762 moveto
+(Technical)s 46 m
+(Report)s 46 m
+(86/10)s -70 m
+2151 2594 moveto
+(Machine)s 46 m
+(Intelligence)s 46 m
+(Project)s -39 m
+2015 2426 moveto
+(Department)s 46 m
+(of)s 46 m
+(Computer)s 46 m
+(Science)s -62 m
+2263 2258 moveto
+(University)s 46 m
+(of)s 46 m
+(Melbourne)s -62 m
+2217 1922 moveto
+(\050Revised)s 46 m
+(November)s 46 m
+(1990\051)s -46 m
+Page restore
+showpage
+%%Page: 1 2
+/Page save def
+.1 .1 scale
+R 14 fp
+R 11 fp
+720 7216 moveto
+(Copyright)s 36 m
+(1986,)s 36 m
+(1987,)s 36 m
+(1988,)s 36 m
+(Machine)s 36 m
+(Intelligence)s 36 m
+(Project,)s 36 m
+(The)s 36 m
+(University)s 36 m
+(of)s 36 m
+(Melbourne.)s -28 m
+720 6952 moveto
+(All)s 37 m
+(rights)s 37 m
+(reserved.)s 73 m
+(The)s 37 m
+(Technical)s 37 m
+(Report)s 37 m
+(edition)s 37 m
+(of)s 37 m
+(this)s 37 m
+(publication)s 37 m
+(is)s 37 m
+(given)s 37 m
+(away)s 36 m
+(free)s 36 m
+(subject)s -31 m
+720 6820 moveto
+(to)s 39 m
+(the)s 38 m
+(condition)s 38 m
+(that)s 38 m
+(it)s 38 m
+(shall)s 38 m
+(not,)s 38 m
+(by)s 38 m
+(the)s 38 m
+(way)s 38 m
+(of)s 38 m
+(trade)s 38 m
+(or)s 38 m
+(otherwise,)s 38 m
+(be)s 38 m
+(lent,)s 38 m
+(resold,)s 38 m
+(hired)s 38 m
+(out,)s 38 m
+(or)s -36 m
+720 6688 moveto
+(otherwise)s 64 m
+(circulated,)s 64 m
+(without)s 64 m
+(the)s 64 m
+(prior)s 64 m
+(consent)s 64 m
+(of)s 64 m
+(the)s 64 m
+(Machine)s 64 m
+(Intelligence)s 64 m
+(Project)s 64 m
+(at)s 63 m
+(the)s -48 m
+720 6556 moveto
+(University)s 51 m
+(of)s 51 m
+(Melbourne,)s 51 m
+(in)s 51 m
+(any)s 51 m
+(form)s 51 m
+(or)s 51 m
+(cover)s 51 m
+(other)s 51 m
+(than)s 51 m
+(that)s 51 m
+(in)s 50 m
+(which)s 50 m
+(it)s 50 m
+(is)s 50 m
+(published)s 50 m
+(and)s -55 m
+720 6424 moveto
+(without)s 56 m
+(a)s 56 m
+(similar)s 55 m
+(condition)s 55 m
+(including)s 55 m
+(this)s 55 m
+(condition)s 55 m
+(being)s 55 m
+(imposed)s 55 m
+(on)s 55 m
+(the)s 55 m
+(subsequent)s 55 m
+(user.)s -28 m
+720 6292 moveto
+(The)s 52 m
+(Machine)s 52 m
+(Intelligence)s 52 m
+(Project)s 51 m
+(makes)s 51 m
+(no)s 51 m
+(representations)s 51 m
+(or)s 51 m
+(warranties)s 51 m
+(with)s 51 m
+(respect)s 51 m
+(to)s 51 m
+(the)s -48 m
+720 6160 moveto
+(contents)s 42 m
+(of)s 42 m
+(this)s 42 m
+(document)s 42 m
+(and)s 42 m
+(specifically)s 42 m
+(disclaims)s 42 m
+(any)s 42 m
+(implied)s 42 m
+(warranties)s 42 m
+(of)s 41 m
+(merchantability)s -55 m
+720 6028 moveto
+(or)s 50 m
+(fitness)s 50 m
+(for)s 50 m
+(any)s 50 m
+(particular)s 50 m
+(purpose.)s 86 m
+(Furthermore,)s 50 m
+(the)s 50 m
+(Machine)s 50 m
+(Intelligence)s 50 m
+(Project)s 49 m
+(reserves)s -43 m
+720 5896 moveto
+(the)s 39 m
+(right)s 39 m
+(to)s 39 m
+(revise)s 39 m
+(this)s 39 m
+(document)s 39 m
+(and)s 39 m
+(to)s 39 m
+(make)s 39 m
+(changes)s 39 m
+(from)s 39 m
+(time)s 39 m
+(to)s 39 m
+(time)s 39 m
+(in)s 39 m
+(its)s 39 m
+(content)s 39 m
+(without)s -31 m
+720 5764 moveto
+(being)s 44 m
+(obligated)s 44 m
+(to)s 44 m
+(notify)s 44 m
+(any)s 44 m
+(person)s 44 m
+(or)s 44 m
+(body)s 44 m
+(of)s 44 m
+(such)s 44 m
+(revisions)s 44 m
+(or)s 44 m
+(changes.)s 80 m
+(The)s 44 m
+(usual)s 44 m
+(codicil)s -31 m
+720 5632 moveto
+(that)s 60 m
+(no)s 60 m
+(part)s 60 m
+(of)s 60 m
+(this)s 60 m
+(publication)s 59 m
+(may)s 59 m
+(be)s 59 m
+(reproduced,)s 59 m
+(stored)s 59 m
+(in)s 59 m
+(a)s 59 m
+(retrieval)s 59 m
+(system,)s 59 m
+(used)s 59 m
+(for)s -36 m
+720 5500 moveto
+(wrapping)s 83 m
+(fish,)s 83 m
+(or)s 83 m
+(transmitted,)s 83 m
+(in)s 83 m
+(any)s 83 m
+(form)s 82 m
+(or)s 82 m
+(by)s 82 m
+(any)s 82 m
+(means,)s 82 m
+(electronic,)s 82 m
+(mechanical,)s -28 m
+720 5368 moveto
+(photocopying,)s 54 m
+(paper)s 54 m
+(dart,)s 54 m
+(recording,)s 54 m
+(or)s 54 m
+(otherwise,)s 54 m
+(without)s 53 m
+(someone's)s 53 m
+(express)s 53 m
+(permission,)s 53 m
+(is)s -43 m
+720 5236 moveto
+(not)s 36 m
+(imposed.)s -28 m
+720 4384 moveto
+(Enquiries)s 36 m
+(relating)s 36 m
+(to)s 36 m
+(the)s 36 m
+(acquisition)s 36 m
+(of)s 36 m
+(NU-Prolog)s 36 m
+(should)s 36 m
+(be)s 36 m
+(made)s 36 m
+(to)s -55 m
+2139 4078 moveto
+(NU-Prolog)s 36 m
+(Distribution)s 36 m
+(Manager)s -36 m
+2238 3946 moveto
+(Machine)s 36 m
+(Intelligence)s 36 m
+(Project)s -31 m
+2132 3814 moveto
+(Department)s 36 m
+(of)s 36 m
+(Computer)s 36 m
+(Science)s -48 m
+2223 3682 moveto
+(The)s 36 m
+(University)s 36 m
+(of)s 36 m
+(Melbourne)s -48 m
+2342 3550 moveto
+(Parkville,)s 36 m
+(Victoria)s 36 m
+(3052)s -55 m
+2679 3418 moveto
+(Australia)s -48 m
+1466 3154 moveto
+(Telephone:)s 36 m
+(\05003\051)s 36 m
+(344)s 36 m
+(5229.)s 72 m
+(Electronic)s 36 m
+(mail:)s 36 m
+(mip@cs)s
+B 13 fp
+(.)s
+R 11 fp
+(mu)s
+B 13 fp
+(.)s
+R 11 fp
+(oz)s
+B 13 fp
+(.)s
+R 11 fp
+(au)s -55 m
+B 8 fp
+2260 2260 moveto
+(Warning:)s 26 m
+(Some)s 26 m
+(of)s 26 m
+(Doc)s 26 m
+(in)s 26 m
+(TechJarg)s -40 m
+Page restore
+showpage
+%%Page: 3 3
+/Page save def
+.1 .1 scale
+B 8 fp
+B 13 fp
+2035 7508 moveto
+(PREFACE)s 43 m
+(TO)s 43 m
+(VERSION)s 43 m
+(1.1)s -65 m
+R 11 fp
+940 7246 moveto
+(The)s 37 m
+(development)s 37 m
+(of)s 37 m
+(the)s 37 m
+(NU-Prolog)s
+R 8 fp
+2538 7290 moveto
+(\262)s
+R 11 fp
+2615 7246 moveto
+(system)s 37 m
+(has)s 37 m
+(been)s 37 m
+(a)s 37 m
+(collective)s 37 m
+(effort)s 37 m
+(of)s 37 m
+(members)s 37 m
+(of)s 37 m
+(the)s -48 m
+720 7114 moveto
+(Machine)s 69 m
+(Intelligence)s 69 m
+(Project)s 69 m
+(at)s 69 m
+(The)s 69 m
+(University)s 69 m
+(of)s 69 m
+(Melbourne.)s 105 m
+(The)s 69 m
+(Machine)s 69 m
+(Intelligence)s -48 m
+720 6982 moveto
+(Project)s 51 m
+(was)s 50 m
+(initiated,)s 50 m
+(in)s 50 m
+(1984,)s 50 m
+(by)s 50 m
+(the)s 50 m
+(Honourable)s 50 m
+(Barry)s 50 m
+(Jones,)s 50 m
+(Minister)s 50 m
+(of)s 50 m
+(Science,)s 50 m
+(and)s 50 m
+(Dr.)s -28 m
+720 6850 moveto
+(Jean-Louis)s 67 m
+(Lassez.)s 103 m
+(We)s 67 m
+(would)s 67 m
+(like)s 67 m
+(to)s 66 m
+(thank)s 66 m
+(the)s 66 m
+(Australian)s 66 m
+(Government's)s 66 m
+(Department)s 66 m
+(of)s -36 m
+720 6718 moveto
+(Science)s 48 m
+(and)s 48 m
+(The)s 48 m
+(University)s 48 m
+(of)s 48 m
+(Melbourne)s 48 m
+(for)s 48 m
+(funding)s 48 m
+(the)s 48 m
+(project,)s 48 m
+(and)s 47 m
+(Pyramid)s 47 m
+(Australia)s 47 m
+(for)s -36 m
+720 6586 moveto
+(the)s 36 m
+(loan)s 36 m
+(of)s 36 m
+(a)s 36 m
+(Pyramid)s 36 m
+(90X)s 36 m
+(computer)s 36 m
+(during)s 36 m
+(1985.)s -28 m
+940 6412 moveto
+(The)s 47 m
+(NU-Prolog)s 47 m
+(language,)s 47 m
+(which)s 47 m
+(is)s 47 m
+(a)s 47 m
+(advance)s 47 m
+(towards)s 47 m
+(declarative)s 46 m
+(programming)s 46 m
+(in)s 46 m
+(logic,)s -28 m
+720 6280 moveto
+(was)s 52 m
+(principally)s 52 m
+(designed)s 52 m
+(by)s 52 m
+(Lee)s 52 m
+(Naish.)s 88 m
+(The)s 52 m
+(NU-Prolog)s 52 m
+(system)s 52 m
+(itself)s 52 m
+(was)s 52 m
+(designed)s 51 m
+(by)s 51 m
+(Lee)s -48 m
+720 6126 moveto
+(Naish)s 38 m
+(and)s 38 m
+(Jeffrey)s 38 m
+(Schultz.)s 74 m
+(NU-Prolog)s 38 m
+(was)s 38 m
+(implemented)s 37 m
+(under)s 37 m
+(UNIX)s
+R 8 fp
+3886 6170 moveto
+(\263)s
+R 11 fp
+3963 6126 moveto
+(by)s 37 m
+(Jeffrey)s 37 m
+(Schultz,)s 37 m
+(with)s -55 m
+720 5994 moveto
+(assistance)s 78 m
+(from)s 78 m
+(David)s 78 m
+(Morley)s 78 m
+(\050parser,)s 78 m
+(definite)s 78 m
+(clause)s 78 m
+(grammars\051,)s 77 m
+(Lee)s 77 m
+(Naish)s 77 m
+(\050negation,)s -28 m
+720 5862 moveto
+(extended)s 55 m
+(syntax\051,)s 55 m
+(John)s 54 m
+(Shepherd)s 54 m
+(\050assembler,)s 54 m
+(loader,)s 54 m
+(superimposed)s 54 m
+(coding,)s 54 m
+(revision)s 54 m
+(system\051,)s -28 m
+720 5730 moveto
+(Kotagiri)s 70 m
+(Ramamohanarao)s 70 m
+(\050superimposed)s 70 m
+(coding\051,)s 70 m
+(James)s 70 m
+(Thom)s 69 m
+(\050database)s 69 m
+(interface\051,)s 69 m
+(Justin)s -55 m
+720 5598 moveto
+(Zobel)s 67 m
+(\050nit,)s 67 m
+(extended)s 67 m
+(syntax\051,)s 67 m
+(Philip)s 67 m
+(Dart)s 67 m
+(\050top)s 66 m
+(level)s 66 m
+(of)s 66 m
+(interpreter\051.)s 102 m
+(and)s 66 m
+(Zoltan)s 66 m
+(Somogyi)s -31 m
+720 5466 moveto
+(\050revision)s 36 m
+(system)s 36 m
+(design\051,)s -28 m
+940 5292 moveto
+(This)s 54 m
+(manual)s 54 m
+(was)s 54 m
+(edited)s 54 m
+(and)s 54 m
+(written)s 54 m
+(by)s 54 m
+(James)s 54 m
+(Thom)s 54 m
+(and)s 54 m
+(Justin)s 53 m
+(Zobel,)s 53 m
+(with)s 53 m
+(assistance)s -48 m
+720 5160 moveto
+(from)s 70 m
+(Philip)s 70 m
+(Dart,)s 70 m
+(Lee)s 70 m
+(Naish,)s 70 m
+(Jeffrey)s 70 m
+(Schultz)s 70 m
+(and)s 69 m
+(John)s 69 m
+(Shepherd.)s 105 m
+(We)s 69 m
+(acknowledge)s 69 m
+(the)s -48 m
+720 5028 moveto
+(comments)s 37 m
+(provided)s 37 m
+(by)s 37 m
+(other)s 37 m
+(staff)s 37 m
+(members)s 37 m
+(and)s 37 m
+(graduate)s 37 m
+(students,)s 36 m
+(including)s 36 m
+(Rodney)s 36 m
+(Topor)s 36 m
+(and)s -55 m
+720 4896 moveto
+(Richard)s 44 m
+(Helm.)s 80 m
+(Finally,)s 44 m
+(we)s 44 m
+(would)s 43 m
+(like)s 43 m
+(to)s 43 m
+(thank)s 43 m
+(John)s 43 m
+(Lloyd)s 43 m
+(and)s 43 m
+(Kotagiri)s 43 m
+(Ramamohanarao)s 43 m
+(for)s -36 m
+720 4764 moveto
+(supervising)s 36 m
+(the)s 36 m
+(Machine)s 36 m
+(Intelligence)s 36 m
+(Project.)s -28 m
+4320 4500 moveto
+(James)s 36 m
+(Thom)s -86 m
+4320 4368 moveto
+(Justin)s 36 m
+(Zobel)s -31 m
+4320 4104 moveto
+(January)s 36 m
+(1987)s -55 m
+R 10 fp
+724 1434 moveto
+(_)s -10 m
+(____________________________)s -54 m
+936 1290 moveto
+(\262)s 41 m
+(NU-Prolog)s 41 m
+(\050pronounced)s 41 m
+(``new)s 41 m
+(prolog''\051)s 41 m
+(is)s 41 m
+(the)s 41 m
+(successor)s 41 m
+(of)s 41 m
+(MU-Prolog)s 41 m
+(3.2,)s 41 m
+(and)s 41 m
+(is)s 40 m
+(not)s 40 m
+(an)s 40 m
+(acro-)s -33 m
+720 1170 moveto
+(nym)s 33 m
+(for)s 33 m
+(Naish's)s 33 m
+(Ultra)s 33 m
+(Prolog.)s -25 m
+936 1026 moveto
+(\263)s 33 m
+(UNIX)s 33 m
+(is)s 33 m
+(a)s 33 m
+(trademark)s 33 m
+(of)s 33 m
+(Bell)s 33 m
+(Laboratories.)s -25 m
+R 11 fp
+2833 420 moveto
+(iii)s -31 m
+Page restore
+showpage
+%%Trailer
