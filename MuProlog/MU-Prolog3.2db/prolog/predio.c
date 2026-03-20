@@ -40,11 +40,9 @@ functions called by PROLOG involved in I/O
 extern jmp_buf intrbuf;
 
 FILE *
-pfiles[MAXFILES + MAXDBQ] = {
-		stdin, stdout, stderr, stdin, stdout };
+pfiles[MAXFILES + MAXDBQ];
 char
-pfmode[MAXFILES + MAXDBQ] = {
-		'r', 'w', 'w', 'r', 'w' };
+pfmode[MAXFILES + MAXDBQ];
 
 extern fget();
 
@@ -224,24 +222,19 @@ p_fmove(t, l)			/* move a file descriptor */
 	old = pfiles[n1];
 	new = pfiles[n2];
 	pfiles[n1] = NULL;
-	fclose(new);		/* close stream we are copying to */
-
-#ifdef FCNTL
-	if(fcntl(fileno(old), F_DUPFD, n2) != n2) {
+	fflush(old);
+	fflush(new);
+	if(dup2(fileno(old), n2) == -1) {
 		plerror(EFILE);
 		return(ERROR);
 	}
-#else
-	dup2(fileno(old), n2);
-#endif
-			/* this is really awful and relies on stdio */
-			/* Still, if people really want 'next' in prolog... */
-	*new = *old;		/* copy stream */
-	old->_ptr =
-	old->_base = NULL;	/* make it look like there is no buffer */
-	old->_flag &= ~_IOMYBUF;
-	fileno(new) = n2;
-	fclose(old);		/* close old stream(without affecting buffer)*/
+	fclose(old);
+	{
+		char mode[3];
+		mode[0] = pfmode[n2];
+		mode[1] = '\0';
+		pfiles[n2] = fdopen(n2, mode);
+	}
 	return(SUCCEED);
 }
 

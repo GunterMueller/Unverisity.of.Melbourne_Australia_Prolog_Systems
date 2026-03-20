@@ -28,6 +28,8 @@
 #include <sys/file.h>
 #include <stdio.h>
 #include <a.out.h>
+#include <errno.h>
+#include <string.h>
 
 #ifdef PAGSIZ
 #define ROUND PAGSIZ
@@ -250,8 +252,7 @@ char Program_name[ MAXPATHLEN ];	/* saves the name of the program */
 char Symbol_name[ MAXPATHLEN ];		/* name of the new object file */
 extern char 
 	*Strend(),	/* append to end of string */
-	*strcpy(), *sys_errlist[], *mktemp();
-extern int errno;	/* system errors */
+	*strcpy(), *mktemp();
 extern caddr_t sbrk();	/* memory allocation */
 
 /*
@@ -349,7 +350,7 @@ Load_file( objects, entries, library )
 		end = sbrk( diff );
 		if( (int)end <= 0 ){
 			fprintf( stderr,
-				"sbrk failed: %s\n", sys_errlist[errno] );
+				"sbrk failed: %s\n", strerror(errno) );
 			return( 1 );
 		}
 		end = sbrk( 0 );
@@ -459,7 +460,7 @@ Load_file( objects, entries, library )
 
 	if( (fcb = open( Symbol_name, O_RDONLY)) < 0){
 		fprintf( stderr, "cannot open temp file %s: %s\n",
-			Symbol_name, sys_errlist[errno] );
+			Symbol_name, strerror(errno) );
 		return( 1 );
 	}
 #	ifdef DEBUG
@@ -493,7 +494,7 @@ Load_file( objects, entries, library )
 #	endif DEBUG
 	if( (int)end <= 0 ){
 		fprintf(stderr, "sbrk failed to allocate: %s\n",
-			sys_errlist[errno] );
+			strerror(errno) );
 		return( 1 );
 	}
 	/* save new end */
@@ -503,7 +504,7 @@ Load_file( objects, entries, library )
 	
 	if(readsize != read(fcb,(char *)end,readsize)){
 		fprintf( stderr, "cannot read %s: %s\n", Symbol_name,
-			sys_errlist[errno] );
+			strerror(errno) );
 		return( 1 );
 	}
 	(void)unlink( Symbol_name );
@@ -585,14 +586,14 @@ Find_symbol_names( entries, fcb, header )
 		/* read in the necessary entries */
 		if( lseek( fcb, next_symbol, 0 ) == -1 ){
 			fprintf( stderr,"lseek on symbol file failed: %s\n",
-				sys_errlist[errno] );
+				strerror(errno) );
 			return( 1 );
 		}
 		if( sizeof(name) != (n = read(fcb,(char *)name,sizeof(name)))){
 			if( n <= 0 ){
 				fprintf( stderr,
 					"read on symbol file failed: %s\n",
-					sys_errlist[errno] );
+					strerror(errno) );
 			}
 		}
 		n = n / sizeof( struct nlist );
@@ -634,12 +635,12 @@ Find_symbol_names( entries, fcb, header )
 	if( lseek(fcb, str_offset, 0 ) == -1){
 		fprintf( stderr,
 		"lseek on symbol file failed: %s\n",
-			sys_errlist[errno] );
+			strerror(errno) );
 		return( 1 );
 	}
 	if( (c = read(fcb, str_buff, sizeof( str_buff ) )) <= 0 ){
 		fprintf( stderr, "read on symbol file failed: %s\n",
-			sys_errlist[errno] );
+			strerror(errno) );
 		return( 1 );
 	}
 	str_start = str_offset;
@@ -711,7 +712,7 @@ Check_entry_for_value( str, val, entries )
      }
 
 
-savedload(fd, bp)
+savedload(fd)
 	int fd;
 {
 	char *start;
@@ -757,7 +758,7 @@ restdload(fd)
 		end = sbrk( totalsize );
 		if( (int)end <= 0 ){
 			fprintf(stderr, "sbrk failed to allocate: %s\n",
-				sys_errlist[errno] );
+				strerror(errno) );
 			return( 0 );
 		}
 		read(fd, start, totalsize);

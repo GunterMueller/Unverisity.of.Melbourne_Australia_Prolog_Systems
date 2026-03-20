@@ -49,7 +49,7 @@ word is the functor (the same as an atom but the number of args is non-zero)
 and then there is one word for each argument.
 */
 
-#if 0
+#if 1
 /*
  * If your machine can't handle tampering with 1 in the most
  * significant bit, change the "#if 1" to "#if 0" to get some

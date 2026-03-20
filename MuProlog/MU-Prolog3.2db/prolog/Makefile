@@ -7,9 +7,12 @@
 #	parent directory. See that file for more details.
 #
 
-HOME	= /usr/src/melb/prolog
+#HOME	= /usr/src/melb/prolog
+HOME	= /home/gunter/GMTEMP/PROLOG/UMelbourne/MU-Prolog/Sources/MU-Prolog3.2db
 
-BIN	= /usr/melb
+
+#BIN	= /usr/melb
+BIN	= /home/gunter/GMTEMP/PROLOG/UMelbourne/MU-Prolog/RunTime/bin
 PROLOG	= $(BIN)/prolog
 PLSAVE	= $(BIN)/plsave
 LPP	= $(BIN)/lpp
@@ -26,8 +29,8 @@ CONFIG	= HOME="$(HOME)" BIN="$(BIN)" LIB="$(LIB)" CDEFS="$(CDEFS)" \
 	  UNIFY="$(UNIFY)" SQL_PATH="$(SQL_PATH)" SQL_EXEC="$(SQL_EXEC)" \
 	  LOCKFILE="$(LOCKFILE)" DDLOCKFILE="$(DDLOCKFILE)"
 
-CFLAGS	= -DGSTKLEN=40000 -DDICT -DDLOAD -DCLINDEX -DNEWDBASE 
-LFLAGS	=
+CFLAGS	= -m32 -DGSTKLEN=40000 -DDICT -DDLOAD -DCLINDEX -DNEWDBASE 
+LFLAGS	= -m32
 
 LD	= /bin/ld
 
@@ -50,7 +53,7 @@ prolog_db: $(OBJS)
 
 local.h: $(HOME)/Config.sed mlocal.c
 	cc -DBIN=\"$(PROLOG)\" -DLIB=\"$(LIB)\" $(CFLAGS) mlocal.c
-	a.out > local.h
+	./a.out > local.h
 	rm -f a.out
 
 dict.h: local.h mdict.h data.o
@@ -58,7 +61,7 @@ dict.h: local.h mdict.h data.o
 #	cp mdict.h makedict.c
 #	ed < makedict.ed
 	cc $(CFLAGS) data.o makedict.c
-	a.out > dict.h
+	./a.out > dict.h
 	rm -f a.out makedict.c makedict.o
 
 io.o: types.h pred.h Makefile

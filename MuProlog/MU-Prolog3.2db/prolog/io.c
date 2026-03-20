@@ -96,7 +96,13 @@ static FILE *outfile;
 
 Ptr lsp, lsz;
 VarP varchain;
-int isop(), NumberString();
+static int isop();
+static int display();
+static int patom();
+static int wstring();
+static int pvar();
+static int contains_comment();
+int NumberString();
 
 #define PREFIX	0
 #define INFIX	1
@@ -226,7 +232,7 @@ static char chtyp[] = {
 /*  p   q   r   s   t   u   v   w   x   y   z   {   |   }   ~  del */
    LC, LC, LC, LC, LC, LC, LC, LC, LC, LC, LC, BK, BK, BK, SY,  BS };
 
-Ptr term();
+static Ptr term();
 
 Ptr fentry(atom,arity)
 Ptr atom; int arity;
@@ -1102,6 +1108,8 @@ Ptr pread()
 		displist(Words(sizeof(VarEntry)), (Ptr)varchain);
     return (Ptr)e;
 }
+
+static digits();
 
 int NumberString(s,p,free)
 /* Scans the string *s to see if it is a number. If yes, *p takes

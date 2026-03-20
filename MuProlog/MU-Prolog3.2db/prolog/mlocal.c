@@ -18,6 +18,8 @@ Checks word size etc. and prints a few #defines
 */
 
 #include <stdio.h>
+#include <stdlib.h>
+
 char *strcat(), *strcpy();
 
 #define TAG (unsigned)0xC0000000	/* top 2 bits of 32 bits */
@@ -58,8 +60,10 @@ main(){
 	/* The top two bits in Ints are used as a tag, which is assumed to */
 	/* be zero for addresses */
 
-	if((int)&err & TAG)
+	if((int)&err & TAG) {
+		fprintf(stderr, "Address of err: %p\n", (void*)&err);
 		error("Top bits in address set: change types.h");
+	}
 
 	/* Currently, some macros assume a short is two bytes (will fix). */
 

@@ -24,6 +24,8 @@ etc
 #include "dict.h"
 #include "pred.h"
 
+static int eval();
+
 int fpeflag;			/* floating exception flag */
 
 onfpe()

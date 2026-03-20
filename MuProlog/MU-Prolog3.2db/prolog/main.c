@@ -104,10 +104,15 @@ main(argc, argv)
 		gargv[argc] = argv[argc];
 #if 1
 	pfiles[0] = stdin;
+	pfmode[0] = 'r';
 	pfiles[1] = stdout;
+	pfmode[1] = 'w';
 	pfiles[2] = stderr;
+	pfmode[2] = 'w';
 	pfiles[3] = stdin;
+	pfmode[3] = 'r';
 	pfiles[4] = stdout;
+	pfmode[4] = 'w';
 #endif
 	initdict();
 	if(signal(SIGFPE, SIG_IGN) != SIG_IGN)
